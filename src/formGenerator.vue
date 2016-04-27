@@ -76,7 +76,7 @@
 
 		ready() {
 			// Legelső betöltés
-			if (this.options.validateAfterLoad === true && !this.isNewModel)
+			if (this.options && this.options.validateAfterLoad === true && !this.isNewModel)
 				this.$parent.validateForm();
 			else
 				this.clearValidationErrors();
@@ -159,13 +159,7 @@
 		min-width: 350px;
 		margin: auto;
 		
-		font-family: "Open Sans";
-		font-size: 14px;
-		
 		input, select, textarea {
-			font-family: "Open Sans";
-			font-size: 14px;
-
 			border-radius: 4px;
 			border: 1px solid #BBB;
 			padding: 2px 5px;

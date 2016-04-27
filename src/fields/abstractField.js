@@ -46,7 +46,7 @@ export default {
 				this.schema.onChanged(this.model, newVal, oldVal, this.schema);
 			}
 
-			if (this.$parent.options.validateAfterChanged === true)
+			if (this.$parent.options && this.$parent.options.validateAfterChanged === true)
 				this.validate();
 		}
 	},

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8">
+  <title>Demo of vue-form-generator</title>
+  <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.css">
+  <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css">
+
+  <style>
+      html {
+        font-family: Tahoma;
+        font-size: 14px;
+      }
+
+      pre {
+        overflow: auto;
+      }
+        pre .string { color: #885800; }
+        pre .number { color: blue; }
+        pre .boolean { color: magenta; }
+        pre .null { color: red; }
+        pre .key { color: green; }    
+            
+  </style>
+</head>
+
+<body>
+  <h1 class="text-center">Demo of vue-form-generator</h1>
+  <div class="container" id="app">
+    <vue-form-generator :schema="schema", :model="model"></vue-form-generator>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Model</div>
+      <div class="panel-body">
+        <pre v-if="model">{{{ model | prettyJSON }}}</pre>
+      </div>
+    </div>
+
+  </div>
+  <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
+  <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.21/vue.min.js"></script>
+  <script type="text/javascript" src="../../dist/vue-form-generator.js"></script>
+  <script type="text/javascript" src="./main.js"></script>
+</body>
+</html>
