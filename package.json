@@ -1,0 +1,24 @@
+{
+  "name": "vue-form-generator",
+  "version": "0.1.0",
+  "description": "A schema-based form generator component for Vue.js",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --config build/webpack.build.config.js",
+    "test": "webpack --config test/webpack.config.js"
+  },
+  "keywords": [
+    "vue",
+    "vuejs",
+    "form",
+    "generator",
+    "schema",
+    "json"
+  ],
+  "author": "Icebob",
+  "license": "MIT",
+  "devDependencies": {
+    "vue": "^1.0.21",
+    "webpack": "1.13.0"
+  }  
+}
