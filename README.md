@@ -2,7 +2,7 @@
 A schema-based form generator component for Vue.js
 
 ## Demo
-TODO
+[JSFiddle simple example](https://jsfiddle.net/icebob/0mg1v81e/)
 
 ## Features
 TODO
