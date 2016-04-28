@@ -1,5 +1,5 @@
 var webpack = require("webpack");
-var version = require("../package.json").version;
+var version = require("./package.json").version;
 var banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
 
 var loaders = [
