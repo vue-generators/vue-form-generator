@@ -4,7 +4,7 @@
   "description": "A schema-based form generator component for Vue.js",
   "main": "dist/vue-form-generator.js",
   "scripts": {
-    "build": "webpack --config build/webpack.build.config.js",
+    "build": "webpack --config webpack.build.config.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
     "test": "webpack --config test/webpack.config.js"
   },
