@@ -52,10 +52,6 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    })
   ],
   module: {
     loaders: loaders

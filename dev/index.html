@@ -13,36 +13,9 @@
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.2/bootstrap-slider.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.min.js"></script>
-
-	<style>
-	    html {
-	        font-family: Tahoma;
-	        font-size: 14px;
-	    }
-
-	    pre {
-	        overflow: auto;
-	    }
-	        pre .string { color: #885800; }
-	        pre .number { color: blue; }
-	        pre .boolean { color: magenta; }
-	        pre .null { color: red; }
-	        pre .key { color: green; }    
-	            
-	</style>
-
   </head>
   <body>
-    <div id="app" class="container-fluid">
-    	<div class="row">
-	    	<div class="col-md-6">
-	        	<vue-form-generator :schema="schema", :model="model", :options="formOptions"></vue-form-generator>    
-	        </div>
-	    	<div class="col-md-6">
-		        <pre v-if="model">{{{ model | prettyJSON }}}</pre>
-	        </div>
-	    </div>
-    </div>
+    <app class="container-fluid"></app>
   	<script src="/app.js"></script>
   </body>
 </html>
