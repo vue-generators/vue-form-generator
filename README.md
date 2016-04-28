@@ -12,16 +12,24 @@ TODO
 
 ## Installation
 ### NPM
+TODO
 ### Manual
+TODO
 
 ## Usage
 TODO
 
 ## Development
-TODO
+This command will start a `webpack-dev-server` with content of `dev` folder.
+```bash
+npm run dev
+```
 
 ## Build
-TODO
+This command will build a distributable version in the `dist` directory.
+```bash
+npm run build
+```
 
 ## Test
 TODO
