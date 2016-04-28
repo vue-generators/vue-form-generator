@@ -1,4 +1,5 @@
 import moment from "moment";
+import faker from "faker";
 import {} from "lodash";
 
 import { validators } from "../src";
@@ -76,7 +77,7 @@ module.exports = {
 				"CoffeeScript",
 				"AngularJS",
 				"ReactJS",
-				"VueJS",
+				"VueJS"
 			]
 		},	
 		{
@@ -174,19 +175,19 @@ module.exports = {
 			default: "en_GB"
 		},
 		{
-			type: "select",
+			type: "selectEx",
 			label: "Country",
 			model: "address.country",
 			multi: true,
 			required: true,
-			values: [
-				"France",
-				"United Kingdom",
-				"United States of America",
-				"Germany",
-				"Italiy"
-			],
-			default: "United Kingdom"
+			values: faker.definitions.address.country,
+			default: "United Kingdom",
+			multiSelect: false,
+			selectOptions: {
+				// https://silviomoreto.github.io/bootstrap-select/options/
+				liveSearch: true,
+				size: 10
+			}
 		},
 		{
 			type: "text",

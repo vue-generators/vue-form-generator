@@ -1,85 +1,154 @@
 <template lang="jade">
-    .row
-      .col-md-6
-        vue-form-generator(:schema='schema', :model='model', :options='formOptions')
-      .col-md-6
-        pre(v-if='model') {{{ model | prettyJSON }}}   
+		.row
+			.col-md-10.col-md-offset-1
+				data-table(:rows="rows", :selected="selected", :select="selectRow")
+
+		.row(v-if="model")
+			.col-md-6
+				.buttons.text-center
+					button.btn.btn-default.new(@click="newModel") New
+					button.btn.btn-primary.save(@click="saveModel") Save
+					button.btn.btn-danger.delete(@click="deleteModel") Delete
+
+				vue-form-generator(:schema='schema', :model='model', :options='formOptions', :multiple="selected.length > 1", v-ref:form, :is-new-model="isNewModel")
+
+
+			.col-md-6
+				pre(v-if='model') {{{ model | prettyJSON }}}   
 
 </template>
 
 <script>
 	import Vue from "vue";
 	import VueFormGenerator from "../src";
+	import DataTable from "./dataTable.vue";
+
 	import Schema from "./schema";
+	import { users } from "./data";
+	import { filters } from "./utils";
+
+	import {each, isFunction, cloneDeep, merge} from 'lodash';	
 
 	export default {
 		components: {
-			"VueFormGenerator": VueFormGenerator.component
+			"VueFormGenerator": VueFormGenerator.component,
+			DataTable
 		},
 
-		filters: {
-			prettyJSON: function(json) {
-				if (json) {
-					json = JSON.stringify(json, undefined, 4);
-					json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-					return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-						var cls = 'number';
-						if (/^"/.test(match)) {
-							if (/:$/.test(match)) {
-								cls = 'key';
-							} else {
-								cls = 'string';
-							}
-						} else if (/true|false/.test(match)) {
-							cls = 'boolean';
-						} else if (/null/.test(match)) {
-							cls = 'null';
-						}
-						return '<span class="' + cls + '">' + match + '</span>';
-					});
-				}
-			}
-		},
+		filters: filters,
 
 		data() {
 			return {
-				model: {
-					id: 1,
-					name: "John Doe",
-					type: "personal",
-					password: "J0hnD03!x4",
-					skills: [
-						"Javascript",
-						"VueJS"
-					],
-					email: "john.doe@gmail.com",
-					language: "en-GB",
-					age: 35,
-					dob: 348966000000,
-					rank: 6,
-					address: {
-						country: "United Kingdom",
-						city: "London",
-						street: "SW1A 5 Parliament St",
-						geo: {
-							lat: 51.501015, 
-							lng: -0.126005
-						}
-					},
-					role: "admin",
-					created: 1461834815864,
-					bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non lacus porttitor, pellentesque odio sit amet, hendrerit felis. In turpis mauris, viverra a lacinia nec, fringilla ut nisi. Curabitur rutrum mattis risus, at dapibus nisl tempus et. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus eget elementum lorem. Pellentesque tempor nec ante ut molestie. Suspendisse imperdiet tempus hendrerit. Morbi a dignissim augue.",
-					status: true,
+				isNewModel: false, 
 
-				},
+				selected: [],
+
+				model: null,
+
+				rows: users,
 
 				schema: Schema,
 
 				formOptions: {
 					validateAfterLoad: true,
-					validateAfterChanged: true
+					validateAfterChanged: true,
+					validateBeforeSave: true
 				}
 			}
+		},
+
+		methods: {
+			selectRow(event, row, add) {
+				if ( (add || (event && event.ctrlKey))) {
+					if (this.selected.indexOf(row) != -1)
+						this.selected.$remove(row);
+					else
+						this.selected.push(row);
+				} else {
+					this.clearSelection();
+					this.selected.push(row);
+				}
+				this.generateModel();
+			},
+
+			clearSelection() {
+				this.selected.splice(0);
+				this.generateModel();
+			},			
+
+			generateModel() {
+				if (this.selected.length == 1) {
+					this.model = cloneDeep(this.selected[0]);
+				}
+				else if (this.selected.length > 1) {
+					this.model = VueFormGenerator.schema.mergeMultiObjectFields(Schema, this.selected);
+				}
+				else
+					this.model = null;				
+			},
+
+			newModel() {
+				console.log("Create new model...");
+				this.selected.splice(0);
+				let newRow = VueFormGenerator.schema.createDefaultObject(Schema, { id: this.getNextID() })
+				this.isNewModel = true;
+				this.model = newRow;
+
+				let el = document.querySelector("div.form input:nth-child(1):not([readonly]):not(:disabled)");
+				if (el)
+					el.focus()
+
+			},			
+
+			saveModel() {
+				console.log("Save model...");
+				if (this.formOptions.validateBeforeSave === false ||  this.validate()) {
+					this.mergeModelValues();
+
+					if (this.isNewModel) {
+						this.rows.push(this.model);
+						this.selectRow(null, this.model, false);
+					}
+
+				} else {
+					// Validation error
+				}
+			},
+
+			mergeModelValues() {
+				let model = this.model;
+				if (model && this.selected.length > 0) {
+					each(this.selected, (row) => {
+						merge(row, model);
+					});
+				}
+			},
+
+			deleteModel() {
+				if (this.selected.length > 0) {
+					each(this.selected, (row) => {
+						this.rows.$remove(row);
+					})
+					this.clearSelection();
+				}
+			},
+
+			getNextID() {
+				let id = 0;
+
+				each(this.rows, (row) => {
+					if (row.id > id)
+						id = row.id;
+				});
+
+				return ++id;
+			},
+
+			validate()	{
+				return this.$refs.form.validate();
+			}
+
+			 
 		},
 		
 		ready() {
@@ -95,7 +164,7 @@
 
 	html {
 		font-family: "Open Sans";
-        font-size: 14px;
+				font-size: 14px;
 	}
 
 	* {
@@ -104,14 +173,14 @@
 		box-sizing: border-box;
 	}
 
-      pre {
-        overflow: auto;
-        
-        .string { color: #885800; }
-        .number { color: blue; }
-        .boolean { color: magenta; }
-        .null { color: red; }
-        .key { color: green; }    	
-      }
+	pre {
+		overflow: auto;
+		
+		.string { color: #885800; }
+		.number { color: blue; }
+		.boolean { color: magenta; }
+		.null { color: red; }
+		.key { color: green; }    	
+	}
 
 </style>
