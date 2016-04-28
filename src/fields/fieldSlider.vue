@@ -10,12 +10,14 @@
 
 		watch: {
 			model: function() {
-				$(this.$el).slider("setValue", this.value);	
+				if ($.fn.slider)
+					$(this.$el).slider("setValue", this.value);	
 			}
 		},
 
 		ready() {
-			$(this.$el).slider(this.schema.sliderOptions);
+			if ($.fn.slider)
+				$(this.$el).slider(this.schema.sliderOptions);
 		}		
 	}
 </script>

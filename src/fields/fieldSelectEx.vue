@@ -38,12 +38,18 @@
 
 		watch: {
 			model: function() {
-				$(this.$el).selectpicker("refresh");	
+				if ($.fn.selectpicker)
+					$(this.$el).selectpicker("refresh");	
+				else
+					console.warn("selectpicker is not loaded!");
 			}
 		},
 
 		ready() {
-			$(this.$el).selectpicker("destroy").selectpicker(this.schema.selectOptions);
+			if ($.fn.selectpicker)
+				$(this.$el).selectpicker("destroy").selectpicker(this.schema.selectOptions);
+			else
+				console.warn("selectpicker is not loaded!");
 		}
 	}
 </script>

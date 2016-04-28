@@ -5,8 +5,8 @@
   "main": "dist/vue-form-generator.js",
   "scripts": {
     "build": "webpack --config build/webpack.build.config.js",
-    "test": "webpack --config test/webpack.config.js",
-    "example-simple": "webpack-dev-server --content-base examples/simple/"
+    "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
+    "test": "webpack --config test/webpack.config.js"
   },
   "keywords": [
     "vue",
@@ -28,6 +28,7 @@
     "css-loader": "0.23.1",
     "jade": "1.11.0",
     "jade-loader": "0.8.0",
+    "jquery": "2.2.3",
     "lodash": "4.11.1",
     "moment": "2.13.0",
     "node-sass": "3.6.0",
