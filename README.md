@@ -7,8 +7,12 @@ TODO
 ## Features
 TODO
 
-## Installation
+## Dependencies
 TODO
+
+## Installation
+### NPM
+### Manual
 
 ## Usage
 TODO
