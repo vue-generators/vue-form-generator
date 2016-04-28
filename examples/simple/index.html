@@ -28,7 +28,12 @@
 <body>
   <h1 class="text-center">Demo of vue-form-generator</h1>
   <div class="container" id="app">
-    <vue-form-generator :schema="schema", :model="model"></vue-form-generator>
+    <div class="panel panel-default">
+      <div class="panel-heading">Form</div>
+      <div class="panel-body">
+        <vue-form-generator :schema="schema", :model="model", :options="formOptions"></vue-form-generator>
+      </div>
+    </div>
 
     <div class="panel panel-default">
       <div class="panel-heading">Model</div>

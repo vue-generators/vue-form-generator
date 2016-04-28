@@ -1,25 +1,22 @@
 <template lang="jade">
-	.panel.panel-default
-		.panel-heading Properties
-		.panel-body
-			table
-				thead
-				tbody
-					tr(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
-						td 
-							span.help(v-if="field.help")
-								i.fa.fa-question-circle
-								.helpText {{{field.help}}}
+	table
+		thead
+		tbody
+			tr(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
+				td 
+					span.help(v-if="field.help")
+						i.fa.fa-question-circle
+						.helpText {{{field.help}}}
 
-							|{{ field.label }}
-						td
-							.field-wrap
-								component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
-								.buttons(v-if="field.buttons && field.buttons.length > 0")
-									button.btn.btn-default(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
-							.hint(v-if="field.hint") {{ field.hint }}
-							.errors(v-if="field.errors && field.errors.length > 0")
-								span(v-for="error in field.errors") {{ error }}
+					|{{ field.label }}
+				td
+					.field-wrap
+						component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
+						.buttons(v-if="field.buttons && field.buttons.length > 0")
+							button.btn.btn-default(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
+					.hint(v-if="field.hint") {{ field.hint }}
+					.errors(v-if="field.errors && field.errors.length > 0")
+						span(v-for="error in field.errors") {{ error }}
 </template>
 
 <script>
@@ -48,7 +45,7 @@
 		
 		data () {
 			return {
-				errors: []
+				errors: [] // Validation errors
 			}
 		},
 
@@ -65,19 +62,19 @@
 		},
 
 		watch: {
-			// Futás közbeni rekord váltáskor
+			// new model loaded
 			model: function() {
 				if (this.options.validateAfterLoad === true && !this.isNewModel)
-					this.$parent.validateForm();
+					this.validate();
 				else
 					this.clearValidationErrors();
 			}
 		},
 
 		ready() {
-			// Legelső betöltés
+			// First load
 			if (this.options && this.options.validateAfterLoad === true && !this.isNewModel)
-				this.$parent.validateForm();
+				this.validate();
 			else
 				this.clearValidationErrors();
 		},

@@ -1,2 +1,5 @@
-module.exports = require("./formGenerator.vue");
-
+module.exports = {
+	component: require("./formGenerator.vue"),
+	schema: require("./utils/schema.js"),
+	validators: require("./utils/validators.js")
+};

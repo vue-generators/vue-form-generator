@@ -10,7 +10,7 @@
 			.info {{ selectedCount }} selected
 			.arrow
 
-		.dropList()
+		.dropList
 			.list-row(v-if="comboExpanded", v-for="item in items")
 				label
 					input(type="checkbox", :checked="getItemIsChecked(item)", @change="onChanged($event, item)")
@@ -134,7 +134,7 @@
 
 		.dropList {
 			transition: height 0.5s;
-			margin-top: 0.5em;
+			//margin-top: 0.5em;
 		}
 	}
 </style>

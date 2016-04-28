@@ -1,7 +1,7 @@
 var vm = new Vue({
 	el: "#app",
 	components: {
-		"vue-form-generator": window.VueFormGenerator
+		"vue-form-generator": VueFormGenerator.component
 	},
 
 	filters: {
@@ -58,18 +58,24 @@ var vm = new Vue({
 					featured: true,
 					required: true,
 					disabled: false,
-					placeholder: "User's name"
+					placeholder: "User's name",
+					validator: VueFormGenerator.validators.string
 				},
 				{
 					type: "password",
 					label: "Password",
-					model: "password"
+					model: "password",
+					min: 6,
+					required: true,
+					hint: "Minimum 6 characters",
+					validator: VueFormGenerator.validators.string
 				},	
 				{
 					type: "email",
 					label: "E-mail",
 					model: "email",
-					placeholder: "User's e-mail address"
+					placeholder: "User's e-mail address",
+					validator: VueFormGenerator.validators.email
 				},					
 				{
 					type: "checklist",
@@ -85,7 +91,7 @@ var vm = new Vue({
 						"CoffeeScript",
 						"AngularJS",
 						"ReactJS",
-						"VueJS",
+						"VueJS"
 					]
 				},
 				{
@@ -99,6 +105,11 @@ var vm = new Vue({
 					default: true
 				}			
 			]
+		},
+
+		formOptions: {
+			validateAfterLoad: true,
+			validateAfterChanged: true
 		}
 	}
 });
