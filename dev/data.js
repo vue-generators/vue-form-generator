@@ -41,6 +41,7 @@ module.exports = {
 			user.language = lang;
 			user.status = faker.helpers.randomize([true, false, true]);
 			user.created = faker.date.recent(30).valueOf();
+			user.dt = faker.date.recent(30).valueOf();
 
 			if (user.type == "business") {
 				user.company = {

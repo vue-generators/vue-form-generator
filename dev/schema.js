@@ -143,7 +143,21 @@ module.exports = {
 				model.age = moment().year() - moment(newVal).year();
 			}
 
-		},			
+		},	
+
+		{
+			type: "dateTime",
+			label: "DT",
+			model: "dt",
+			multi: true,
+			validator: [
+				validators.date
+			],
+			dateTimePickerOptions: {
+				format: "YYYY-MM-DD HH:mm:ss"
+			}
+
+		},
 		{
 			type: "slider",
 			label: "Rank",

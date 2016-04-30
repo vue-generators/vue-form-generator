@@ -13,6 +13,7 @@ TODO
 ## Installation
 ### NPM
 TODO
+
 ### Manual
 TODO
 
@@ -35,13 +36,14 @@ npm run build
 TODO
 
 ## TODO
-* [ ] Date picker with bootstrap-datepicker
+* [x] Date picker with bootstrap-datepicker
 * [ ] Time picker
 * [ ] Color picker with spectrum
 * [ ] Image editor
 * [ ] Better slider
 * [ ] Groupable fields
 * [ ] Validation handling with multiple models
+* [ ] Bundle for vendor files
 
 ## License
 vue-form-generator is available under the [MIT license](https://tldrlegal.com/license/mit-license).

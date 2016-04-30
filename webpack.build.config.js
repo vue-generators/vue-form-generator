@@ -22,44 +22,43 @@ var loaders = [
 ];
 
 module.exports = [
-
-{
-    entry: "./src/index",
-    output: {
-        path: "./dist",
-        filename: "vue-form-generator.js",
-        library: "VueFormGenerator",
-        libraryTarget: "umd"
-    },
-    plugins: [
-    new webpack.BannerPlugin(banner, {
-        raw: true
-    })],
-    module: {
-        loaders: loaders
-    }
-},
-
-{
-    entry: "./src/index",
-    output: {
-        path: "./dist",
-        filename: "vue-form-generator.min.js",
-        library: "VueFormGenerator",
-        libraryTarget: "umd"
-    },
-    plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
+    {
+        entry: "./src/index",
+        output: {
+            path: "./dist",
+            filename: "vue-form-generator.js",
+            library: "VueFormGenerator",
+            libraryTarget: "umd"
+        },
+        plugins: [
+        new webpack.BannerPlugin(banner, {
+            raw: true
+        })],
+        module: {
+            loaders: loaders
         }
-    }),
-    new webpack.BannerPlugin(banner, {
-        raw: true
-    })],
-    module: {
-        loaders: loaders
+    },
+
+    {
+        entry: "./src/index",
+        output: {
+            path: "./dist",
+            filename: "vue-form-generator.min.js",
+            library: "VueFormGenerator",
+            libraryTarget: "umd"
+        },
+        plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.BannerPlugin(banner, {
+            raw: true
+        })],
+        module: {
+            loaders: loaders
+        }
     }
-}
 
 ];
