@@ -15,7 +15,7 @@ export default {
 				if (isFunction(this.schema.get))
 					val = this.schema.get(this.model);
 
-				else if (this.schema.model)
+				else if (this.model && this.schema.model)
 					val = this.$get("model." + this.schema.model);
 
 				if (isFunction(this.formatValueToField))
@@ -70,7 +70,6 @@ export default {
 					let err = validator(this.value, this.schema);
 					if (err && err.length > 0) {
 						Array.prototype.push.apply(this.schema.errors, err);
-						// console.log(this.schema.errors);
 					}
 				});
 

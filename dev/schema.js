@@ -85,7 +85,7 @@ module.exports = {
 			label: "Company name",
 			model: "company.name",
 			styleClasses: "company",
-			visible(model) { return model.type == "business"; }
+			visible(model) { return model && model.type == "business"; }
 		},
 		{
 			type: "text",
@@ -95,7 +95,7 @@ module.exports = {
 			pattern: "^\\+[0-9]{2}-[237]0-[0-9]{3}-[0-9]{4}$",
 			placeholder: "User's phone number",
 			hint: "Format: +36-(20|30|70)-000-0000",
-			visible(model) { return model.type == "business"; }
+			visible(model) { return model && model.type == "business"; }
 		},			
 		{
 			type: "email",
@@ -200,7 +200,7 @@ module.exports = {
 		{
 			type: "text",
 			label: "Street",
-			model: "address.street",
+			model: "address.streetC",
 			required: true
 		},        
 		{
@@ -220,10 +220,15 @@ module.exports = {
 				if (!model.address.geo)
 					model.address.geo = {};
 
-				if (values.length > 0)
+				if (values.length > 0 && values[0].trim() != "")
 					model.address.geo.lat = parseFloat(values[0].trim());
-				if (values.length > 1)
+				else 
+					model.address.geo.lat = 0
+
+				if (values.length > 1 && values[1].trim() != "")
 					model.address.geo.lng = parseFloat(values[1].trim());
+				else 
+					model.address.geo.lng = 0
 			},
 			buttons: [
 				{
@@ -282,7 +287,7 @@ module.exports = {
 			type: "label",
 			label: "Created",
 			model: "created",
-			get(model) { return model.created ? moment(model.created).format("LLL") : "-"; }
+			get(model) { return model && model.created ? moment(model.created).format("LLL") : "-"; }
 		},
 		{
 			type: "checkbox",

@@ -3,12 +3,18 @@
 			.col-md-10.col-md-offset-1
 				data-table(:rows="rows", :selected="selected", :select="selectRow")
 
-		.row(v-if="model")
+		.row(v-show="model")
 			.col-md-6
 				.buttons.text-center
 					button.btn.btn-default.new(@click="newModel") New
-					button.btn.btn-primary.save(@click="saveModel") Save
+					button.btn.btn-primary.save(@click="saveModel") 
+						| Save
+						i.fa.fa-warning(v-if="showWarning()")
 					button.btn.btn-danger.delete(@click="deleteModel") Delete
+
+				.errors.text-center
+					div.alert.alert-danger(v-for="item in validationErrors") {{ item.field.label}}: 
+						strong {{ item.error }}
 
 				vue-form-generator(:schema='schema', :model='model', :options='formOptions', :multiple="selected.length > 1", v-ref:form, :is-new-model="isNewModel")
 
@@ -51,14 +57,30 @@
 
 				formOptions: {
 					validateAfterLoad: true,
-					validateAfterChanged: true,
+					validateAfterChanged: false,
 					validateBeforeSave: true
 				}
 			}
 		},
 
+		computed: {
+			validationErrors() {
+				if (this.$refs.form && this.$refs.form.errors) 
+					return this.$refs.form.errors;
+
+				return [];
+			}
+		},
+
 		methods: {
+			showWarning() { 
+				if (this.$refs.form && this.$refs.form.errors) {
+					return this.$refs.form.errors.length > 0 
+				}
+			},
+
 			selectRow(event, row, add) {
+				this.isNewModel = false;
 				if ( (add || (event && event.ctrlKey))) {
 					if (this.selected.indexOf(row) != -1)
 						this.selected.$remove(row);
@@ -181,6 +203,21 @@
 		.boolean { color: magenta; }
 		.null { color: red; }
 		.key { color: green; }    	
+	} 
+
+	.buttons {
+		button {
+			margin: 0.2em 0.3em;
+			padding: 6px 20px;
+			position: relative;
+		}
+
+		i.fa.fa-warning {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			color: Orange;			
+		}
 	}
 
 </style>

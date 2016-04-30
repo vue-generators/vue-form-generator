@@ -10,7 +10,9 @@
 		tbody
 			tr(v-for="row in rows", @click="select($event, row)", :class="{ active: isSelected(row) }")
 				td {{ row.id }}
-				td {{ row.name }}
+				td 
+					| {{ row.name }} 
+					.label.label-warning(v-if="!row.status") Inactive
 				td {{ row.email }}
 				td {{ row.address.country }}
 </template>

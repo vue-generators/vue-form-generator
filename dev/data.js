@@ -1,15 +1,18 @@
 import faker from 'faker';
 import moment from 'moment';
 
-module.exports = {
-	roles: [
-		{ id: "admin", name: "Administrator"},
-		{ id: "moderator", name: "Moderator"},
-		{ id: "user", name: "Registered User"},
-		{ id: "visitor", name: "Visitor"}
-	],
+let roles = [
+	{ id: "admin", name: "Administrator"},
+	{ id: "moderator", name: "Moderator"},
+	{ id: "user", name: "Registered User"},
+	{ id: "visitor", name: "Visitor"}
+]
 
-	skills: [ "HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS" ],
+let skills = [ "HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS" ];
+
+module.exports = {
+	roles,
+	skills,
 
 	users: (function() {
 		let res = [];
@@ -28,12 +31,12 @@ module.exports = {
 				min: 1,
 				max: 10
 			});
-			user.role = faker.helpers.randomize(module.exports.roles).id;
+			user.role = faker.helpers.randomize(roles).id;
 
 
 			user.skills = [];
-			user.skills.push(faker.helpers.randomize(module.exports.skills));
-			user.skills.push(faker.helpers.randomize(module.exports.skills));
+			user.skills.push(faker.helpers.randomize(skills));
+			user.skills.push(faker.helpers.randomize(skills));
 
 			user.language = lang;
 			user.status = faker.helpers.randomize([true, false, true]);
@@ -66,7 +69,7 @@ module.exports = {
 			user.accountHistory = undefined;
 
 			res.push(user);
-			console.log(user);
+			//console.log(user);
 		}
 		//console.log(res);
 		return res;

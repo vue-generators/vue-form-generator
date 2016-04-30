@@ -1,5 +1,5 @@
 <template lang="jade">
-	table
+	table(v-if="schema != null")
 		thead
 		tbody
 			tr(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
@@ -52,10 +52,12 @@
 		computed: {
 			fields() {
 				let res = [];
-				each(this.schema.fields, (field) => {
-					if (!this.multiple || field.multi === true)
-						res.push(field);
-				});
+				if (this.schema) {
+					each(this.schema.fields, (field) => {
+						if (!this.multiple || field.multi === true)
+							res.push(field);
+					});
+				}
 
 				return res;
 			}
@@ -129,7 +131,12 @@
 					if (isFunction(child.validate))
 					{
 						let err = child.validate();
-						Array.prototype.push.apply(this.errors, err);
+						each(err, (err) => {
+							this.errors.push({
+								field: child.schema,
+								error: err
+							})
+						});
 					}
 				});
 
