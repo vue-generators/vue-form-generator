@@ -3,7 +3,7 @@
 		input.form-control.link(type="text", v-model="wrappedValue", :readonly="schema.readonly", :disabled="disabled", :placeholder="schema.placeholder")
 		input.form-control.file(type="file", :readonly="schema.readonly", :disabled="disabled", v-if="schema.browse !== false", @change="fileChanged")
 		.preview(:style="previewStyle")
-			.remove(title="Remove image", @click="remove")
+			.remove.fa.fa-trash-o(title="Remove image", @click="remove")
 </template>
 
 <script>
@@ -83,13 +83,15 @@
 		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 
 		.remove {
-			background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVR42u2SwQoAIAhD88vVLy8KBlaS0i1oJwP3piGVg0Skmpq8HjqZrWl9uwCbGAmwKYGZs/6iqgMyAdJuM8W2QmYKpLt/0AG9ASCv/oAnANd3AEjmAlFT1BypAV+PnRH5YehvAAAAAElFTkSuQmCC');
+			/*background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVR42u2SwQoAIAhD88vVLy8KBlaS0i1oJwP3piGVg0Skmpq8HjqZrWl9uwCbGAmwKYGZs/6iqgMyAdJuM8W2QmYKpLt/0AG9ASCv/oAnANd3AEjmAlFT1BypAV+PnRH5YehvAAAAAElFTkSuQmCC');
 			width: 16px;
 			height: 16px;
+			*/
+			font-size: 1.2em;
 
 			position: absolute;
-			right: 2px;
-			bottom: 2px;
+			right: 0.2em;
+			bottom: 0.2em;
 			opacity: 0.7;
 
 			&:hover {

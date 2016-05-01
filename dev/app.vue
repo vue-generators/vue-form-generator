@@ -6,11 +6,16 @@
 		.row(v-show="model")
 			.col-md-6
 				.buttons.text-center
-					button.btn.btn-default.new(@click="newModel") New
+					button.btn.btn-default.new(@click="newModel") 
+						i.fa.fa-plus
+						| New
 					button.btn.btn-primary.save(@click="saveModel") 
+						i.fa.fa-floppy-o
 						| Save
 						i.fa.fa-warning(v-if="showWarning()")
-					button.btn.btn-danger.delete(@click="deleteModel") Delete
+					button.btn.btn-danger.delete(@click="deleteModel") 
+						i.fa.fa-trash
+						| Delete
 
 				.errors.text-center
 					div.alert.alert-danger(v-for="item in validationErrors") {{ item.field.label}}: 
@@ -210,6 +215,10 @@
 			margin: 0.2em 0.3em;
 			padding: 6px 20px;
 			position: relative;
+
+			i {
+				margin-right: 0.3em;
+			}
 		}
 
 		i.fa.fa-warning {
