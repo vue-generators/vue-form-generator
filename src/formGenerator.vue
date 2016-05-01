@@ -8,7 +8,7 @@
 						i.fa.fa-question-circle
 						.helpText {{{field.help}}}
 
-					|{{ field.label }}
+					| {{ field.label }}
 				td
 					.field-wrap
 						component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")

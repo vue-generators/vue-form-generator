@@ -37,8 +37,9 @@ TODO
 
 ## TODO
 * [x] Date picker with bootstrap-datepicker
-* [ ] Time picker
-* [ ] Color picker with spectrum
+* [x] Time picker
+* [x] HTML5 Color picker
+* [x] Color picker with spectrum
 * [ ] Image editor
 * [ ] Better slider
 * [ ] Groupable fields

@@ -114,6 +114,14 @@ module.exports = {
 			//validator: validators.regexp
 		},
 		{
+			type: "spectrum",
+			label: "Color",
+			model: "favoriteColor",
+			colorOptions: {
+				//preferredFormat: "rgb"
+			}
+		},		
+		{
 			type: "number",
 			label: "Age",
 			model: "age",
@@ -129,7 +137,7 @@ module.exports = {
 			]
 		},
 		{
-			type: "date",
+			type: "dateTime",
 			label: "DOB",
 			model: "dob",
 			multi: true,
@@ -139,6 +147,9 @@ module.exports = {
 			validator: [
 				validators.date
 			],
+			dateTimePickerOptions: {
+				format: "YYYY-MM-DD"
+			},			
 			onChanged(model, newVal, oldVal, field) {
 				model.age = moment().year() - moment(newVal).year();
 			}
@@ -158,6 +169,22 @@ module.exports = {
 			}
 
 		},
+
+		{
+			type: "dateTime",
+			label: "Time",
+			model: "time",
+			multi: true,
+			format: "HH:mm:ss",
+			/*validator: [
+				validators.time
+			],*/
+			dateTimePickerOptions: {
+				format: "HH:mm:ss"
+			}
+
+		},
+
 		{
 			type: "slider",
 			label: "Rank",

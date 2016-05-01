@@ -42,6 +42,7 @@ module.exports = {
 			user.status = faker.helpers.randomize([true, false, true]);
 			user.created = faker.date.recent(30).valueOf();
 			user.dt = faker.date.recent(30).valueOf();
+			user.favoriteColor = faker.internet.color();
 
 			if (user.type == "business") {
 				user.company = {

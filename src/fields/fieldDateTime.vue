@@ -16,16 +16,23 @@
 
 		methods: {
 
+			getDateFormat() {
+				if (this.schema.dateTimePickerOptions && this.schema.dateTimePickerOptions.format) 
+					return this.schema.dateTimePickerOptions.format
+				else
+					return inputFormat;
+			},
+
 			formatValueToField(value) {
 				if (value != null)
-					return moment(value, this.schema.format).format(inputFormat);
+					return moment(value, this.schema.format).format(this.getDateFormat());
 
 				return value;
 			},
 
 			formatValueToModel(value) {
 				if (value != null) {
-					let m = moment(value, inputFormat);
+					let m = moment(value, this.getDateFormat());
 					if (this.schema.format)
 						value = m.format(this.schema.format);
 					else
