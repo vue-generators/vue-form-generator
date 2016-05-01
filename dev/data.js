@@ -34,6 +34,7 @@ module.exports = {
 			});
 			user.role = faker.helpers.randomize(roles).id;
 			//user.mobile = faker.phone.phoneNumber();
+			user.avatar = faker.internet.avatar();
 
 			user.skills = [];
 			user.skills.push(faker.helpers.randomize(skills));

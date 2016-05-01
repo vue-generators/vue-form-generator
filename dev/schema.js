@@ -126,7 +126,14 @@ module.exports = {
 			colorOptions: {
 				//preferredFormat: "rgb"
 			}
-		},		
+		},	
+		{
+			type: "image",
+			label: "Avatar",
+			model: "avatar",
+			browse: true
+
+		},
 		{
 			type: "number",
 			label: "Age",
@@ -290,8 +297,8 @@ module.exports = {
 							if (!model.address.geo)
 								model.address.geo = {};
 
-							model.address.geo.lat = pos.coords.latitude;
-							model.address.geo.lng = pos.coords.longitude;
+							model.address.geo.lat = pos.coords.latitude.toFixed(5);
+							model.address.geo.lng = pos.coords.longitude.toFixed(5);
     						});
 						} else {
     						alert("Geolocation is not supported by this browser.");
