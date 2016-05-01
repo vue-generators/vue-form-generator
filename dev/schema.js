@@ -114,6 +114,12 @@ module.exports = {
 			//validator: validators.regexp
 		},
 		{
+			type: "masked",
+			label: "Mobile",
+			model: "mobile",
+			mask: "(99) 999-9999"
+		},		
+		{
 			type: "spectrum",
 			label: "Color",
 			model: "favoriteColor",

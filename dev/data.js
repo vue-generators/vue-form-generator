@@ -26,13 +26,14 @@ module.exports = {
 			user.bio = faker.lorem.paragraph();
 			let dob = faker.date.past(40, "1998-01-01");
 			user.dob = dob.valueOf();
+			user.time = moment().format("hh:mm:ss");
 			user.age = moment().year() - moment(dob).year();
 			user.rank = faker.random.number({
 				min: 1,
 				max: 10
 			});
 			user.role = faker.helpers.randomize(roles).id;
-
+			//user.mobile = faker.phone.phoneNumber();
 
 			user.skills = [];
 			user.skills.push(faker.helpers.randomize(skills));

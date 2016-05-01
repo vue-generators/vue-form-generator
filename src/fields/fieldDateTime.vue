@@ -47,6 +47,9 @@
 		ready() {
 			if ($.fn.datetimepicker) 
 				$(this.$el).datetimepicker(this.schema.dateTimePickerOptions);
+			else
+				console.warn("Bootstrap datetimepicker library is missing. Please download from https://eonasdan.github.io/bootstrap-datetimepicker/ and load the script and CSS in the HTML head section!");
+
 		}		
 	}
 </script>

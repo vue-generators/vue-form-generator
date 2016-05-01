@@ -29,7 +29,10 @@
 
 					}
 				}));
+			else
+				console.warn("Spectrum color library is missing. Please download from http://bgrins.github.io/spectrum/ and load the script and CSS in the HTML head section!");
 		}
+
 	}
 </script>
 
