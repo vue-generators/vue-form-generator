@@ -64,6 +64,7 @@ TODO
 * [ ] Validation handling with multiple models
 * [ ] Bundle for vendor files
 * [ ] Unit tests, coverage and CI
+* [ ] try [joi](https://www.npmjs.com/package/joi) for validation
 
 ## License
 vue-form-generator is available under the [MIT license](https://tldrlegal.com/license/mit-license).
