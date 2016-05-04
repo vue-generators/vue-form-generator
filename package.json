@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --config webpack.build.config.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
+    "lint": "eslint --ext=.js,.vue src",
     "test": "webpack --config test/webpack.config.js"
   },
   "keywords": [
@@ -26,6 +27,8 @@
     "babel-preset-stage-0": "6.5.0",
     "babel-runtime": "5.8.38",
     "css-loader": "0.23.1",
+    "eslint": "2.9.0",
+    "eslint-plugin-vue": "0.1.1",
     "faker": "3.1.0",
     "jade": "1.11.0",
     "jade-loader": "0.8.0",
