@@ -36,7 +36,73 @@ https://github.com/icebob/vue-form-generator/archive/master.zip
 ```
 
 ## Usage
-TODO
+Simply require it and add as a component:
+```js
+import VueFormGenerator from "vue-form-generator";
+
+export default {
+  ...
+  components: {
+    VueFormGenerator: VueFormGenerator.component
+  }
+  ...
+```
+
+## Examples
+### Schema sample
+```js
+{
+    fields: [{
+        type: "text",
+        label: "ID",
+        model: "id",
+        readonly: true,
+        featured: false,
+        disabled: true
+    }, {
+        type: "text",
+        label: "Name",
+        model: "name",
+        readonly: false,
+        featured: true,
+        required: true,
+        disabled: false,
+        placeholder: "User's name",
+        validator: VueFormGenerator.validators.string
+    }, {
+        type: "password",
+        label: "Password",
+        model: "password",
+        min: 6,
+        required: true,
+        hint: "Minimum 6 characters",
+        validator: VueFormGenerator.validators.string
+    }, {
+        type: "email",
+        label: "E-mail",
+        model: "email",
+        placeholder: "User's e-mail address",
+        validator: VueFormGenerator.validators.email
+    }, {
+        type: "checklist",
+        label: "Skills",
+        model: "skills",
+        multi: true,
+        required: true,
+        multiSelect: true,
+        values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"]
+    }, {
+        type: "checkbox",
+        label: "Status",
+        model: "status",
+        multi: true,
+        readonly: false,
+        featured: false,
+        disabled: false,
+        default: true
+    }]
+}
+```
 
 ## Development
 This command will start a `webpack-dev-server` with content of `dev` folder.
