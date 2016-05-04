@@ -36,16 +36,41 @@ https://github.com/icebob/vue-form-generator/archive/master.zip
 ```
 
 ## Usage
-Simply require it and add as a component:
+```html
+<template>
+  <div class="panel-body">
+    <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+  </div>
+</template>
+
+```
 ```js
+<script>
 import VueFormGenerator from "vue-form-generator";
 
 export default {
   ...
   components: {
     VueFormGenerator: VueFormGenerator.component
+  },
+  
+  data: {
+    schema: { ... },
+    model:             
+      id: 1,
+      name: "John Doe",
+      password: "J0hnD03!x4",
+      skills: ["Javascript", "VueJS"],
+      email: "john.doe@gmail.com",
+      status: true
+    },
+    formOptions: {
+      validateAfterLoad: true,
+      validateAfterChanged: true
+    }
   }
   ...
+</script>
 ```
 
 ## Examples
