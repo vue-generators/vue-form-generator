@@ -7,7 +7,7 @@
 </template>
 
 <script>
-	import abstractField from './abstractField';
+	import abstractField from "./abstractField";
 
 	export default {
 		mixins: [ abstractField ],
@@ -18,24 +18,24 @@
 					return {
 						display: "block",
 						"background-image": "url(" + this.value + ")"
-					}
+					};
 				} else {
 					return {
 						display: "none"
-					}
+					};
 				}
 			},
 
 			wrappedValue: {
 				get() {
 					if (this.value && this.value.indexOf("data") == 0)
-						return "<inline base64 image>"
+						return "<inline base64 image>";
 					else
 						return this.value;
 				},
 				set(newValue) {
 					if (newValue && newValue.indexOf("http") == 0) {
-						this.value = newValue
+						this.value = newValue;
 					}
 				}
 			}
@@ -53,17 +53,17 @@
 			},
 
 			fileChanged(event) {
-				var reader = new FileReader();
+				let reader = new FileReader();
 				reader.onload = (e) => {
 					this.value = e.target.result;				
-				}
+				};
 
 				if (event.target.files && event.target.files.length > 0) {
 					reader.readAsDataURL(event.target.files[0]);
 				}
 			}
 		}
-	}
+	};
 </script>
 
 <style lang="sass" scoped>

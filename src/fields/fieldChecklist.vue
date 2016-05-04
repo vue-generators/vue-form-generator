@@ -19,7 +19,7 @@
 
 <script>
 	import {isObject, isNil} from "lodash";
-	import abstractField from './abstractField';
+	import abstractField from "./abstractField";
 	
 	export default {
 		mixins: [ abstractField ],
@@ -27,7 +27,7 @@
 		data() {
 			return {
 				comboExpanded: false
-			}
+			};
 		},
 
 		computed: {
@@ -76,11 +76,11 @@
 					this.value.$remove(this.getItemID(item));
 			},
 
-			onExpandCombo(event) {
+			onExpandCombo() {
 				this.comboExpanded = !this.comboExpanded;				
 			}
 		}
-	}
+	};
 </script>
 
 

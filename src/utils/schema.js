@@ -1,12 +1,12 @@
-import {get, set, each, isString, isArray, isFunction} from 'lodash';
+import {get, set, each} from "lodash";
 
 module.exports.createDefaultObject = function (schema, obj = {}){
 	each(schema.fields, (field) => {
 		if (get(obj, field.model) === undefined)
-			set(obj, field.model, field.default)
+			set(obj, field.model, field.default);
 	});
 	return obj;
-}
+};
 
 module.exports.getMultipleFields = function(schema) {
 	let res = [];
@@ -16,7 +16,7 @@ module.exports.getMultipleFields = function(schema) {
 	});
 
 	return res;
-}
+};
 
 module.exports.mergeMultiObjectFields = function(schema, objs) {
 	let model = {};
@@ -43,4 +43,4 @@ module.exports.mergeMultiObjectFields = function(schema, objs) {
 	});
 
 	return model;
-}
+};

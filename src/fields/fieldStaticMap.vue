@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import abstractField from './abstractField';
+	import abstractField from "./abstractField";
 
 	export default {
 		mixins: [ abstractField ],
@@ -14,7 +14,7 @@
 					return `http://maps.googleapis.com/maps/api/staticmap?center=${this.model.address.geo.lat},${this.model.address.geo.lng}&zoom=8&scale=false&size=800x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C${this.model.address.city}`;
 			}
 		}
-	}
+	};
 </script>
 
 <style lang="sass" scoped>

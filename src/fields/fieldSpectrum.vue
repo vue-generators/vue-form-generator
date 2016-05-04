@@ -3,8 +3,8 @@
 </template>
 
 <script>
-	import abstractField from './abstractField';
-	import { defaults } from 'lodash';
+	import abstractField from "./abstractField";
+	import { defaults } from "lodash";
 	export default {
 		mixins: [ abstractField ],
 
@@ -25,15 +25,14 @@
 					allowEmpty: !this.schema.required,
 					preferredFormat: "hex",
 					change: (color) => {
-						this.value = color ? color.toString() : null
-
+						this.value = color ? color.toString() : null;
 					}
 				}));
 			else
 				console.warn("Spectrum color library is missing. Please download from http://bgrins.github.io/spectrum/ and load the script and CSS in the HTML head section!");
 		}
 
-	}
+	};
 </script>
 
 

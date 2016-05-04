@@ -1,4 +1,4 @@
-import {each, isFunction, isArray, isUndefined} from 'lodash';
+import {each, isFunction, isArray, isUndefined} from "lodash";
 
 export default {
 	props: [
@@ -89,5 +89,4 @@ export default {
 				this.schema.errors.splice(0); // Clear
 		}
 	}
-}
-
+};

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import abstractField from './abstractField';
+	import abstractField from "./abstractField";
 	export default {
 		mixins: [ abstractField ],
 
@@ -19,7 +19,7 @@
 			if ($.fn.slider)
 				$(this.$el).slider(this.schema.sliderOptions);
 		}		
-	}
+	};
 </script>
 
 

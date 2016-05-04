@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	import abstractField from './abstractField';
+	import abstractField from "./abstractField";
 	import moment from "moment";
 
 	let inputFormat = "YYYY-MM-DD HH:mm:ss";
@@ -18,7 +18,7 @@
 
 			getDateFormat() {
 				if (this.schema.dateTimePickerOptions && this.schema.dateTimePickerOptions.format) 
-					return this.schema.dateTimePickerOptions.format
+					return this.schema.dateTimePickerOptions.format;
 				else
 					return inputFormat;
 			},
@@ -51,7 +51,7 @@
 				console.warn("Bootstrap datetimepicker library is missing. Please download from https://eonasdan.github.io/bootstrap-datetimepicker/ and load the script and CSS in the HTML head section!");
 
 		}		
-	}
+	};
 </script>
 
 

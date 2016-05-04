@@ -21,10 +21,10 @@
 
 <script>
 	import Vue from "vue";
-	import {each, isFunction, isNil, isArray, isString} from 'lodash';
+	import {each, isFunction, isNil, isArray, isString} from "lodash";
 
 	// Load all fields from '../fields' folder
-	let Fields = require.context('./fields/', false, /^\.\/field([\w-_]+)\.vue$/);
+	let Fields = require.context("./fields/", false, /^\.\/field([\w-_]+)\.vue$/);
 	let fieldComponents = {};
 	each(Fields.keys(), (key) => {
 		let compName = Vue.util.classify(key.replace(/^\.\//, "").replace(/\.vue/, ""));
@@ -46,7 +46,7 @@
 		data () {
 			return {
 				errors: [] // Validation errors
-			}
+			};
 		},
 
 		computed: {
@@ -88,7 +88,7 @@
 					disabled: this.fieldDisabled(field), 
 					featured: field.featured, 
 					required: field.required
-				}
+				};
 
 				if (isArray(field.styleClasses)) {
 					each(field.styleClasses, (c) => baseClasses[c] = true);
@@ -135,7 +135,7 @@
 							this.errors.push({
 								field: child.schema,
 								error: err
-							})
+							});
 						});
 					}
 				});
@@ -151,7 +151,8 @@
 				});				
 			}
 		}
-	}
+	};
+	
 </script>
 
 <style lang="sass" scoped>

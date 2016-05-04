@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import abstractField from './abstractField';
+	import abstractField from "./abstractField";
 
 	export default {
 		mixins: [ abstractField ],
@@ -14,7 +14,7 @@
 			else
 				console.warn("JQuery MaskedInput library is missing. Please download from https://github.com/digitalBush/jquery.maskedinput and load the script in the HTML head section!");
 		}		
-	}
+	};
 </script>
 
 <style lang="sass" scoped>

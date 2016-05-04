@@ -1,4 +1,4 @@
-import { isNil, isNumber, isString } from 'lodash';
+import { isNil, isNumber, isString } from "lodash";
 import moment from "moment";
 
 function checkEmpty(value, required) {
@@ -34,14 +34,14 @@ module.exports = {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
 		if (!(Number(value) === value && value % 1 === 0))
-			return ["Invalid number!"]
+			return ["Invalid number!"];
 	},
 
 	double(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
 		if (!(Number(value) === value && value % 1 !== 0))
-			return ["Invalid number!"]
+			return ["Invalid number!"];
 	},
 
 	string(value, field) {
@@ -106,7 +106,7 @@ module.exports = {
 	url(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
-		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
+		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
 		if (!re.test(value))
 			return ["Invalid URL!"];
 	},	
@@ -118,32 +118,32 @@ module.exports = {
 			https://github.com/chriso/validator.js/blob/master/src/lib/isCreditCard.js
 		*/
 		const creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
-		const sanitized = value.replace(/[^0-9]+/g, '');
-			if (!creditCard.test(sanitized)) {
-				return ["Invalid card format!"];
-			}
-			let sum = 0;
-			let digit;
-			let tmpNum;
-			let shouldDouble;
-			for (let i = sanitized.length - 1; i >= 0; i--) {
-				digit = sanitized.substring(i, (i + 1));
-				tmpNum = parseInt(digit, 10);
-				if (shouldDouble) {
-					tmpNum *= 2;
-					if (tmpNum >= 10) {
-						sum += ((tmpNum % 10) + 1);
-					} else {
-						sum += tmpNum;
-					}
+		const sanitized = value.replace(/[^0-9]+/g, "");
+		if (!creditCard.test(sanitized)) {
+			return ["Invalid card format!"];
+		}
+		let sum = 0;
+		let digit;
+		let tmpNum;
+		let shouldDouble;
+		for (let i = sanitized.length - 1; i >= 0; i--) {
+			digit = sanitized.substring(i, (i + 1));
+			tmpNum = parseInt(digit, 10);
+			if (shouldDouble) {
+				tmpNum *= 2;
+				if (tmpNum >= 10) {
+					sum += ((tmpNum % 10) + 1);
 				} else {
 					sum += tmpNum;
 				}
-				shouldDouble = !shouldDouble;
+			} else {
+				sum += tmpNum;
 			}
+			shouldDouble = !shouldDouble;
+		}
 
-			if (!((sum % 10) === 0 ? sanitized : false))
-				return ["Invalid card number!"];
+		if (!((sum % 10) === 0 ? sanitized : false))
+			return ["Invalid card number!"];
 	},
 
 	alpha(value, field) {
@@ -157,4 +157,4 @@ module.exports = {
 
 		// TODO
 	}
-}
+};

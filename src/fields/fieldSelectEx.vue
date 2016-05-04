@@ -5,7 +5,7 @@
 
 <script>
 	import {isObject} from "lodash";
-	import abstractField from './abstractField';
+	import abstractField from "./abstractField";
 
 	export default {
 		mixins: [ abstractField ],
@@ -50,7 +50,7 @@
 				console.warn("Bootstrap-select library is missing. Please download from https://silviomoreto.github.io/bootstrap-select/ and load the script and CSS in the HTML head section!");
 
 		}
-	}
+	};
 </script>
 
 
