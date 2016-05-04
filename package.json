@@ -44,5 +44,12 @@
     "vue-style-loader": "1.0.0",
     "webpack": "1.13.0",
     "webpack-dev-server": "1.14.1"
+  },
+  "dependencies": {
+    "joi": "8.0.5",
+    "joi-browser": "8.0.5"
+  },
+  "browser": {
+    "joi": "joi-browser"
   }
 }

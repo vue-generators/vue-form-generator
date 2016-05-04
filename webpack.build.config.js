@@ -30,13 +30,26 @@ module.exports = [
             library: "VueFormGenerator",
             libraryTarget: "umd"
         },
+
         plugins: [
-        new webpack.BannerPlugin(banner, {
-            raw: true
-        })],
+            new webpack.optimize.DedupePlugin(),
+            new webpack.DefinePlugin({
+                'process.env' : {
+                    NODE_ENV : JSON.stringify('production')
+                }
+            }),
+            new webpack.BannerPlugin(banner, {
+                raw: true
+            })
+        ],
+
         module: {
             loaders: loaders
-        }
+        },
+
+        resolve: {
+            packageAlias: 'browser'
+        }        
     },
 
     {
@@ -48,17 +61,30 @@ module.exports = [
             libraryTarget: "umd"
         },
         plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
-        }),
-        new webpack.BannerPlugin(banner, {
-            raw: true
-        })],
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                }
+            }),
+            new webpack.optimize.DedupePlugin(),
+            new webpack.DefinePlugin({
+                'process.env' : {
+                    NODE_ENV : JSON.stringify('production')
+                }
+            }),        
+            new webpack.BannerPlugin(banner, {
+                raw: true
+            })
+        ],
+
         module: {
             loaders: loaders
-        }
+        },
+
+        resolve: {
+            packageAlias: 'browser'
+        }        
+
     }
 
 ];

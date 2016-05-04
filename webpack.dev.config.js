@@ -43,18 +43,26 @@ var loaders = [
 
 module.exports = {
   devtool: 'eval-source-map',
+  
   entry: {
     app: path.resolve('dev', 'main.js')
   },
+
   output: {
     path: path.resolve('dev'),
     filename: '[name].js',
     publicPath: '/'
   },
+
   plugins: [
   ],
+
   module: {
     loaders: loaders
+  },
+
+  resolve: {
+    packageAlias: 'browser'
   },
 
   vue: {

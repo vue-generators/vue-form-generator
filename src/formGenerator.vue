@@ -21,6 +21,7 @@
 
 <script>
 	import Vue from "vue";
+	//import Joi from "joi";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
 
 	// Load all fields from '../fields' folder
