@@ -9,7 +9,7 @@ module.exports = function(config) {
 
         reporters: ['spec', 'coverage'],
 
-        frameworks: ['mocha', 'chai'/*, 'sinon-chai'*/],
+        frameworks: ['mocha', 'chai', 'sinon-chai'],
 
         files: ['./index.js'],
 
