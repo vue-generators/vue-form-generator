@@ -3,7 +3,7 @@
 		thead
 		tbody
 			tr(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
-				td 
+				td
 					span.help(v-if="field.help")
 						i.fa.fa-question-circle
 						.helpText {{{field.help}}}

@@ -55,10 +55,7 @@ describe("VueFormGenerator.vue", () => {
 					readonly: false,
 					featured: false,
 					required: false,
-					disabled: false,
-					hint: null,
-					helpText: null,
-					placeholder: "User's name"
+					disabled: false
 				}
 			]
 		};
@@ -112,53 +109,109 @@ describe("VueFormGenerator.vue", () => {
 			})
 		});		
 
+		it("should be add a custom classes", (done) => {
+			vm.$set("schema.fields[0].styleClasses", "classA");
+			vm.$nextTick(() => {
+				expect(tr.classList.contains("classA")).to.be.true;
+				done();
+			})
+		});		
+
+		it("should be add more custom classes", (done) => {
+			vm.$set("schema.fields[0].styleClasses", [ "classB", "classC" ]);
+			vm.$nextTick(() => {
+				expect(tr.classList.contains("classB")).to.be.true;
+				expect(tr.classList.contains("classC")).to.be.true;
+				done();
+			})
+		});		
+
 	});	
-/*
-	describe("check form row classes", () => {
+
+	describe("check form row caption cell", () => {
+		let tr, tdCaption, tdField;
 		let schema = {
 			fields: [
 				{
 					type: "text",
 					label: "Name",
 					model: "name",
-					readonly: false,
-					featured: false,
-					required: false,
-					disabled: false,
-					hint: null,
-					helpText: null,
+					help: null
+				}
+			]
+		};
+
+		before( () => {
+			createFormGenerator(schema);
+			tr = el.getElementsByTagName("tr")[0];
+			tdCaption = tr.getElementsByTagName("td")[0];
+			tdField = tr.getElementsByTagName("td")[1];
+		});
+
+		it("should be text of cell is the name of field", () => {
+			expect(tdCaption).to.be.exist;
+			expect(tdCaption.textContent).to.be.equal("Name");
+		});
+
+		it("should be a question icon if has helpText", (done) => {
+			vm.schema.fields[0].help = "Sample help";
+			vm.$nextTick(() => {
+				let span = tr.querySelector(".help");
+				expect(span).to.be.exist;
+				expect(span.querySelector("i")).to.be.exist;
+				expect(span.querySelector(".helpText")).to.be.exist;
+				expect(span.querySelector(".helpText").textContent).to.be.equal("Sample help");
+				done();
+			})
+		});
+
+	});
+
+	describe("check form row field cell", () => {
+		let tr, tdField;
+		let schema = {
+			fields: [
+				{
+					type: "text",
+					label: "Name",
+					model: "name",
+					hint: "Hint text",
+					errors: [],
 					placeholder: "User's name"
 				}
 			]
 		};
-		let model = null;
 
-		beforeEach((done) => {
-			createFormGenerator(schema, model, {}, (_el, _vm) => {
-				el = _el;
-				vm = _vm;
+		before( () => {
+			createFormGenerator(schema);
+			tr = el.getElementsByTagName("tr")[0];
+			tdField = tr.getElementsByTagName("td")[1];
+		});
+
+		it("should be a .field-wrap div", () => {
+			expect(tdField.querySelector(".field-wrap")).to.be.exist;
+		});
+
+		it("should be a hint div if hint is not null", () => {
+			let hint = tdField.querySelector(".hint");
+			expect(hint).to.be.exist;
+			expect(hint.textContent).to.be.equal("Hint text");
+		});
+
+		it("should be .errors div if there are errors in fields", (done) => {
+			vm.schema.fields[0].errors.push("Some error!", "Another error!");
+			vm.$nextTick(() => {
+				let div = tdField.querySelector(".errors");
+				expect(div).to.be.exist;
+				let errors = div.querySelectorAll("span");
+				expect(errors.length).to.be.equal(2);
+				expect(errors[0].textContent).to.be.equal("Some error!");
+				expect(errors[1].textContent).to.be.equal("Another error!");
 				done();
 			});
 		});
 
-		it("should be create a row and an input text field with empty value", () => {
-			// check row
-			let tr = el.getElementsByTagName("tr")[0];
-			expect(tr).to.be.exist;
-			expect(tr.classList.length).to.be.equal(0);
+	});
 
-			let tdCaption = tr.getElementsByTagName("td")[0];
-			expect(tdCaption).to.be.exist;
-			expect(tdCaption.textContent.trim()).to.be.equal("Name"); // TODO why need to trim?
-
-			let tdField = tr.getElementsByTagName("td")[1];
-			expect(tdField).to.be.exist;
-			
-			let input = tdField.getElementsByTagName("input")[0];
-			expect(input).to.be.exist;
-			expect(input.type).to.be.equal("text");
-		});
-
-	});	*/
 
 });
