@@ -88,7 +88,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = {
 		component: __webpack_require__(1),
 		schema: __webpack_require__(203),
-		validators: __webpack_require__(204)
+		validators: __webpack_require__(204),
+
+		install: function install(Vue, options) {
+			Vue.component("VueFormGenerator", module.exports.component);
+		}
 	};
 
 /***/ },
@@ -505,6 +509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 				var baseClasses = {
 					error: field.errors && field.errors.length > 0,
 					disabled: this.fieldDisabled(field),
+					readonly: field.readonly,
 					featured: field.featured,
 					required: field.required
 				};
@@ -42203,7 +42208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 202 */
 /***/ function(module, exports) {
 
-	module.exports = "<table v-if=\"schema != null\" _v-9c7f8788=\"\"><thead _v-9c7f8788=\"\"></thead><tbody _v-9c7f8788=\"\"><tr v-for=\"field in fields\" v-if=\"fieldVisible(field)\" :class=\"getFieldRowClasses(field)\" _v-9c7f8788=\"\"><td _v-9c7f8788=\"\"> <span v-if=\"field.help\" class=\"help\" _v-9c7f8788=\"\"><i class=\"fa fa-question-circle\" _v-9c7f8788=\"\"></i><div class=\"helpText\" _v-9c7f8788=\"\">{{{field.help}}}</div></span>{{ field.label }}</td><td _v-9c7f8788=\"\"><div class=\"field-wrap\" _v-9c7f8788=\"\"><component :is=\"getFieldType(field)\" :disabled=\"fieldDisabled(field)\" :model.sync=\"model\" :schema.sync=\"field\" _v-9c7f8788=\"\"></component><div v-if=\"field.buttons &amp;&amp; field.buttons.length > 0\" class=\"buttons\" _v-9c7f8788=\"\"><button v-for=\"btn in field.buttons\" @click=\"btn.onclick(model, field)\" :class=\"btn.classes\" class=\"btn btn-default\" _v-9c7f8788=\"\">{{ btn.label }}</button></div></div><div v-if=\"field.hint\" class=\"hint\" _v-9c7f8788=\"\">{{ field.hint }}</div><div v-if=\"field.errors &amp;&amp; field.errors.length > 0\" class=\"errors\" _v-9c7f8788=\"\"><span v-for=\"error in field.errors\" _v-9c7f8788=\"\">{{ error }}</span></div></td></tr></tbody></table>";
+	module.exports = "<table v-if=\"schema != null\" _v-9c7f8788=\"\"><thead _v-9c7f8788=\"\"></thead><tbody _v-9c7f8788=\"\"><tr v-for=\"field in fields\" v-if=\"fieldVisible(field)\" :class=\"getFieldRowClasses(field)\" _v-9c7f8788=\"\"><td _v-9c7f8788=\"\"><span v-if=\"field.help\" class=\"help\" _v-9c7f8788=\"\"><i class=\"fa fa-question-circle\" _v-9c7f8788=\"\"></i><div class=\"helpText\" _v-9c7f8788=\"\">{{{field.help}}}</div></span>{{ field.label }}</td><td _v-9c7f8788=\"\"><div class=\"field-wrap\" _v-9c7f8788=\"\"><component :is=\"getFieldType(field)\" :disabled=\"fieldDisabled(field)\" :model.sync=\"model\" :schema.sync=\"field\" _v-9c7f8788=\"\"></component><div v-if=\"field.buttons &amp;&amp; field.buttons.length > 0\" class=\"buttons\" _v-9c7f8788=\"\"><button v-for=\"btn in field.buttons\" @click=\"btn.onclick(model, field)\" :class=\"btn.classes\" class=\"btn btn-default\" _v-9c7f8788=\"\">{{ btn.label }}</button></div></div><div v-if=\"field.hint\" class=\"hint\" _v-9c7f8788=\"\">{{ field.hint }}</div><div v-if=\"field.errors &amp;&amp; field.errors.length > 0\" class=\"errors\" _v-9c7f8788=\"\"><span v-for=\"error in field.errors\" _v-9c7f8788=\"\">{{ error }}</span></div></td></tr></tbody></table>";
 
 /***/ },
 /* 203 */
