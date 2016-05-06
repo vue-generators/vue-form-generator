@@ -2,7 +2,9 @@ import { expect } from "chai";
 
 import VueFormGenerator from "src/index";
 
+describe("module", () => {
 
+	it("module properties", () => {
 
 		expect(true).to.be.true;
 
@@ -10,6 +12,7 @@ import VueFormGenerator from "src/index";
 		expect(VueFormGenerator).to.have.property("component");
 		expect(VueFormGenerator).to.have.property("schema");
 		expect(VueFormGenerator).to.have.property("validators");
+		expect(VueFormGenerator.install).to.be.a("function");
 
 	});
 
