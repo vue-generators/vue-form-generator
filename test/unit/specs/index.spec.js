@@ -2,9 +2,7 @@ import { expect } from "chai";
 
 import VueFormGenerator from "src/index";
 
-describe("VueFormGenerator", () => {
 
-	it("class properties", () => {
 
 		expect(true).to.be.true;
 

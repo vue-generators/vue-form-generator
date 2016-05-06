@@ -1,22 +1,29 @@
 var path = require("path");
 var webpack = require('webpack');
-
+var sourceDir = path.resolve(__dirname, '../../src');
 module.exports = {
   devtool: '#inline-source-map',
   
   module: {
+    preLoaders: [
+      {
+        test: /\.js$/,
+        loader: 'isparta',
+        include: sourceDir,
+        exclude: /node_modules/
+      }
+    ],
+
     loaders: [
       {
-        "test": /\.js?$/,
+        "test": /\.vue$/,
+        "loader": "vue"
+      },
+      {
+        "test": /\.js$/,
+        //"include": /test\/unit/,
         "exclude": /node_modules/,
-        "loader": "babel",
-        "query": {
-          "presets": [
-            "es2015",
-            "stage-0"
-          ],
-          "plugins": []
-        }
+        "loader": "babel"
       },
       {
         "test": /\.css?$/,
@@ -29,10 +36,6 @@ module.exports = {
       {
         "test": /\.jade?$/,
         "loader": "jade"
-      },
-      {
-        "test": /\.vue?$/,
-        "loader": "vue"
       },
       { 
         test: /\.(woff2?|svg)$/, 
@@ -47,22 +50,21 @@ module.exports = {
   },
 
   resolve: {
-    packageAlias: 'browser',
+    packageAlias: 'browser',   
     alias: {
-      'src': path.resolve(__dirname, '../../src')
+      'src': sourceDir
     }
   },
-
   plugins: [
   ],
 
   vue: {
     autoprefixer: {
       browsers: ['last 2 versions']
-    }/*,
+    },
     loaders: {
       js: 'isparta'
-    }*/
+    }
   }
  
 };
