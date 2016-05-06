@@ -1,3 +1,6 @@
-/node_modules
-/test/specs.js
 .DS_Store
+node_modules/
+npm-debug.log
+selenium-debug.log
+test/unit/coverage
+test/e2e/reports 

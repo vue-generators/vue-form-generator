@@ -1,4 +1,5 @@
 module.exports = {
+    root: true,
     "env": {
         "browser": true,
         "commonjs": true,
@@ -10,7 +11,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "vue"
+        "html"
     ],
     "rules": {
         "indent": [
