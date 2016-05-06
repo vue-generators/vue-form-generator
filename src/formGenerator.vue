@@ -7,7 +7,6 @@
 					span.help(v-if="field.help")
 						i.fa.fa-question-circle
 						.helpText {{{field.help}}}
-
 					| {{ field.label }}
 				td
 					.field-wrap
@@ -87,6 +86,7 @@
 				let baseClasses = {
 					error: field.errors && field.errors.length > 0, 
 					disabled: this.fieldDisabled(field), 
+					readonly: field.readonly, 
 					featured: field.featured, 
 					required: field.required
 				};
