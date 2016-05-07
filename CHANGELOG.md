@@ -1,3 +1,37 @@
+<a name="0.1.1"></a>
+## 0.1.1 (2016-05-07)
+
+* :package: Build ([28183bf](https://github.com/icebob/vue-form-generator/commit/28183bf))
+* :package: Build ([6ce60d6](https://github.com/icebob/vue-form-generator/commit/6ce60d6))
+* :package: Build ([eb4b1f9](https://github.com/icebob/vue-form-generator/commit/eb4b1f9))
+* 0.1.1 ([d52c53f](https://github.com/icebob/vue-form-generator/commit/d52c53f))
+* Add badges ([b58ec65](https://github.com/icebob/vue-form-generator/commit/b58ec65))
+* Add changelog ([5ae0832](https://github.com/icebob/vue-form-generator/commit/5ae0832))
+* Add coveralls ([c425ef7](https://github.com/icebob/vue-form-generator/commit/c425ef7))
+* Add eslint ([816fc34](https://github.com/icebob/vue-form-generator/commit/816fc34))
+* add TODO ([00c9554](https://github.com/icebob/vue-form-generator/commit/00c9554))
+* Add travis ci ([182f42e](https://github.com/icebob/vue-form-generator/commit/182f42e))
+* change dependencies ([6ba97df](https://github.com/icebob/vue-form-generator/commit/6ba97df))
+* Create first test cases ([2246059](https://github.com/icebob/vue-form-generator/commit/2246059))
+* Create test environment ([a874195](https://github.com/icebob/vue-form-generator/commit/a874195))
+* Create test environment ([8cfde38](https://github.com/icebob/vue-form-generator/commit/8cfde38))
+* Fix CI errors. ([0d62830](https://github.com/icebob/vue-form-generator/commit/0d62830))
+* Fixed lint errors and warnings ([b88dc5c](https://github.com/icebob/vue-form-generator/commit/b88dc5c))
+* Improve webpack config ([f369c90](https://github.com/icebob/vue-form-generator/commit/f369c90))
+* More tests ([9cf627c](https://github.com/icebob/vue-form-generator/commit/9cf627c))
+* Test cases ([8d2c1dd](https://github.com/icebob/vue-form-generator/commit/8d2c1dd))
+* Test cases ([facc6b2](https://github.com/icebob/vue-form-generator/commit/facc6b2))
+* Update README.md ([3d7c3a4](https://github.com/icebob/vue-form-generator/commit/3d7c3a4))
+* Update README.md ([00999d2](https://github.com/icebob/vue-form-generator/commit/00999d2))
+* Update README.md ([10f7bc8](https://github.com/icebob/vue-form-generator/commit/10f7bc8))
+* Update README.md ([90403bb](https://github.com/icebob/vue-form-generator/commit/90403bb))
+* docs: Add gitbook files ([cb7309e](https://github.com/icebob/vue-form-generator/commit/cb7309e))
+* docs: update readme badgets ([43d321c](https://github.com/icebob/vue-form-generator/commit/43d321c))
+* docs: update readme badgets ([38b14c9](https://github.com/icebob/vue-form-generator/commit/38b14c9))
+* config: add coveralls ([60a3ef1](https://github.com/icebob/vue-form-generator/commit/60a3ef1))
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2016-05-03)
 
