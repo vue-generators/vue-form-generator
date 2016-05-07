@@ -3,7 +3,7 @@ module.exports = {
 	schema: require("./utils/schema.js"),
 	validators: require("./utils/validators.js"),
 	
-	install(Vue, options) {
+	install(Vue) {
 		Vue.component("VueFormGenerator", module.exports.component);
 	}
 };
