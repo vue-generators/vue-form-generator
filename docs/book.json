@@ -1,0 +1,19 @@
+{
+  "gitbook": "2.x.x",
+  "plugins": ["edit-link", "github", "advanced-emoji"],
+  "pluginsConfig": {
+    "edit-link": {
+      "base": "https://github.com/icebob/vue-form-generator/tree/master/docs",
+      "label": "Edit This Page"
+    },
+    "github": {
+      "url": "https://github.com/icebob/vue-form-generator/"
+    }
+  },
+  "links": {
+    "sharing": {
+      "facebook": false,
+      "twitter": false
+    }
+  }
+}
