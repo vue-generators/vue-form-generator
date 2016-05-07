@@ -81,7 +81,6 @@
     "sinon": "1.17.4",
     "sinon-chai": "2.8.0",
     "style-loader": "0.13.1",
-    "vue": "1.0.21",
     "vue-hot-reload-api": "1.3.2",
     "vue-html-loader": "1.2.2",
     "vue-loader": "8.2.3",
@@ -93,7 +92,8 @@
   },
   "dependencies": {
     "joi": "8.0.5",
-    "joi-browser": "8.0.5"
+    "joi-browser": "8.0.5",
+    "vue": "1.0.21"
   },
   "browser": {
     "joi": "joi-browser"
