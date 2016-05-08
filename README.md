@@ -148,7 +148,9 @@ npm run build
 ```
 
 ## Test
-TODO
+```bash
+npm run test
+```
 
 ## TODO
 * [x] Date picker with bootstrap-datepicker
@@ -160,7 +162,7 @@ TODO
 * [ ] Groupable fields
 * [ ] Validation handling with multiple models
 * [ ] Bundle for vendor files
-* [ ] Unit tests, coverage and CI
+* [x] Unit tests, coverage and CI
 * [ ] try [joi](https://www.npmjs.com/package/joi) for validation
 
 ## License
