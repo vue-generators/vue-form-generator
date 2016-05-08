@@ -8,4 +8,4 @@ node_js:
     - "4"
     - "0.12"
 after_success:
-  - cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - npm run coverall
