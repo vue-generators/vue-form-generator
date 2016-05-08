@@ -46,13 +46,17 @@ module.exports = {
         test: /\.(ttf|eot)$/, 
         loader: 'url' 
       }
+    ],
+    noParse: [
+        /node_modules\/sinon\//,
     ]
   },
 
   resolve: {
     packageAlias: 'browser',   
     alias: {
-      'src': sourceDir
+      'src': sourceDir,
+      'sinon': 'sinon/pkg/sinon'
     }
   },
   plugins: [
