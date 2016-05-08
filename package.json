@@ -5,14 +5,16 @@
   "homepage": "https://github.com/icebob/vue-form-generator",
   "main": "dist/vue-form-generator.js",
   "scripts": {
+    "prebuild": "npm run test",
     "build": "webpack --config webpack.build.config.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
     "lint": "eslint --ext=.js,.vue src",
-    "coverall": "karma start test/unit/karma.conf.js --single-run --reporters coverage,coveralls",
+    "coverall": "npm run test && cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "changelog": "conventional-changelog -i CHANGELOG.md -s",
     "docs": "cd docs && gitbook serve",
     "unit": "karma start test/unit/karma.conf.js",
     "e2e": "node test/e2e/runner.js",
+    "pretest": "npm run lint",
     "test": "npm run unit",
     "ci": "karma start test/unit/karma.conf.js --auto-watch --no-single-run --reporters=dots"
   },
