@@ -66,16 +66,16 @@
 		watch: {
 			// new model loaded
 			model: function() {
-				if (this.options.validateAfterLoad === true && !this.isNewModel)
+				if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 					this.validate();
 				else
 					this.clearValidationErrors();
 			}
 		},
 
-		ready() {
+		compiled() {
 			// First load
-			if (this.options && this.options.validateAfterLoad === true && !this.isNewModel)
+			if (this.options && this.options.validateAfterLoad === true && this.isNewModel !== true)
 				this.validate();
 			else
 				this.clearValidationErrors();

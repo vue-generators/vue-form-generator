@@ -7,19 +7,20 @@ Vue.use(VueFormGenerator);
 
 let el, vm;
 
-function createFormGenerator(schema = {}, model = null, options = {}) {
+function createFormGenerator(schema = {}, model = null, options = {}, multiple = false) {
 	el = document.createElement("div");		
-	el.innerHTML = `<vue-form-generator :schema="schema" :model="model" :options="options"></vue-form-generator>`;
+	el.innerHTML = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" v-ref:form></vue-form-generator>`;
 	vm = new Vue({
 		el: el,
 		data: {
 			schema,
 			model,
-			options
+			options,
+			multiple
 		}
 	});
 
-	console.log(el);
+	// console.log(el);
 
 	return [el, vm];
 }
@@ -213,5 +214,260 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check computed fields if multiple is true", () => {
+		let schema = {
+			fields: [
+				{	type: "text",	label: "name", model: "name", multi: false	},
+				{	type: "text",	label: "phone", model: "phone", multi: true	}, 
+				{	type: "text",	label: "email", model: "email"	} // multi is undefined
+			]
+		};
+		let form;
+
+		before( () => {
+			createFormGenerator(schema, {}, {}, true);
+			form = vm.$refs.form;
+		});
+
+		it("should render only phone field", () => {
+			expect(form.fields.length).to.be.equal(1);
+			expect(el.getElementsByTagName("tr")[0].getElementsByTagName("td")[0].textContent).to.be.equal("phone");
+		});
+	});
+
+	describe("check fieldDisabled with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					disabled(model) { return !model.status; }	
+				}
+			]
+		};
+		let model = {
+			name: "John Doe",
+			status: true
+		}
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be enabled the name field", () => {
+			let input = el.getElementsByTagName("input")[0];
+			expect(input.disabled).to.be.false;
+		});	
+
+		it("should be disabled the name field", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				let input = el.getElementsByTagName("input")[0];
+				expect(input.disabled).to.be.true;
+
+				done();
+			});
+		});	
+
+	});
+
+	describe("check fieldDisabled with const", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					disabled: false
+				}
+			]
+		};
+
+		let model = { name: "John Doe" };
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be enabled the name field", () => {
+			let input = el.getElementsByTagName("input")[0];
+			expect(input.disabled).to.be.false;
+		});	
+
+		it("should be disabled the name field", (done) => {
+			schema.fields[0].disabled = true;
+			vm.$nextTick(() => {
+				let input = el.getElementsByTagName("input")[0];
+				expect(input.disabled).to.be.true;
+
+				done();
+			});
+		});	
+
+	});
+
+	// TODO: wrong
+	describe("check fieldVisible with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					visible(model) { return model.status; }	
+				}
+			]
+		};
+		let model = {
+			name: "John Doe",
+			status: true
+		}
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be visible the name field", () => {
+			expect(el.querySelector("input[type=text]")).to.be.defined;
+		});	
+
+		it("should be hidden the name field", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector("input[type=text]")).to.be.null;
+				done();
+			});
+		});	
+
+	});
+
+	describe("check fieldVisible with const", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					visible: true
+				}
+			]
+		};
+
+		let model = { name: "John Doe" };
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be enabled the name field", () => {
+			expect(el.querySelector("input[type=text]")).to.be.defined;
+		});	
+
+		it("should be disabled the name field", (done) => {
+			schema.fields[0].visible = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector("input[type=text]")).to.be.null;
+				done();
+			});
+		});	
+
+	});	
+
+	describe("check validate", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					min: 3,
+					validator: VueFormGenerator.validators.string
+				}
+			]
+		};
+
+		let model = { name: "John Doe" };
+		let form;
+
+		before( () => {
+			createFormGenerator(schema, model);
+			form = vm.$refs.form;
+		});
+
+		it("should empty the errors", () => {
+			expect(form.errors).to.be.length(0);
+			expect(form.validate()).to.be.true;
+			expect(form.errors).to.be.length(0);
+		});
+
+		it("should give an validation error", () => {
+			model.name = "Ab";
+			expect(form.validate()).to.be.false;
+			expect(form.errors).to.be.length(1);
+		});
+
+		it("should no validation error", () => {
+			model.name = "Abc";
+			expect(form.validate()).to.be.true;
+			expect(form.errors).to.be.length(0);
+		});
+
+	});
+
+	describe("check validateAfterLoad option", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					min: 3,
+					validator: VueFormGenerator.validators.string
+				}
+			]
+		};
+
+		let model = { name: "Me" };
+		let form;
+
+		before( () => {
+			createFormGenerator(schema, model, { validateAfterLoad: true });
+			form = vm.$refs.form;
+		});
+
+		it("should be validation error at ready()", (done) => {
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(1);
+				done();
+			});
+		});
+
+		it("should be validation error if model is changed", (done) => {
+			form.model = { name: "Al" };
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(1);
+				done();
+			});
+		});		
+
+		it("should be no errors if model is correct", (done) => {
+			form.model = { name: "Bob" };
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(0);
+				done();
+			});
+		});		
+
+		it("should be no errors if validateAfterLoad is false", (done) => {
+			form.options.validateAfterLoad = false;
+			form.model = { name: "Ed" };
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(0);
+				done();
+			});
+		});		
+
+	});
 
 });
