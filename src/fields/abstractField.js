@@ -40,8 +40,6 @@ export default {
 
 	watch: {
 		value: function(newVal, oldVal) {
-			//console.log("Value changed!");
-			
 			if (isFunction(this.schema.onChanged)) {
 				this.schema.onChanged(this.model, newVal, oldVal, this.schema);
 			}
