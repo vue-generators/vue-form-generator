@@ -2,7 +2,7 @@ import {get, set, each} from "lodash";
 
 module.exports.createDefaultObject = function (schema, obj = {}){
 	each(schema.fields, (field) => {
-		if (get(obj, field.model) === undefined)
+		if (get(obj, field.model) === undefined && field.default !== undefined)
 			set(obj, field.model, field.default);
 	});
 	return obj;

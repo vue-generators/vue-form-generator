@@ -1,5 +1,5 @@
 <template lang="jade">
-	select.selectpicker(v-model="value", :disabled="disabled", :multiple="schema.multiSelect",  :title="schema.placeholder", data-width="100%")
+	select.selectpicker(v-model="value", :disabled="disabled", :multiple="schema.multiSelect", :title="schema.placeholder", data-width="100%")
 		option(v-for="item in items", :value="getItemID(item)") {{ getItemName(item) }}
 </template>
 
