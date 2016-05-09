@@ -143,6 +143,37 @@ describe("fieldImage.vue", () => {
 			});
 		});
 
+		it("should convert image to base64 if file input changed", (done) => {
+			// Stub the browser FileReader
+			let FR = window.FileReader;
+			window.FileReader = sinon.stub().returns({
+				readAsDataURL(file) {
+					this.onload({
+						target: {
+							result: "base64 image data"
+						}
+					});
+				}
+			});
+			field.fileChanged({
+				target: {
+					files: [
+						{
+							name: "test.jpg",
+							length: 55431
+						}
+					]
+				}
+			});
+
+			vm.$nextTick( () => {
+				let remove = el.querySelector(".remove");
+				expect(input.value).to.be.equal("base64 image data");
+				expect(model.avatar).to.be.equal("base64 image data");
+				done();
+			});
+		});		
+
 	});
 
 });
