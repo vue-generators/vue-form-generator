@@ -320,8 +320,8 @@ module.exports = {
 		{
 			type: "staticMap",
 			label: "Map",
-			model: "address",
-			visible: false				
+			model: "address.geo",
+			visible: true				
 		},
 		{
 			type: "select",
