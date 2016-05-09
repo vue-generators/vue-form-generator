@@ -35,8 +35,6 @@ module.exports = {
 
 		if (!(Number(value) === value && value % 1 === 0))
 			return ["Invalid number!"];
-		
-		return [];
 	},
 
 	double(value, field) {
@@ -44,8 +42,6 @@ module.exports = {
 
 		if (!(Number(value) === value && value % 1 !== 0))
 			return ["Invalid number!"];
-		
-		return [];
 	},
 
 	string(value, field) {
@@ -153,12 +149,16 @@ module.exports = {
 	alpha(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
-		// TODO
+		let re = /^[a-zA-Z]*$/;		
+		if (!re.test(value))
+			return ["Invalid text! Cannot contains numbers or special characters"];
 	},
 
 	alphaNumeric(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
-		// TODO
+		let re = /^[a-zA-Z0-9]*$/;	
+		if (!re.test(value))
+			return ["Invalid text! Cannot contains special characters"];
 	}
 };
