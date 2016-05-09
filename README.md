@@ -28,6 +28,7 @@ A schema-based form generator component for Vue.js
 - [bootstrap-datetimepicker](https://github.com/Eonasdan/bootstrap-datetimepicker) for `datetime` fields (optional)
 - [spectrum](https://github.com/bgrins/spectrum) for `spectrum` color picker fields (optional)
 - [maskedinput](http://digitalbush.com/projects/masked-input-plugin/) for `masked` fields
+- [ion.rangeSlider](https://github.com/IonDen/ion.rangeSlider) for range slider fields
 
 ## Installation
 ### NPM
@@ -158,7 +159,7 @@ npm run test
 * [x] HTML5 Color picker
 * [x] Color picker with spectrum
 * [x] Image editor
-* [ ] Better slider
+* [x] Better slider (ion.rangeSlider)
 * [ ] Groupable fields
 * [ ] Validation handling with multiple models
 * [ ] Bundle for vendor files

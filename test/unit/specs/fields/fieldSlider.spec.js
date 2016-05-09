@@ -20,8 +20,7 @@ describe("fieldSlider.vue", () => {
 			label: "Rating",
 			model: "rating",
 			min: 1,
-			max: 10,
-			placeholder: "Field placeholder"
+			max: 10
 		};
 		let model = { rating: 8 };
 		let input;
@@ -29,7 +28,6 @@ describe("fieldSlider.vue", () => {
 		before( () => {
 			createField(schema, model, false);
 			input = el.getElementsByTagName("input")[0];
-			//console.log(input);
 		});
 
 		it("should contain an input text element", () => {
@@ -38,47 +36,17 @@ describe("fieldSlider.vue", () => {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
-			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.getAttribute("data-slider-min")).to.be.equal("1");	
-			expect(input.getAttribute("data-slider-max")).to.be.equal("10");	
-			expect(input.disabled).to.be.false;	
-		});
-
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
-				expect(input.getAttribute("data-slider-value")).to.be.equal("8");	
-				expect(input.value).to.be.equal("8");	
-				done();
-			});
+			expect(input.getAttribute("data-min")).to.be.equal("1");	
+			expect(input.getAttribute("data-max")).to.be.equal("10");	
+			expect(input.getAttribute("data-disable")).to.be.null;	
 		});
 
 		it("should set disabled", (done) => {
 			field.disabled = true;
 			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
+				expect(input.getAttribute("data-disable")).to.be.equal("");	
 				done();
 			});
-		});
-
-		it("input value should be the model value after changed", (done) => {
-			model.rating = 3;
-			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("3");	
-				done();
-			});
-
-		});
-
-		it("model value should be the input value if changed", (done) => {
-			input.value = "6";
-			trigger(input, "input");
-
-			vm.$nextTick( () => {
-				expect(model.rating).to.be.equal(6);	
-				done();
-			});
-
 		});
 
 	});

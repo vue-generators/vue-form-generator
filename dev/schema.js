@@ -206,13 +206,28 @@ module.exports = {
 			min: 1,
 			max: 10,
 			sliderOptions: {
-				tooltip: "show"
+				grid: true
 			},
 			validator: [
 				validators.integer,
 				validators.number
 			]
-		},			
+		},	
+
+		{
+			type: "slider",
+			label: "Income",
+			model: "income",
+			multi: true,
+			min: 0,
+			max: 100000,
+			sliderOptions: {
+				type: "double",
+				prefix: "$",
+				step: 1000
+			}
+		},
+
 		{
 			type: "select",
 			label: "Language",
@@ -321,7 +336,7 @@ module.exports = {
 			type: "staticMap",
 			label: "Map",
 			model: "address.geo",
-			visible: true				
+			visible: false				
 		},
 		{
 			type: "select",
