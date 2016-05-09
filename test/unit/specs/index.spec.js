@@ -6,8 +6,6 @@ describe("module", () => {
 
 	it("module properties", () => {
 
-		expect(true).to.be.true;
-
 		expect(VueFormGenerator).to.be.exist;
 		expect(VueFormGenerator).to.have.property("component");
 		expect(VueFormGenerator).to.have.property("schema");

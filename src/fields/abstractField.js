@@ -1,4 +1,4 @@
-import {each, isFunction, isArray, isUndefined} from "lodash";
+import {each, isFunction, isString, isArray, isUndefined} from "lodash";
 
 export default {
 	props: [
@@ -40,6 +40,7 @@ export default {
 
 	watch: {
 		value: function(newVal, oldVal) {
+			//console.log("Changed", newVal, oldVal);
 			if (isFunction(this.schema.onChanged)) {
 				this.schema.onChanged(this.model, newVal, oldVal, this.schema);
 			}
@@ -65,9 +66,12 @@ export default {
 				}
 
 				each(validators, (validator) => {
-					let err = validator(this.value, this.schema);
-					if (err && err.length > 0) {
-						Array.prototype.push.apply(this.schema.errors, err);
+					let err = validator(this.value, this.schema, this.model);
+					if (err) {
+						if (isArray(err))
+							Array.prototype.push.apply(this.schema.errors, err);
+						else if (isString(err))
+							this.schema.errors.push(err);
 					}
 				});
 
