@@ -35,6 +35,8 @@ module.exports = {
 
 		if (!(Number(value) === value && value % 1 === 0))
 			return ["Invalid number!"];
+		
+		return [];
 	},
 
 	double(value, field) {
@@ -42,6 +44,8 @@ module.exports = {
 
 		if (!(Number(value) === value && value % 1 !== 0))
 			return ["Invalid number!"];
+		
+		return [];
 	},
 
 	string(value, field) {
