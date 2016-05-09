@@ -1,5 +1,6 @@
 import { expect } from "chai";
 import { createVueField, trigger } from "../util";
+import moment from "moment";
 
 import Vue from "vue";
 import FieldDateTime from "src/fields/fieldDateTime.vue";
@@ -12,9 +13,7 @@ function createField(schema = {}, model = null, disabled = false, options) {
 	[ el, vm, field ] = createVueField("fieldDateTime", schema, model, disabled, options);
 }
 
-// TODO test error caused by timezone
-
-describe.skip("fieldDateTime.vue", () => {
+describe.only("fieldDateTime.vue", () => {
 
 	describe("check template", () => {
 		let schema = {
@@ -42,7 +41,7 @@ describe.skip("fieldDateTime.vue", () => {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("2016-05-09 15:04:41");	
+				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD HH:mm:ss") );	
 				done();
 			});
 		});
@@ -58,14 +57,14 @@ describe.skip("fieldDateTime.vue", () => {
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("2009-02-14 00:31:30");	
+				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD HH:mm:ss") );	
 				done();
 			});
 
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = "2015-01-02 11:22:33";
+			input.value = moment(1420194153000).format("YYYY-MM-DD HH:mm:ss");
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
@@ -97,7 +96,7 @@ describe.skip("fieldDateTime.vue", () => {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("2016.05.09");	
+				expect(input.value).to.be.equal( moment("20160509", schema.format).format(schema.dateTimePickerOptions.format) );	
 				done();
 			});
 		});
@@ -107,7 +106,7 @@ describe.skip("fieldDateTime.vue", () => {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal("20150102");	
+				expect(model.event).to.be.equal( "20150102" );	
 				done();
 			});
 
