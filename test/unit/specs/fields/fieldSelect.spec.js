@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { trigger } from "../util";
+import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
 import FieldSelect from "src/fields/fieldSelect.vue";
@@ -9,23 +9,11 @@ Vue.component("FieldSelect", FieldSelect);
 let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {
-	el = document.createElement("div");		
-	el.innerHTML = `<field-select :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></field-select>`;
-	vm = new Vue({
-		el: el,
-		data: {
-			schema,
-			model,
-			disabled,
-			options
-		}
-	});
-
-	field = vm.$refs.field;
-	//console.log(el);
+	[ el, vm, field ] = createVueField("fieldSelect", schema, model, disabled, options);
 }
 
-describe.only("fieldSelect.vue", () => {
+
+describe("fieldSelect.vue", () => {
 
 	describe("check template", () => {
 		let schema = {
@@ -47,7 +35,7 @@ describe.only("fieldSelect.vue", () => {
 			input = el.getElementsByTagName("select")[0];
 		});
 
-		it("should contain an select element", () => {
+		it("should contain a select element", () => {
 			expect(field).to.be.exist;
 			expect(field.$el).to.be.exist;
 

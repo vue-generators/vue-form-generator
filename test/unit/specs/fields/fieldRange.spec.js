@@ -2,30 +2,28 @@ import { expect } from "chai";
 import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
-import FieldNumber from "src/fields/fieldNumber.vue";
+import FieldRange from "src/fields/fieldRange.vue";
 
-Vue.component("FieldNumber", FieldNumber);
+Vue.component("FieldRange", FieldRange);
 
 let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldNumber", schema, model, disabled, options);
+	[ el, vm, field ] = createVueField("fieldRange", schema, model, disabled, options);
 }
 
-
-describe("fieldNumber.vue", () => {
+describe("fieldRange.vue", () => {
 
 	describe("check template", () => {
 		let schema = {
-			type: "number",
-			label: "Age",
-			model: "age",
-			readonly: false,
-			min: 18,
-			max: 100,
+			type: "range",
+			label: "Rating",
+			model: "rating",
+			min: 1,
+			max: 10,
 			placeholder: "Field placeholder"
 		};
-		let model = { age: 27 };
+		let model = { rating: 8 };
 		let input;
 
 		before( () => {
@@ -33,31 +31,22 @@ describe("fieldNumber.vue", () => {
 			input = el.getElementsByTagName("input")[0];
 		});
 
-		it("should contain an input number element", () => {
+		it("should contain an input range element", () => {
 			expect(field).to.be.exist;
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.type).to.be.equal("number");
+			expect(input.type).to.be.equal("range");
 			expect(input.classList.contains("form-control")).to.be.true;
 			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.readOnly).to.be.false;	
-			expect(input.min).to.be.equal("18");	
-			expect(input.max).to.be.equal("100");	
+			expect(input.min).to.be.equal("1");	
+			expect(input.max).to.be.equal("10");	
 			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("27");	
-				done();
-			});
-		});
-
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
+				expect(input.value).to.be.equal("8");	
 				done();
 			});
 		});
@@ -71,20 +60,20 @@ describe("fieldNumber.vue", () => {
 		});
 
 		it("input value should be the model value after changed", (done) => {
-			model.age = 35;
+			model.rating = 3;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("35");	
+				expect(input.value).to.be.equal("3");	
 				done();
 			});
 
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = "50";
+			input.value = "6";
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.age).to.be.equal(50);	
+				expect(model.rating).to.be.equal(6);	
 				done();
 			});
 

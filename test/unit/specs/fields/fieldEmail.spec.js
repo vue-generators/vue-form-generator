@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { trigger } from "../util";
+import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
 import FieldEmail from "src/fields/fieldEmail.vue";
@@ -9,21 +9,9 @@ Vue.component("FieldEmail", FieldEmail);
 let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {
-	el = document.createElement("div");		
-	el.innerHTML = `<field-email :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></field-email>`;
-	vm = new Vue({
-		el: el,
-		data: {
-			schema,
-			model,
-			disabled,
-			options
-		}
-	});
-
-	field = vm.$refs.field;
-	//console.log(el);
+	[ el, vm, field ] = createVueField("fieldEmail", schema, model, disabled, options);
 }
+
 
 describe("fieldEmail.vue", () => {
 
@@ -43,7 +31,7 @@ describe("fieldEmail.vue", () => {
 			input = el.getElementsByTagName("input")[0];
 		});
 
-		it("should contain az input email element", () => {
+		it("should contain an input email element", () => {
 			expect(field).to.be.exist;
 			expect(field.$el).to.be.exist;
 

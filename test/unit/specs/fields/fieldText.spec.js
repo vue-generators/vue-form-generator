@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { trigger } from "../util";
+import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
 import FieldText from "src/fields/fieldText.vue";
@@ -9,20 +9,7 @@ Vue.component("FieldText", FieldText);
 let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {
-	el = document.createElement("div");		
-	el.innerHTML = `<field-text :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></field-text>`;
-	vm = new Vue({
-		el: el,
-		data: {
-			schema,
-			model,
-			disabled,
-			options
-		}
-	});
-
-	field = vm.$refs.field;
-	//console.log(el);
+	[ el, vm, field ] = createVueField("fieldText", schema, model, disabled, options);
 }
 
 describe("fieldText.vue", () => {
@@ -43,7 +30,7 @@ describe("fieldText.vue", () => {
 			input = el.getElementsByTagName("input")[0];
 		});
 
-		it("should contain az input text element", () => {
+		it("should contain an input text element", () => {
 			expect(field).to.be.exist;
 			expect(field.$el).to.be.exist;
 

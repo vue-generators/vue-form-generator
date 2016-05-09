@@ -1,5 +1,5 @@
 <template lang="jade">
-	input(type="color", v-model="value", :disabled="disabled", :placeholder="schema.placeholder")
+	input(type="color", v-model="value", :disabled="disabled")
 	span.helper {{ value }}
 </template>
 

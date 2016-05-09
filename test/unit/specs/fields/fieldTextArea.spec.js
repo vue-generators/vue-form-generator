@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { trigger } from "../util";
+import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
 import FieldTextArea from "src/fields/fieldTextArea.vue";
@@ -9,21 +9,9 @@ Vue.component("FieldTextArea", FieldTextArea);
 let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {
-	el = document.createElement("div");		
-	el.innerHTML = `<field-text-area :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></field-text-area>`;
-	vm = new Vue({
-		el: el,
-		data: {
-			schema,
-			model,
-			disabled,
-			options
-		}
-	});
-
-	field = vm.$refs.field;
-	console.log(el);
+	[ el, vm, field ] = createVueField("fieldTextArea", schema, model, disabled, options);
 }
+
 
 describe("fieldTextArea.vue", () => {
 
@@ -44,7 +32,7 @@ describe("fieldTextArea.vue", () => {
 			input = el.getElementsByTagName("textarea")[0];
 		});
 
-		it("should contain az input text element", () => {
+		it("should contain a textarea element", () => {
 			expect(field).to.be.exist;
 			expect(field.$el).to.be.exist;
 

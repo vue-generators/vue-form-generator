@@ -1,0 +1,56 @@
+import { expect } from "chai";
+import { createVueField, trigger } from "../util";
+
+import Vue from "vue";
+import FieldLabel from "src/fields/fieldLabel.vue";
+
+Vue.component("FieldLabel", FieldLabel);
+
+let el, vm, field;
+
+function createField(schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField("fieldLabel", schema, model, disabled, options);
+}
+
+describe("fieldLabel.vue", () => {
+
+	describe("check template", () => {
+		let schema = {
+			type: "label",
+			label: "Timestamp",
+			model: "timestamp"
+		};
+		let model = { timestamp: "2 days ago" };
+		let span;
+
+		before( () => {
+			createField(schema, model, false);
+			span = el.getElementsByTagName("span")[0];
+		});
+
+		it("should contain a span element", () => {
+			expect(field).to.be.exist;
+			expect(field.$el).to.be.exist;
+
+			expect(span).to.be.defined;
+		});
+
+		it("should contain the value", (done) => {
+			vm.$nextTick( () => {
+				expect(span.textContent).to.be.equal("2 days ago");	
+				done();
+			});
+		});
+
+		it("input value should be the model value after changed", (done) => {
+			model.timestamp = "Foo bar";
+			vm.$nextTick( () => {
+				expect(span.textContent).to.be.equal("Foo bar");	
+				done();
+			});
+
+		});
+
+	});
+
+});
