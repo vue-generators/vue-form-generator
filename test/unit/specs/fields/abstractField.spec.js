@@ -27,7 +27,7 @@ function createField(schema = {}, model = null, disabled = false, options) {
 	return [el, vm];
 }
 
-describe("abstractField", () => {
+describe("abstractField.vue", () => {
 
 	describe("check static value", () => {
 		let schema = {

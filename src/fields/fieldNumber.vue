@@ -1,5 +1,5 @@
 <template lang="jade">
-	input.form-control(type="number", v-model="value", number, :min="schema.min", :max="schema.max", :disabled="disabled", :placeholder="schema.placeholder")
+	input.form-control(type="number", v-model="value", number, :min="schema.min", :max="schema.max", :readonly="schema.readonly", :disabled="disabled", :placeholder="schema.placeholder")
 </template>
 
 <script>
