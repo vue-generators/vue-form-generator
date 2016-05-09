@@ -262,6 +262,7 @@ describe("Validators", () => {
 		it("should give error if value is not matched the pattern", () => {
 			check(v.creditCard, "12345679", field, 1);
 			check(v.creditCard, "4556778266680579000", field, 1);
+			check(v.creditCard, "343811242956600", field, 1);
 		});
 		
 		it("should not give error", () => {
