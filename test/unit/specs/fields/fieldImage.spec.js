@@ -170,6 +170,8 @@ describe("fieldImage.vue", () => {
 				let remove = el.querySelector(".remove");
 				expect(input.value).to.be.equal("base64 image data");
 				expect(model.avatar).to.be.equal("base64 image data");
+
+				window.FileReader = FR;
 				done();
 			});
 		});		
