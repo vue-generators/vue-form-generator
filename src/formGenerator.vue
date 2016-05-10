@@ -69,7 +69,7 @@
 				if (oldModel == newModel) // model got a new property
 					return;
 
-				console.log("Model changed!");
+				//console.log("Model changed!");
 				if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 					this.validate();
 				else
