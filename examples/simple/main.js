@@ -92,7 +92,8 @@ var vm = new Vue({
 						"AngularJS",
 						"ReactJS",
 						"VueJS"
-					]
+					],
+					validator: VueFormGenerator.validators.array
 				},
 				{
 					type: "checkbox",

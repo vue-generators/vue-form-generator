@@ -26,7 +26,7 @@ module.exports = {
 				{ id: "business", name: "Business" }
 			],
 			default: "personal"
-		},			
+		},	
 		{
 			type: "text",
 			label: "Name",
