@@ -15,7 +15,7 @@ A schema-based form generator component for Vue.js
 ## Features
 - multiple objects editing
 - 18 built-in field types
-- built-in validations
+- built-in validators
 - Bootstrap friendly templates
 - ...etc
 
@@ -32,7 +32,7 @@ A schema-based form generator component for Vue.js
 
 ## Installation
 ### NPM
-Installation uses the [npm](http://npmjs.org/) package manager. Just type the following command after installing npm.
+You can install it via [NPM](http://npmjs.org/).
 ```
 $ npm install vue-form-generator
 ```
@@ -165,6 +165,9 @@ npm run test
 * [ ] Bundle for vendor files
 * [x] Unit tests, coverage and CI
 * [ ] try [joi](https://www.npmjs.com/package/joi) for validation
+
+## Contribution
+Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
 
 ## License
 vue-form-generator is available under the [MIT license](https://tldrlegal.com/license/mit-license).
