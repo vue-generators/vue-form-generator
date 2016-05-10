@@ -13,6 +13,10 @@ function checkEmpty(value, required) {
 
 module.exports = {
 	
+	required(value, field) {
+		return checkEmpty(value, field.required); 
+	},
+
 	number(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 

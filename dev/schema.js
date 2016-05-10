@@ -120,21 +120,26 @@ module.exports = {
 			type: "masked",
 			label: "Mobile",
 			model: "mobile",
-			mask: "(99) 999-9999"
+			mask: "(99) 999-9999",
+			validator: validators.required
 		},		
 		{
 			type: "spectrum",
 			label: "Color",
 			model: "favoriteColor",
+			required: true,
 			colorOptions: {
 				//preferredFormat: "rgb"
-			}
+			},
+			validator: validators.required
 		},	
 		{
 			type: "image",
 			label: "Avatar",
 			model: "avatar",
-			browse: true
+			required: true,
+			browse: true,
+			validator: validators.required
 
 		},
 		{
@@ -157,6 +162,7 @@ module.exports = {
 			label: "DOB",
 			model: "dob",
 			multi: true,
+			required: true,
 			placeholder: "User's birth of date",
 			min: moment("1900-01-01").toDate(),
 			max: moment("2016-01-01").toDate(),
@@ -208,13 +214,11 @@ module.exports = {
 			multi: true,
 			min: 1,
 			max: 10,
+			required: true,
 			sliderOptions: {
 				grid: true
 			},
-			validator: [
-				validators.integer,
-				validators.number
-			]
+			validator: validators.integer
 		},	
 
 		{
@@ -244,7 +248,7 @@ module.exports = {
 				{ id: "it", name: "Italic" },
 				{ id: "fr", name: "French" }
 			],
-			default: "en_GB"
+			validator: validators.required
 		},
 		{
 			type: "selectEx",
@@ -253,13 +257,14 @@ module.exports = {
 			multi: true,
 			required: true,
 			values: faker.definitions.address.country,
-			default: "United Kingdom",
+			//default: "United Kingdom",
 			multiSelect: false,
 			selectOptions: {
 				// https://silviomoreto.github.io/bootstrap-select/options/
 				liveSearch: true,
 				size: 10
-			}
+			},
+			validator: validators.required
 		},
 		{
 			type: "text",
@@ -351,7 +356,7 @@ module.exports = {
 				{ id: "user", name: "Registered User"},
 				{ id: "visitor", name: "Visitor"}
 			],
-			default: null
+			validator: validators.required
 		},		
 		{
 			type: "label",

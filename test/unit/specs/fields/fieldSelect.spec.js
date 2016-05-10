@@ -20,6 +20,7 @@ describe("fieldSelect.vue", () => {
 			type: "select",
 			label: "Cities",
 			model: "city",
+			required: false,
 			values: [
 				"London",
 				"Paris",
@@ -46,11 +47,17 @@ describe("fieldSelect.vue", () => {
 
 		it("should contain option elements", () => {
 			let options = input.querySelectorAll("option");
-			expect(options.length).to.be.equal(4);
+			expect(options.length).to.be.equal(4 + 1); // +1 for <non selected>
 
-			expect(options[1].value).to.be.equal("Paris");
-			expect(options[1].textContent).to.be.equal("Paris");
-			expect(options[1].selected).to.be.true;
+			expect(options[2].value).to.be.equal("Paris");
+			expect(options[2].textContent).to.be.equal("Paris");
+			expect(options[2].selected).to.be.true;
+		});
+
+		it("should contain a <non selected> element", () => {
+			let options = input.querySelectorAll("option");
+			expect(options[0].disabled).to.be.false;
+			expect(options[0].textContent).to.be.equal("<Not selected>");
 		});
 
 		it("should contain the value", (done) => {
@@ -88,6 +95,16 @@ describe("fieldSelect.vue", () => {
 
 		});
 
+		it("should contain a disabled <non selected> element if required", (done) => {
+			schema.required = true;
+			vm.$nextTick( () => {
+				let options = input.querySelectorAll("option");
+				expect(options[0].disabled).to.be.true;
+				expect(options[0].textContent).to.be.equal("<Not selected>");
+				done();
+			});
+		});
+
 	});
 
 	describe("check static values with { id, name } objects", () => {
@@ -112,12 +129,12 @@ describe("fieldSelect.vue", () => {
 
 		it("should contain option elements", () => {
 			let options = input.querySelectorAll("option");
-			expect(options.length).to.be.equal(4);
+			expect(options.length).to.be.equal(4 + 1); // +1 for <non selected>
 
-			expect(options[1].value).to.be.equal("2");
-			expect(options[1].textContent).to.be.equal("Paris");
-			expect(options[1].selected).to.be.true;
-			expect(options[0].selected).to.be.false;
+			expect(options[2].value).to.be.equal("2");
+			expect(options[2].textContent).to.be.equal("Paris");
+			expect(options[2].selected).to.be.true;
+			expect(options[1].selected).to.be.false;
 		});		
 
 		it("should contain the value", (done) => {

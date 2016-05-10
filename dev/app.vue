@@ -18,7 +18,7 @@
 						| Delete
 
 				.errors.text-center
-					div.alert.alert-danger(v-for="item in validationErrors") {{ item.field.label}}: 
+					div.alert.alert-danger(v-for="item in validationErrors", track-by="$index") {{ item.field.label}}: 
 						strong {{ item.error }}
 
 				vue-form-generator(:schema='schema', :model='model', :options='formOptions', :multiple="selected.length > 1", v-ref:form, :is-new-model="isNewModel")

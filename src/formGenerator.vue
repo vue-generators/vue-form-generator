@@ -15,7 +15,7 @@
 							button.btn.btn-default(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
 					.hint(v-if="field.hint") {{ field.hint }}
 					.errors(v-if="field.errors && field.errors.length > 0")
-						span(v-for="error in field.errors") {{ error }}
+						span(v-for="error in field.errors", track-by="$index") {{ error }}
 </template>
 
 <script>
@@ -65,7 +65,11 @@
 
 		watch: {
 			// new model loaded
-			model: function() {
+			model: function(newModel, oldModel) {
+				if (oldModel == newModel) // model got a new property
+					return;
+
+				console.log("Model changed!");
 				if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 					this.validate();
 				else
