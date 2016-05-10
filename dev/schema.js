@@ -19,7 +19,6 @@ module.exports = {
 			type: "select",
 			label: "Type",
 			model: "type",
-			multi: true,
 			required: true,
 			values: [
 				{ id: "personal", name: "Personal" },
@@ -161,7 +160,6 @@ module.exports = {
 			type: "dateTime",
 			label: "DOB",
 			model: "dob",
-			multi: true,
 			required: true,
 			placeholder: "User's birth of date",
 			min: moment("1900-01-01").toDate(),
@@ -239,7 +237,6 @@ module.exports = {
 			type: "select",
 			label: "Language",
 			model: "language",
-			multi: true,
 			required: true,
 			values: [
 				{ id: "en-GB", name: "English (GB)" },
@@ -348,7 +345,6 @@ module.exports = {
 			type: "select",
 			label: "Role",
 			model: "role",
-			multi: true,
 			required: true,
 			values: [
 				{ id: "admin", name: "Administrator"},

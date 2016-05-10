@@ -81,9 +81,7 @@ var vm = new Vue({
 					type: "checklist",
 					label: "Skills",
 					model: "skills",
-					multi: true,
 					required: true,
-					multiSelect: true,
 					values: [
 						"HTML5",
 						"Javascript",
