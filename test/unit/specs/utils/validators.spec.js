@@ -129,7 +129,7 @@ describe("Validators", () => {
 		});
 	});
 
-	describe.only("test Validators.array", () => {
+	describe("test Validators.array", () => {
 
 		let field = {
 			required: true,
