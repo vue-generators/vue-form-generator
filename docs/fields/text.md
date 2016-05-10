@@ -6,8 +6,8 @@ Property 		| Type 			| Description
 --------------- | ------------- | -----------
 readonly		| `boolean` 	| If true, the input field is read-only
 placeholder		| `String` 		| Placeholder text for input field
-min 			| `Number` 		| Minimum length of text (need `validators.string`)
-max 			| `Number` 		| Maximum length of text (need `validators.string`)
+min 			| `Number` 		| Minimum length of value (need use `validators.string`)
+max 			| `Number` 		| Maximum length of value (need use `validators.string`)
 
 ## Usage
 A featured and required name input field, where the length of name must be between 3 and 50 characters
@@ -25,7 +25,7 @@ A featured and required name input field, where the length of name must be betwe
 	validator: validators.string
 }
 ```
-Test field for website address with url validators
+Text field for website address with url & string validator
 ```js
 {
 	type: "text",
