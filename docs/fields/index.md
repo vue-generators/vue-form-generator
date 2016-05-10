@@ -45,24 +45,24 @@ onValidated		| `Function` 	| Event if validation executed. `onValidated(model, e
 ## Example
 
 ```js
-	{
-		type: "text",
-		label: "Name",
-		model: "name",
-		readonly: false,
-		featured: true,
-		disabled: false,
-		required: true,
-		default: "Anonymous",
-		validator: validators.string,
+{
+	type: "text",
+	label: "Name",
+	model: "name",
+	readonly: false,
+	featured: true,
+	disabled: false,
+	required: true,
+	default: "Anonymous",
+	validator: validators.string,
 
-		onChanged(model, newVal, oldVal, field) {
-			console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
-		},
+	onChanged(model, newVal, oldVal, field) {
+		console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
+	},
 
-		onValidated(model, errors, field) {
-			if (errors.length > 0)
-				console.warn("Validation error in Name field! Errors:", errors);
-		}
+	onValidated(model, errors, field) {
+		if (errors.length > 0)
+			console.warn("Validation error in Name field! Errors:", errors);
 	}
+}
 ```

@@ -19,4 +19,4 @@ The schema contains the fields of the form
 }
 ```
 
-[Available field types](fields/README.md)
+[Available field types](fields/index.md)
