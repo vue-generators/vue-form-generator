@@ -229,4 +229,12 @@
 		}
 	}
 
+	.errors {
+		.alert {
+			padding: 4px;
+			width: 80%;
+			margin: 5px auto;
+		}
+	}
+
 </style>

@@ -54,7 +54,7 @@ export default {
 		validate() {
 			this.clearValidationErrors();
 
-			if (this.schema.validator) {
+			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
 
 				let validators = [];
 				if (!isArray(this.schema.validator)) {

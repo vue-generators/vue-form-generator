@@ -197,6 +197,51 @@ describe("abstractField.vue", () => {
 
 	});	
 
+	describe("check validate function if field is disabled", () => {
+		let schema = {
+			type: "text",		
+			label: "Name", 
+			model: "name", 
+			validator: sinon.spy()
+		};
+
+		let model = { name: "John Doe" };
+
+		beforeEach( () => {
+			createField(schema, model, true);
+		});
+
+		it("should not call schema validator", () => {
+			schema.validator.reset();
+			field.validate();
+			expect(schema.validator.callCount).to.be.equal(0);
+		});
+
+	});	
+
+	describe("check validate function if field is readonly", () => {
+		let schema = {
+			type: "text",		
+			label: "Name", 
+			model: "name", 
+			readonly: true,
+			validator: sinon.spy()
+		};
+
+		let model = { name: "John Doe" };
+
+		beforeEach( () => {
+			createField(schema, model);
+		});
+
+		it("should not call schema validator", () => {
+			schema.validator.reset();
+			field.validate();
+			expect(schema.validator.callCount).to.be.equal(0);
+		});
+
+	});		
+
 	describe("check validate function with validator array", () => {
 		let spy1 = sinon.spy();
 		let spy2 = sinon.spy();

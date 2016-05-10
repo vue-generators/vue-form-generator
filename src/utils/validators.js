@@ -1,4 +1,4 @@
-import { isNil, isNumber, isString } from "lodash";
+import { isNil, isNumber, isString, isArray } from "lodash";
 import moment from "moment";
 
 function checkEmpty(value, required) {
@@ -60,6 +60,27 @@ module.exports = {
 
 		return err;
 	},
+
+	array(value, field) {
+		if (field.required) {
+
+			if (!isArray(value))
+				return ["Value is not an array!"];
+
+			if (value.length == 0)
+				return ["This field is required!"];
+		}
+
+		if (!isNil(value)) {
+			if (!isNil(field.min))
+				if (value.length < field.min)
+					return ["Select minimum " + field.min + " items!"];
+
+			if (!isNil(field.max))
+				if (value.length > field.max)
+					return ["Select maximum " + field.max + " items!"];
+		}
+	},	
 
 	date(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;

@@ -78,7 +78,10 @@ module.exports = {
 				"AngularJS",
 				"ReactJS",
 				"VueJS"
-			]
+			],
+			min: 2,
+			max: 4,
+			validator: validators.array
 		},	
 		{
 			type: "text",
@@ -263,14 +266,12 @@ module.exports = {
 			label: "City",
 			model: "address.city",
 			multi: true,
-			required: true,
 			validator: validators.required
 		},
 		{
 			type: "text",
 			label: "Street",
-			model: "address.streetC",
-			required: true
+			model: "address.streetC"
 		},        
 		{
 			type: "text",

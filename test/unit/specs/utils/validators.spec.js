@@ -129,6 +129,54 @@ describe("Validators", () => {
 		});
 	});
 
+	describe.only("test Validators.array", () => {
+
+		let field = {
+			required: true,
+			min: 2,
+			max: 4
+		}
+
+		it("should give error if value is null, but field is required", () => {
+			check(v.array, null, field, 1);
+		});
+
+		it("should give error if count of items is smaller than min", () => {
+			check(v.array, [], field, 1);
+			check(v.array, [1], field, 1);
+			check(v.array, ["ab"], field, 1);
+			check(v.array, [true], field, 1);
+		});
+		
+		it("should give error if count of items is greater than max", () => {
+			check(v.array, [1,2,3,4,5], field, 1);
+		});
+
+		it("should give error if value is not array", () => {
+			check(v.array, 123, field, 1);
+			check(v.array, true, field, 1);
+			check(v.array, "John", field, 1);
+		});
+		
+		it("should not give error", () => {
+			check(v.array, [1,4], field, 0);
+			check(v.array, ["John", "Doe", "Jane"], field, 0);
+			check(v.array, [true, true, false], field, 0);
+			check(v.array, [ [5], [3] ], field, 0);
+		});
+
+		it("should not give error if value is null and field is not required", () => {
+			field.required = false;
+			check(v.array, null, field, 0);
+		});
+
+		it("should give error if count of item is smaller than minimum and field is not required", () => {
+			field.required = false;
+			check(v.array, ["Foo"], field, 1);
+		});
+
+	});	
+
 	describe("test Validators.date", () => {
 
 		let field = {
