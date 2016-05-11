@@ -19,8 +19,7 @@ describe("FieldCheckbox.vue", () => {
 		let schema = {
 			type: "checkbox",
 			label: "Status",
-			model: "status",
-			readonly: false
+			model: "status"
 		};
 		let model = { status: true };
 		let input;
@@ -36,21 +35,12 @@ describe("FieldCheckbox.vue", () => {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("checkbox");
-			expect(input.readOnly).to.be.false;	
 			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
 				expect(input.checked).to.be.true;	
-				done();
-			});
-		});
-
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
 				done();
 			});
 		});
