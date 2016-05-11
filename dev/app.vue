@@ -40,9 +40,10 @@
 
 	import {each, isFunction, cloneDeep, merge} from 'lodash';	
 
+	Vue.use(VueFormGenerator);
+
 	export default {
 		components: {
-			"VueFormGenerator": VueFormGenerator.component,
 			DataTable
 		},
 
