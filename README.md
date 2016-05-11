@@ -50,17 +50,12 @@ https://github.com/icebob/vue-form-generator/archive/master.zip
   </div>
 </template>
 
-```
-```js
 <script>
 import VueFormGenerator from "vue-form-generator";
 
+Vue.use(VueFormGenerator);
+
 export default {
-  ...
-  components: {
-    VueFormGenerator: VueFormGenerator.component
-  },
-  
   data: {
     schema: { ... },
     model:             
@@ -76,7 +71,7 @@ export default {
       validateAfterChanged: true
     }
   }
-  ...
+}
 </script>
 ```
 
