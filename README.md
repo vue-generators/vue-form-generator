@@ -12,12 +12,17 @@ A schema-based form generator component for Vue.js
 ## Demo
 [JSFiddle simple example](https://jsfiddle.net/icebob/0mg1v81e/)
 
+[![Screenshot](https://icebob.gitbooks.io/vueformgenerator/content/assets/vfg-example1.png)](https://jsfiddle.net/icebob/0mg1v81e/)
+
 ## Features
 - multiple objects editing
 - 18 built-in field types
 - built-in validators
 - Bootstrap friendly templates
 - ...etc
+
+## Documentation
+[Online documentation on Gitbook](https://icebob.gitbooks.io/vueformgenerator/content/)
 
 ## Dependencies
 - [jQuery](http://www.jquery.com)
