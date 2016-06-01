@@ -1,3 +1,5 @@
+/* global sinon */
+
 import { expect } from "chai";
 import { createVueField, trigger } from "../util";
 
@@ -147,7 +149,7 @@ describe("fieldImage.vue", () => {
 			// Stub the browser FileReader
 			let FR = window.FileReader;
 			window.FileReader = sinon.stub().returns({
-				readAsDataURL(file) {
+				readAsDataURL() {
 					this.onload({
 						target: {
 							result: "base64 image data"
@@ -167,7 +169,6 @@ describe("fieldImage.vue", () => {
 			});
 
 			vm.$nextTick( () => {
-				let remove = el.querySelector(".remove");
 				expect(input.value).to.be.equal("base64 image data");
 				expect(model.avatar).to.be.equal("base64 image data");
 

@@ -176,7 +176,7 @@ describe("fieldChecklist.vue", () => {
 						{ id: 5, name: "AngularJS" },
 						{ id: 6, name: "ReactJS" },
 						{ id: 7, name: "VueJS" }
-					]
+					];
 				}
 			};
 			let model = { skills: [2, 7] };

@@ -29,7 +29,6 @@ describe("VueFormGenerator.vue", () => {
 
 	describe("with empty schema", () => {
 		let schema = {};
-		let model = null;
 
 		beforeEach( () => {
 			createFormGenerator(schema);
@@ -75,7 +74,7 @@ describe("VueFormGenerator.vue", () => {
 			vm.$nextTick(() => {
 				expect(tr.classList.contains("featured")).to.be.true;
 				done();
-			})
+			});
 		});
 
 		it("should be readonly class", (done) => {
@@ -83,7 +82,7 @@ describe("VueFormGenerator.vue", () => {
 			vm.$nextTick(() => {
 				expect(tr.classList.contains("readonly")).to.be.true;
 				done();
-			})
+			});
 		});		
 
 		it("should be disabled class", (done) => {
@@ -91,7 +90,7 @@ describe("VueFormGenerator.vue", () => {
 			vm.$nextTick(() => {
 				expect(tr.classList.contains("disabled")).to.be.true;
 				done();
-			})
+			});
 		});		
 
 		it("should be required class", (done) => {
@@ -99,7 +98,7 @@ describe("VueFormGenerator.vue", () => {
 			vm.$nextTick(() => {
 				expect(tr.classList.contains("required")).to.be.true;
 				done();
-			})
+			});
 		});		
 
 		it("should be error class", (done) => {
@@ -107,7 +106,7 @@ describe("VueFormGenerator.vue", () => {
 			vm.$nextTick(() => {
 				expect(tr.classList.contains("error")).to.be.true;
 				done();
-			})
+			});
 		});		
 
 		it("should be add a custom classes", (done) => {
@@ -115,7 +114,7 @@ describe("VueFormGenerator.vue", () => {
 			vm.$nextTick(() => {
 				expect(tr.classList.contains("classA")).to.be.true;
 				done();
-			})
+			});
 		});		
 
 		it("should be add more custom classes", (done) => {
@@ -124,13 +123,13 @@ describe("VueFormGenerator.vue", () => {
 				expect(tr.classList.contains("classB")).to.be.true;
 				expect(tr.classList.contains("classC")).to.be.true;
 				done();
-			})
+			});
 		});		
 
 	});	
 
 	describe("check form row caption cell", () => {
-		let tr, tdCaption, tdField;
+		let tr, tdCaption;
 		let schema = {
 			fields: [
 				{
@@ -146,7 +145,6 @@ describe("VueFormGenerator.vue", () => {
 			createFormGenerator(schema);
 			tr = el.getElementsByTagName("tr")[0];
 			tdCaption = tr.getElementsByTagName("td")[0];
-			tdField = tr.getElementsByTagName("td")[1];
 		});
 
 		it("should be text of cell is the name of field", () => {
@@ -163,7 +161,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(span.querySelector(".helpText")).to.be.exist;
 				expect(span.querySelector(".helpText").textContent).to.be.equal("Sample help");
 				done();
-			})
+			});
 		});
 
 	});
@@ -246,10 +244,11 @@ describe("VueFormGenerator.vue", () => {
 				}
 			]
 		};
+
 		let model = {
 			name: "John Doe",
 			status: true
-		}
+		};
 
 		before( () => {
 			createFormGenerator(schema, model);
@@ -319,10 +318,11 @@ describe("VueFormGenerator.vue", () => {
 				}
 			]
 		};
+		
 		let model = {
 			name: "John Doe",
 			status: true
-		}
+		};
 
 		before( () => {
 			createFormGenerator(schema, model);

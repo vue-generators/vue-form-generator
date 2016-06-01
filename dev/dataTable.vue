@@ -14,7 +14,7 @@
 				td {{ row.id }}
 				td 
 					img(:src="row.avatar") 
-					| {{ row.name }} 
+					| {{ row.firstName + " " + row.lastName }} ({{row.userName}})
 					.label.label-warning(v-if="!row.status") Inactive
 				td {{ row.email }}
 				td {{ row.address.country }}

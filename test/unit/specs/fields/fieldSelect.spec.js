@@ -177,7 +177,7 @@ describe("fieldSelect.vue", () => {
 					{ id: 2, name: "Paris" },
 					{ id: 3, name: "Rome" },
 					{ id: 4, name: "Berlin" }
-				]
+				];
 			}
 		};
 		let model = { city: 2 };

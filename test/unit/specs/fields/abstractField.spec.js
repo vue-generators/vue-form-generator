@@ -1,7 +1,7 @@
+/* global sinon */
 import { expect } from "chai";
 
 import Vue from "vue";
-import VueFormGenerator from "src/index";
 import AbstractField from "src/fields/abstractField";
 
 Vue.component("AbstractField", AbstractField);
@@ -133,7 +133,7 @@ describe("abstractField.vue", () => {
 				expect(schema.onChanged.calledOnce).to.be.true;
 				expect(schema.onChanged.calledWith(model, "Jane Doe", "John Doe", schema)).to.be.true;
 				done();
-			})
+			});
 		});
 
 	});	
@@ -148,7 +148,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 		let options = {
 			validateAfterChanged: false
-		}
+		};
 
 		beforeEach( () => {
 			createField(schema, model, false, options);

@@ -1,5 +1,7 @@
-import faker from 'faker';
+import Fakerator from 'fakerator';
 import moment from 'moment';
+
+let fakerator = new Fakerator();
 
 let roles = [
 	{ id: "admin", name: "Administrator"},
@@ -17,63 +19,33 @@ module.exports = {
 	users: (function() {
 		let res = [];
 		for (let i = 0; i < 5; i++) {
-			let lang = faker.helpers.randomize(['en-US', 'en-GB', 'de', 'fr', 'it']);
-			//faker.locale = lang;
-			let user = faker.helpers.createCard();
+			let lang = fakerator.random.arrayElement(['en-US', 'en-GB', 'de', 'fr', 'it']);
+			let user = fakerator.entity.user();
 			user.id = i + 1;
-			user.type = faker.helpers.randomize(["personal", "business"]);
-			user.password = faker.internet.password(10);
-			user.bio = faker.lorem.paragraph();
-			let dob = faker.date.past(40, "1998-01-01");
+			user.type = fakerator.random.arrayElement(["personal", "business"]);
+			user.bio = fakerator.lorem.paragraph();
+			let dob = fakerator.date.past(40, "1998-01-01");
 			user.dob = dob.valueOf();
 			user.time = moment().format("hh:mm:ss");
 			user.age = moment().year() - moment(dob).year();
-			user.rank = faker.random.number({
-				min: 1,
-				max: 10
-			});
-			user.role = faker.helpers.randomize(roles).id;
-			//user.mobile = faker.phone.phoneNumber();
-			user.avatar = faker.internet.avatar();
+			user.rank = fakerator.random.number(1, 10);
+			user.role = fakerator.random.arrayElement(roles).id;
+			//user.mobile = fakerator.phone.phoneNumber();
+			user.avatar = fakerator.internet.avatar();
 
-			user.skills = [];
-			user.skills.push(faker.helpers.randomize(skills));
-			user.skills.push(faker.helpers.randomize(skills));
+			user.skills = fakerator.utimes(fakerator.random.arrayElement, 2, skills);
 
 			user.language = lang;
-			user.status = faker.helpers.randomize([true, false, true]);
-			user.created = faker.date.recent(30).valueOf();
-			user.dt = faker.date.recent(30).valueOf();
-			user.favoriteColor = faker.internet.color();
+			user.status = fakerator.random.boolean(75);
+			user.created = fakerator.date.recent(30).valueOf();
+			user.dt = fakerator.date.recent(30).valueOf();
+			user.favoriteColor = "#" + fakerator.internet.color();
 
-			if (user.type == "business") {
-				user.company = {
-					"name": faker.company.companyName(),
-					"catchPhrase": faker.company.catchPhrase(),
-					"bs": faker.company.bs(),
-					"website": faker.internet.domainName(),
-					"phone": faker.phone.phoneNumber(),
-					"address": {
-						"street": faker.address.streetAddress(),
-						"city": faker.address.city(),
-						"country": faker.address.country(),
-						"zipcode": faker.address.zipCode(),
-						"geo": {
-							"lat": faker.address.latitude(),
-							"lng": faker.address.longitude()
-						}
-					}
-
-				}
-			} else {
-				user.company = undefined;
-			}
-
-			user.posts = undefined;
-			user.accountHistory = undefined;
-
+			if (user.type == "business")
+				user.company = fakerator.entity.company();
+			
 			res.push(user);
-			//console.log(user);
+			console.log(user);
 		}
 		//console.log(res);
 		return res;

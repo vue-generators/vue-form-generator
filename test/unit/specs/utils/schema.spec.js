@@ -73,8 +73,8 @@ describe("SchemaUtils", () => {
 
 		let models = [
 			{	id: 1, name: "John", age: 25, status: true },
-			{	id: 2, name: "James", age: 30, status: true },
-		]
+			{	id: 2, name: "James", age: 30, status: true }
+		];
 
 		it("create merged model from multiple objects #1", () => {
 			let res = SchemaUtils.mergeMultiObjectFields(schema, models);

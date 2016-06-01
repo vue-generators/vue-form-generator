@@ -19,7 +19,7 @@ describe("Validators", () => {
 			min: 5,
 			max: 10,
 			required: true
-		}
+		};
 
 		it("should give error if value is null, but field is required", () => {
 			check(v.number, null, field, 1);
@@ -58,7 +58,7 @@ describe("Validators", () => {
 
 	describe("test Validators.integer", () => {
 
-		let field = {}
+		let field = {};
 
 		it("should give error if value is not integer", () => {
 			check(v.integer, 3.14, field, 1);
@@ -75,7 +75,7 @@ describe("Validators", () => {
 
 	describe("test Validators.double", () => {
 
-		let field = {}
+		let field = {};
 
 		it("should give error if value is not double", () => {
 			check(v.double, "3,14", field, 1);
@@ -94,7 +94,7 @@ describe("Validators", () => {
 			required: true,
 			min: 3,
 			max: 10
-		}
+		};
 
 		it("should give error if value is null, but field is required", () => {
 			check(v.string, null, field, 1);
@@ -135,7 +135,7 @@ describe("Validators", () => {
 			required: true,
 			min: 2,
 			max: 4
-		}
+		};
 
 		it("should give error if value is null, but field is required", () => {
 			check(v.array, null, field, 1);
@@ -183,7 +183,7 @@ describe("Validators", () => {
 			required: true,
 			min: 1262799081231,
 			max: 1562799081231
-		}
+		};
 
 		it("should give error if value is null, but field is required", () => {
 			check(v.date, null, field, 1);
@@ -222,7 +222,7 @@ describe("Validators", () => {
 		let field = {
 			required: true,
 			pattern: /^[a-z0-9-]+$/g
-		}
+		};
 
 		it("should give error if value is null, but field is required", () => {
 			check(v.regexp, null, field, 1);
@@ -331,7 +331,7 @@ describe("Validators", () => {
 
 		let field = {
 			required: true
-		}
+		};
 
 		it("should give error if value is null, but field is required", () => {
 			check(v.alpha, null, field, 1);
@@ -363,7 +363,7 @@ describe("Validators", () => {
 
 		let field = {
 			required: true
-		}
+		};
 
 		it("should give error if value is null, but field is required", () => {
 			check(v.alphaNumeric, null, field, 1);

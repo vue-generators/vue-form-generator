@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField } from "../util";
 
 import Vue from "vue";
 import FieldSpectrum from "src/fields/fieldSpectrum.vue";

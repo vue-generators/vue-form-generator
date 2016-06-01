@@ -1,8 +1,10 @@
 import moment from "moment";
-import faker from "faker";
+import Fakerator from "fakerator";
 import {} from "lodash";
 
 import { validators } from "../src";
+
+let fakerator = new Fakerator();
 
 module.exports = {
 	fields: [
@@ -28,11 +30,11 @@ module.exports = {
 		},	
 		{
 			type: "text",
-			label: "Name",
-			model: "name",
+			label: "First name",
+			model: "firstName",
 			featured: true,
 			required: true,
-			placeholder: "User's full name",
+			placeholder: "User's first name",
 			validator: validators.string,
 
 			onChanged(model, newVal, oldVal, field) {
@@ -43,6 +45,25 @@ module.exports = {
 				//if (errors.length > 0)
 				//	console.warn("Validation error in Name field! Errors:", errors);
 			}
+		},
+		{
+			type: "text",
+			label: "Last name",
+			model: "lastName",
+			featured: true,
+			required: true,
+			placeholder: "User's last name",
+			validator: validators.string
+		},	
+		{
+			type: "text",
+			label: "Username",
+			model: "userName",
+			featured: true,
+			required: true,
+			min: 5,
+			placeholder: "User's last name",
+			validator: validators.string
 		},
 		{
 			type: "password",
@@ -253,7 +274,7 @@ module.exports = {
 			model: "address.country",
 			multi: true,
 			required: true,
-			values: faker.definitions.address.country,
+			values: ["United Kingdom", "France", "Germany"],
 			//default: "United Kingdom",
 			multiSelect: false,
 			selectOptions: {
@@ -273,7 +294,7 @@ module.exports = {
 		{
 			type: "text",
 			label: "Street",
-			model: "address.streetC"
+			model: "address.street"
 		},        
 		{
 			type: "text",
@@ -282,7 +303,7 @@ module.exports = {
 			disabled: false,
 			get(model) { 
 				if (model && model.address && model.address.geo) 
-					return model.address.geo.lat + ", " + model.address.geo.lng;
+					return model.address.geo.latitude + ", " + model.address.geo.longitude;
 			},
 			set(model, val) {
 				let values = val.split(",");
@@ -293,14 +314,14 @@ module.exports = {
 					model.address.geo = {};
 
 				if (values.length > 0 && values[0].trim() != "")
-					model.address.geo.lat = parseFloat(values[0].trim());
+					model.address.geo.latitude = parseFloat(values[0].trim());
 				else 
-					model.address.geo.lat = 0
+					model.address.geo.latitude = 0
 
 				if (values.length > 1 && values[1].trim() != "")
-					model.address.geo.lng = parseFloat(values[1].trim());
+					model.address.geo.longitude = parseFloat(values[1].trim());
 				else 
-					model.address.geo.lng = 0
+					model.address.geo.longitude = 0
 			},
 			buttons: [
 				{
@@ -315,8 +336,8 @@ module.exports = {
 							if (!model.address.geo)
 								model.address.geo = {};
 
-							model.address.geo.lat = pos.coords.latitude.toFixed(5);
-							model.address.geo.lng = pos.coords.longitude.toFixed(5);
+							model.address.geo.latitude = pos.coords.latitude.toFixed(5);
+							model.address.geo.longitude = pos.coords.longitude.toFixed(5);
     						});
 						} else {
     						alert("Geolocation is not supported by this browser.");
@@ -328,8 +349,8 @@ module.exports = {
 					label: "Clear",
 					onclick: function(model) {
 						model.address.geo = {
-							lat: 0,
-							lng: 0
+							latitude: 0,
+							longitude: 0
 						};
 					}
 				}
