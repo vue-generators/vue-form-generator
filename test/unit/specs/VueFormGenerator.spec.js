@@ -305,7 +305,6 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
-	// TODO: wrong
 	describe("check fieldVisible with function", () => {
 		let schema = {
 			fields: [

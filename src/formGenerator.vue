@@ -230,7 +230,7 @@
 			}					
 		} // span.help
 
-		> .field-wrap {
+		.field-wrap {
 			display: flex;
 
 			.buttons {
