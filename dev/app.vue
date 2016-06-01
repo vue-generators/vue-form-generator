@@ -4,7 +4,7 @@
 				data-table(:rows="rows", :selected="selected", :select="selectRow")
 
 		.row(v-show="model")
-			.col-md-6
+			.col-md-5.col-md-offset-1
 				.buttons.text-center
 					button.btn.btn-default.new(@click="newModel") 
 						i.fa.fa-plus

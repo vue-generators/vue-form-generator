@@ -34,18 +34,15 @@ describe("VueFormGenerator.vue", () => {
 			createFormGenerator(schema);
 		});
 
-		it("should be create HTML table", () => {
+		it("should be create fieldset", () => {
 			expect(vm.$el).to.be.exist;
-			expect(el.getElementsByTagName("table")).to.be.length(1);
-
-			let table = el.getElementsByTagName("table")[0];
-			expect(table.getElementsByTagName("tbody")).to.be.length(1);
+			expect(el.getElementsByTagName("fieldset")).to.be.length(1);
 		});
 
 	});
 
-	describe("check form row classes", () => {
-		let tr;
+	describe("check form-group classes", () => {
+		let group;
 		let schema = {
 			fields: [
 				{
@@ -62,17 +59,19 @@ describe("VueFormGenerator.vue", () => {
 
 		before( () => {
 			createFormGenerator(schema);
-			tr = el.getElementsByTagName("tr")[0];
+			group = el.querySelector(".form-group");
 		});
 
-		it("should be empty classList", () => {
-			expect(tr.classList.length).to.be.equal(0);
+		it("should be minimal classes", () => {
+			expect(group.classList.length).to.be.equal(2);
+			expect(group.classList.contains("form-group")).to.be.true;
+			expect(group.classList.contains("field-text")).to.be.true;
 		});
 
 		it("should be featured class", (done) => {
 			vm.schema.fields[0].featured = true;
 			vm.$nextTick(() => {
-				expect(tr.classList.contains("featured")).to.be.true;
+				expect(group.classList.contains("featured")).to.be.true;
 				done();
 			});
 		});
@@ -80,7 +79,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be readonly class", (done) => {
 			vm.schema.fields[0].readonly = true;
 			vm.$nextTick(() => {
-				expect(tr.classList.contains("readonly")).to.be.true;
+				expect(group.classList.contains("readonly")).to.be.true;
 				done();
 			});
 		});		
@@ -88,7 +87,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be disabled class", (done) => {
 			vm.schema.fields[0].disabled = true;
 			vm.$nextTick(() => {
-				expect(tr.classList.contains("disabled")).to.be.true;
+				expect(group.classList.contains("disabled")).to.be.true;
 				done();
 			});
 		});		
@@ -96,7 +95,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be required class", (done) => {
 			vm.schema.fields[0].required = true;
 			vm.$nextTick(() => {
-				expect(tr.classList.contains("required")).to.be.true;
+				expect(group.classList.contains("required")).to.be.true;
 				done();
 			});
 		});		
@@ -104,7 +103,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be error class", (done) => {
 			vm.$set("schema.fields[0].errors", [ "!!!" ]);
 			vm.$nextTick(() => {
-				expect(tr.classList.contains("error")).to.be.true;
+				expect(group.classList.contains("error")).to.be.true;
 				done();
 			});
 		});		
@@ -112,7 +111,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be add a custom classes", (done) => {
 			vm.$set("schema.fields[0].styleClasses", "classA");
 			vm.$nextTick(() => {
-				expect(tr.classList.contains("classA")).to.be.true;
+				expect(group.classList.contains("classA")).to.be.true;
 				done();
 			});
 		});		
@@ -120,8 +119,8 @@ describe("VueFormGenerator.vue", () => {
 		it("should be add more custom classes", (done) => {
 			vm.$set("schema.fields[0].styleClasses", [ "classB", "classC" ]);
 			vm.$nextTick(() => {
-				expect(tr.classList.contains("classB")).to.be.true;
-				expect(tr.classList.contains("classC")).to.be.true;
+				expect(group.classList.contains("classB")).to.be.true;
+				expect(group.classList.contains("classC")).to.be.true;
 				done();
 			});
 		});		
@@ -129,7 +128,7 @@ describe("VueFormGenerator.vue", () => {
 	});	
 
 	describe("check form row caption cell", () => {
-		let tr, tdCaption;
+		let group, label;
 		let schema = {
 			fields: [
 				{
@@ -143,19 +142,19 @@ describe("VueFormGenerator.vue", () => {
 
 		before( () => {
 			createFormGenerator(schema);
-			tr = el.getElementsByTagName("tr")[0];
-			tdCaption = tr.getElementsByTagName("td")[0];
+			group = el.querySelector(".form-group");
+			label = group.querySelector("label");
 		});
 
 		it("should be text of cell is the name of field", () => {
-			expect(tdCaption).to.be.exist;
-			expect(tdCaption.textContent).to.be.equal("Name");
+			expect(label).to.be.exist;
+			expect(label.textContent).to.be.equal("Name");
 		});
 
 		it("should be a question icon if has helpText", (done) => {
 			vm.schema.fields[0].help = "Sample help";
 			vm.$nextTick(() => {
-				let span = tr.querySelector(".help");
+				let span = group.querySelector(".help");
 				expect(span).to.be.exist;
 				expect(span.querySelector("i")).to.be.exist;
 				expect(span.querySelector(".helpText")).to.be.exist;
@@ -167,7 +166,7 @@ describe("VueFormGenerator.vue", () => {
 	});
 
 	describe("check form row field cell", () => {
-		let tr, tdField;
+		let group, label;
 		let schema = {
 			fields: [
 				{
@@ -183,16 +182,16 @@ describe("VueFormGenerator.vue", () => {
 
 		before( () => {
 			createFormGenerator(schema);
-			tr = el.getElementsByTagName("tr")[0];
-			tdField = tr.getElementsByTagName("td")[1];
+			group = el.querySelector(".form-group");
+			label = group.querySelector("label");
 		});
 
 		it("should be a .field-wrap div", () => {
-			expect(tdField.querySelector(".field-wrap")).to.be.exist;
+			expect(group.querySelector(".field-wrap")).to.be.exist;
 		});
 
 		it("should be a hint div if hint is not null", () => {
-			let hint = tdField.querySelector(".hint");
+			let hint = group.querySelector(".hint");
 			expect(hint).to.be.exist;
 			expect(hint.textContent).to.be.equal("Hint text");
 		});
@@ -200,7 +199,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be .errors div if there are errors in fields", (done) => {
 			vm.schema.fields[0].errors.push("Some error!", "Another error!");
 			vm.$nextTick(() => {
-				let div = tdField.querySelector(".errors");
+				let div = group.querySelector(".errors");
 				expect(div).to.be.exist;
 				let errors = div.querySelectorAll("span");
 				expect(errors.length).to.be.equal(2);
@@ -229,7 +228,7 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should render only phone field", () => {
 			expect(form.fields.length).to.be.equal(1);
-			expect(el.getElementsByTagName("tr")[0].getElementsByTagName("td")[0].textContent).to.be.equal("phone");
+			expect(el.querySelector(".form-group label").textContent).to.be.equal("phone");
 		});
 	});
 
