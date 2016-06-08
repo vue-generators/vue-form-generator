@@ -165,6 +165,7 @@ npm run test
 * [ ] Bundle for vendor files
 * [x] Unit tests, coverage and CI
 * [ ] try [joi](https://www.npmjs.com/package/joi) for validation
+* [ ] sortable checkbox list
 
 ## Contribution
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
