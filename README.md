@@ -63,7 +63,7 @@ Vue.use(VueFormGenerator);
 export default {
   data: {
     schema: { ... },
-    model:             
+    model: {             
       id: 1,
       name: "John Doe",
       password: "J0hnD03!x4",
