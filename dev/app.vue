@@ -238,4 +238,10 @@
 		}
 	}
 
+	.form-group {
+		&.half-width {
+			width: 50%;
+		}
+	}
+
 </style>

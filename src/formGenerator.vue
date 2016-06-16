@@ -158,7 +158,7 @@
 	
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	
 	$errorColor: lighten(#F00, 0%);
 
@@ -249,6 +249,9 @@
 
 
 		.form-group {
+			display: inline-block;
+			width: 100%;
+			margin: 0.5rem 0.26rem;
 
 			label {
 				font-weight: 400;
