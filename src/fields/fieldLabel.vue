@@ -14,5 +14,6 @@
 	span {
 		display: block;
 		width: 100%;
+		margin-left: 12px;
 	}
 </style>

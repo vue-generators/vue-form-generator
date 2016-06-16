@@ -35,6 +35,7 @@ module.exports = {
 			featured: true,
 			required: true,
 			placeholder: "User's first name",
+			styleClasses: "half-width",
 			validator: validators.string,
 
 			onChanged(model, newVal, oldVal, field) {
@@ -53,6 +54,7 @@ module.exports = {
 			featured: true,
 			required: true,
 			placeholder: "User's last name",
+			styleClasses: "half-width",
 			validator: validators.string
 		},	
 		{
@@ -382,11 +384,13 @@ module.exports = {
 			get(model) { return model && model.created ? moment(model.created).format("LLL") : "-"; }
 		},
 		{
-			type: "checkbox",
+			type: "switch",
 			label: "Status",
 			model: "status",
 			multi: true,
-			default: true
+			default: true,
+			textOn: "Active",
+			textOff: "Inactive"
 		},
 		{
 			type: "textArea",

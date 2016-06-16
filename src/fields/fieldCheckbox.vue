@@ -9,3 +9,9 @@
 		mixins: [ abstractField ]
 	};
 </script>
+
+<style lang="sass" scoped>
+	input[type=checkbox] {
+		margin-left: 12px;
+	}
+</style>
