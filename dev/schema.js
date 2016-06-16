@@ -10,7 +10,7 @@ module.exports = {
 	fields: [
 		{
 			type: "text",
-			label: "ID",
+			label: "ID (disabled text field)",
 			model: "id",
 			readonly: true,
 			editableIfNew: true, // TODO
@@ -19,7 +19,7 @@ module.exports = {
 		},
 		{
 			type: "select",
-			label: "Type",
+			label: "Type (select field)",
 			model: "type",
 			required: true,
 			values: [
@@ -70,7 +70,7 @@ module.exports = {
 		},
 		{
 			type: "password",
-			label: "Password",
+			label: "Password (password field)",
 			model: "password",
 			min: 6,
 			required: true,
@@ -81,7 +81,7 @@ module.exports = {
 	
 		{
 			type: "selectEx",
-			label: "Skills",
+			label: "Skills (selectEx field)",
 			model: "skills",
 			multi: true,
 			required: true,
@@ -128,7 +128,7 @@ module.exports = {
 		},			
 		{
 			type: "email",
-			label: "E-mail",
+			label: "E-mail (email field)",
 			model: "email",
 			placeholder: "User's e-mail address"
 		},		
@@ -145,7 +145,7 @@ module.exports = {
 		},
 		{
 			type: "masked",
-			label: "Mobile",
+			label: "Mobile  (masked field)",
 			model: "mobile",
 			mask: "(99) 999-9999",
 			styleClasses: "half-width",
@@ -153,7 +153,7 @@ module.exports = {
 		},		
 		{
 			type: "spectrum",
-			label: "Color",
+			label: "Color (spectrum field)",
 			model: "favoriteColor",
 			required: true,
 			colorOptions: {
@@ -163,7 +163,7 @@ module.exports = {
 		},	
 		{
 			type: "image",
-			label: "Avatar",
+			label: "Avatar (image field)",
 			model: "avatar",
 			required: true,
 			browse: true,
@@ -172,7 +172,7 @@ module.exports = {
 		},
 		{
 			type: "number",
-			label: "Age",
+			label: "Age (number field)",
 			model: "age",
 			multi: true,
 			disabled: true,
@@ -187,7 +187,7 @@ module.exports = {
 		},
 		{
 			type: "dateTime",
-			label: "DOB",
+			label: "DOB (dateTime field)",
 			model: "dob",
 			required: true,
 			placeholder: "User's birth of date",
@@ -236,7 +236,7 @@ module.exports = {
 
 		{
 			type: "slider",
-			label: "Rank",
+			label: "Rank (slider field)",
 			model: "rank",
 			multi: true,
 			min: 1,
@@ -289,12 +289,13 @@ module.exports = {
 				{ id: "it", name: "Italic" },
 				{ id: "fr", name: "French" }
 			],
+			hint: "Your native language",
 			styleClasses: "half-width",
 			validator: validators.required
 		},
 		{
 			type: "selectEx",
-			label: "Country",
+			label: "Country (selectEx field)",
 			model: "address.country",
 			multi: true,
 			required: true,
@@ -390,13 +391,13 @@ module.exports = {
 		},
 		{
 			type: "label",
-			label: "Created",
+			label: "Created (label field)",
 			model: "created",
 			get(model) { return model && model.created ? moment(model.created).format("LLL") : "-"; }
 		},
 		{
 			type: "switch",
-			label: "Status",
+			label: "Status (switch field)",
 			model: "status",
 			multi: true,
 			default: true,
@@ -405,7 +406,7 @@ module.exports = {
 		},
 		{
 			type: "textArea",
-			label: "Biography",
+			label: "Biography (textArea field)",
 			model: "bio",
 			hint: "Max 500 characters",
 			max: 500,

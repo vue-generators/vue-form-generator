@@ -33,6 +33,7 @@
 	import Vue from "vue";
 	import VueFormGenerator from "../src";
 	import DataTable from "./dataTable.vue";
+	import Fakerator from "fakerator";
 
 	import Schema from "./schema";
 	import { users } from "./data";
@@ -41,6 +42,8 @@
 	import {each, isFunction, cloneDeep, merge} from 'lodash';	
 
 	Vue.use(VueFormGenerator);
+
+	let fakerator = new Fakerator();
 
 	export default {
 		components: {
@@ -181,6 +184,10 @@
 		
 		ready() {
 			window.app = this;
+
+			if (users.length > 0) {
+				this.selectRow(null, fakerator.random.arrayElement(users));
+			}
 		}
 	}
 
