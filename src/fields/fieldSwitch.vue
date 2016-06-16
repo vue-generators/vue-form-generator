@@ -3,7 +3,6 @@
 		input(type="checkbox", v-model="value", :disabled="disabled")
 		span.label(:data-on="schema.textOn || 'On'", :data-off="schema.textOff || 'Off'")
 		span.handle
-		span {{ this | json}}
 </template>
 
 <script>
@@ -16,11 +15,13 @@
 
 <style lang="sass" scoped>
 
+	$width: 120px;
+
 	label {
 		position: relative;
 		display: block;
 		vertical-align: top;
-		width: 100px;
+		width: $width;
 		height: 30px;
 		padding: 3px;
 		margin: 0 10px 10px 0;
@@ -105,7 +106,7 @@
 		box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
 	}
 	input:checked ~ .handle {
-		left: 74px;
+		left: $width - 26px;
 		box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 	}
 	 
