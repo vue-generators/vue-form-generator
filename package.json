@@ -96,7 +96,7 @@
   "dependencies": {
     "joi": "8.4.2",
     "joi-browser": "8.0.5",
-    "vue": "1.0.21"
+    "vue": "1.0.24"
   },
   "browser": {
     "joi": "joi-browser"
