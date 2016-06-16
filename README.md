@@ -16,7 +16,7 @@ A schema-based form generator component for Vue.js
 
 ## Features
 - multiple objects editing
-- 18 built-in field types
+- 19 built-in field types
 - built-in validators
 - Bootstrap friendly templates
 - ...etc
@@ -124,14 +124,13 @@ export default {
         multiSelect: true,
         values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"]
     }, {
-        type: "checkbox",
+        type: "switch",
         label: "Status",
         model: "status",
         multi: true,
-        readonly: false,
-        featured: false,
-        disabled: false,
-        default: true
+        default: true,
+        textOn: "Active",
+        textOff: "Inactive"
     }]
 }
 ```
@@ -154,16 +153,9 @@ npm run test
 ```
 
 ## TODO
-* [x] Date picker with bootstrap-datepicker
-* [x] Time picker
-* [x] HTML5 Color picker
-* [x] Color picker with spectrum
-* [x] Image editor
-* [x] Better slider (ion.rangeSlider)
 * [ ] Groupable fields
 * [ ] Validation handling with multiple models
 * [ ] Bundle for vendor files
-* [x] Unit tests, coverage and CI
 * [ ] try [joi](https://www.npmjs.com/package/joi) for validation
 * [ ] sortable checkbox list
 
