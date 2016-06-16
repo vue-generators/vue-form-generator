@@ -6,6 +6,7 @@ import FieldSpectrum from "src/fields/fieldSpectrum.vue";
 
 Vue.component("FieldSpectrum", FieldSpectrum);
 
+// eslint-disable-next-line
 let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {

@@ -6,6 +6,7 @@ import FieldStaticMap from "src/fields/fieldStaticMap.vue";
 
 Vue.component("FieldStaticMap", FieldStaticMap);
 
+// eslint-disable-next-line
 let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {

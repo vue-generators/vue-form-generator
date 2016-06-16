@@ -10,6 +10,8 @@ let el, vm, field;
 
 function createField(schema = {}, model = null, disabled = false, options) {
 	el = document.createElement("div");		
+
+	// eslint-disable-next-line quotes
 	el.innerHTML = `<abstract-field :schema="schema" :model="model" :disabled="disabled" v-ref:field></abstract-field>`;
 	vm = new Vue({
 		el: el,

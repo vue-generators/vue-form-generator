@@ -9,6 +9,7 @@ let el, vm;
 
 function createFormGenerator(schema = {}, model = null, options = {}, multiple = false) {
 	el = document.createElement("div");		
+	// eslint-disable-next-line quotes
 	el.innerHTML = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" v-ref:form></vue-form-generator>`;
 	vm = new Vue({
 		el: el,
@@ -166,7 +167,7 @@ describe("VueFormGenerator.vue", () => {
 	});
 
 	describe("check form row field cell", () => {
-		let group, label;
+		let group; //, label;
 		let schema = {
 			fields: [
 				{
@@ -183,7 +184,7 @@ describe("VueFormGenerator.vue", () => {
 		before( () => {
 			createFormGenerator(schema);
 			group = el.querySelector(".form-group");
-			label = group.querySelector("label");
+			//label = group.querySelector("label");
 		});
 
 		it("should be a .field-wrap div", () => {
