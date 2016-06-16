@@ -238,10 +238,15 @@
 		}
 	}
 
-	.form-group {
-		&.half-width {
-			width: 50%;
+	.form-group.half-width {
+		width: 50%;
+	}
+
+	.half-width + .half-width {
+		&:not(.first) {
+			padding-left: 0.5rem;
 		}
 	}
+
 
 </style>

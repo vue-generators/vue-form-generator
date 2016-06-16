@@ -65,6 +65,7 @@ module.exports = {
 			required: true,
 			min: 5,
 			placeholder: "User's last name",
+			styleClasses: ["half-width", "first"],
 			validator: validators.string
 		},
 		{
@@ -74,6 +75,7 @@ module.exports = {
 			min: 6,
 			required: true,
 			hint: "Minimum 6 characters",
+			styleClasses: "half-width",
 			validator: validators.string			
 		},	
 	
@@ -109,7 +111,8 @@ module.exports = {
 			type: "text",
 			label: "Company name",
 			model: "company.name",
-			styleClasses: "company",
+			styleClasses: ["company", "half-width"],
+
 			visible(model) { return model && model.type == "business"; }
 		},
 		{
@@ -120,6 +123,7 @@ module.exports = {
 			pattern: "^\\+[0-9]{2}-[237]0-[0-9]{3}-[0-9]{4}$",
 			placeholder: "User's phone number",
 			hint: "Format: +36-(20|30|70)-000-0000",
+			styleClasses: "half-width",
 			visible(model) { return model && model.type == "business"; }
 		},			
 		{
@@ -135,7 +139,8 @@ module.exports = {
 			pattern: "^\\+[0-9]{2}-[237]0-[0-9]{3}-[0-9]{4}$",
 			placeholder: "User's phone number",
 			hint: "Format: +36-(20|30|70)-000-0000",
-			help: "You can use any <b>formatted</b> texts. Or place a <a target='_blank' href='https://github.com/icebob/vue-form-generator'>link</a> to another site."
+			help: "You can use any <b>formatted</b> texts. Or place a <a target='_blank' href='https://github.com/icebob/vue-form-generator'>link</a> to another site.",
+			styleClasses: "half-width"
 			//validator: validators.regexp
 		},
 		{
@@ -143,6 +148,7 @@ module.exports = {
 			label: "Mobile",
 			model: "mobile",
 			mask: "(99) 999-9999",
+			styleClasses: "half-width",
 			validator: validators.required
 		},		
 		{
@@ -258,6 +264,21 @@ module.exports = {
 
 		{
 			type: "select",
+			label: "Role",
+			model: "role",
+			required: true,
+			values: [
+				{ id: "admin", name: "Administrator"},
+				{ id: "moderator", name: "Moderator"},
+				{ id: "user", name: "Registered User"},
+				{ id: "visitor", name: "Visitor"}
+			],
+			styleClasses: "half-width",
+			validator: validators.required
+		},		
+
+		{
+			type: "select",
 			label: "Language",
 			model: "language",
 			required: true,
@@ -268,6 +289,7 @@ module.exports = {
 				{ id: "it", name: "Italic" },
 				{ id: "fr", name: "French" }
 			],
+			styleClasses: "half-width",
 			validator: validators.required
 		},
 		{
@@ -284,6 +306,7 @@ module.exports = {
 				liveSearch: true,
 				size: 10
 			},
+			styleClasses: ["half-width", "first"],
 			validator: validators.required
 		},
 		{
@@ -291,6 +314,7 @@ module.exports = {
 			label: "City",
 			model: "address.city",
 			multi: true,
+			styleClasses: "half-width",
 			validator: validators.required
 		},
 		{
@@ -364,19 +388,6 @@ module.exports = {
 			model: "address.geo",
 			visible: false				
 		},
-		{
-			type: "select",
-			label: "Role",
-			model: "role",
-			required: true,
-			values: [
-				{ id: "admin", name: "Administrator"},
-				{ id: "moderator", name: "Moderator"},
-				{ id: "user", name: "Registered User"},
-				{ id: "visitor", name: "Visitor"}
-			],
-			validator: validators.required
-		},		
 		{
 			type: "label",
 			label: "Created",
