@@ -84,7 +84,7 @@
     "sinon": "1.17.4",
     "sinon-chai": "2.8.0",
     "style-loader": "0.13.1",
-    "vue-hot-reload-api": "1.3.2",
+    "vue-hot-reload-api": "2.0.0",
     "vue-html-loader": "1.2.2",
     "vue-loader": "8.5.2",
     "vue-style-loader": "1.0.0",
