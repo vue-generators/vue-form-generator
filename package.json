@@ -95,11 +95,6 @@
   },
   "dependencies": {
     "babel-runtime": "6.9.2",
-    "joi": "8.4.2",
-    "joi-browser": "8.0.5",
     "vue": "1.0.24"
-  },
-  "browser": {
-    "joi": "joi-browser"
   }
 }
