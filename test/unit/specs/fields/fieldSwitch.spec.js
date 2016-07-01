@@ -102,4 +102,50 @@ describe("FieldSwitch.vue", () => {
 
 	});
 
+	describe("check template with custom On/Off values", () => {
+		let schema = {
+			type: "switch",
+			model: "sex",
+			textOn: "Female",
+			textOff: "Male",
+			valueOn: "female",
+			valueOff: "male"
+		};
+		let model = { sex: "female" };
+		let input;
+
+		before( () => {
+			createField(schema, model, false);
+			input = el.querySelector("input");
+		});
+
+		it("check input value", (done) => {
+			vm.$nextTick( () => {
+				expect(input.checked).to.be.true;	
+				done();
+			});
+		});
+
+		it("input value should be the model value after changed", (done) => {
+			model.sex = "male";
+			vm.$nextTick( () => {
+				expect(input.checked).to.be.false;	
+				done();
+			});
+
+		});
+
+		it("model value should be the input value if changed", (done) => {
+			input.checked = true;
+			trigger(input, "change");
+
+			vm.$nextTick( () => {
+				expect(model.sex).to.be.equal("female");	
+				done();
+			});
+
+		});		
+
+	});
+
 });

@@ -32,6 +32,7 @@ module.exports = {
 			user.role = fakerator.random.arrayElement(roles).id;
 			//user.mobile = fakerator.phone.phoneNumber();
 			user.avatar = fakerator.internet.avatar();
+			user.sex = fakerator.random.arrayElement(["male", "female"]);
 
 			user.skills = fakerator.utimes(fakerator.random.arrayElement, 2, skills);
 

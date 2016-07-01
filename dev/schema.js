@@ -235,6 +235,18 @@ module.exports = {
 		},
 
 		{
+			type: "switch",
+			label: "Sex (switch field)",
+			model: "sex",
+			multi: true,
+			default: "male",
+			textOn: "Female",
+			textOff: "Male",
+			valueOn: "female",
+			valueOff: "male"
+		},		
+
+		{
 			type: "slider",
 			label: "Rank (slider field)",
 			model: "rank",
