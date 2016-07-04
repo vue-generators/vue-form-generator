@@ -17,7 +17,6 @@ fieldset(v-if="schema != null")
                 i.fa.fa-pencil
             button.btn.btn-xs.btn-danger.remove-btn(@click="onRemoveField($index)")
                 i.fa.fa-remove
-pre {{ schema | json }}
 
 </template>
 
@@ -49,12 +48,12 @@ pre {{ schema | json }}
 		
 		data () {
 			return {
+                editFieldItem: {},// use only in edit mode, also used to transfer data to external scripts
 				errors: [] // Validation errors
 			};
 		},
 
 		computed: {
-            editField: {},// use only in edit mode, also used to transfer data to external scripts
 			fields() {
 				let res = [];
 				if (this.schema) {
@@ -70,7 +69,7 @@ pre {{ schema | json }}
 
 		watch: {
 			// new model loaded
-			model: function(newModel, oldModel) {
+			model(newModel, oldModel) {
 				if (oldModel == newModel) // model got a new property
 					return;
 
@@ -89,6 +88,14 @@ pre {{ schema | json }}
 			else
 				this.clearValidationErrors();
 		},
+
+        ready(){
+            let self = this;
+
+            this.$on('fg:setEditField', (val)=>{
+                self.editFieldItem = val;
+            });
+        },
 	
 		methods: {
 			getFieldRowClasses(field) {
@@ -167,7 +174,8 @@ pre {{ schema | json }}
 			},
 
             onEditField(item){
-                this.editField = item;
+                this.editFieldItem = item;
+                this.$dispatch('fg:getEditField', Vue.util.extend({}, item));
             },
 
             onRemoveField(idx){

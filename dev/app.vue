@@ -184,6 +184,12 @@
 
 			 
 		},
+
+        events: {
+            'fg:getEditField'(val){
+                this.$set('editField', Vue.util.extend({}, val));
+            }
+        },
 		
 		ready() {
 			window.app = this;
