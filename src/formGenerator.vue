@@ -1,17 +1,23 @@
 <template lang="jade">
-	fieldset(v-if="schema != null")
-		.form-group(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
-			label {{ field.label }}
-				span.help(v-if="field.help")
-					i.fa.fa-question-circle
-					.helpText {{{field.help}}}
-			.field-wrap
-				component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
-				.buttons(v-if="field.buttons && field.buttons.length > 0")
-					button.btn.btn-default(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
-			.hint(v-if="field.hint") {{ field.hint }}
-			.errors(v-if="field.errors && field.errors.length > 0")
-				span(v-for="error in field.errors", track-by="$index") {{ error }}
+fieldset(v-if="schema != null")
+    .form-group(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
+        label {{ field.label }}
+            span.help(v-if="field.help")
+                i.fa.fa-question-circle
+                .helpText {{{field.help}}}
+        .field-wrap
+            component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
+            .buttons(v-if="field.buttons && field.buttons.length > 0")
+                button.btn.btn-default(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
+        .hint(v-if="field.hint") {{ field.hint }}
+        .errors(v-if="field.errors && field.errors.length > 0")
+            span(v-for="error in field.errors", track-by="$index") {{ error }}
+        .function-controls(v-if="isEditMode")
+            button.btn.btn-xs.btn-default.edit-btn(@click="onEditField(field)")
+                i.fa.fa-pencil
+            button.btn.btn-xs.btn-danger.remove-btn(@click="onRemoveField($index)")
+                i.fa.fa-remove
+
 </template>
 
 <script>
@@ -36,11 +42,13 @@
 			"options",
 			"model",
 			"multiple",
-			"isNewModel"
+			"isNewModel",
+            "isEditMode"
 		],
 		
 		data () {
 			return {
+                editFieldItem: {},// use only in edit mode, also used to transfer data to external scripts
 				errors: [] // Validation errors
 			};
 		},
@@ -61,7 +69,7 @@
 
 		watch: {
 			// new model loaded
-			model: function(newModel, oldModel) {
+			model(newModel, oldModel) {
 				if (oldModel == newModel) // model got a new property
 					return;
 
@@ -80,6 +88,14 @@
 			else
 				this.clearValidationErrors();
 		},
+
+        ready(){
+            let self = this;
+
+            this.$on('fg:setEditField', (val)=>{
+                self.editFieldItem = val;
+            });
+        },
 	
 		methods: {
 			getFieldRowClasses(field) {
@@ -99,6 +115,9 @@
 				}
 
 				baseClasses["field-" + field.type] = true;
+
+                if(this.isEditMode)
+                    baseClasses["editable-item"] = true;
 
 				return baseClasses;
 			},
@@ -152,7 +171,16 @@
 				each(this.$children, (child) => {
 					child.clearValidationErrors();
 				});				
-			}
+			},
+
+            onEditField(item){
+                this.editFieldItem = item;
+                this.$dispatch('fg:getEditField', Vue.util.extend({}, item));
+            },
+
+            onRemoveField(idx){
+                this.schema.fields.splice(idx, 1);
+            }
 		}
 	};
 	
@@ -163,6 +191,20 @@
 	$errorColor: lighten(#F00, 0%);
 
 	fieldset {
+
+        .editable-item{
+            position: relative;
+        }
+
+        .function-controls{
+            position: absolute;
+            top:0;
+            right:0;
+        }
+
+        .edit-btn{
+            margin-right: 2px;
+        }
 		
 		input, select, textarea {
 			border-radius: 4px;
