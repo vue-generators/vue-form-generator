@@ -188,6 +188,10 @@
 			if (users.length > 0) {
 				this.selectRow(null, fakerator.random.arrayElement(users));
 			}
+
+			// Localize validate errors
+			VueFormGenerator.validators.resources.fieldIsRequired = "Ezt a mezőt kötelező kitölteni!";
+			VueFormGenerator.validators.resources.textTooSmall = "A szöveg túl rövid! Jelenleg: {0}, minimum: {1}";
 		}
 	}
 

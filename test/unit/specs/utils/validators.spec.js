@@ -391,5 +391,28 @@ describe("Validators", () => {
 			field.required = false;
 			check(v.alphaNumeric, null, field, 0);
 		});
-	});	
+	});
+
+	describe("test localized error messages", () => {
+
+		let field = {
+			min: 5,
+			max: 10,
+			required: true
+		};
+
+		it("should give the default error message", () => {
+			expect(v.number(null, field)[0]).to.be.equal("This field is required!");
+			expect(v.string("Ab", field)[0]).to.be.equal("The length of text is too small! Current: 2, Minimum: 5");
+		});
+
+		it("should give the localized error message", () => {
+			v.resources.fieldIsRequired = "A mezőt kötelező kitölteni!";
+			v.resources.textTooSmall = "A szöveg túl rövid. {1} helyett {0}";
+
+			expect(v.number(null, field)[0]).to.be.equal("A mezőt kötelező kitölteni!");
+			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. 2 helyett 5");
+		});
+
+	});
 });

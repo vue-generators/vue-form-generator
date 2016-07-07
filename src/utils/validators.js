@@ -4,14 +4,55 @@ import moment from "moment";
 function checkEmpty(value, required) {
 	if (isNil(value) || value === "") {
 		if (required)
-			return ["This field is required!"];
+			return [msg(resources.fieldIsRequired)];
 		else
 			return [];
 	}
 	return null;
 }
 
+function msg(text) {
+	if (text != null && arguments.length > 1)
+		for (let i = 1; i < arguments.length; i++)
+			text = text.replace(/\{\d+?\}/, arguments[i]);
+
+	return text;
+}
+
+let resources = {
+	fieldIsRequired: "This field is required!",
+	invalidFormat: "Invalid format!",
+
+	numberTooSmall: "The number is too small! Minimum: {0}",
+	numberTooBig: "The number is too big! Maximum: {0}",
+	invalidNumber: "Invalid number",
+
+	textTooSmall: "The length of text is too small! Current: {0}, Minimum: {1}",
+	textTooBig: "The length of text is too big! Current: {0}, Maximum: {1}",
+	thisNotText: "This is not a text!",
+
+	thisNotArray: "This is not an array!",
+
+	selectMinItems: "Select minimum {0} items!",
+	selectMaxItems: "Select maximum {0} items!",
+
+	invalidDate: "Invalid date!",
+	dateIsEarly: "The date is too early! Current: {0}, Minimum: {1}",
+	dateIsLate: "The date is too late! Current: {0}, Maximum: {1}",
+
+	invalidEmail: "Invalid e-mail address!",
+	invalidURL: "Invalid URL!",
+
+	invalidCard: "Invalid card format!",
+	invalidCardNumber: "Invalid card number!",
+
+	invalidTextContainNumber: "Invalid text! Cannot contains numbers or special characters",
+	invalidTextContainSpec: "Invalid text! Cannot contains special characters"
+};
+
 module.exports = {
+
+	resources,
 	
 	required(value, field) {
 		return checkEmpty(value, field.required); 
@@ -23,13 +64,13 @@ module.exports = {
 		let err = [];
 		if (isNumber(value)) {
 			if (!isNil(field.min) && value < field.min)
-				err.push("The number is too small! Minimum: " + field.min);
+				err.push(msg(resources.numberTooSmall, field.min));
 
 			if (!isNil(field.max) && value > field.max)
-				err.push("The number is too big! Maximum: " + field.max);
+				err.push(msg(resources.numberTooBig, field.max));
 
 		} else 
-			err.push("This is not a number!");
+			err.push(msg(resources.invalidNumber));
 
 		return err;
 	},
@@ -38,14 +79,14 @@ module.exports = {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
 		if (!(Number(value) === value && value % 1 === 0))
-			return ["Invalid number!"];
+			return [msg(resources.invalidNumber)];
 	},
 
 	double(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
 		if (!(Number(value) === value && value % 1 !== 0))
-			return ["Invalid number!"];
+			return [msg(resources.invalidNumber)];
 	},
 
 	string(value, field) {
@@ -54,13 +95,13 @@ module.exports = {
 		let err = [];
 		if (isString(value)) {
 			if (!isNil(field.min) && value.length < field.min)
-				err.push(`The length of text is too small! Current: ${value.length}, Minimum: ${field.min}`);
+				err.push(msg(resources.textTooSmall, value.length, field.min));
 
 			if (!isNil(field.max) && value.length > field.max)
-				err.push(`The length of text is too big! Current: ${value.length}, Maximum: ${field.max}`);
+				err.push(msg(resources.textTooBig, value.length, field.max));
 
 		} else 
-			err.push("This is not a text!");
+			err.push(msg(resources.thisNotText));
 
 		return err;
 	},
@@ -69,20 +110,20 @@ module.exports = {
 		if (field.required) {
 
 			if (!isArray(value))
-				return ["Value is not an array!"];
+				return [msg(resources.thisNotArray)];
 
 			if (value.length == 0)
-				return ["This field is required!"];
+				return [msg(resources.fieldIsRequired)];
 		}
 
 		if (!isNil(value)) {
 			if (!isNil(field.min))
 				if (value.length < field.min)
-					return ["Select minimum " + field.min + " items!"];
+					return [msg(resources.selectMinItems, field.min)];
 
 			if (!isNil(field.max))
 				if (value.length > field.max)
-					return ["Select maximum " + field.max + " items!"];
+					return [msg(resources.selectMaxItems, field.max)];
 		}
 	},	
 
@@ -91,20 +132,20 @@ module.exports = {
 
 		let m = moment(value);
 		if (!m.isValid()) 
-			return ["Invalid date!"];
+			return [msg(resources.invalidDate)];
 
 		let err = [];
 
 		if (!isNil(field.min)) {
 			let min = moment(field.min);
 			if (m.isBefore(min))
-				err.push(`The date is too early! Current: ${m.format("L")}, Minimum: ${min.format("L")}`);
+				err.push(msg(resources.dateIsEarly, m.format("L"), min.format("L")));
 		}
 
 		if (!isNil(field.max)) {
 			let max = moment(field.max);
 			if (m.isAfter(max))
-				err.push(`The date is too late! Current: ${m.format("L")}, Maximum: ${max.format("L")}`);
+				err.push(msg(resources.dateIsLate, m.format("L"), max.format("L")));
 		}
 
 		return err;
@@ -116,7 +157,7 @@ module.exports = {
 		if (!isNil(field.pattern)) {
 			let re = new RegExp(field.pattern);
 			if (!re.test(value))
-				return ["Invalid format!"];
+				return [msg(resources.invalidFormat)];
 		}
 	},
 
@@ -125,7 +166,7 @@ module.exports = {
 
 		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if (!re.test(value))
-			return ["Invalid e-mail address!"];
+			return [msg(resources.invalidEmail)];
 	},	
 
 	url(value, field) {
@@ -133,7 +174,7 @@ module.exports = {
 
 		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
 		if (!re.test(value))
-			return ["Invalid URL!"];
+			return [msg(resources.invalidURL)];
 	},	
 
 	creditCard(value, field) {
@@ -145,7 +186,7 @@ module.exports = {
 		const creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
 		const sanitized = value.replace(/[^0-9]+/g, "");
 		if (!creditCard.test(sanitized)) {
-			return ["Invalid card format!"];
+			return [msg(resources.invalidCard)];
 		}
 		let sum = 0;
 		let digit;
@@ -168,7 +209,7 @@ module.exports = {
 		}
 
 		if (!((sum % 10) === 0 ? sanitized : false))
-			return ["Invalid card number!"];
+			return [msg(resources.invalidCardNumber)];
 	},
 
 	alpha(value, field) {
@@ -176,7 +217,7 @@ module.exports = {
 
 		let re = /^[a-zA-Z]*$/;		
 		if (!re.test(value))
-			return ["Invalid text! Cannot contains numbers or special characters"];
+			return [msg(resources.invalidTextContainNumber)];
 	},
 
 	alphaNumeric(value, field) {
@@ -184,6 +225,6 @@ module.exports = {
 
 		let re = /^[a-zA-Z0-9]*$/;	
 		if (!re.test(value))
-			return ["Invalid text! Cannot contains special characters"];
+			return [msg(resources.invalidTextContainSpec)];
 	}
 };
