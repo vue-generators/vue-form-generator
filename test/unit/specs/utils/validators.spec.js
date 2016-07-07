@@ -13,6 +13,18 @@ function check(validator, value, field, errorCount) {
 
 describe("Validators", () => {
 
+	describe("test Validators.required", () => {
+
+		it("should NOT give error if value is null, but field is NOT required", () => {
+			check(v.required, null, { required: false }, 0);
+		});
+
+		it("should give error if value is null, but field is required", () => {
+			check(v.required, null, { required: true }, 1);
+		});
+
+	});
+
 	describe("test Validators.number", () => {
 
 		let field = {
