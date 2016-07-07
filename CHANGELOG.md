@@ -1,3 +1,18 @@
+<a name="0.3.0"></a>
+# 0.3.0 (2016-07-07)
+
+* :arrow_up: bump version ([249376f](https://github.com/icebob/vue-form-generator/commit/249376f))
+* :new: implement #14 ([c6d0a76](https://github.com/icebob/vue-form-generator/commit/c6d0a76))
+* :package: build ([9e91fcb](https://github.com/icebob/vue-form-generator/commit/9e91fcb))
+* :package: build: v0.3.0 ([8780d3b](https://github.com/icebob/vue-form-generator/commit/8780d3b))
+* add maxlength property to fieldText ([3fede6d](https://github.com/icebob/vue-form-generator/commit/3fede6d))
+* cover validators.required method ([df2516c](https://github.com/icebob/vue-form-generator/commit/df2516c))
+* Move validator error messages to resources #15 ([302ba3f](https://github.com/icebob/vue-form-generator/commit/302ba3f))
+* remove joi dependency ([31c24f1](https://github.com/icebob/vue-form-generator/commit/31c24f1))
+* improve:  minor change dev code ([84b0a2c](https://github.com/icebob/vue-form-generator/commit/84b0a2c))
+
+
+
 <a name="0.2.0"></a>
 # 0.2.0 (2016-06-16)
 
