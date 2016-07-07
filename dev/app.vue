@@ -1,31 +1,31 @@
 <template lang="jade">
-		.row
-			.col-md-10.col-md-offset-1
-				data-table(:rows="rows", :selected="selected", :select="selectRow")
+	.row
+		.col-md-10.col-md-offset-1
+			data-table(:rows="rows", :selected="selected", :select="selectRow")
 
-		.row(v-show="model")
-			.col-md-5.col-md-offset-1
-				.buttons.text-center
-					button.btn.btn-default.new(@click="newModel") 
-						i.fa.fa-plus
-						| New
-					button.btn.btn-primary.save(@click="saveModel") 
-						i.fa.fa-floppy-o
-						| Save
-						i.fa.fa-warning(v-if="showWarning()")
-					button.btn.btn-danger.delete(@click="deleteModel") 
-						i.fa.fa-trash
-						| Delete
+	.row(v-show="model")
+		.col-md-5.col-md-offset-1
+			.buttons.text-center
+				button.btn.btn-default.new(@click="newModel") 
+					i.fa.fa-plus
+					| New
+				button.btn.btn-primary.save(@click="saveModel") 
+					i.fa.fa-floppy-o
+					| Save
+					i.fa.fa-warning(v-if="showWarning()")
+				button.btn.btn-danger.delete(@click="deleteModel") 
+					i.fa.fa-trash
+					| Delete
 
-				.errors.text-center
-					div.alert.alert-danger(v-for="item in validationErrors", track-by="$index") {{ item.field.label}}: 
-						strong {{ item.error }}
+			.errors.text-center
+				div.alert.alert-danger(v-for="item in validationErrors", track-by="$index") {{ item.field.label}}: 
+					strong {{ item.error }}
 
-				vue-form-generator(:schema='schema', :model='model', :options='formOptions', :multiple="selected.length > 1", v-ref:form, :is-new-model="isNewModel")
+			vue-form-generator(:schema='schema', :model='model', :options='formOptions', :multiple="selected.length > 1", v-ref:form, :is-new-model="isNewModel")
 
 
-			.col-md-6
-				pre(v-if='model') {{{ model | prettyJSON }}}   
+		.col-md-6
+			pre(v-if='model') {{{ model | prettyJSON }}}   
 
 </template>
 
