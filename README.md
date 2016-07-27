@@ -25,10 +25,9 @@ A schema-based form generator component for Vue.js
 [Online documentation on Gitbook](https://icebob.gitbooks.io/vueformgenerator/content/)
 
 ## Dependencies
-- [jQuery](http://www.jquery.com)
 - [Moment.js](http://momentjs.com/) (built-in)
 - [lodash](https://lodash.com/) (built-in)
-- [BootStrap](http://getbootstrap.com/) (optional)
+- [BootStrap](http://getbootstrap.com/) & [jQuery](http://www.jquery.com) (optional)
 - [bootstrap-select](https://silviomoreto.github.io/bootstrap-select/) for `selectEx` fields (optional)
 - [bootstrap-datetimepicker](https://github.com/Eonasdan/bootstrap-datetimepicker) for `datetime` fields (optional)
 - [spectrum](https://github.com/bgrins/spectrum) for `spectrum` color picker fields (optional)
