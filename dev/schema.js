@@ -83,16 +83,23 @@ module.exports = {
 			type: "vueMultiSelect",
 			label: "Skills (vue-multiSelect field)",
 			model: "skills",
-			multi: true,
 			required: true,
 			multiSelect: true,
 			selectOptions: {
-				// https://silviomoreto.github.io/bootstrap-select/options/
-				liveSearch: true,
-				//maxOptions: 3,
-				//size: 4,
-				//actionsBox: true,
-				selectedTextFormat: "count > 3"
+				// id:25,
+				// key:"name",
+				// label: "name",
+				searchable:true,
+				clearOnSelect:true,
+				hideSelected:true,
+				// maxHeight:300,
+				// allowEmpty:true,
+				// resetAfter:false,
+				closeOnSelect: true,
+				// customLabel:function(){return ""},
+				taggable:true,
+				tagPlaceholder:'Press enter to create a tag',
+				max:4
 			},
 			values: [
 				"HTML5",
@@ -103,8 +110,12 @@ module.exports = {
 				"ReactJS",
 				"VueJS"
 			],
+			onChanged(model, newVal, oldVal, field) {				
+				console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
+			},
 			min: 2,
 			max: 4,
+			placeholder:"Select one Vue",
 			validator: validators.array
 		},	
 	
