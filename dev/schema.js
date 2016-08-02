@@ -77,6 +77,35 @@ module.exports = {
 			hint: "Minimum 6 characters",
 			styleClasses: "half-width",
 			validator: validators.string			
+		},
+
+		{
+			type: "vueMultiSelect",
+			label: "Skills (vue-multiSelect field)",
+			model: "skills",
+			multi: true,
+			required: true,
+			multiSelect: true,
+			selectOptions: {
+				// https://silviomoreto.github.io/bootstrap-select/options/
+				liveSearch: true,
+				//maxOptions: 3,
+				//size: 4,
+				//actionsBox: true,
+				selectedTextFormat: "count > 3"
+			},
+			values: [
+				"HTML5",
+				"Javascript",
+				"CSS3",
+				"CoffeeScript",
+				"AngularJS",
+				"ReactJS",
+				"VueJS"
+			],
+			min: 2,
+			max: 4,
+			validator: validators.array
 		},	
 	
 		{
