@@ -32,13 +32,9 @@
 <script>
 // import { isObject } from "lodash";
 import abstractField from "./abstractField";
-import Multiselect from "vue-multiselect";
 
 export default {
 	mixins: [abstractField],
-	components: {
-		Multiselect
-	},
 	computed: {
 		options() {
 			let values = this.schema.values;
@@ -82,5 +78,14 @@ export default {
 			console.log("onClose", value, id);
 		}
 	}
+    created() {
+        // Check if the component is loaded
+        if (window.VueMultiselect) {
+            Vue.component("multiselect", window.VueMultiselect.default);           
+        } else {
+            console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and load the script in the HTML head section!");
+        }
+    }
 };
 </script>
+
