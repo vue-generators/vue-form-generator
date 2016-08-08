@@ -10,7 +10,7 @@
 	};
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	input[type=checkbox] {
 		margin-left: 12px;
 	}

@@ -40,7 +40,7 @@
 </script>
 
 
-<style lang="sass" scoped>
+<style lang="sass">
 	select {
 		width: 100%;
 	}
