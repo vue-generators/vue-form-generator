@@ -459,7 +459,7 @@ module.exports = {
 			placeholder: "User's biography",
 			rows: 4,
 			validator: validators.string
-		}, {
+		}/*, {
 			type: "submit",
 			label: "",
 			caption: "Submit form",
@@ -468,6 +468,6 @@ module.exports = {
 				console.log("Form submitted!", model);
 				alert("Form submitted!");
 			}
-		}
+		}*/
 	]
 }
