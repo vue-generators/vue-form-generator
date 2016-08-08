@@ -37,57 +37,58 @@
 	)
 </template>
 <script>
+/*global Vue:true*/
 import abstractField from "./abstractField";
 
 export default {
-    mixins: [abstractField],
-    computed: {
-        options() {
-            let values = this.schema.values;
-            if (typeof(values) == "function") {
-                return values.apply(this, [this.model, this.schema]);
-            } else {
-                return values;
-            }
-        }
-    },
-    methods: {
-        updateSelected(value, id) {
-            this.value = value;
-        },
-        addTag(newTag, id) {
-            let onNewTag = this.schema.selectOptions.onNewTag;
-            if (typeof(onNewTag) == "function") {
-                onNewTag(newTag, id, this.options, this.value);
-            }
-        },
-        onSearchChange(searchQuery, id) {
-            let onSearch = this.schema.selectOptions.onSearch;
-            if (typeof(onSearch) == "function") {
-                onSearch(searchQuery, id, this.options);
-            }
-        },
-        onSelect(selectedOption, id) {
-            // console.log("onSelect", selectedOption, id);
-        },
-        onRemove(removedOption, id) {
-            // console.log("onRemove", removedOption, id);
-        },
-        onOpen(id) {
-            // console.log("onOpen", id);
-        },
-        onClose(value, id) {
-            // console.log("onClose", value, id);
-        }
-    },
-    created() {
-        // Check if the component is loaded
-        if (window.VueMultiselect) {
-            Vue.component("multiselect", window.VueMultiselect.default);           
-        } else {
-            console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and load the script in the HTML head section!");
-        }
-    }
+	mixins: [abstractField],
+	computed: {
+		options() {
+			let values = this.schema.values;
+			if (typeof(values) == "function") {
+				return values.apply(this, [this.model, this.schema]);
+			} else {
+				return values;
+			}
+		}
+	},
+	methods: {
+		updateSelected(value/*, id*/) {
+			this.value = value;
+		},
+		addTag(newTag, id) {
+			let onNewTag = this.schema.selectOptions.onNewTag;
+			if (typeof(onNewTag) == "function") {
+				onNewTag(newTag, id, this.options, this.value);
+			}
+		},
+		onSearchChange(searchQuery, id) {
+			let onSearch = this.schema.selectOptions.onSearch;
+			if (typeof(onSearch) == "function") {
+				onSearch(searchQuery, id, this.options);
+			}
+		},
+		onSelect(/*selectedOption, id*/) {
+			// console.log("onSelect", selectedOption, id);
+		},
+		onRemove(/*removedOption, id*/) {
+			// console.log("onRemove", removedOption, id);
+		},
+		onOpen(/*id*/) {
+			// console.log("onOpen", id);
+		},
+		onClose(/*value, id*/) {
+			// console.log("onClose", value, id);
+		}
+	},
+	created() {
+		// Check if the component is loaded
+		if (window.VueMultiselect) {
+			Vue.component("multiselect", window.VueMultiselect.default);
+		} else {
+			console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and load the script in the HTML head section!");
+		}
+	}
 };
 </script>
 
