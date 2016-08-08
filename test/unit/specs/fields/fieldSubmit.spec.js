@@ -1,0 +1,68 @@
+/* global sinon */
+import { expect } from "chai";
+import { createVueField } from "../util";
+
+import Vue from "vue";
+import FieldSubmit from "src/fields/fieldSubmit.vue";
+
+Vue.component("FieldSubmit", FieldSubmit);
+
+// eslint-disable-next-line
+let el, vm, field;
+
+function createField(schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField("fieldSubmit", schema, model, disabled, options);
+}
+
+describe("fieldSubmit.vue", () => {
+
+	describe("check template", () => {
+		let schema = {
+			type: "submit",
+			caption: "Submit form",
+			validateBeforeSubmit: false,
+			onSubmit() {}
+		};
+		let model = { name: "John Doe" };
+		let input;
+
+		before( () => {
+			createField(schema, model, false);
+			input = el.getElementsByTagName("input")[0];
+		});
+
+		it("should contain an input submit element", () => {
+			expect(field).to.be.exist;
+			expect(field.$el).to.be.exist;
+
+			expect(input).to.be.defined;
+			expect(input.type).to.be.equal("submit");
+			expect(input.value).to.be.equal("Submit form");	
+		});
+
+		it("should not call validate if validateBeforeSubmit is false", () => {
+			schema.onSubmit = sinon.spy();
+			let cb = sinon.spy();
+			field.$parent.validate = cb;
+
+			input.click();
+			expect(cb.called).to.be.false;	
+			expect(schema.onSubmit.calledOnce).to.be.true;	
+			expect(schema.onSubmit.calledWith(model, schema)).to.be.true;	
+		});
+		
+
+		it("should call validate if validateBeforeSubmit is true", () => {
+			schema.validateBeforeSubmit = true;
+			schema.onSubmit = sinon.spy();
+			let cb = sinon.spy();
+			field.$parent.validate = cb;
+
+			input.click();
+			expect(cb.called).to.be.true;	
+			expect(schema.onSubmit.called).to.be.false;	
+		});	
+
+	});
+
+});
