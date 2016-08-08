@@ -84,7 +84,7 @@
 </script>
 
 
-<style lang="sass" scoped>
+<style lang="sass">
 
 	.listbox, .dropList {
 		height: auto;

@@ -34,7 +34,7 @@
 	};
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 
 	$width: 120px;
 

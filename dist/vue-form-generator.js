@@ -27153,7 +27153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 13 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"checkbox\" v-model=\"value\" :disabled=\"disabled\" _v-2fdafcb6=\"\">";
+	module.exports = "<input type=\"checkbox\" v-model=\"value\" :disabled=\"disabled\"/>";
 
 /***/ },
 /* 14 */
@@ -27257,7 +27257,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 17 */
 /***/ function(module, exports) {
 
-	module.exports = "<div v-if=\"schema.listBox\" class=\"listbox form-control\" _v-3254e498=\"\"><div v-for=\"item in items\" class=\"list-row\" _v-3254e498=\"\"><label _v-3254e498=\"\"><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\" _v-3254e498=\"\">{{ getItemName(item) }}</label></div></div><div v-if=\"!schema.listBox\" class=\"combobox form-control\" _v-3254e498=\"\"><div @click=\"onExpandCombo\" :class=\"{ expanded: comboExpanded }\" class=\"mainRow\" _v-3254e498=\"\"><div class=\"info\" _v-3254e498=\"\">{{ selectedCount }} selected</div><div class=\"arrow\" _v-3254e498=\"\"></div></div><div class=\"dropList\" _v-3254e498=\"\"><div v-if=\"comboExpanded\" v-for=\"item in items\" class=\"list-row\" _v-3254e498=\"\"><label _v-3254e498=\"\"><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\" _v-3254e498=\"\">{{ getItemName(item) }}</label></div></div></div>";
+	module.exports = "<div v-if=\"schema.listBox\" class=\"listbox form-control\"><div v-for=\"item in items\" class=\"list-row\"><label><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\"/>{{ getItemName(item) }}</label></div></div><div v-if=\"!schema.listBox\" class=\"combobox form-control\"><div @click=\"onExpandCombo\" :class=\"{ expanded: comboExpanded }\" class=\"mainRow\"><div class=\"info\">{{ selectedCount }} selected</div><div class=\"arrow\"></div></div><div class=\"dropList\"><div v-if=\"comboExpanded\" v-for=\"item in items\" class=\"list-row\"><label><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\"/>{{ getItemName(item) }}</label></div></div></div>";
 
 /***/ },
 /* 18 */
@@ -27296,7 +27296,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 21 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"color\" v-model=\"value\" :disabled=\"disabled\" _v-da15201e=\"\"><span class=\"helper\" _v-da15201e=\"\">{{ value }}</span>";
+	module.exports = "<input type=\"color\" v-model=\"value\" :disabled=\"disabled\"/><span class=\"helper\">{{ value }}</span>";
 
 /***/ },
 /* 22 */
@@ -41414,7 +41414,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 128 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"input-group date\" _v-6ef4e97d=\"\"><input type=\"text\" v-model=\"value\" :disabled=\"disabled\" class=\"form-control\" _v-6ef4e97d=\"\"><span class=\"input-group-addon\" _v-6ef4e97d=\"\"><span class=\"glyphicon glyphicon-calendar\" _v-6ef4e97d=\"\"></span></span></div>";
+	module.exports = "<div class=\"input-group date\"><input type=\"text\" v-model=\"value\" :disabled=\"disabled\" class=\"form-control\"/><span class=\"input-group-addon\"><span class=\"glyphicon glyphicon-calendar\"></span></span></div>";
 
 /***/ },
 /* 129 */
@@ -41453,7 +41453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 132 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"email\" v-model=\"value\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\" _v-c97470ac=\"\">";
+	module.exports = "<input type=\"email\" v-model=\"value\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/>";
 
 /***/ },
 /* 133 */
@@ -41561,7 +41561,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 136 */
 /***/ function(module, exports) {
 
-	module.exports = "<div class=\"wrapper\" _v-2ee9a42e=\"\"><input type=\"text\" v-model=\"wrappedValue\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control link\" _v-2ee9a42e=\"\"><input type=\"file\" :readonly=\"schema.readonly\" :disabled=\"disabled\" v-if=\"schema.browse !== false\" @change=\"fileChanged\" class=\"form-control file\" _v-2ee9a42e=\"\"><div :style=\"previewStyle\" class=\"preview\" _v-2ee9a42e=\"\"><div title=\"Remove image\" @click=\"remove\" class=\"remove fa fa-trash-o\" _v-2ee9a42e=\"\"></div></div></div>";
+	module.exports = "<div class=\"wrapper\"><input type=\"text\" v-model=\"wrappedValue\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control link\"/><input type=\"file\" :readonly=\"schema.readonly\" :disabled=\"disabled\" v-if=\"schema.browse !== false\" @change=\"fileChanged\" class=\"form-control file\"/><div :style=\"previewStyle\" class=\"preview\"><div title=\"Remove image\" @click=\"remove\" class=\"remove fa fa-trash-o\"></div></div></div>";
 
 /***/ },
 /* 137 */
@@ -41600,7 +41600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 140 */
 /***/ function(module, exports) {
 
-	module.exports = "<span _v-0eace1fc=\"\">{{ value }}</span>";
+	module.exports = "<span>{{ value }}</span>";
 
 /***/ },
 /* 141 */
@@ -41661,7 +41661,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 144 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"text\" v-model=\"value\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\" _v-2b1174ed=\"\">";
+	module.exports = "<input type=\"text\" v-model=\"value\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/>";
 
 /***/ },
 /* 145 */
@@ -41700,7 +41700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 148 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"number\" v-model=\"value\" number=\"number\" :min=\"schema.min\" :max=\"schema.max\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\" _v-6a19b8ab=\"\">";
+	module.exports = "<input type=\"number\" v-model=\"value\" number=\"number\" :min=\"schema.min\" :max=\"schema.max\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/>";
 
 /***/ },
 /* 149 */
@@ -41739,7 +41739,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 152 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"password\" v-model=\"value\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\" _v-6c65f47d=\"\">";
+	module.exports = "<input type=\"password\" v-model=\"value\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/>";
 
 /***/ },
 /* 153 */
@@ -41778,7 +41778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 156 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"range\" v-model=\"value\" :min=\"schema.min\" :max=\"schema.max\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\" _v-1fd4066a=\"\"><div class=\"helpText\" _v-1fd4066a=\"\">{{ value }}</div>";
+	module.exports = "<input type=\"range\" v-model=\"value\" :min=\"schema.min\" :max=\"schema.max\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/><div class=\"helpText\">{{ value }}</div>";
 
 /***/ },
 /* 157 */
@@ -41859,7 +41859,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 160 */
 /***/ function(module, exports) {
 
-	module.exports = "<select v-model=\"value\" :disabled=\"disabled\" class=\"form-control\" _v-1ec600de=\"\"><option :disabled=\"schema.required\" :value=\"null\" :selected=\"value == undefined\" _v-1ec600de=\"\">&lt;Not selected&gt;</option><option v-for=\"item in items\" :value=\"getItemID(item)\" _v-1ec600de=\"\">{{ getItemName(item) }}</option></select>";
+	module.exports = "<select v-model=\"value\" :disabled=\"disabled\" class=\"form-control\"><option :disabled=\"schema.required\" :value=\"null\" :selected=\"value == undefined\">&lt;Not selected&gt;</option><option v-for=\"item in items\" :value=\"getItemID(item)\">{{ getItemName(item) }}</option></select>";
 
 /***/ },
 /* 161 */
@@ -43072,7 +43072,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 229 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"text\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" _v-0942c6b3=\"\">";
+	module.exports = "<input type=\"text\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\"/>";
 
 /***/ },
 /* 230 */
@@ -43135,7 +43135,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 233 */
 /***/ function(module, exports) {
 
-	module.exports = "<img :src=\"mapLink\" _v-5915e81c=\"\">";
+	module.exports = "<img :src=\"mapLink\"/>";
 
 /***/ },
 /* 234 */
@@ -43278,7 +43278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 241 */
 /***/ function(module, exports) {
 
-	module.exports = "<label _v-6cc6a716=\"\"><input type=\"checkbox\" v-model=\"value\" :disabled=\"disabled\" _v-6cc6a716=\"\"><span :data-on=\"schema.textOn || 'On'\" :data-off=\"schema.textOff || 'Off'\" class=\"label\" _v-6cc6a716=\"\"></span><span class=\"handle\" _v-6cc6a716=\"\"></span></label>";
+	module.exports = "<label><input type=\"checkbox\" v-model=\"value\" :disabled=\"disabled\"/><span :data-on=\"schema.textOn || 'On'\" :data-off=\"schema.textOff || 'Off'\" class=\"label\"></span><span class=\"handle\"></span></label>";
 
 /***/ },
 /* 242 */
@@ -43317,7 +43317,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 245 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"text\" v-model=\"value\" :maxlength=\"schema.max\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\" _v-59b0db0f=\"\">";
+	module.exports = "<input type=\"text\" v-model=\"value\" :maxlength=\"schema.max\" :readonly=\"schema.readonly\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/>";
 
 /***/ },
 /* 246 */
@@ -43356,7 +43356,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 249 */
 /***/ function(module, exports) {
 
-	module.exports = "<textarea v-model=\"value\" :rows=\"schema.rows || 2\" :readonly=\"schema.readonly\" :placeholder=\"schema.placeholder\" :disabled=\"disabled\" :maxlength=\"schema.max\" class=\"form-control\" _v-51662488=\"\"></textarea>";
+	module.exports = "<textarea v-model=\"value\" :rows=\"schema.rows || 2\" :readonly=\"schema.readonly\" :placeholder=\"schema.placeholder\" :disabled=\"disabled\" :maxlength=\"schema.max\" class=\"form-control\"></textarea>";
 
 /***/ },
 /* 250 */

@@ -10,7 +10,7 @@
 	};
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	span {
 		display: block;
 		width: 100%;

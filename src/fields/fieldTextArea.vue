@@ -12,7 +12,7 @@
 </script>
 
 
-<style lang="sass" scoped>
+<style lang="sass">
 	textarea {
 		width: 100%;
 	}

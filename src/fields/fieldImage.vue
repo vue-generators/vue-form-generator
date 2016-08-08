@@ -66,7 +66,7 @@
 	};
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 	.wrapper, input {
 		width: 100%;
 	}

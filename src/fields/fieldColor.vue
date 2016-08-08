@@ -11,7 +11,7 @@
 </script>
 
 
-<style lang="sass" scoped>
+<style lang="sass">
 	span {
 		margin-left: 0.3em;
 	}
