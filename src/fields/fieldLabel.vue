@@ -11,7 +11,7 @@
 </script>
 
 <style lang="sass">
-	.vue-form-generator .field-label {
+	.vue-form-generator .field-label span {
 		display: block;
 		width: 100%;
 		margin-left: 12px;
