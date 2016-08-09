@@ -43,7 +43,7 @@
 
 		watch: {
 			model() {
-				$(this.$el).find("input.file").val("");
+				this.$el.querySelector("input.file").value = "";
 			}
 		},
 
