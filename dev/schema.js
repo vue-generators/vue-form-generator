@@ -198,6 +198,15 @@ module.exports = {
 			styleClasses: "half-width",
 			validator: validators.required
 		}, {
+			type: "color",
+			label: "Color (basic)",
+			model: "favoriteColor",
+			required: true,
+			colorOptions: {
+				//preferredFormat: "rgb"
+			},
+			validator: validators.required
+		}, {			
 			type: "spectrum",
 			label: "Color (spectrum field)",
 			model: "favoriteColor",

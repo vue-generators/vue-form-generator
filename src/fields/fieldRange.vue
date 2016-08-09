@@ -11,7 +11,8 @@
 </script>
 
 
-<style lang="sass" scoped>
+<style lang="sass">
+.vue-form-generator .field-range {
 	input {
 		width: 100%;
 	}
@@ -19,4 +20,5 @@
 	.helpText {
 		margin: auto 0.5em;
 	}
+}
 </style>

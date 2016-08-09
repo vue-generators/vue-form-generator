@@ -34,15 +34,16 @@
 	};
 </script>
 
-<style lang="sass" scoped>
+<style lang="sass">
 
-	$width: 120px;
+$field-switch-width: 120px;
 
-	label {
+.vue-form-generator .field-switch { 
+	.field-wrap label {
 		position: relative;
 		display: block;
 		vertical-align: top;
-		width: $width;
+		width: $field-switch-width;
 		height: 30px;
 		padding: 3px;
 		margin: 0 10px 10px 0;
@@ -127,7 +128,8 @@
 		box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
 	}
 	input:checked ~ .handle {
-		left: $width - 26px;
+		left: $field-switch-width - 32px;
+		left: calc(100% - 32px);
 		box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 	}
 	 
@@ -136,5 +138,5 @@
 	.label, .handle {
 		transition: all 0.3s ease;
 	}
-
+}
 </style>

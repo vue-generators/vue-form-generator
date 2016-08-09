@@ -57,7 +57,7 @@
 
 
 <style lang="sass">
-	.irs {
+	.vue-form-generator .field-slider .irs {
 		width: 100%;
 	}
 </style>

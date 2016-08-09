@@ -10,8 +10,8 @@
 	};
 </script>
 
-<style lang="sass" scoped>
-	span {
+<style lang="sass">
+	.vue-form-generator .field-label {
 		display: block;
 		width: 100%;
 		margin-left: 12px;

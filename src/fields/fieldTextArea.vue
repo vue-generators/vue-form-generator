@@ -12,8 +12,5 @@
 </script>
 
 
-<style lang="sass" scoped>
-	textarea {
-		width: 100%;
-	}
+<style lang="sass">
 </style>

@@ -1,5 +1,5 @@
 <template lang="jade">
-	fieldset(v-if="schema != null")
+	fieldset.vue-form-generator(v-if="schema != null")
 		.form-group(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
 			label {{ field.label }}
 				span.help(v-if="field.help")
@@ -162,7 +162,7 @@
 	
 	$errorColor: lighten(#F00, 0%);
 
-	fieldset {
+	fieldset.vue-form-generator {
 		
 		input, select, textarea {
 			border-radius: 4px;

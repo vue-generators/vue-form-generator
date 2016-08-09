@@ -11,8 +11,8 @@
 	
 </script>
 
-<style lang="sass" scoped>
-	input {
+<style lang="sass">
+	.vue-form-generator .field-text input {
 		width: 100%;
 	}
 </style>

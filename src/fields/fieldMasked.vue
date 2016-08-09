@@ -17,8 +17,5 @@
 	};
 </script>
 
-<style lang="sass" scoped>
-	input {
-		width: 100%;
-	}
+<style lang="sass">
 </style>

@@ -66,11 +66,11 @@
 	};
 </script>
 
-<style lang="sass" scoped>
-	.wrapper, input {
+<style lang="sass">
+.vue-form-generator .field-image {
+	&.wrapper {
 		width: 100%;
 	}
-
 	.preview {
 		position: relative;
 		margin-top: 5px;
@@ -100,4 +100,5 @@
 			}
 		}
 	}
+}
 </style>
