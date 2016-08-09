@@ -128,7 +128,8 @@ $field-switch-width: 120px;
 		box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
 	}
 	input:checked ~ .handle {
-		left: $width - 26px;
+		left: $field-switch-width - 32px;
+		left: calc(100% - 32px);
 		box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 	}
 	 
