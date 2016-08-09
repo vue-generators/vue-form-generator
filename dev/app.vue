@@ -249,14 +249,18 @@
 		}
 	}
 
-	.form-group.half-width {
-		width: 50%;
-	}
+	fieldset.vue-form-generator {
 
-	.half-width + .half-width {
-		&:not(.first) {
-			padding-left: 0.5rem;
+		.form-group.half-width {
+			width: 50%;
 		}
+
+		.half-width + .half-width {
+			&:not(.first) {
+				padding-left: 0.5rem;
+			}
+		}
+		
 	}
 
 
