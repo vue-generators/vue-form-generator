@@ -11,7 +11,4 @@
 
 
 <style lang="sass">
-	input {
-		width: 100%;
-	}
 </style>

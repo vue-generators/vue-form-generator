@@ -18,7 +18,7 @@
 </script>
 
 <style lang="sass">
-	img {
+	.vue-form-generator .field-staticMap img {
 		display: block;
 		width: auto;
 		max-width: 100%;

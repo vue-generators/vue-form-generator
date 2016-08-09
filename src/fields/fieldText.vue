@@ -12,7 +12,7 @@
 </script>
 
 <style lang="sass">
-	input {
+	.vue-form-generator .field-text input {
 		width: 100%;
 	}
 </style>

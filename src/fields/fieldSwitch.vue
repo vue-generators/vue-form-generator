@@ -36,13 +36,14 @@
 
 <style lang="sass">
 
-	$width: 120px;
+$field-switch-width: 120px;
 
-	label {
+.vue-form-generator .field-switch { 
+	.field-wrap label {
 		position: relative;
 		display: block;
 		vertical-align: top;
-		width: $width;
+		width: $field-switch-width;
 		height: 30px;
 		padding: 3px;
 		margin: 0 10px 10px 0;
@@ -136,5 +137,5 @@
 	.label, .handle {
 		transition: all 0.3s ease;
 	}
-
+}
 </style>

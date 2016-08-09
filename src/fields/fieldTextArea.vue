@@ -13,7 +13,4 @@
 
 
 <style lang="sass">
-	textarea {
-		width: 100%;
-	}
 </style>

@@ -12,7 +12,7 @@
 
 
 <style lang="sass">
-	span {
+	.vue-form-generator .field-color .helper {
 		margin-left: 0.3em;
 	}
 </style>
