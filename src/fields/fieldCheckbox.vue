@@ -11,7 +11,7 @@
 </script>
 
 <style lang="sass">
-	.vue-form-generator .field-checkbox {
+	.vue-form-generator .field-checkbox input {
 		margin-left: 12px;
 	}
 </style>
