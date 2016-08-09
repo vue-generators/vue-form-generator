@@ -164,11 +164,20 @@
 
 	fieldset.vue-form-generator {
 		
-		input, select, textarea {
-			border-radius: 4px;
-			border: 1px solid #BBB;
-			padding: 2px 5px;
+		.form-control {
+			// Default Bootstrap .form-control style
+			display: block;
 			width: 100%;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			color: #555;
+			background-color: #fff;
+			background-image: none;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;	
 		}
 		
 		span.help {
@@ -210,20 +219,6 @@
 				width: 100%;
 			}  
 
-			/* CSS Triangles - see Trevor's post */
-			/*.helpText:after {
-				border-left: solid transparent 10px;
-				border-right: solid transparent 10px;
-				border-top: solid #1496bb 10px;
-				bottom: -10px;
-				content: " ";
-				height: 0;
-				left: 50%;
-				margin-left: -13px;
-				position: absolute;
-				width: 0;
-			}*/
-				
 			&:hover .helpText {
 				opacity: 1;
 				pointer-events: auto;
@@ -236,9 +231,41 @@
 
 			.buttons {
 				white-space: nowrap;
+
 				button {
+					
+					// Default Bootstrap button style
 					display: inline-block;
-					margin: 0 2px;
+					padding: 6px 12px;
+					margin: 0px;					
+					margin-left: 4px;
+					font-size: 14px;
+					font-weight: normal;
+					line-height: 1.42857143;
+					text-align: center;
+					white-space: nowrap;
+					vertical-align: middle;
+					touch-action: manipulation;
+					cursor: pointer;
+					user-select: none;
+					color: #333;
+					background-color: #fff;
+					border: 1px solid #ccc;
+					border-radius: 4px;
+
+					&:hover {
+						color: #333;
+						background-color: #e6e6e6;
+						border-color: #adadad;
+					}
+
+					&:active {
+						color: #333;
+						background-color: #d4d4d4;
+						border-color: #8c8c8c;
+						outline: 0;
+						box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+					}
 				}
 			}
 		}		
