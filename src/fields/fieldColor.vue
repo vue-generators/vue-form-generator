@@ -12,7 +12,14 @@
 
 
 <style lang="sass">
-	.vue-form-generator .field-color .helper {
-		margin-left: 0.3em;
-	}
+	.vue-form-generator .field-color {
+
+		input {
+			width: 60px;
+		}
+
+		.helper {
+			margin-left: 0.3em;
+		}
+	} 
 </style>

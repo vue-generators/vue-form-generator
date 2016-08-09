@@ -168,6 +168,7 @@
 			border-radius: 4px;
 			border: 1px solid #BBB;
 			padding: 2px 5px;
+			width: 100%;
 		}
 		
 		span.help {
