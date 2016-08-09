@@ -1,6 +1,7 @@
 <template lang="jade">
-	input(type="color", v-model="value", :disabled="disabled")
-	span.helper {{ value }}
+	.wrapper
+		input(type="color", v-model="value", :disabled="disabled")
+		span.helper {{ value }}
 </template>
 
 <script>

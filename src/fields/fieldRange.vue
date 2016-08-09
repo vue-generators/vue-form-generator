@@ -1,6 +1,7 @@
 <template lang="jade">
-	input.form-control(type="range", v-model="value", :min="schema.min", :max="schema.max", :disabled="disabled", :placeholder="schema.placeholder")
-	.helpText {{ value }}
+	.wrapper
+		input.form-control(type="range", v-model="value", :min="schema.min", :max="schema.max", :disabled="disabled", :placeholder="schema.placeholder")
+		.helpText {{ value }}
 </template>
 
 <script>
