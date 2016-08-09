@@ -85,56 +85,58 @@
 
 
 <style lang="sass">
+	.vue-form-generator .field-checklist {
 
-	.listbox, .dropList {
-		height: auto;
-		max-height: 150px;
-		overflow: auto;
+		.listbox, .dropList {
+			height: auto;
+			max-height: 150px;
+			overflow: auto;
 
-		.list-row {
-			label {
-				font-weight: initial;
-			}
+			.list-row {
+				label {
+					font-weight: initial;
+				}
 
-			input {
-				margin-right: 0.3em;
-			}
-		}
-	}
-
-	.combobox {
-		height: initial;
-		overflow: hidden;
-
-		.mainRow {
-			cursor: pointer;
-			position: relative;
-	
-			.arrow {
-				position: absolute;
-				right: -6px;
-				top: 4px;
-				width: 16px;
-				height: 16px;
-
-				transform: rotate(0deg);
-				transition: transform 0.5s;
-
-				background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAGdJREFUOI3tzjsOwjAURNGDUqSgTxU5K2AVrJtswjUsgHSR0qdxAZZFPrS+3ZvRzBsqf9MUtBtazJk+oMe0VTriiZCFX8nbpENMgfARjsn74vKj5IFruhfc8d6zIF9S/Hyk5HS4spMVeFcOjszaOwMAAAAASUVORK5CYII=');
-				background-repeat: no-repeat;
-
-			}
-
-			&.expanded {
-				.arrow {
-					transform: rotate(-180deg);
+				input {
+					margin-right: 0.3em;
 				}
 			}
 		}
 
-		.dropList {
-			transition: height 0.5s;
-			//margin-top: 0.5em;
+		.combobox {
+			height: initial;
+			overflow: hidden;
+
+			.mainRow {
+				cursor: pointer;
+				position: relative;
+		
+				.arrow {
+					position: absolute;
+					right: -6px;
+					top: 4px;
+					width: 16px;
+					height: 16px;
+
+					transform: rotate(0deg);
+					transition: transform 0.5s;
+
+					background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAGdJREFUOI3tzjsOwjAURNGDUqSgTxU5K2AVrJtswjUsgHSR0qdxAZZFPrS+3ZvRzBsqf9MUtBtazJk+oMe0VTriiZCFX8nbpENMgfARjsn74vKj5IFruhfc8d6zIF9S/Hyk5HS4spMVeFcOjszaOwMAAAAASUVORK5CYII=');
+					background-repeat: no-repeat;
+
+				}
+
+				&.expanded {
+					.arrow {
+						transform: rotate(-180deg);
+					}
+				}
+			}
+
+			.dropList {
+				transition: height 0.5s;
+				//margin-top: 0.5em;
+			}
 		}
 	}
 </style>

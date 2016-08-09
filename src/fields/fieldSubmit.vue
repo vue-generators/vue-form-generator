@@ -29,6 +29,9 @@
 
 <style lang="sass">
 	.vue-form-generator .field-submit input {
-		width: 100%;
+		// Default bootstrap primary button style
+		color: #fff !important;
+		background-color: #337ab7 !important;
+		border-color: #2e6da4 !important;
 	}
 </style>

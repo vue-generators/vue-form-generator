@@ -8,7 +8,7 @@
 			.field-wrap
 				component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
 				.buttons(v-if="field.buttons && field.buttons.length > 0")
-					button.btn.btn-default(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
+					button(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
 			.hint(v-if="field.hint") {{ field.hint }}
 			.errors(v-if="field.errors && field.errors.length > 0")
 				span(v-for="error in field.errors", track-by="$index") {{ error }}
@@ -231,40 +231,44 @@
 
 			.buttons {
 				white-space: nowrap;
+				margin-left: 4px;
+			}
 
-				button {					
-					// Default Bootstrap button style
-					display: inline-block;
-					padding: 6px 12px;
-					margin: 0px;					
-					margin-left: 4px;
-					font-size: 14px;
-					font-weight: normal;
-					line-height: 1.42857143;
-					text-align: center;
-					white-space: nowrap;
-					vertical-align: middle;
-					touch-action: manipulation;
-					cursor: pointer;
-					user-select: none;
+			button, input[type=submit] {					
+				// Default Bootstrap button style
+				display: inline-block;
+				padding: 6px 12px;
+				margin: 0px;					
+				font-size: 14px;
+				font-weight: normal;
+				line-height: 1.42857143;
+				text-align: center;
+				white-space: nowrap;
+				vertical-align: middle;
+				touch-action: manipulation;
+				cursor: pointer;
+				user-select: none;
+				color: #333;
+				background-color: #fff;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+
+				&:not(:last-child) {
+					margin-right: 4px;
+				}
+
+				&:hover {
 					color: #333;
-					background-color: #fff;
-					border: 1px solid #ccc;
-					border-radius: 4px;
+					background-color: #e6e6e6;
+					border-color: #adadad;
+				}
 
-					&:hover {
-						color: #333;
-						background-color: #e6e6e6;
-						border-color: #adadad;
-					}
-
-					&:active {
-						color: #333;
-						background-color: #d4d4d4;
-						border-color: #8c8c8c;
-						outline: 0;
-						box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-					}
+				&:active {
+					color: #333;
+					background-color: #d4d4d4;
+					border-color: #8c8c8c;
+					outline: 0;
+					box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 				}
 			}
 		}		
