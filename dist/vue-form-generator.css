@@ -247,6 +247,7 @@ fieldset.vue-form-generator .form-group {
 
 
 
+
 .vue-form-generator .field-image .wrapper {
   width: 100%; }
 
@@ -276,6 +277,7 @@ fieldset.vue-form-generator .form-group {
   display: block;
   width: 100%;
   margin-left: 12px; }
+
 
 
 
@@ -374,6 +376,7 @@ fieldset.vue-form-generator .form-group {
   font-weight: bold; }
 .vue-form-generator .field-slider .irs {
   width: 100%; }
+
 
 
 

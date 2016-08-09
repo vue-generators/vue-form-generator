@@ -116,7 +116,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-9c7f8788/formGenerator.vue"
+	  var id = "_v-00e1475f/formGenerator.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -27034,7 +27034,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-c65c5786/fieldCheckbox.vue"
+	  var id = "_v-17478bba/fieldCheckbox.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -27175,7 +27175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-6bfee3c8/fieldChecklist.vue"
+	  var id = "_v-c37c7382/fieldChecklist.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -27256,7 +27256,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "<div v-if=\"schema.listBox\" class=\"listbox form-control\"><div v-for=\"item in items\" class=\"list-row\"><label><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\"/>{{ getItemName(item) }}</label></div></div><div v-if=\"!schema.listBox\" class=\"combobox form-control\"><div @click=\"onExpandCombo\" :class=\"{ expanded: comboExpanded }\" class=\"mainRow\"><div class=\"info\">{{ selectedCount }} selected</div><div class=\"arrow\"></div></div><div class=\"dropList\"><div v-if=\"comboExpanded\" v-for=\"item in items\" class=\"list-row\"><label><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\"/>{{ getItemName(item) }}</label></div></div></div>";
+	module.exports = "<div class=\"wrapper\"><div v-if=\"schema.listBox\" class=\"listbox form-control\"><div v-for=\"item in items\" class=\"list-row\"><label><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\"/>{{ getItemName(item) }}</label></div></div><div v-if=\"!schema.listBox\" class=\"combobox form-control\"><div @click=\"onExpandCombo\" :class=\"{ expanded: comboExpanded }\" class=\"mainRow\"><div class=\"info\">{{ selectedCount }} selected</div><div class=\"arrow\"></div></div><div class=\"dropList\"><div v-if=\"comboExpanded\" v-for=\"item in items\" class=\"list-row\"><label><input type=\"checkbox\" :checked=\"getItemIsChecked(item)\" @change=\"onChanged($event, item)\"/>{{ getItemName(item) }}</label></div></div></div></div>";
 
 /***/ },
 /* 17 */
@@ -27279,7 +27279,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-2b40e459/fieldColor.vue"
+	  var id = "_v-c25cb408/fieldColor.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -27295,7 +27295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 20 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"color\" v-model=\"value\" :disabled=\"disabled\"/><span class=\"helper\">{{ value }}</span>";
+	module.exports = "<div class=\"wrapper\"><input type=\"color\" v-model=\"value\" :disabled=\"disabled\"/><span class=\"helper\">{{ value }}</span></div>";
 
 /***/ },
 /* 21 */
@@ -27318,7 +27318,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-23b43c15/fieldDateTime.vue"
+	  var id = "_v-c3ac18dc/fieldDateTime.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41436,7 +41436,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-33913c12/fieldEmail.vue"
+	  var id = "_v-b1bc0496/fieldEmail.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41475,7 +41475,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-fe52bb5e/fieldImage.vue"
+	  var id = "_v-17313818/fieldImage.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41533,7 +41533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		watch: {
 			model: function model() {
-				$(this.$el).find("input.file").val("");
+				this.$el.querySelector("input.file").value = "";
 			}
 		},
 
@@ -41583,7 +41583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-de15f92c/fieldLabel.vue"
+	  var id = "_v-0485c50d/fieldLabel.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41622,7 +41622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-c796e4f6/fieldMasked.vue"
+	  var id = "_v-ca87ff7c/fieldMasked.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41683,7 +41683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-49865d7a/fieldNumber.vue"
+	  var id = "_v-4c777800/fieldNumber.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41722,7 +41722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-21254715/fieldPassword.vue"
+	  var id = "_v-c8ca02dc/fieldPassword.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41761,7 +41761,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-ef3d1d9a/fieldRange.vue"
+	  var id = "_v-081b9a54/fieldRange.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41777,7 +41777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 155 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"range\" v-model=\"value\" :min=\"schema.min\" :max=\"schema.max\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/><div class=\"helpText\">{{ value }}</div>";
+	module.exports = "<div class=\"wrapper\"><input type=\"range\" v-model=\"value\" :min=\"schema.min\" :max=\"schema.max\" :disabled=\"disabled\" :placeholder=\"schema.placeholder\" class=\"form-control\"/><div class=\"helpText\">{{ value }}</div></div>";
 
 /***/ },
 /* 156 */
@@ -41800,7 +41800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-e02dcd14/fieldSelect.vue"
+	  var id = "_v-e31ee79a/fieldSelect.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41881,7 +41881,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-61444149/fieldSelectEx.vue"
+	  var id = "_v-488c0e74/fieldSelectEx.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -41972,7 +41972,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-348be2db/fieldSlider.vue"
+	  var id = "_v-33135598/fieldSlider.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -43012,7 +43012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-83fbcd6a/fieldSpectrum.vue"
+	  var id = "_v-3877d0c8/fieldSpectrum.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -43094,7 +43094,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-3c40e884/fieldStaticMap.vue"
+	  var id = "_v-108220a7/fieldStaticMap.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -43157,7 +43157,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-76d33692/fieldSubmit.vue"
+	  var id = "_v-755aa94f/fieldSubmit.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -43228,7 +43228,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-442c80a4/fieldSwitch.vue"
+	  var id = "_v-471d9b2a/fieldSwitch.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -43300,7 +43300,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-8d1d8cb2/fieldText.vue"
+	  var id = "_v-0fc037a4/fieldText.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -43339,7 +43339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-e7e77f58/fieldTextArea.vue"
+	  var id = "_v-0681f7d1/fieldTextArea.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
@@ -43377,7 +43377,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var hotAPI = require("vue-hot-reload-api")
 	  hotAPI.install(require("vue"), false)
 	  if (!hotAPI.compatible) return
-	  var id = "_v-46024729/fieldVueMultiSelect.vue"
+	  var id = "_v-8504a634/fieldVueMultiSelect.vue"
 	  if (!module.hot.data) {
 	    hotAPI.createRecord(id, module.exports)
 	  } else {
