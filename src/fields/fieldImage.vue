@@ -3,7 +3,7 @@
 		input.form-control.link(type="text", v-model="wrappedValue", :readonly="schema.readonly", :disabled="disabled", :placeholder="schema.placeholder")
 		input.form-control.file(type="file", :readonly="schema.readonly", :disabled="disabled", v-if="schema.browse !== false", @change="fileChanged")
 		.preview(:style="previewStyle")
-			.remove.fa.fa-trash-o(title="Remove image", @click="remove")
+			.remove(title="Remove image", @click="remove")
 </template>
 
 <script>
@@ -66,37 +66,41 @@
 	};
 </script>
 
-<style lang="sass" scoped>
-	.wrapper, input {
-		width: 100%;
-	}
+<style lang="sass">
 
-	.preview {
-		position: relative;
-		margin-top: 5px;
-		height: 100px;
-		background-repeat: no-repeat;
-		background-size: contain;
-		background-position: center center;						
-		border: 1px solid #ccc;
-		border-radius: 3px;
-		box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	.vue-form-generator .field-image {
+		
+		.wrapper {
+			width: 100%;
+		}
 
-		.remove {
-			/*background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVR42u2SwQoAIAhD88vVLy8KBlaS0i1oJwP3piGVg0Skmpq8HjqZrWl9uwCbGAmwKYGZs/6iqgMyAdJuM8W2QmYKpLt/0AG9ASCv/oAnANd3AEjmAlFT1BypAV+PnRH5YehvAAAAAElFTkSuQmCC');
-			width: 16px;
-			height: 16px;
-			*/
-			font-size: 1.2em;
+		.preview {
+			position: relative;
+			margin-top: 5px;
+			height: 100px;
+			background-repeat: no-repeat;
+			background-size: contain;
+			background-position: center center;						
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 
-			position: absolute;
-			right: 0.2em;
-			bottom: 0.2em;
-			opacity: 0.7;
+			.remove {
+				background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAXUlEQVR42u2SwQoAIAhD88vVLy8KBlaS0i1oJwP3piGVg0Skmpq8HjqZrWl9uwCbGAmwKYGZs/6iqgMyAdJuM8W2QmYKpLt/0AG9ASCv/oAnANd3AEjmAlFT1BypAV+PnRH5YehvAAAAAElFTkSuQmCC');
+				width: 16px;
+				height: 16px;
+				
+				font-size: 1.2em;
 
-			&:hover {
-				opacity: 1.0;
-				cursor: pointer;
+				position: absolute;
+				right: 0.2em;
+				bottom: 0.2em;
+				opacity: 0.7;
+
+				&:hover {
+					opacity: 1.0;
+					cursor: pointer;
+				}
 			}
 		}
 	}

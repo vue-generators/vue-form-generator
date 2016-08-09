@@ -1,6 +1,7 @@
 var webpack = require("webpack");
 var version = require("./package.json").version;
 var banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var loaders = [
   {
@@ -33,11 +34,20 @@ module.exports = [
             }),
             new webpack.BannerPlugin(banner, {
                 raw: true
-            })
+            }),
+            new ExtractTextPlugin('vue-form-generator.css', { allChunks: true }),
         ],
 
         module: {
             loaders: loaders
+        },
+
+        vue: {
+            loaders: {
+                css: ExtractTextPlugin.extract('css'),
+                postcss: ExtractTextPlugin.extract('css'),
+                sass: ExtractTextPlugin.extract('css!sass'),
+            }
         },
 
         resolve: {

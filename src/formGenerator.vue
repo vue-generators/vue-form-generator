@@ -1,5 +1,5 @@
 <template lang="jade">
-	fieldset(v-if="schema != null")
+	fieldset.vue-form-generator(v-if="schema != null")
 		.form-group(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
 			label {{ field.label }}
 				span.help(v-if="field.help")
@@ -8,7 +8,7 @@
 			.field-wrap
 				component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
 				.buttons(v-if="field.buttons && field.buttons.length > 0")
-					button.btn.btn-default(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
+					button(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
 			.hint(v-if="field.hint") {{ field.hint }}
 			.errors(v-if="field.errors && field.errors.length > 0")
 				span(v-for="error in field.errors", track-by="$index") {{ error }}
@@ -162,12 +162,22 @@
 	
 	$errorColor: lighten(#F00, 0%);
 
-	fieldset {
+	fieldset.vue-form-generator {
 		
-		input, select, textarea {
+		.form-control {
+			// Default Bootstrap .form-control style
+			display: block;
+			width: 100%;
+			padding: 6px 12px;
+			font-size: 14px;
+			line-height: 1.42857143;
+			color: #555;
+			background-color: #fff;
+			background-image: none;
+			border: 1px solid #ccc;
 			border-radius: 4px;
-			border: 1px solid #BBB;
-			padding: 2px 5px;
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;	
 		}
 		
 		span.help {
@@ -209,20 +219,6 @@
 				width: 100%;
 			}  
 
-			/* CSS Triangles - see Trevor's post */
-			/*.helpText:after {
-				border-left: solid transparent 10px;
-				border-right: solid transparent 10px;
-				border-top: solid #1496bb 10px;
-				bottom: -10px;
-				content: " ";
-				height: 0;
-				left: 50%;
-				margin-left: -13px;
-				position: absolute;
-				width: 0;
-			}*/
-				
 			&:hover .helpText {
 				opacity: 1;
 				pointer-events: auto;
@@ -235,9 +231,44 @@
 
 			.buttons {
 				white-space: nowrap;
-				button {
-					display: inline-block;
-					margin: 0 2px;
+				margin-left: 4px;
+			}
+
+			button, input[type=submit] {					
+				// Default Bootstrap button style
+				display: inline-block;
+				padding: 6px 12px;
+				margin: 0px;					
+				font-size: 14px;
+				font-weight: normal;
+				line-height: 1.42857143;
+				text-align: center;
+				white-space: nowrap;
+				vertical-align: middle;
+				touch-action: manipulation;
+				cursor: pointer;
+				user-select: none;
+				color: #333;
+				background-color: #fff;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+
+				&:not(:last-child) {
+					margin-right: 4px;
+				}
+
+				&:hover {
+					color: #333;
+					background-color: #e6e6e6;
+					border-color: #adadad;
+				}
+
+				&:active {
+					color: #333;
+					background-color: #d4d4d4;
+					border-color: #8c8c8c;
+					outline: 0;
+					box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 				}
 			}
 		}		

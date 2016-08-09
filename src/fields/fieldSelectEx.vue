@@ -56,7 +56,7 @@
 
 
 <style lang="sass">
-	.bootstrap-select {
+	.vue-form-generator .field-selectEx .bootstrap-select {
 		.dropdown-menu li.selected .text{
 			font-weight: bold;
 		}

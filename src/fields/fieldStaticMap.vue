@@ -17,8 +17,8 @@
 	};
 </script>
 
-<style lang="sass" scoped>
-	img {
+<style lang="sass">
+	.vue-form-generator .field-staticMap img {
 		display: block;
 		width: auto;
 		max-width: 100%;

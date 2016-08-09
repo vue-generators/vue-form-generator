@@ -11,8 +11,15 @@
 </script>
 
 
-<style lang="sass" scoped>
-	span {
-		margin-left: 0.3em;
-	}
+<style lang="sass">
+	.vue-form-generator .field-color {
+
+		input {
+			width: 60px;
+		}
+
+		.helper {
+			margin-left: 0.3em;
+		}
+	} 
 </style>

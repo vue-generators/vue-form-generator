@@ -5,7 +5,7 @@
 
 	.row(v-show="model")
 		.col-md-5.col-md-offset-1
-			.buttons.text-center
+			.control-buttons.text-center
 				button.btn.btn-default.new(@click="newModel") 
 					i.fa.fa-plus
 					| New
@@ -222,7 +222,7 @@
 		.key { color: green; }    	
 	} 
 
-	.buttons {
+	.control-buttons {
 		button {
 			margin: 0.2em 0.3em;
 			padding: 6px 20px;
@@ -249,14 +249,18 @@
 		}
 	}
 
-	.form-group.half-width {
-		width: 50%;
-	}
+	fieldset.vue-form-generator {
 
-	.half-width + .half-width {
-		&:not(.first) {
-			padding-left: 0.5rem;
+		.form-group.half-width {
+			width: 50%;
 		}
+
+		.half-width + .half-width {
+			&:not(.first) {
+				padding-left: 0.5rem;
+			}
+		}
+
 	}
 
 
