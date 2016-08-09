@@ -43206,7 +43206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 237 */
 /***/ function(module, exports) {
 
-	module.exports = "<input type=\"submit\" :value=\"schema.caption\" @click=\"click\" _v-05b01dfa=\"\">";
+	module.exports = "<input type=\"submit\" :value=\"schema.caption\" @click=\"click\"/>";
 
 /***/ },
 /* 238 */
@@ -43454,7 +43454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 253 */
 /***/ function(module, exports) {
 
-	module.exports = "<fieldset v-if=\"schema != null\"><div v-for=\"field in fields\" v-if=\"fieldVisible(field)\" :class=\"getFieldRowClasses(field)\" class=\"form-group\"><label>{{ field.label }}<span v-if=\"field.help\" class=\"help\"><i class=\"fa fa-question-circle\"></i><div class=\"helpText\">{{{field.help}}}</div></span></label><div class=\"field-wrap\"><component :is=\"getFieldType(field)\" :disabled=\"fieldDisabled(field)\" :model.sync=\"model\" :schema.sync=\"field\"></component><div v-if=\"field.buttons &amp;&amp; field.buttons.length &gt; 0\" class=\"buttons\"><button v-for=\"btn in field.buttons\" @click=\"btn.onclick(model, field)\" :class=\"btn.classes\" class=\"btn btn-default\">{{ btn.label }}</button></div></div><div v-if=\"field.hint\" class=\"hint\">{{ field.hint }}</div><div v-if=\"field.errors &amp;&amp; field.errors.length &gt; 0\" class=\"errors\"><span v-for=\"error in field.errors\" track-by=\"$index\">{{ error }}</span></div></div></fieldset>";
+	module.exports = "<fieldset v-if=\"schema != null\" class=\"vue-form-generator\"><div v-for=\"field in fields\" v-if=\"fieldVisible(field)\" :class=\"getFieldRowClasses(field)\" class=\"form-group\"><label>{{ field.label }}<span v-if=\"field.help\" class=\"help\"><i class=\"fa fa-question-circle\"></i><div class=\"helpText\">{{{field.help}}}</div></span></label><div class=\"field-wrap\"><component :is=\"getFieldType(field)\" :disabled=\"fieldDisabled(field)\" :model.sync=\"model\" :schema.sync=\"field\"></component><div v-if=\"field.buttons &amp;&amp; field.buttons.length &gt; 0\" class=\"buttons\"><button v-for=\"btn in field.buttons\" @click=\"btn.onclick(model, field)\" :class=\"btn.classes\" class=\"btn btn-default\">{{ btn.label }}</button></div></div><div v-if=\"field.hint\" class=\"hint\">{{ field.hint }}</div><div v-if=\"field.errors &amp;&amp; field.errors.length &gt; 0\" class=\"errors\"><span v-for=\"error in field.errors\" track-by=\"$index\">{{ error }}</span></div></div></fieldset>";
 
 /***/ },
 /* 254 */

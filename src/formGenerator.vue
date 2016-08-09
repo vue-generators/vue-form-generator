@@ -162,7 +162,7 @@
 	
 	$errorColor: lighten(#F00, 0%);
 
-	fieldset {
+	fieldset.vue-form-generator {
 		
 		input, select, textarea {
 			border-radius: 4px;
