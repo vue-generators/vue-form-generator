@@ -46,11 +46,7 @@ module.exports = [
             loaders: {
                 css: ExtractTextPlugin.extract('css'),
                 postcss: ExtractTextPlugin.extract('css'),
-                // less: ExtractTextPlugin.extract('css!less'),
-                // sass: ExtractTextPlugin.extract('css!sass?indentedSyntax'),
                 sass: ExtractTextPlugin.extract('css!sass'),
-                // stylus: ExtractTextPlugin.extract('css!stylus'),
-                // styl: ExtractTextPlugin.extract('css!stylus')
             }
         },
 

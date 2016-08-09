@@ -4,8 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta charset="utf-8">
   <title>Demo of vue-form-generator</title>
-  <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.css">
-  <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../../dist/vue-form-generator.css">
 
   <style>
       html {
@@ -22,6 +21,51 @@
         pre .null { color: red; }
         pre .key { color: green; }    
             
+      .container {
+        max-width: 970px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;        
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      fieldset {
+        border: 0;
+      }
+
+      .panel {
+        margin-bottom: 20px;
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        border-color: #ddd;
+      }
+
+      .panel-heading {
+        color: #333;
+        background-color: #f5f5f5;
+        border-color: #ddd;
+
+        padding: 10px 15px;
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;        
+      }
+
+      .panel-body {
+        padding: 15px;
+      }
+
   </style>
 </head>
 
@@ -43,9 +87,6 @@
     </div>
 
   </div>
-  <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.1.4/jquery.js"></script>
-  <script type="text/javascript" src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.21/vue.min.js"></script>
   <script type="text/javascript" src="../../dist/vue-form-generator.js"></script>
   <script type="text/javascript" src="./main.js"></script>
