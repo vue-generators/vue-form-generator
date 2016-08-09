@@ -232,8 +232,7 @@
 			.buttons {
 				white-space: nowrap;
 
-				button {
-					
+				button {					
 					// Default Bootstrap button style
 					display: inline-block;
 					padding: 6px 12px;
