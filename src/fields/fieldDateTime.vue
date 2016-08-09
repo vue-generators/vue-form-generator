@@ -6,6 +6,7 @@
 </template>
 
 <script>
+	/* global $ */
 	import abstractField from "./abstractField";
 	import moment from "moment";
 

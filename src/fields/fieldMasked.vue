@@ -3,6 +3,7 @@
 </template>
 
 <script>
+	/* global $ */
 	import abstractField from "./abstractField";
 
 	export default {

@@ -5,6 +5,7 @@
 </template>
 
 <script>
+	/* global $ */
 	import {isObject} from "lodash";
 	import abstractField from "./abstractField";
 
