@@ -35,7 +35,7 @@ module.exports = [
             new webpack.BannerPlugin(banner, {
                 raw: true
             }),
-            new ExtractTextPlugin('vue-form-generator.css'),
+            new ExtractTextPlugin('vue-form-generator.css', { allChunks: true }),
         ],
 
         module: {
