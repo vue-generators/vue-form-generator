@@ -4,28 +4,25 @@
  * Released under the MIT License.
  */
 
-fieldset.vue-form-generator input, fieldset.vue-form-generator select, fieldset.vue-form-generator textarea {
+fieldset.vue-form-generator .form-control {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
   border-radius: 4px;
-  border: 1px solid #BBB;
-  padding: 2px 5px; }
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; }
 
 fieldset.vue-form-generator span.help {
   margin-left: 0.3em;
   position: relative;
-  /* This bridges the gap so you can mouse into the tooltip without it disappearing */
-  /* CSS Triangles - see Trevor's post */
-  /*.helpText:after {
-			border-left: solid transparent 10px;
-			border-right: solid transparent 10px;
-			border-top: solid #1496bb 10px;
-			bottom: -10px;
-			content: " ";
-			height: 0;
-			left: 50%;
-			margin-left: -13px;
-			position: absolute;
-			width: 0;
-		}*/ }
+  /* This bridges the gap so you can mouse into the tooltip without it disappearing */ }
   fieldset.vue-form-generator span.help .helpText {
     background-color: #444;
     bottom: 30px;
@@ -64,10 +61,41 @@ fieldset.vue-form-generator .field-wrap {
   display: -ms-flexbox;
   display: flex; }
   fieldset.vue-form-generator .field-wrap .buttons {
-    white-space: nowrap; }
-    fieldset.vue-form-generator .field-wrap .buttons button {
-      display: inline-block;
-      margin: 0 2px; }
+    white-space: nowrap;
+    margin-left: 4px; }
+  fieldset.vue-form-generator .field-wrap button, fieldset.vue-form-generator .field-wrap input[type=submit] {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 0px;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+        touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px; }
+    fieldset.vue-form-generator .field-wrap button:not(:last-child), fieldset.vue-form-generator .field-wrap input[type=submit]:not(:last-child) {
+      margin-right: 4px; }
+    fieldset.vue-form-generator .field-wrap button:hover, fieldset.vue-form-generator .field-wrap input[type=submit]:hover {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #adadad; }
+    fieldset.vue-form-generator .field-wrap button:active, fieldset.vue-form-generator .field-wrap input[type=submit]:active {
+      color: #333;
+      background-color: #d4d4d4;
+      border-color: #8c8c8c;
+      outline: 0;
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
 
 fieldset.vue-form-generator .hint {
   font-style: italic;
@@ -106,24 +134,24 @@ fieldset.vue-form-generator .form-group {
       padding-top: 0px;
       margin-top: 0.2em;
       font-weight: 600; }
-.vue-form-generator .field-checkbox {
+.vue-form-generator .field-checkbox input {
   margin-left: 12px; }
-.listbox, .dropList {
+.vue-form-generator .field-checklist .listbox, .vue-form-generator .field-checklist .dropList {
   height: auto;
   max-height: 150px;
   overflow: auto; }
-  .listbox .list-row label, .dropList .list-row label {
+  .vue-form-generator .field-checklist .listbox .list-row label, .vue-form-generator .field-checklist .dropList .list-row label {
     font-weight: initial; }
-  .listbox .list-row input, .dropList .list-row input {
+  .vue-form-generator .field-checklist .listbox .list-row input, .vue-form-generator .field-checklist .dropList .list-row input {
     margin-right: 0.3em; }
 
-.combobox {
+.vue-form-generator .field-checklist .combobox {
   height: initial;
   overflow: hidden; }
-  .combobox .mainRow {
+  .vue-form-generator .field-checklist .combobox .mainRow {
     cursor: pointer;
     position: relative; }
-    .combobox .mainRow .arrow {
+    .vue-form-generator .field-checklist .combobox .mainRow .arrow {
       position: absolute;
       right: -6px;
       top: 4px;
@@ -137,12 +165,15 @@ fieldset.vue-form-generator .form-group {
       transition: transform 0.5s, -webkit-transform 0.5s;
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAGdJREFUOI3tzjsOwjAURNGDUqSgTxU5K2AVrJtswjUsgHSR0qdxAZZFPrS+3ZvRzBsqf9MUtBtazJk+oMe0VTriiZCFX8nbpENMgfARjsn74vKj5IFruhfc8d6zIF9S/Hyk5HS4spMVeFcOjszaOwMAAAAASUVORK5CYII=");
       background-repeat: no-repeat; }
-    .combobox .mainRow.expanded .arrow {
+    .vue-form-generator .field-checklist .combobox .mainRow.expanded .arrow {
       -webkit-transform: rotate(-180deg);
               transform: rotate(-180deg); }
-  .combobox .dropList {
+  .vue-form-generator .field-checklist .combobox .dropList {
     -webkit-transition: height 0.5s;
     transition: height 0.5s; }
+.vue-form-generator .field-color input {
+  width: 60px; }
+
 .vue-form-generator .field-color .helper {
   margin-left: 0.3em; }
 
@@ -216,7 +247,7 @@ fieldset.vue-form-generator .form-group {
 
 
 
-.vue-form-generator .field-image.wrapper {
+.vue-form-generator .field-image .wrapper {
   width: 100%; }
 
 .vue-form-generator .field-image .preview {
@@ -242,7 +273,7 @@ fieldset.vue-form-generator .form-group {
     .vue-form-generator .field-image .preview .remove:hover {
       opacity: 1.0;
       cursor: pointer; }
-.vue-form-generator .field-label {
+.vue-form-generator .field-label span {
   display: block;
   width: 100%;
   margin-left: 12px; }
@@ -388,7 +419,9 @@ fieldset.vue-form-generator .form-group {
   width: auto;
   max-width: 100%; }
 .vue-form-generator .field-submit input {
-  width: 100%; }
+  color: #fff !important;
+  background-color: #337ab7 !important;
+  border-color: #2e6da4 !important; }
 .vue-form-generator .field-switch {
   /* Transition
 	========================== */ }
@@ -398,12 +431,9 @@ fieldset.vue-form-generator .form-group {
     vertical-align: top;
     width: 120px;
     height: 30px;
-    padding: 3px;
+    padding: 0;
     margin: 0 10px 10px 0;
-    background: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
-    background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
-    background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
-    border-radius: 18px;
+    border-radius: 15px;
     box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
     cursor: pointer; }
   .vue-form-generator .field-switch input {
@@ -447,8 +477,8 @@ fieldset.vue-form-generator .form-group {
     opacity: 1; }
   .vue-form-generator .field-switch .handle {
     position: absolute;
-    top: 4px;
-    left: 4px;
+    top: 1px;
+    left: 1px;
     width: 28px;
     height: 28px;
     background: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
@@ -470,14 +500,26 @@ fieldset.vue-form-generator .form-group {
     border-radius: 6px;
     box-shadow: inset 0 1px rgba(0, 0, 0, 0.02); }
   .vue-form-generator .field-switch input:checked ~ .handle {
-    left: 88px;
-    left: calc(100% - 32px);
+    left: 91px;
+    left: calc(100% - ($field-switch-height - 1px));
     box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2); }
   .vue-form-generator .field-switch .label, .vue-form-generator .field-switch .handle {
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease; }
-.vue-form-generator .field-text input {
-  width: 100%; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
