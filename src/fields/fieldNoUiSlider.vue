@@ -8,27 +8,34 @@ import { defaults } from "lodash";
 
 export default {
 	mixins: [abstractField],
+
 	data() {
 		return {
 			slider: null
 		};
 	},
+
 	watch: {
 		model: function() {
 			if (window.noUiSlider) {
-				console.log(this.value);
 				this.slider.noUiSlider.set(this.value);
 			}
 		}
 	},
+
 	methods: {
 		onChange(value) {
+			console.log(value);
 			if (value.length === 1) {
-				// this.value = parseInt(value[0], 10);
-				this.value = value[0];
+				// Single value
+				this.value = parseFloat(value[0]);
+			} else {
+				// Array (range)
+				this.value = [parseFloat(value[0]), parseFloat(value[1])];
 			}
 		}
 	},
+
 	ready() {
 		if (window.noUiSlider) {
 			this.slider = this.$el;
@@ -48,9 +55,13 @@ export default {
 </script>
 
 <style lang="sass">
-.vue-form-generator .field-noUiSlider {
-	.field-wrap {
-		display: block;
+
+	.vue-form-generator .field-noUiSlider {
+
+		.field-wrap {
+			display: block;
+		}
+		
 	}
-}
+
 </style>
