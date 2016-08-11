@@ -299,6 +299,27 @@ module.exports = {
 		},
 
 		{
+			type: "noUiSlider",
+			label: "Rank (noUiSlider field)",
+			model: "rank",
+			multi: true,
+			min: 1,
+			max: 10,
+			required: true,
+			sliderOptions: {
+				// connect: "lower",	// "lower", "upper", true, false
+				// margin: 2 //number
+				// limit: 2 //number
+				step:1,
+				// orientation:"horizontal", //"vertical", "horizontal"
+				// direction: "ltr", //"ltr", "rtl"
+				// tooltips: false, // false, true, formatter, array[formatter or false]
+				// animate: true,
+			},
+			// validator: validators.integer
+		},
+
+		{
 			type: "slider",
 			label: "Rank (slider field)",
 			model: "rank",
@@ -309,7 +330,7 @@ module.exports = {
 			sliderOptions: {
 				grid: true
 			},
-			validator: validators.integer
+			// validator: validators.integer
 		},
 
 		{
