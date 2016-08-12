@@ -191,6 +191,39 @@ module.exports = {
 			styleClasses: "half-width"
 				//validator: validators.regexp
 		}, {
+			type: "cleave",
+			label: "Mobile  (Cleave.js field)",
+			model: "mobile",
+			cleaveOptions: {
+				// Credit Card
+			    creditCard: false,
+			    onCreditCardTypeChanged(type){
+					console.log("onCreditCardTypeChanged", type);	
+				},
+			    // Phone
+			    phone: false,
+    			phoneRegionCode: 'AU',
+    			// Date
+    			date: false,
+    			datePattern: ['d', 'm', 'Y'],
+    			// Numerals
+    			numeral: false,
+    			numeralThousandsGroupStyle: 'thousand',
+    			numeralDecimalScale: 2,
+    			numeralDecimalMark: '.',
+    			// General
+    			blocks: [0, 2, 3, 4],
+    			delimiter: ' ',
+    			delimiters: ['(', ') ', '-', '-'],
+    			// prefix: '(',
+    			numericOnly: true,
+    			uppercase: false,
+    			lowercase: false
+			},
+
+			styleClasses: "half-width",
+			validator: validators.required
+		}, {			
 			type: "masked",
 			label: "Mobile  (masked field)",
 			model: "mobile",
