@@ -50,11 +50,11 @@
 					field: this.$el, // bind the datepicker to a form field
 					// trigger: , // use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 					bound: true, // automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
-					position: 'bottom left', // preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to 'bottom left')
+					position: "bottom left", // preferred position of the datepicker relative to the form field, e.g.: `top right`, `bottom right` **Note:** automatic adjustment may occur to avoid datepicker from being displayed outside the viewport, see [positions example][] (default to "bottom left")
 					reposition: true, // can be set to false to not reposition datepicker within the viewport, forcing it to take the configured `position` (default: true)
 					// container: , // DOM node to render calendar into, see [container example][] (default: undefined)
 					// format: , // the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for custom formatting)
-					// formatStrict: , // the default flag for moment's strict date parsing (requires [Moment.js][moment] for custom formatting)
+					// formatStrict: , // the default flag for moment"s strict date parsing (requires [Moment.js][moment] for custom formatting)
 					// defaultDate: , // the initial date to view when first opened
 					// setDefaultDate: , // make the `defaultDate` the initial selected value
 					firstDay: 1, // first day of the week (0: Sunday, 1: Monday, etc)
@@ -66,11 +66,11 @@
 					showWeekNumber: false, // show the ISO week number at the head of the row (default `false`)
 					isRTL: false, // reverse the calendar for right-to-left languages
 					i18n: {
-					    previousMonth : 'Previous Month',
-					    nextMonth     : 'Next Month',
-					    months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-					    weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-					    weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+						previousMonth : "Previous Month",
+						nextMonth     : "Next Month",
+						months        : ["January","February","March","April","May","June","July","August","September","October","November","December"],
+						weekdays      : ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+						weekdaysShort : ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]
 					}, // language defaults for month and weekday names (see internationalization below)
 					// yearSuffix: , // additional text to append to the year in the title
 					showMonthAfterYear: false, // render the month after year in the title (default `false`)

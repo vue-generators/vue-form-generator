@@ -23,18 +23,18 @@ export default {
 				// onCreditCardTypeChanged: onCreditCardTypeChanged.bind(this),
 				// Phone
 				phone: false,
-				phoneRegionCode: 'AU',
+				phoneRegionCode: "AU",
 				// Date
 				date: false,
-				datePattern: ['d', 'm', 'Y'],
+				datePattern: ["d", "m", "Y"],
 				// Numerals
 				numeral: false,
-				numeralThousandsGroupStyle: 'thousand',
+				numeralThousandsGroupStyle: "thousand",
 				numeralDecimalScale: 2,
-				numeralDecimalMark: '.',
+				numeralDecimalMark: ".",
 				// General
 				blocks: [],
-				delimiter: ' ',
+				delimiter: " ",
 				prefix: null,
 				numericOnly: false,
 				uppercase: false,
