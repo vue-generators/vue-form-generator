@@ -191,6 +191,39 @@ module.exports = {
 			styleClasses: "half-width"
 				//validator: validators.regexp
 		}, {
+			type: "cleave",
+			label: "Mobile  (Cleave.js field)",
+			model: "mobile",
+			cleaveOptions: {
+				// Credit Card
+			    creditCard: false,
+			    onCreditCardTypeChanged(type){
+					console.log("onCreditCardTypeChanged", type);	
+				},
+			    // Phone
+			    phone: false,
+    			phoneRegionCode: 'AU',
+    			// Date
+    			date: false,
+    			datePattern: ['d', 'm', 'Y'],
+    			// Numerals
+    			numeral: false,
+    			numeralThousandsGroupStyle: 'thousand',
+    			numeralDecimalScale: 2,
+    			numeralDecimalMark: '.',
+    			// General
+    			blocks: [0, 2, 3, 4],
+    			delimiter: ' ',
+    			delimiters: ['(', ') ', '-', '-'],
+    			// prefix: '(',
+    			numericOnly: true,
+    			uppercase: false,
+    			lowercase: false
+			},
+
+			styleClasses: "half-width",
+			validator: validators.required
+		}, {			
 			type: "masked",
 			label: "Mobile  (masked field)",
 			model: "mobile",
@@ -255,9 +288,57 @@ module.exports = {
 				model.age = moment().year() - moment(newVal).year();
 			}
 
-		},
+		}, {
+			type: "pikaday",
+			label: "DOB (pikaday field)",
+			model: "dob",
+			required: true,
+			placeholder: "User's birth of date",
+			min: moment("1900-01-01").toDate(),
+			max: moment("2016-01-01").toDate(),
+			validator: [
+				validators.date
+			],
+			pikadayOptions: {
+				bound: true,
+				position: 'bottom left',
+				reposition: true,
+				// container: ,
+				format: 'YYYY-MM-DD HH:mm:ss',
+				// formatStrict: ,
+				// defaultDate: ,
+				// setDefaultDate: ,
+				firstDay: 1,
+				// minDate: ,
+				// maxDate: ,
+				disableWeekends: false,
+				// disableDayFn: ,
+				// yearRange: ,
+				showWeekNumber: false,
+				isRTL: false,
+				i18n: {
+				    previousMonth : 'Previous Month',
+				    nextMonth     : 'Next Month',
+				    months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+				    weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+				    weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+				},
+				// yearSuffix: ,
+				showMonthAfterYear: false,
+				showDaysInNextAndPreviousMonths: false,
+				// numberOfMonths: ,
+				// mainCalendar: ,
+				theme: null,
+				// onSelect: ,
+				// onOpen: ,
+				// onClose: ,
+				// onDraw: ,
+			},
+			onChanged(model, newVal, oldVal, field) {
+				model.age = moment().year() - moment(newVal).year();
+			}
 
-		{
+		},{
 			type: "dateTime",
 			label: "DT",
 			model: "dt",
