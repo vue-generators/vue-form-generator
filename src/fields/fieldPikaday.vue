@@ -1,5 +1,5 @@
 <template lang="jade">
-	input.form-control(type="text")
+	input.form-control(type="text", v-model="value", :readonly="schema.readonly", :disabled="disabled", :placeholder="schema.placeholder")
 </template>
 
 <script>
@@ -39,8 +39,6 @@
 					else
 						value = m.toDate().valueOf();
 				}
-				console.log(this.value);
-				// this.value = value;
 				return value;
 			}
 
@@ -48,7 +46,7 @@
 
 		ready() {
 			if (window.Pikaday){
-				this.picker = new Pikaday(defaults(this.schema.pikadayOptions || {}, {
+				this.picker = new window.Pikaday(defaults(this.schema.pikadayOptions || {}, {
 					field: this.$el, // bind the datepicker to a form field
 					// trigger: , // use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 					bound: true, // automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
@@ -86,7 +84,6 @@
 					// onDraw: , // callback function for when the picker draws a new month
 				}));
 			}
-			// this.slider.noUiSlider.on("change", this.onChange.bind(this));
 			else{
 				console.warn("Pikaday is missing. Please download from https://github.com/dbushell/Pikaday/ and load the script and CSS in the HTML head section!");
 			}
