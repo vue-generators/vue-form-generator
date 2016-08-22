@@ -2,6 +2,7 @@ var webpack = require("webpack");
 var version = require("./package.json").version;
 var banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var StatsPlugin = require('stats-webpack-plugin');
 
 var loaders = [
   {
@@ -26,16 +27,25 @@ module.exports = [
         },
 
         plugins: [
-            new webpack.optimize.DedupePlugin(),
             new webpack.DefinePlugin({
                 'process.env' : {
                     NODE_ENV : JSON.stringify('production')
                 }
             }),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                }
+            }),
+            new webpack.optimize.DedupePlugin(),
             new webpack.BannerPlugin(banner, {
                 raw: true
             }),
             new ExtractTextPlugin('vue-form-generator.css', { allChunks: true }),
+            new StatsPlugin('../stats.json', {
+                chunkModules: true
+                //exclude: [/node_modules[\\\/]react/]
+            })
         ],
 
         module: {
@@ -53,41 +63,6 @@ module.exports = [
         resolve: {
             packageAlias: 'browser'
         }        
-    },
-
-    {
-        entry: "./src/index",
-        output: {
-            path: "./dist",
-            filename: "vue-form-generator.min.js",
-            library: "VueFormGenerator",
-            libraryTarget: "umd"
-        },
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false
-                }
-            }),
-            new webpack.optimize.DedupePlugin(),
-            new webpack.DefinePlugin({
-                'process.env' : {
-                    NODE_ENV : JSON.stringify('production')
-                }
-            }),        
-            new webpack.BannerPlugin(banner, {
-                raw: true
-            })
-        ],
-
-        module: {
-            loaders: loaders
-        },
-
-        resolve: {
-            packageAlias: 'browser'
-        }        
-
     }
 
 ];

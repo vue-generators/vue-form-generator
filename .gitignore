@@ -5,4 +5,5 @@ docs/_book/
 npm-debug.log
 selenium-debug.log
 test/unit/coverage
-test/e2e/reports 
+test/e2e/reports
+stats.json

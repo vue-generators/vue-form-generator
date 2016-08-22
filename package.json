@@ -6,7 +6,7 @@
   "main": "dist/vue-form-generator.js",
   "scripts": {
     "prebuild": "npm run test",
-    "build": "webpack --config webpack.build.config.js",
+    "build": "webpack --progress -p --config webpack.build.config.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
     "lint": "eslint --ext=.js,.vue src test/unit/specs",
     "coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
@@ -33,7 +33,6 @@
   },
   "files": [
     "dist/vue-form-generator.js",
-    "dist/vue-form-generator.min.js",
     "dist/vue-form-generator.css",
     "src"
   ],
@@ -85,6 +84,7 @@
     "sass-loader": "3.2.0",
     "sinon": "1.17.5",
     "sinon-chai": "2.8.0",
+    "stats-webpack-plugin": "0.4.2",
     "style-loader": "0.13.1",
     "vue-hot-reload-api": "1.3.2",
     "vue-html-loader": "1.2.3",
