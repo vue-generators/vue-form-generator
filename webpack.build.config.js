@@ -2,6 +2,7 @@ var webpack = require("webpack");
 var version = require("./package.json").version;
 var banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var StatsPlugin = require('stats-webpack-plugin');
 
 var loaders = [
   {
@@ -36,6 +37,10 @@ module.exports = [
                 raw: true
             }),
             new ExtractTextPlugin('vue-form-generator.css', { allChunks: true }),
+            new StatsPlugin('../stats.json', {
+                chunkModules: true
+                //exclude: [/node_modules[\\\/]react/]
+            })
         ],
 
         module: {
