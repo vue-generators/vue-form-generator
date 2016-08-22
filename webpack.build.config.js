@@ -27,12 +27,17 @@ module.exports = [
         },
 
         plugins: [
-            new webpack.optimize.DedupePlugin(),
             new webpack.DefinePlugin({
                 'process.env' : {
                     NODE_ENV : JSON.stringify('production')
                 }
             }),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                }
+            }),
+            new webpack.optimize.DedupePlugin(),
             new webpack.BannerPlugin(banner, {
                 raw: true
             }),
@@ -58,41 +63,6 @@ module.exports = [
         resolve: {
             packageAlias: 'browser'
         }        
-    },
-
-    {
-        entry: "./src/index",
-        output: {
-            path: "./dist",
-            filename: "vue-form-generator.min.js",
-            library: "VueFormGenerator",
-            libraryTarget: "umd"
-        },
-        plugins: [
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false
-                }
-            }),
-            new webpack.optimize.DedupePlugin(),
-            new webpack.DefinePlugin({
-                'process.env' : {
-                    NODE_ENV : JSON.stringify('production')
-                }
-            }),        
-            new webpack.BannerPlugin(banner, {
-                raw: true
-            })
-        ],
-
-        module: {
-            loaders: loaders
-        },
-
-        resolve: {
-            packageAlias: 'browser'
-        }        
-
     }
 
 ];
