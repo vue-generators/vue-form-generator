@@ -181,6 +181,16 @@ module.exports = {
 			model: "email",
 			placeholder: "User's e-mail address"
 		}, {
+			type: "googleAddress",
+			label: "Location (googleAddress)",
+			model: "location",
+			placeholder: "Location",
+			onPlaceChanged(value, place, rawPlace, model, schema) {
+				console.log("Location changed! " + value);
+				//console.log(place);
+				//console.log(rawPlace);
+			}
+		}, {
 			type: "text",
 			label: "Phone",
 			model: "phone",
