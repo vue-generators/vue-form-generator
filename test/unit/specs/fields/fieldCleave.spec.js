@@ -20,7 +20,7 @@ describe("fieldCleave.vue", () => {
 			label: "Phone",
 			model: "phone",
 			phone: true,
-			phoneRegionCode: 'HU',
+			phoneRegionCode: "HU",
 			readonly: false,
 			placeholder: "Field placeholder"
 		};
