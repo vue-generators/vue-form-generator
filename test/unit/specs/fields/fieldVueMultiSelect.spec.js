@@ -27,7 +27,8 @@ describe("fieldVueMultiSelect.vue", () => {
 				"Paris",
 				"Rome",
 				"Berlin"
-			]
+			],
+			selectOptions: {}
 		};
 		let model = { city: "Paris" };
 		let input;

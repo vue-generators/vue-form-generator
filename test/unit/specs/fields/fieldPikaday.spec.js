@@ -13,7 +13,7 @@ function createField(schema = {}, model = null, disabled = false, options) {
 	[ el, vm, field ] = createVueField("fieldPikaday", schema, model, disabled, options);
 }
 
-describe.only("fieldPikaday.vue", () => {
+describe("fieldPikaday.vue", () => {
 
 	describe("check template", () => {
 		let schema = {
