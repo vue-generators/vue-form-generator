@@ -38,5 +38,25 @@ describe("fieldNoUiSlider.vue", () => {
 			expect(input).to.be.defined;
 			expect(input.classList.contains("slider")).to.be.true;			
 		});
+
+		before( () => {
+			vm.$appendTo(document.body);			
+		});
+
+		it("should only test in the correct environment", (done) => {
+			if (window.noUiSlider) {
+				// make assertions
+				it("should contain a complex div element", (done) => {
+					vm.$nextTick( () => {						
+						expect(input).to.be.defined;
+						expect(input.classList.contains("noui-target")).to.be.true;	
+						done();
+					});
+				});
+
+			} else {
+				this.skip();
+			}
+		});
 	});
 });
