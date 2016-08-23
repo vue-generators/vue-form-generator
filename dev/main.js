@@ -1,7 +1,7 @@
 $(function() {
 	let App = require("./App.vue");
 
-	new Vue({
+	let app = new Vue({
 		el: "body",
 		components: {
 			App
