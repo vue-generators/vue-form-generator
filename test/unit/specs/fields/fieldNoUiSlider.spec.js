@@ -47,9 +47,8 @@ describe("fieldNoUiSlider.vue", () => {
 		it("should contain an handle element", (done) => {
 			if (window.noUiSlider) {
 				vm.$nextTick( () => {
-					let handle = input.querySelectorAll(".noUi-handle");
-					expect(handle.length).to.be.equal(1);					
-					expect(handle[0]).to.be.defined;
+					let handle = input.querySelector(".noUi-handle");
+					expect(handle).to.be.defined;
 					// expect(input.classList.contains("noui-target")).to.be.true;
 					done();
 				});
@@ -60,7 +59,7 @@ describe("fieldNoUiSlider.vue", () => {
 
 		it.skip("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				let origin = input.querySelectorAll(".noUi-origin")[0];				
+				let origin = input.querySelector(".noUi-origin");				
 				expect(origin.style.left).to.be.within("70%", "90%");
 				done();
 			});
@@ -72,7 +71,7 @@ describe("fieldNoUiSlider.vue", () => {
 
 		it("handle value should be the model value after changed", (done) => {
 			vm.$nextTick( () => {
-				let origin = input.querySelectorAll(".noUi-origin")[0];				
+				let origin = input.querySelector(".noUi-origin");				
 				expect(origin.style.left).to.be.equal("100%");				
 				done();
 			});
