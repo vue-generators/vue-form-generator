@@ -53,7 +53,7 @@ describe("fieldNoUiSlider.vue", () => {
 					done();
 				});
 			} else {
-				this.skip();
+				throw new Exception("Library is not loaded");
 			}
 		});
 
