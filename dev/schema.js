@@ -222,9 +222,9 @@ module.exports = {
     			numeralDecimalScale: 2,
     			numeralDecimalMark: '.',
     			// General
-    			blocks: [0, 2, 3, 4],
+    			blocks: [0, 2, 0, 3, 4],
     			delimiter: ' ',
-    			delimiters: ['(', ') ', '-', '-'],
+    			delimiters: ['(', ')', ' ', '-', '-'],
     			// prefix: '(',
     			numericOnly: true,
     			uppercase: false,
