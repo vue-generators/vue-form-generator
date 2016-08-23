@@ -406,6 +406,16 @@ module.exports = {
 				// direction: "ltr", //"ltr", "rtl"
 				// tooltips: false, // false, true, formatter, array[formatter or false]
 				// animate: true,
+				range:{
+					'min': [  0 ],
+					'max': [ 10 ]
+				},
+				pips: {
+					mode: 'count',
+					values: 6,
+					density: 10,
+					stepped: true
+				}
 			},
 			// validator: validators.integer
 		},
