@@ -36,27 +36,71 @@ describe("fieldNoUiSlider.vue", () => {
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.classList.contains("slider")).to.be.true;			
+			expect(input.classList.contains("slider")).to.be.true;
+			expect(input.disabled).to.be.undefined;
 		});
 
 		before( () => {
-			vm.$appendTo(document.body);			
+			vm.$appendTo(document.body);
 		});
 
-		it("should only test in the correct environment", (done) => {
+		it("should contain an handle element", (done) => {
 			if (window.noUiSlider) {
-				// make assertions
-				it("should contain a complex div element", (done) => {
-					vm.$nextTick( () => {						
-						expect(input).to.be.defined;
-						expect(input.classList.contains("noui-target")).to.be.true;	
-						done();
-					});
+				vm.$nextTick( () => {
+					let handle = input.querySelectorAll(".noUi-handle");
+					expect(handle.length).to.be.equal(1);					
+					expect(handle[0]).to.be.defined;
+					// expect(input.classList.contains("noui-target")).to.be.true;
+					done();
 				});
-
 			} else {
 				this.skip();
 			}
+		});
+
+		it.skip("should contain the value", (done) => {
+			vm.$nextTick( () => {
+				let origin = input.querySelectorAll(".noUi-origin")[0];				
+				expect(origin.style.left).to.be.within("70%", "90%");
+				done();
+			});
+		});
+
+		before( () => {
+			vm.model = { rating: 10 };
+		});
+
+		it("handle value should be the model value after changed", (done) => {
+			vm.$nextTick( () => {
+				let origin = input.querySelectorAll(".noUi-origin")[0];				
+				expect(origin.style.left).to.be.equal("100%");				
+				done();
+			});
+		});
+
+		// before( (done) => {
+		// 	input.querySelectorAll(".noUi-origin")[0].style.left = "0%";
+		// 	vm.$nextTick( () => {
+		// 		done();
+		// 	});
+		// });
+
+		it.skip("model value should be the handle value after changed", (done) => {
+			vm.$nextTick( () => {
+				expect(vm.model.rating).to.be.equal("0");				
+				done();
+			});
+		});
+		
+		it.skip("should set disabled", (done) => {			
+			console.log(field.disabled);
+			console.log(input);
+			vm.schema.disabled = true;
+			vm.$nextTick( () => {
+				console.log(input);
+				expect(input.disabled).to.be.true;
+				done();
+			});
 		});
 	});
 });
