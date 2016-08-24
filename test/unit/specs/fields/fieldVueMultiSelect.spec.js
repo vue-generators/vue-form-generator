@@ -49,8 +49,7 @@ describe("fieldVueMultiSelect.vue", () => {
 		});
 
 		it("should contain option elements", () => {					
-			let options = input.querySelectorAll("li.multiselect__option");
-			console.log(options);
+			let options = input.querySelectorAll("li.multiselect__option");			
 			expect(options.length).to.be.equal(schema.values.length);
 			expect(options[1].querySelector("span").textContent).to.be.equal("Paris");
 			expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;
@@ -68,6 +67,7 @@ describe("fieldVueMultiSelect.vue", () => {
 		it("input value should be the model value after changed", (done) => {
 			model.city = "Rome";
 			vm.$nextTick( () => {
+				expect(input.querySelectorAll("li.multiselect__option--selected").length).to.be.equal(1);
 				let options = input.querySelectorAll("li.multiselect__option");			
 				expect(options[2].querySelector("span").textContent).to.be.equal("Rome");
 				expect(options[2].classList.contains("multiselect__option--selected")).to.be.true;	
@@ -78,6 +78,7 @@ describe("fieldVueMultiSelect.vue", () => {
 		it("input value should be the model value after changed (multiselection)", (done) => {
 			model.city = ["Paris","Rome"];
 			vm.$nextTick( () => {
+				expect(input.querySelectorAll("li.multiselect__option--selected").length).to.be.equal(2);
 				let options = input.querySelectorAll("li.multiselect__option");
 				expect(options[1].querySelector("span").textContent).to.be.equal("Paris");
 				expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;	
@@ -92,6 +93,7 @@ describe("fieldVueMultiSelect.vue", () => {
 			trigger(options[2], "mousedown");			
 			
 			vm.$nextTick( () => {
+				expect(model.city.length).to.be.equal(1);
 				expect(model.city[0]).to.be.equal("Paris");
 				done();
 			});
