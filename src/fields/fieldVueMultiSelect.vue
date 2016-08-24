@@ -17,7 +17,7 @@
 		:custom-label="schema.selectOptions.customLabel || null",
 		:taggable="schema.selectOptions.taggable",
 		:tag-placeholder="schema.selectOptions.tagPlaceholder",
-		:max="schema.max",
+		:max="schema.max || null",
 		@update="updateSelected",
 		@tag="addTag",
 		@select="onSelect",
@@ -33,7 +33,7 @@
 		:limit="schema.selectOptions.limit",
 		:limit-text="schema.selectOptions.limitText",
 		:loading="schema.selectOptions.loading",
-		:disabled="schema.disabled",
+		:disabled="disabled",
 	)
 </template>
 <script>

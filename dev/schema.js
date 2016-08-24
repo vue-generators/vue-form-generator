@@ -222,9 +222,9 @@ module.exports = {
     			numeralDecimalScale: 2,
     			numeralDecimalMark: '.',
     			// General
-    			blocks: [0, 2, 3, 4],
+    			blocks: [0, 2, 0, 3, 4],
     			delimiter: ' ',
-    			delimiters: ['(', ') ', '-', '-'],
+    			delimiters: ['(', ')', ' ', '-', '-'],
     			// prefix: '(',
     			numericOnly: true,
     			uppercase: false,
@@ -406,6 +406,16 @@ module.exports = {
 				// direction: "ltr", //"ltr", "rtl"
 				// tooltips: false, // false, true, formatter, array[formatter or false]
 				// animate: true,
+				range:{
+					'min': [  0 ],
+					'max': [ 10 ]
+				},
+				pips: {
+					mode: 'count',
+					values: 6,
+					density: 10,
+					stepped: true
+				}
 			},
 			// validator: validators.integer
 		},

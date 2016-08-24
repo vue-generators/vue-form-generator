@@ -1,5 +1,5 @@
 <template lang="jade">
-	div.slider
+	div.slider(:disabled="disabled")
 </template>
 
 <script>
