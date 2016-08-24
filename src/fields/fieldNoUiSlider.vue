@@ -4,7 +4,7 @@
 
 <script>
 import abstractField from "./abstractField";
-import { defaults } from "lodash";
+import { isArray, defaults } from "lodash";
 
 export default {
 	mixins: [abstractField],
@@ -17,7 +17,7 @@ export default {
 
 	watch: {
 		model: function() {
-			if (window.noUiSlider) {
+			if (window.noUiSlider && this.slider && this.slider.noUiSlider) {
 				this.slider.noUiSlider.set(this.value);
 			}
 		}
@@ -25,13 +25,12 @@ export default {
 
 	methods: {
 		onChange(value) {
-			console.log(value);
-			if (value.length === 1) {
-				// Single value
-				this.value = parseFloat(value[0]);
-			} else {
+			if (isArray(value)) {
 				// Array (range)
 				this.value = [parseFloat(value[0]), parseFloat(value[1])];
+			} else {
+				// Single value
+				this.value = parseFloat(value);
 			}
 		}
 	},
@@ -40,7 +39,7 @@ export default {
 		if (window.noUiSlider) {
 			this.slider = this.$el;
 			window.noUiSlider.create(this.slider, defaults(this.schema.sliderOptions || {}, {
-				start: this.schema.min,
+				start: this.value != null ? this.value : this.schema.min,
 				range: {
 					"min": this.schema.min,
 					"max": this.schema.max

@@ -19,10 +19,13 @@
 					} else
 						valueFrom = this.value;
 
-					$(this.$el).data("ionRangeSlider").update({
-						from: valueFrom,
-						to: valueTo
-					});	
+					let ionRangeSlider = $(this.$el).data("ionRangeSlider");
+					if (ionRangeSlider) {
+						ionRangeSlider.update({
+							from: valueFrom,
+							to: valueTo
+						});	
+					}
 				}
 			}
 		},

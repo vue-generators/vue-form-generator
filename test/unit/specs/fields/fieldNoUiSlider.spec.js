@@ -49,7 +49,7 @@ describe("fieldNoUiSlider.vue", () => {
 				vm.$nextTick( () => {
 					let handle = input.querySelector(".noUi-handle");
 					expect(handle).to.be.defined;
-					// expect(input.classList.contains("noui-target")).to.be.true;
+					expect(input.classList.contains("noUi-target")).to.be.true;
 					done();
 				});
 			} else {
@@ -58,7 +58,7 @@ describe("fieldNoUiSlider.vue", () => {
 			}
 		});
 
-		it.skip("should contain the value", (done) => {
+		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
 				let origin = input.querySelector(".noUi-origin");				
 				expect(origin.style.left).to.be.within("70%", "90%");
@@ -66,39 +66,29 @@ describe("fieldNoUiSlider.vue", () => {
 			});
 		});
 
-		before( () => {
-			vm.model = { rating: 10 };
-		});
-
 		it("handle value should be the model value after changed", (done) => {
-			vm.$nextTick( () => {
+			field.model = { rating: 10 };
+			setTimeout( () => {
 				let origin = input.querySelector(".noUi-origin");				
 				expect(origin.style.left).to.be.equal("100%");				
 				done();
-			});
+			}, 100);
 		});
 
-		// before( (done) => {
-		// 	input.querySelectorAll(".noUi-origin")[0].style.left = "0%";
-		// 	vm.$nextTick( () => {
-		// 		done();
-		// 	});
-		// });
-
-		it.skip("model value should be the handle value after changed", (done) => {
-			vm.$nextTick( () => {
-				expect(vm.model.rating).to.be.equal("0");				
+		it("model value should be the handle value after changed", (done) => {
+			// `field.slider.noUiSlider.set(3);`	- It doesn't fired the onChange event 
+			field.onChange(3);
+			setTimeout( () => {
+				expect(vm.model.rating).to.be.equal(3);				
 				done();
-			});
+			}, 100);
 		});
 		
-		it.skip("should set disabled", (done) => {			
-			console.log(field.disabled);
-			console.log(input);
-			vm.schema.disabled = true;
+		it("should set disabled", (done) => {			
+			field.disabled = true;
 			vm.$nextTick( () => {
-				console.log(input);
-				expect(input.disabled).to.be.true;
+				// This is not real input, it is a div. So we can check the disabled attribute
+				expect(input.hasAttribute("disabled")).to.be.true;
 				done();
 			});
 		});

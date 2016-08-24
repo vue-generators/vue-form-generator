@@ -397,6 +397,7 @@ module.exports = {
 			min: 1,
 			max: 10,
 			required: true,
+			disabled: false,
 			sliderOptions: {
 				// connect: "lower",	// "lower", "upper", true, false
 				// margin: 2 //number
