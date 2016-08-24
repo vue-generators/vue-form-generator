@@ -17,7 +17,7 @@
     "e2e": "node test/e2e/runner.js",
     "pretest": "npm run lint",
     "test": "npm run unit",
-    "ci": "karma start test/unit/karma.conf.js --auto-watch --no-single-run --reporters=dots"
+    "ci": "karma start test/unit/karma.conf.js --auto-watch --no-single-run --reporters=dots --port=9877"
   },
   "keywords": [
     "vue",
