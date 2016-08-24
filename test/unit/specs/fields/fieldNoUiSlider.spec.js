@@ -53,6 +53,7 @@ describe("fieldNoUiSlider.vue", () => {
 					done();
 				});
 			} else {
+				// eslint-disable-next-line
 				throw new Exception("Library is not loaded");
 			}
 		});
