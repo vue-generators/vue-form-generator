@@ -28,6 +28,7 @@ describe("fieldMasked.vue", () => {
 
 		before( () => {
 			createField(schema, model, false);
+			vm.$appendTo(document.body);
 			input = el.getElementsByTagName("input")[0];
 		});
 
@@ -54,7 +55,12 @@ describe("fieldMasked.vue", () => {
 			schema.readonly = true;
 			vm.$nextTick( () => {
 				expect(input.readOnly).to.be.true;	
-				done();
+
+				// Rollback
+				schema.readonly = false;
+				vm.$nextTick( () => {
+					done();
+				});
 			});
 		});
 
@@ -62,7 +68,12 @@ describe("fieldMasked.vue", () => {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;	
-				done();
+
+				// Rollback
+				field.disabled = false;
+				vm.$nextTick( () => {
+					done();
+				});
 			});
 		});
 
@@ -83,6 +94,25 @@ describe("fieldMasked.vue", () => {
 				expect(model.phone).to.be.equal("(21) 888-6655");	
 				done();
 			});
+
+		});
+
+		it("should be formatted data in model", (done) => {
+			input.value = "123456789";
+			// Call the paste event what trigger the formatter
+			let $input = window.jQuery(input);
+			$input.trigger(window.jQuery.Event("paste"));			
+
+			setTimeout( () => {
+				expect(input.value).to.be.equal("(12) 345-6789");	
+				trigger(input, "input");
+
+				vm.$nextTick( () => {
+					expect(model.phone).to.be.equal("(12) 345-6789");	
+					done();
+				});
+
+			}, 10);
 
 		});
 

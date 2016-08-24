@@ -28,6 +28,7 @@ describe("fieldNoUiSlider.vue", () => {
 
 		before( () => {
 			createField(schema, model, false);
+			vm.$appendTo(document.body);
 			input = el.getElementsByClassName("slider")[0];
 		});
 
@@ -38,10 +39,6 @@ describe("fieldNoUiSlider.vue", () => {
 			expect(input).to.be.defined;
 			expect(input.classList.contains("slider")).to.be.true;
 			expect(input.disabled).to.be.undefined;
-		});
-
-		before( () => {
-			vm.$appendTo(document.body);
 		});
 
 		it("should contain an handle element", (done) => {
