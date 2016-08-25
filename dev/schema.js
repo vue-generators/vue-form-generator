@@ -120,8 +120,7 @@ module.exports = {
 			],
 			onChanged(model, newVal, oldVal, field) {
 				console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
-			},
-			min: 2,
+			},			
 			max: 4,
 			placeholder: "placeholder",
 			validator: validators.array
