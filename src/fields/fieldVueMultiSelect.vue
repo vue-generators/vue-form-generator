@@ -7,6 +7,7 @@
 		:key="schema.selectOptions.key || null",
 		:label="schema.selectOptions.label || null",
 		:searchable="schema.selectOptions.searchable",
+		:local-search="schema.selectOptions.localSearch",
 		:clear-on-select="schema.selectOptions.clearOnSelect",
 		:hide-selected="schema.selectOptions.hideSelected",
 		:placeholder="schema.placeholder",
@@ -24,8 +25,7 @@
 		@remove="onRemove",
 		@search-change="onSearchChange",
 		@open="onOpen",
-		@close="onClose",
-		:show-pointer="schema.selectOptions.showPointer",
+		@close="onClose",		
 		:select-label="schema.selectOptions.selectLabel",
 		:selected-label="schema.selectOptions.selectedLabel",
 		:deselect-label="schema.selectOptions.deselectLabel",
@@ -34,6 +34,9 @@
 		:limit-text="schema.selectOptions.limitText",
 		:loading="schema.selectOptions.loading",
 		:disabled="disabled",
+		:option-partial="schema.selectOptions.optionPartial",
+		:show-pointer="schema.selectOptions.showPointer",
+		:option-height="schema.selectOptions.optionHeight"
 	)
 </template>
 <script>
