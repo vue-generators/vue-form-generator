@@ -13,7 +13,7 @@ function createField(schema = {}, model = null, disabled = false, options) {
 	[ el, vm, field ] = createVueField("fieldPikaday", schema, model, disabled, options);
 }
 
-describe("fieldPikaday.vue", () => {
+describe.only("fieldPikaday.vue", () => {
 
 	describe("check template", () => {
 		let schema = {
@@ -41,7 +41,7 @@ describe("fieldPikaday.vue", () => {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD") );	
 				done();
 			});
 		});
@@ -57,18 +57,18 @@ describe("fieldPikaday.vue", () => {
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD") );	
 				done();
 			});
 
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = moment(1420194153000).format("YYYY-MM-DD HH:mm:ss");
+			input.value = moment(1420153200000).format("YYYY-MM-DD");
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal(1420194153000);	
+				expect(model.event).to.be.equal(1420153200000);	
 				done();
 			});
 

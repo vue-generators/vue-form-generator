@@ -7,7 +7,7 @@
 	import moment from "moment";
 	import { defaults } from "lodash";
 
-	let inputFormat = "YYYY-MM-DD HH:mm:ss";
+	let inputFormat = "YYYY-MM-DD";
 
 	export default {
 		mixins: [ abstractField ],
