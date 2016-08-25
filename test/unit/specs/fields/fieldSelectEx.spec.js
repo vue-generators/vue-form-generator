@@ -41,7 +41,6 @@ describe("fieldSelectEx.vue", () => {
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.classList.contains("selectpicker")).to.be.true;
 			expect(input.disabled).to.be.false;	
 			expect(input.multiple).to.be.false;	
 		});
