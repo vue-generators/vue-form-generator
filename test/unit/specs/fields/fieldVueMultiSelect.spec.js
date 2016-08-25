@@ -35,7 +35,6 @@ describe("fieldVueMultiSelect.vue", () => {
 
 		before( () => {
 			createField(schema, model, false);
-			vm.$appendTo(document.body);
 			input = el.querySelector(".multiselect");
 		});
 

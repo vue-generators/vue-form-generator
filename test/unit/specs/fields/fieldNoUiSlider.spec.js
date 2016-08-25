@@ -28,7 +28,6 @@ describe("fieldNoUiSlider.vue", () => {
 
 		before( () => {
 			createField(schema, model, false);
-			vm.$appendTo(document.body);
 			input = el.getElementsByClassName("slider")[0];
 		});
 

@@ -13,7 +13,7 @@ function createField(schema = {}, model = null, disabled = false, options) {
 	[ el, vm, field ] = createVueField("fieldDateTime", schema, model, disabled, options);
 }
 
-describe("fieldDateTime.vue", () => {
+describe.only("fieldDateTime.vue", () => {
 
 	describe("check template", () => {
 		let schema = {
@@ -50,7 +50,12 @@ describe("fieldDateTime.vue", () => {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;	
-				done();
+
+				// Rollback
+				field.disabled = false;
+				vm.$nextTick( () => {
+					done();
+				});
 			});
 		});
 

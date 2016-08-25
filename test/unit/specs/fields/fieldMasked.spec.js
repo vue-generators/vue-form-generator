@@ -28,7 +28,6 @@ describe("fieldMasked.vue", () => {
 
 		before( () => {
 			createField(schema, model, false);
-			vm.$appendTo(document.body);
 			input = el.getElementsByTagName("input")[0];
 		});
 

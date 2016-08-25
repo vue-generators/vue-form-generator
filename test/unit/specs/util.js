@@ -20,6 +20,7 @@ export function trigger (el, event, args) {
 export function createVueField(type, schema = {}, model = null, disabled = false, options) {
 	let elName = Vue.util.hyphenate(type);
 	let el = document.createElement("div");		
+	document.body.appendChild(el);
 	el.innerHTML = `<${elName} :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></${elName}>`;
 	let vm = new Vue({
 		el: el,
@@ -31,6 +32,6 @@ export function createVueField(type, schema = {}, model = null, disabled = false
 		}
 	});
 	let field = vm.$refs.field;
-	
+
 	return [ el, vm, field ];
 }
