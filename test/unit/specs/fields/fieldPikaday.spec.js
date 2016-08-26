@@ -50,6 +50,7 @@ describe("fieldPikaday.vue", () => {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;	
+				field.disabled = false;
 				done();
 			});
 		});
@@ -64,11 +65,12 @@ describe("fieldPikaday.vue", () => {
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = moment(1420153200000).format("YYYY-MM-DD");
-			trigger(input, "input");
+			let day = moment(1420070400000).format("YYYY-MM-DD");
+			field.picker.setDate(day);
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal(1420153200000);	
+				expect(input.value).to.be.equal(day);	
+				expect(moment(model.event).format("YYYY-MM-DD")).to.be.equal(day);	
 				done();
 			});
 
