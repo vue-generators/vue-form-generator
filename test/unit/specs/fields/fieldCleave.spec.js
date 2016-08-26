@@ -19,12 +19,14 @@ describe("fieldCleave.vue", function() {
 			type: "masked",
 			label: "Phone",
 			model: "phone",
-			phone: true,
-			phoneRegionCode: "HU",
 			readonly: false,
-			placeholder: "Field placeholder"
+			placeholder: "Field placeholder",
+			cleaveOptions: {
+				phone: true,
+				phoneRegionCode: "HU",
+			}
 		};
-		let model = { phone: "(30) 123-4567" };
+		let model = { phone: "30 123 4567" };
 		let input;
 
 		before( () => {
@@ -46,7 +48,7 @@ describe("fieldCleave.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("(30) 123-4567");	
+				expect(input.value).to.be.equal("30 123 4567");	
 				done();
 			});
 		});
@@ -55,6 +57,7 @@ describe("fieldCleave.vue", function() {
 			schema.readonly = true;
 			vm.$nextTick( () => {
 				expect(input.readOnly).to.be.true;	
+				schema.readonly = false;
 				done();
 			});
 		});
@@ -63,29 +66,42 @@ describe("fieldCleave.vue", function() {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;	
+				field.disabled = false;
 				done();
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
-			model.phone = "(70) 555-4433";
+			model.phone = "70 555 4433";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("(70) 555-4433");	
+				expect(input.value).to.be.equal("70 555 4433");	
 				done();
 			});
 
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = "(21) 888-6655";
+			input.value = "21 888 6655";
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.phone).to.be.equal("(21) 888-6655");	
+				expect(model.phone).to.be.equal("21 888 6655");	
 				done();
 			});
 
 		});
+
+		it("should be formatted data in model", (done) => {
+			field.cleave.setRawValue("301234567");
+			expect(input.value).to.be.equal("30 123 4567");	
+			trigger(input, "change");
+
+			vm.$nextTick( () => {
+				expect(model.phone).to.be.equal("30 123 4567");	
+				done();
+			});
+
+		});		
 
 	});
 
