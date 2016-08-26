@@ -8,11 +8,11 @@ Vue.component("FieldMasked", FieldMasked);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldMasked", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldMasked", schema, model, disabled, options);
 }
 
-describe("fieldMasked.vue", () => {
+describe("fieldMasked.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -27,7 +27,7 @@ describe("fieldMasked.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

@@ -8,11 +8,11 @@ Vue.component("FieldSelectEx", FieldSelectEx);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldSelectEx", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldSelectEx", schema, model, disabled, options);
 }
 
-describe("fieldSelectEx.vue", () => {
+describe("fieldSelectEx.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -32,7 +32,7 @@ describe("fieldSelectEx.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("select")[0];
 		});
 
@@ -134,7 +134,7 @@ describe("fieldSelectEx.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("select")[0];
 		});
 
@@ -195,7 +195,7 @@ describe("fieldSelectEx.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("select")[0];
 		});
 

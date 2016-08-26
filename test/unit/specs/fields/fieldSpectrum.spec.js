@@ -9,11 +9,11 @@ Vue.component("FieldSpectrum", FieldSpectrum);
 // eslint-disable-next-line
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldSpectrum", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldSpectrum", schema, model, disabled, options);
 }
 
-describe("fieldSpectrum.vue", () => {
+describe("fieldSpectrum.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -25,7 +25,7 @@ describe("fieldSpectrum.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

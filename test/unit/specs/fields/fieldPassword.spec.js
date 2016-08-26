@@ -8,12 +8,12 @@ Vue.component("FieldPassword", FieldPassword);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldPassword", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldPassword", schema, model, disabled, options);
 }
 
 
-describe("fieldPassword.vue", () => {
+describe("fieldPassword.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -27,7 +27,7 @@ describe("fieldPassword.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

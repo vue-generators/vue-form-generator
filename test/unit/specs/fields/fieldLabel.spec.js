@@ -8,11 +8,11 @@ Vue.component("FieldLabel", FieldLabel);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldLabel", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldLabel", schema, model, disabled, options);
 }
 
-describe("fieldLabel.vue", () => {
+describe("fieldLabel.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -24,7 +24,7 @@ describe("fieldLabel.vue", () => {
 		let span;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			span = el.getElementsByTagName("span")[0];
 		});
 

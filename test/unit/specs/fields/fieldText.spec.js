@@ -8,11 +8,11 @@ Vue.component("FieldText", FieldText);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldText", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldText", schema, model, disabled, options);
 }
 
-describe("fieldText.vue", () => {
+describe("fieldText.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -26,7 +26,7 @@ describe("fieldText.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

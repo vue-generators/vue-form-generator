@@ -8,12 +8,12 @@ Vue.component("FieldTextArea", FieldTextArea);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldTextArea", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldTextArea", schema, model, disabled, options);
 }
 
 
-describe("fieldTextArea.vue", () => {
+describe("fieldTextArea.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -28,7 +28,7 @@ describe("fieldTextArea.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("textarea")[0];
 		});
 

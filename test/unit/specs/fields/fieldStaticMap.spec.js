@@ -9,11 +9,11 @@ Vue.component("FieldStaticMap", FieldStaticMap);
 // eslint-disable-next-line
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldStaticMap", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldStaticMap", schema, model, disabled, options);
 }
 
-describe("fieldStaticMap.vue", () => {
+describe("fieldStaticMap.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -30,7 +30,7 @@ describe("fieldStaticMap.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("img")[0];
 		});
 

@@ -17,10 +17,20 @@ export function trigger (el, event, args) {
 	}
 }
 
-export function createVueField(type, schema = {}, model = null, disabled = false, options) {
+export function createVueField(test, type, schema = {}, model = null, disabled = false, options) {
 	let elName = Vue.util.hyphenate(type);
-	let el = document.createElement("div");		
-	document.body.appendChild(el);
+
+	let container = document.createElement("div");		
+	container.className = "test-unit";
+	document.body.appendChild(container);
+
+	let h2 = document.createElement("h2");
+	h2.textContent = test ? "Test: " + test.title : "Test case";
+	container.appendChild(h2);
+
+	let el = document.createElement("fieldset");		
+	el.className = "vue-form-generator";
+	container.appendChild(el);
 	el.innerHTML = `<${elName} :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></${elName}>`;
 	let vm = new Vue({
 		el: el,

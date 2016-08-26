@@ -8,11 +8,11 @@ Vue.component("FieldGoogleAddress", FieldGoogleAddress);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldGoogleAddress", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldGoogleAddress", schema, model, disabled, options);
 }
 
-describe("fieldGoogleAddress.vue", () => {
+describe("fieldGoogleAddress.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -26,7 +26,7 @@ describe("fieldGoogleAddress.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

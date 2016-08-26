@@ -8,11 +8,11 @@ Vue.component("FieldSlider", FieldSlider);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldSlider", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldSlider", schema, model, disabled, options);
 }
 
-describe("fieldSlider.vue", () => {
+describe("fieldSlider.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -26,7 +26,7 @@ describe("fieldSlider.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

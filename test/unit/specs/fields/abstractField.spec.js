@@ -8,7 +8,7 @@ Vue.component("AbstractField", AbstractField);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
+function createField(test, schema = {}, model = null, disabled = false, options) {
 	el = document.createElement("div");		
 
 	// eslint-disable-next-line quotes
@@ -29,7 +29,7 @@ function createField(schema = {}, model = null, disabled = false, options) {
 	return [el, vm];
 }
 
-describe("abstractField.vue", () => {
+describe("abstractField.vue", function() {
 
 	describe("check static value", () => {
 		let schema = {
@@ -40,7 +40,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should give the model static value", () => {
@@ -66,7 +66,7 @@ describe("abstractField.vue", () => {
 		let model = {};
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should be called the schema.get function", () => {
@@ -94,7 +94,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 			field.formatValueToField = function(value) {
 				return "**" + value + "**";
 			};
@@ -125,7 +125,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should called once the schema.onChanged", (done) => {
@@ -153,7 +153,7 @@ describe("abstractField.vue", () => {
 		};
 
 		beforeEach( () => {
-			createField(schema, model, false, options);
+			createField(this, schema, model, false, options);
 			field.validate = sinon.spy();
 		});
 
@@ -187,7 +187,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should call schema validator", () => {
@@ -210,7 +210,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model, true);
+			createField(this, schema, model, true);
 		});
 
 		it("should not call schema validator", () => {
@@ -233,7 +233,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should not call schema validator", () => {
@@ -257,7 +257,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should call schema validator", () => {
@@ -285,7 +285,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		beforeEach( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should called once the schema.onValidated", () => {
@@ -311,7 +311,7 @@ describe("abstractField.vue", () => {
 		let model = { name: "John Doe" };
 
 		before( () => {
-			createField(schema, model);
+			createField(this, schema, model);
 		});
 
 		it("should be undefined", () => {

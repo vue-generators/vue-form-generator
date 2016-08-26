@@ -8,11 +8,11 @@ Vue.component("FieldRange", FieldRange);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldRange", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldRange", schema, model, disabled, options);
 }
 
-describe("fieldRange.vue", () => {
+describe("fieldRange.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -27,7 +27,7 @@ describe("fieldRange.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

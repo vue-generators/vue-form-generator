@@ -8,13 +8,12 @@ Vue.component("FieldNumber", FieldNumber);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldNumber", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldNumber", schema, model, disabled, options);
 }
 
 
-describe("fieldNumber.vue", () => {
-
+describe("fieldNumber.vue", function() {
 	describe("check template", () => {
 		let schema = {
 			type: "number",
@@ -29,7 +28,7 @@ describe("fieldNumber.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 
