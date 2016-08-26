@@ -163,6 +163,10 @@
 	$errorColor: lighten(#F00, 0%);
 
 	fieldset.vue-form-generator {
+
+		* {
+			box-sizing: border-box;
+		}		
 		
 		.form-control {
 			// Default Bootstrap .form-control style
