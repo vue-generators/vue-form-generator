@@ -9,11 +9,11 @@ Vue.component("fieldNoUiSlider", fieldNoUiSlider);
 // eslint-disable-next-line
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldNoUiSlider", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldNoUiSlider", schema, model, disabled, options);
 }
 
-describe("fieldNoUiSlider.vue", () => {
+describe("fieldNoUiSlider.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -27,8 +27,7 @@ describe("fieldNoUiSlider.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
-			vm.$appendTo(document.body);
+			createField(this, schema, model, false);
 			input = el.getElementsByClassName("slider")[0];
 		});
 

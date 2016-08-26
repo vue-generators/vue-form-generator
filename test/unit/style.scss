@@ -1,0 +1,36 @@
+html {
+	background: #CCC;
+	font-family: Arial, Tahoma;
+	font-size: 14px;
+
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.test-unit {
+	min-width: 22%;
+	display: inline-block;
+	vertical-align: top;
+	margin: 10px;
+	padding: 10px;
+
+	border: 1px solid #888;
+	border-radius: 8px;
+
+	background: #EEE;
+
+	h2 {
+		margin: 0;
+		border-bottom: 1px solid #888;
+		margin-bottom: 10px;
+		font-size: 14px;		
+	}
+
+	fieldset {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+}

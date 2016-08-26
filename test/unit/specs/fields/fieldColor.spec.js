@@ -8,11 +8,11 @@ Vue.component("FieldColor", FieldColor);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldColor", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldColor", schema, model, disabled, options);
 }
 
-describe("fieldColor.vue", () => {
+describe("fieldColor.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -24,7 +24,7 @@ describe("fieldColor.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

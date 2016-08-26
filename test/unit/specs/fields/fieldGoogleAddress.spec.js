@@ -2,28 +2,27 @@ import { expect } from "chai";
 import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
-import FieldRange from "src/fields/fieldRange.vue";
+import FieldGoogleAddress from "src/fields/fieldGoogleAddress.vue";
 
-Vue.component("FieldRange", FieldRange);
+Vue.component("FieldGoogleAddress", FieldGoogleAddress);
 
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldRange", schema, model, disabled, options);
+	[ el, vm, field ] = createVueField(test, "fieldGoogleAddress", schema, model, disabled, options);
 }
 
-describe("fieldRange.vue", function() {
+describe("fieldGoogleAddress.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
-			type: "range",
-			label: "Rating",
-			model: "rating",
-			min: 1,
-			max: 10,
+			type: "text",
+			label: "Address",
+			model: "address",
+			readonly: false,
 			placeholder: "Field placeholder"
 		};
-		let model = { rating: 8 };
+		let model = { address: "Paris, France" };
 		let input;
 
 		before( () => {
@@ -31,22 +30,30 @@ describe("fieldRange.vue", function() {
 			input = el.getElementsByTagName("input")[0];
 		});
 
-		it("should contain an input range element", () => {
+		it("should contain an input text element", () => {
 			expect(field).to.be.exist;
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.type).to.be.equal("range");
+			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
 			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.min).to.be.equal("1");	
-			expect(input.max).to.be.equal("10");	
+			expect(input.readOnly).to.be.false;	
 			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("8");	
+				expect(input.value).to.be.equal("Paris, France");	
+				done();
+			});
+		});
+
+		it("should set readOnly", (done) => {
+			schema.readonly = true;
+			vm.$nextTick( () => {
+				expect(input.readOnly).to.be.true;	
+				schema.readonly = false;
 				done();
 			});
 		});
@@ -55,29 +62,37 @@ describe("fieldRange.vue", function() {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;	
+				field.disabled = false;
 				done();
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
-			model.rating = 3;
+			model.address = "Rome, Italy";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("3");	
+				expect(input.value).to.be.equal("Rome, Italy");	
 				done();
 			});
 
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = "6";
-			trigger(input, "input");
+			input.value = "Budapest, Hungary";
+			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.rating).to.be.equal(6);	
+				expect(model.address).to.be.equal("Budapest, Hungary");
 				done();
 			});
 
 		});
+
+		/*
+			TODO:
+				1. check HTML list if typing
+				2. check geolocate called if input got focus
+				3. check onPlaceChanged called
+		 */
 
 	});
 

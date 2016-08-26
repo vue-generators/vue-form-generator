@@ -8,12 +8,12 @@ Vue.component("FieldEmail", FieldEmail);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldEmail", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldEmail", schema, model, disabled, options);
 }
 
 
-describe("fieldEmail.vue", () => {
+describe("fieldEmail.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -27,7 +27,7 @@ describe("fieldEmail.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

@@ -10,11 +10,11 @@ Vue.component("FieldImage", FieldImage);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldImage", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldImage", schema, model, disabled, options);
 }
 
-describe("fieldImage.vue", () => {
+describe("fieldImage.vue", function() {
 
 	describe("check template without preview", () => {
 		let schema = {
@@ -28,7 +28,7 @@ describe("fieldImage.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.querySelector("input[type=text]");
 		});
 

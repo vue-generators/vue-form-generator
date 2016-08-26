@@ -10,6 +10,12 @@
 	export default {
 		mixins: [ abstractField ],
 
+		data() {
+			return {
+				slider: null
+			};
+		},
+
 		watch: {
 			model: function() {
 				if ($.fn.ionRangeSlider) {
@@ -19,9 +25,8 @@
 					} else
 						valueFrom = this.value;
 
-					let ionRangeSlider = $(this.$el).data("ionRangeSlider");
-					if (ionRangeSlider) {
-						ionRangeSlider.update({
+					if (this.slider) {
+						this.slider.update({
 							from: valueFrom,
 							to: valueTo
 						});	
@@ -38,24 +43,31 @@
 				} else
 					valueFrom = this.value;
 
+				let self = this;
 				$(this.$el).ionRangeSlider(defaults(this.schema.sliderOptions || {}, {
 					type: "single",
 					grid: true,
 					hide_min_max: true,
 					from: valueFrom,
 					to: valueTo,
-					onChange: (slider) => {
-						if (this.schema.sliderOptions.type == "double") {
-							this.value = [ slider.from, slider.to ];
+					onChange(slider) {
+						if (self.slider.options.type == "double") {
+							self.value = [ slider.from, slider.to ];
 						} else {
-							this.value = slider.from;
+							self.value = slider.from;
 						}
 					}
 				}));
+				this.slider = $(this.$el).data("ionRangeSlider");
 			}
 			else
 				console.warn("ion.rangeSlider library is missing. Please download from https://github.com/IonDen/ion.rangeSlider and load the script and CSS in the HTML head section!");
-		}		
+		},
+
+		beforeDestroy() {
+			if (this.slider)
+				this.slider.destroy();
+		}	
 	};
 </script>
 

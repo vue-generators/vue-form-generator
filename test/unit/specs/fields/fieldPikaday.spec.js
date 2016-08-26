@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField } from "../util";
 import moment from "moment";
 
 import Vue from "vue";
@@ -9,11 +9,11 @@ Vue.component("FieldPikaday", FieldPikaday);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldPikaday", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldPikaday", schema, model, disabled, options);
 }
 
-describe("fieldPikaday.vue", () => {
+describe("fieldPikaday.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -25,7 +25,7 @@ describe("fieldPikaday.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 
@@ -41,7 +41,7 @@ describe("fieldPikaday.vue", () => {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD") );	
 				done();
 			});
 		});
@@ -50,6 +50,7 @@ describe("fieldPikaday.vue", () => {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;	
+				field.disabled = false;
 				done();
 			});
 		});
@@ -57,18 +58,19 @@ describe("fieldPikaday.vue", () => {
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD") );	
 				done();
 			});
 
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = moment(1420194153000).format("YYYY-MM-DD HH:mm:ss");
-			trigger(input, "input");
+			let day = moment(1420070400000).format("YYYY-MM-DD");
+			field.picker.setDate(day);
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal(1420194153000);	
+				expect(input.value).to.be.equal(day);	
+				expect(moment(model.event).format("YYYY-MM-DD")).to.be.equal(day);	
 				done();
 			});
 

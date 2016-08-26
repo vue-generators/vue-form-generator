@@ -43,6 +43,11 @@ export default {
 		} else {
 			console.warn("Cleave is missing. Please download from https://github.com/nosir/cleave.js/ and load the script in the HTML head section!");
 		}
+	},
+
+	beforeDestroy() {
+		if (this.cleave)
+			this.cleave.destroy();
 	}
 };
 </script>

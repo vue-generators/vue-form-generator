@@ -8,11 +8,11 @@ Vue.component("FieldChecklist", FieldChecklist);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldChecklist", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldChecklist", schema, model, disabled, options);
 }
 
-describe("fieldChecklist.vue", () => {
+describe("fieldChecklist.vue", function() {
 
 	describe("check listbox template", () => {
 
@@ -41,7 +41,7 @@ describe("fieldChecklist.vue", () => {
 			}
 
 			before( () => {
-				createField(schema, model, false);
+				createField(this, schema, model, false);
 				listbox = el.querySelector(".listbox");
 				checkboxes = listbox.querySelectorAll("input[type=checkbox]");
 			});
@@ -122,7 +122,7 @@ describe("fieldChecklist.vue", () => {
 			}
 
 			before( () => {
-				createField(schema, model, false);
+				createField(this, schema, model, false);
 				listbox = el.querySelector(".listbox");
 				checkboxes = listbox.querySelectorAll("input[type=checkbox]");
 			});
@@ -188,7 +188,7 @@ describe("fieldChecklist.vue", () => {
 			}
 
 			before( () => {
-				createField(schema, model, false);
+				createField(this, schema, model, false);
 				listbox = el.querySelector(".listbox");
 				checkboxes = listbox.querySelectorAll("input[type=checkbox]");
 			});
@@ -257,7 +257,7 @@ describe("fieldChecklist.vue", () => {
 			}
 
 			before( () => {
-				createField(schema, model, false);
+				createField(this, schema, model, false);
 				combobox = el.querySelector(".combobox");
 				dropList = combobox.querySelector(".dropList");
 				mainRow = combobox.querySelector(".mainRow");

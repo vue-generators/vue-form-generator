@@ -8,12 +8,11 @@ Vue.component("FieldCheckbox", FieldCheckbox);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldCheckbox", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldCheckbox", schema, model, disabled, options);
 }
 
-
-describe("FieldCheckbox.vue", () => {
+describe("FieldCheckbox.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -25,7 +24,7 @@ describe("FieldCheckbox.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

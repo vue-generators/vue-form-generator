@@ -10,11 +10,11 @@ Vue.component("FieldSubmit", FieldSubmit);
 // eslint-disable-next-line
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldSubmit", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldSubmit", schema, model, disabled, options);
 }
 
-describe("fieldSubmit.vue", () => {
+describe("fieldSubmit.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -27,7 +27,7 @@ describe("fieldSubmit.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
 

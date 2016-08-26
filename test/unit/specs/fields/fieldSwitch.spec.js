@@ -8,11 +8,11 @@ Vue.component("FieldSwitch", FieldSwitch);
 
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldSwitch", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldSwitch", schema, model, disabled, options);
 }
 
-describe("FieldSwitch.vue", () => {
+describe("FieldSwitch.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -24,7 +24,7 @@ describe("FieldSwitch.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.querySelector("input");
 		});
 
@@ -91,7 +91,7 @@ describe("FieldSwitch.vue", () => {
 		let model = { status: true };
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 		});
 
 		it("check attributes", () => {
@@ -115,7 +115,7 @@ describe("FieldSwitch.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
+			createField(this, schema, model, false);
 			input = el.querySelector("input");
 		});
 

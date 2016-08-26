@@ -9,11 +9,11 @@ Vue.component("fieldVueMultiSelect", fieldVueMultiSelect);
 // eslint-disable-next-line
 let el, vm, field;
 
-function createField(schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField("fieldVueMultiSelect", schema, model, disabled, options);
+function createField(test, schema = {}, model = null, disabled = false, options) {
+	[ el, vm, field ] = createVueField(test, "fieldVueMultiSelect", schema, model, disabled, options);
 }
 
-describe("fieldVueMultiSelect.vue", () => {
+describe("fieldVueMultiSelect.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -34,8 +34,7 @@ describe("fieldVueMultiSelect.vue", () => {
 		let input;
 
 		before( () => {
-			createField(schema, model, false);
-			vm.$appendTo(document.body);
+			createField(this, schema, model, false);
 			input = el.querySelector(".multiselect");
 		});
 

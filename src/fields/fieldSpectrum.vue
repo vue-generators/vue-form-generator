@@ -9,17 +9,30 @@
 	export default {
 		mixins: [ abstractField ],
 
+		data() {
+			return {
+				picker: null
+			};
+		},
+
 		watch: { 
 			model() {
 				if ($.fn.spectrum) {
-					$(this.$el).spectrum("set", this.value);
+					this.picker.spectrum("set", this.value);
 				}
+			},
+
+			disabled(val) {
+				if (val)
+					this.picker.spectrum("disable");
+				else
+					this.picker.spectrum("enable");
 			}
 		},
 
 		ready() {
-			if ($.fn.spectrum)
-				$(this.$el).spectrum("destroy").spectrum(defaults(this.schema.colorOptions || {}, {
+			if ($.fn.spectrum) {
+				this.picker = $(this.$el).spectrum("destroy").spectrum(defaults(this.schema.colorOptions || {}, {
 					showInput: true,
 					showAlpha: true,
 					disabled: this.schema.disabled,
@@ -29,8 +42,16 @@
 						this.value = color ? color.toString() : null;
 					}
 				}));
-			else
+				this.picker.spectrum("set", this.value);
+
+			} else {
 				console.warn("Spectrum color library is missing. Please download from http://bgrins.github.io/spectrum/ and load the script and CSS in the HTML head section!");
+			}
+		},
+
+		beforeDestroy() {
+			if (this.picker)
+				this.picker.spectrum("destroy");
 		}
 
 	};
