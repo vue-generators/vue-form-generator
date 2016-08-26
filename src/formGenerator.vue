@@ -1,4 +1,5 @@
 <template lang="jade">
+div
 	fieldset.vue-form-generator(v-if="schema != null")
 		.form-group(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
 			label {{ field.label }}
