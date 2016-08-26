@@ -23,7 +23,7 @@
 
 				//google inputs retrieved
 				"inputs": {
-					"street_number": "long_name",
+					street_number: "long_name",
 					route: "long_name",
 					country: "long_name",
 					administrative_area_level_1: "long_name",
@@ -89,7 +89,7 @@
 							lng: position.coords.longitude
 						};
 
-						let circle = new google.maps.Circle({
+						let circle = new window.google.maps.Circle({
 							center: geolocation,
 							radius: position.coords.accuracy
 						});
