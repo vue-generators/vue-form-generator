@@ -54,6 +54,11 @@
 			}
 			else
 				console.warn("Bootstrap datetimepicker library is missing. Please download from https://eonasdan.github.io/bootstrap-datetimepicker/ and load the script and CSS in the HTML head section!");
+		},
+
+		beforeDestroy() {
+			if ($.fn.datetimepicker)
+				$(this.$el).data("DateTimePicker").destroy();
 		}		
 	};
 </script>
