@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField } from "../util";
 import moment from "moment";
 
 import Vue from "vue";

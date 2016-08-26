@@ -48,7 +48,6 @@
 
 		ready() {
 			if ($.fn.datetimepicker) {
-				let self = this;
 				$(this.$el).datetimepicker(defaults(this.schema.dateTimePickerOptions || {}, {
 					format: inputFormat
 				}));

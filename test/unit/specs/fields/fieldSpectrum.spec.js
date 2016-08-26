@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField } from "../util";
+import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
 import FieldSpectrum from "src/fields/fieldSpectrum.vue";
@@ -38,10 +38,10 @@ describe("fieldSpectrum.vue", () => {
 			//expect(input.classList.contains("form-control")).to.be.true;
 			expect(input.disabled).to.be.false;	
 		});
-		/* TODO
+
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("#ff8822");	
+				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ff8822");	
 				done();
 			});
 		});
@@ -50,29 +50,31 @@ describe("fieldSpectrum.vue", () => {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;	
+				expect(el.querySelectorAll(".sp-disabled").length).to.be.equal(1);
+				field.disabled = false;
 				done();
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
-			model.color = "#ffff00";
+			field.model = { color: "#ffff00" };
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("#ffff00");	
+				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ffff00");	
 				done();
 			});
 
 		});
 
 		it("model value should be the input value if changed", (done) => {
-			input.value = "#123456";
-			trigger(input, "change");
+			field.picker.spectrum("set", "#123456");
+			trigger(document.querySelector(".sp-input"), "change");
 
 			vm.$nextTick( () => {
-				expect(model.color).to.be.equal("#123456");	
+				expect(field.model.color).to.be.equal("#123456");	
 				done();
 			});
 
-		});*/
+		});
 
 	});
 

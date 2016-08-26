@@ -13,7 +13,7 @@
 		data() {
 			return {
 				slider: null
-			}
+			};
 		},
 
 		watch: {
