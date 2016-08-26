@@ -41,13 +41,42 @@ describe("fieldSlider.vue", () => {
 			expect(input.getAttribute("data-disable")).to.be.null;	
 		});
 
+		it("should contain the value", (done) => {
+			vm.$nextTick( () => {
+				let origin = el.querySelector(".irs-slider.single");				
+				expect(origin.style.left).to.be.within("70%", "90%");
+				done();
+			});
+		});
+
 		it("should set disabled", (done) => {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.getAttribute("data-disable")).to.be.equal("");	
+				field.disabled = false;
 				done();
 			});
 		});
+
+		it("input value should be the model value after changed", (done) => {
+			field.model = { rating: 3 };
+			vm.$nextTick( () => {
+				let origin = el.querySelector(".irs-slider.single");				
+				expect(origin.style.left).to.be.within("20%", "40%");
+				done();
+			});
+
+		});
+
+		it("model value should be the input value if changed", (done) => {
+			field.slider.update({ from: 6 });
+			field.slider.callOnChange(field.slider); // trigger changes
+			vm.$nextTick( () => {
+				expect(field.model.rating).to.be.equal(6);	
+				done();
+			});
+
+		});		
 
 	});
 
