@@ -593,7 +593,7 @@ module.exports = {
 		}/*, {
 			type: "submit",
 			label: "",
-			caption: "Submit form",
+			buttonText: "Submit form",
 			validateBeforeSubmit: true,
 			onSubmit(model, schema) {
 				console.log("Form submitted!", model);
