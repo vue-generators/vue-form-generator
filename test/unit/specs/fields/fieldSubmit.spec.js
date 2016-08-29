@@ -19,7 +19,7 @@ describe("fieldSubmit.vue", function() {
 	describe("check template", () => {
 		let schema = {
 			type: "submit",
-			caption: "Submit form",
+			buttonText: "Submit form",
 			validateBeforeSubmit: false,
 			onSubmit() {}
 		};
