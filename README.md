@@ -18,8 +18,9 @@ A schema-based form generator component for Vue.js v1.x.x
 
 ## Features
 - multiple objects editing
-- 21 field types
+- 24 field types
 - built-in validators
+- Bootstrap friendly templates
 - customizable styles
 - ...etc
 
@@ -63,8 +64,8 @@ Vue.use(VueFormGenerator);
 
 export default {
   data: {
-    schema: { ... },
-    model: {             
+  
+    model:             
       id: 1,
       name: "John Doe",
       password: "J0hnD03!x4",
@@ -72,6 +73,47 @@ export default {
       email: "john.doe@gmail.com",
       status: true
     },
+  
+    schema: {
+      fields: [{
+        type: "text",
+        label: "ID (disabled text field)",
+        model: "id",
+        readonly: true,         
+        disabled: true
+      },{
+        type: "text",
+        label: "Name",
+        model: "name",
+        placeholder: "Your name",
+        featured: true,
+        required: true
+      },{
+        type: "password",
+        label: "Password",
+        model: "password",
+        min: 6,
+        required: true,
+        hint: "Minimum 6 characters",
+        validator: validators.string
+      },{
+        type: "select",
+        label: "skills",
+        model: "type",      
+        values: ["Javascript", "VueJS", "CSS3", "HTML5"]
+      },{
+        type: "email",
+        label: "E-mail",
+        model: "email",
+        placeholder: "User's e-mail address"
+      },{
+        type: "checkbox",
+        label: "Status",
+        model: "status",
+        default: true
+      }]
+    },
+
     formOptions: {
       validateAfterLoad: true,
       validateAfterChanged: true
@@ -79,61 +121,6 @@ export default {
   }
 }
 </script>
-```
-
-## Examples
-### Schema sample
-```js
-{
-    fields: [{
-        type: "text",
-        label: "ID",
-        model: "id",
-        readonly: true,
-        featured: false,
-        disabled: true
-    }, {
-        type: "text",
-        label: "Name",
-        model: "name",
-        readonly: false,
-        featured: true,
-        required: true,
-        disabled: false,
-        placeholder: "User's name",
-        validator: VueFormGenerator.validators.string
-    }, {
-        type: "password",
-        label: "Password",
-        model: "password",
-        min: 6,
-        required: true,
-        hint: "Minimum 6 characters",
-        validator: VueFormGenerator.validators.string
-    }, {
-        type: "email",
-        label: "E-mail",
-        model: "email",
-        placeholder: "User's e-mail address",
-        validator: VueFormGenerator.validators.email
-    }, {
-        type: "checklist",
-        label: "Skills",
-        model: "skills",
-        multi: true,
-        required: true,
-        multiSelect: true,
-        values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"]
-    }, {
-        type: "switch",
-        label: "Status",
-        model: "status",
-        multi: true,
-        default: true,
-        textOn: "Active",
-        textOff: "Inactive"
-    }]
-}
 ```
 
 ## Development
@@ -157,7 +144,6 @@ npm run test
 * [ ] sortable checkbox list
 * [ ] Groupable fields
 * [ ] Validation handling with multiple models
-* [ ] Bundle for vendor files
 
 ## Contribution
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
