@@ -28,14 +28,13 @@ A schema-based form generator component for Vue.js v1.x.x
 [Online documentation on Gitbook](https://icebob.gitbooks.io/vueformgenerator/content/)
 
 ## Dependencies
-- [Moment.js](http://momentjs.com/) (built-in)
-- [lodash](https://lodash.com/) (built-in)
-- [BootStrap](http://getbootstrap.com/) & [jQuery](http://www.jquery.com) (optional)
-- [bootstrap-select](https://silviomoreto.github.io/bootstrap-select/) for `selectEx` fields (optional)
-- [bootstrap-datetimepicker](https://github.com/Eonasdan/bootstrap-datetimepicker) for `datetime` fields (optional)
-- [spectrum](https://github.com/bgrins/spectrum) for `spectrum` color picker fields (optional)
-- [maskedinput](http://digitalbush.com/projects/masked-input-plugin/) for `masked` fields
-- [ion.rangeSlider](https://github.com/IonDen/ion.rangeSlider) for range slider fields
+vue-form-generator use [Moment.js](http://momentjs.com/) and [lodash](https://lodash.com/) internally.
+
+While build-in fields don't need external dependencies, optional fields may need other libraries.  
+These dependency fall in two camp: jQuery or Vanilla. You can find almost the same functionality in both flavor.  
+That way, it's your choice to depend on jQuery or not.
+
+You can find details on dependencies in [documentation](https://icebob.gitbooks.io/vueformgenerator/content/).
 
 ## Installation
 ### NPM
