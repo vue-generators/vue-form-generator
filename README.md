@@ -30,11 +30,11 @@ A schema-based form generator component for Vue.js v1.x.x
 ## Dependencies
 vue-form-generator use [Moment.js](http://momentjs.com/) and [lodash](https://lodash.com/) internally.
 
-While build-in fields don't need external dependencies, optional fields may need other libraries.  
+While built-in fields don't need external dependencies, optional fields may need other libraries.  
 These dependency fall in two camp: jQuery or Vanilla. You can find almost the same functionality in both flavor.  
 That way, it's your choice to depend on jQuery or not.
 
-You can find details on dependencies in [documentation](https://icebob.gitbooks.io/vueformgenerator/content/).
+You can find details about dependencies in [documentation](https://icebob.gitbooks.io/vueformgenerator/content/).
 
 ## Installation
 ### NPM
