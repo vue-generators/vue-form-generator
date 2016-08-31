@@ -303,48 +303,44 @@ module.exports = {
 			model: "dob",
 			required: true,
 			placeholder: "User's birth of date",
-			min: moment("1900-01-01").toDate(),
-			max: moment("2016-01-01").toDate(),
-			validator: [
-				validators.date
-			],
+			validator: validators.date,
 			pikadayOptions: {
-				bound: true,
-				position: 'bottom left',
-				reposition: true,
+				// bound: true,
+				// position: 'bottom left',
+				// reposition: true,
 				// container: ,
-				format: 'YYYY-MM-DD HH:mm:ss',
+				// format: 'YYYY-MM-DD HH:mm:ss',
 				// formatStrict: ,
 				// defaultDate: ,
 				// setDefaultDate: ,
-				firstDay: 1,
+				// firstDay: 1,
 				// minDate: ,
 				// maxDate: ,
-				disableWeekends: false,
+				// disableWeekends: false,
 				// disableDayFn: ,
 				// yearRange: ,
-				showWeekNumber: false,
-				isRTL: false,
-				i18n: {
-				    previousMonth : 'Previous Month',
-				    nextMonth     : 'Next Month',
-				    months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
-				    weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
-				    weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-				},
+				// showWeekNumber: false,
+				// isRTL: false,
+				// i18n: {
+				//     previousMonth : 'Previous Month',
+				//     nextMonth     : 'Next Month',
+				//     months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
+				//     weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+				//     weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+				// },
 				// yearSuffix: ,
-				showMonthAfterYear: false,
-				showDaysInNextAndPreviousMonths: false,
+				// showMonthAfterYear: false,
+				// showDaysInNextAndPreviousMonths: false,
 				// numberOfMonths: ,
 				// mainCalendar: ,
-				theme: null,
+				// theme: null,
 				// onSelect: ,
 				// onOpen: ,
 				// onClose: ,
 				// onDraw: ,
 			},
 			onChanged(model, newVal, oldVal, field) {
-				model.age = moment().year() - moment(newVal).year();
+				// model.age = moment().year() - moment(newVal).year();
 			}
 
 		},{
