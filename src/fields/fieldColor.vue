@@ -1,6 +1,6 @@
 <template lang="jade">
 	.wrapper
-		input(type="color", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :readonly="schema.readonly")
+		input(type="color", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled")
 		span.helper {{ value }}
 </template>
 

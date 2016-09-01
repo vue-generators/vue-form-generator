@@ -1,5 +1,5 @@
 <template lang="jade">
-	input(type="checkbox", v-model="value",  :autocomplete="schema.autocomplete", :disabled="disabled", :readonly="schema.readonly")
+	input(type="checkbox", v-model="value",  :autocomplete="schema.autocomplete", :disabled="disabled")
 </template>
 
 <script>
