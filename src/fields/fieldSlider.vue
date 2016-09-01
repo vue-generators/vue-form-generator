@@ -1,5 +1,5 @@
 <template lang="jade">
-	input(type="text", :data-min="schema.min", :data-max="schema.max", :data-step="schema.step", :data-disable="disabled")
+	input(type="text", :autocomplete="schema.autocomplete", :data-disable="disabled", :data-max="schema.max", :data-min="schema.min", :data-step="schema.step", :placeholder="schema.placeholder", :readonly="schema.readonly")
 </template>
 
 <script>

@@ -1,7 +1,7 @@
 <template lang="jade">
 	div.wrapper
-		input.form-control.link(type="text", v-model="wrappedValue", :readonly="schema.readonly", :disabled="disabled", :placeholder="schema.placeholder")
-		input.form-control.file(type="file", :readonly="schema.readonly", :disabled="disabled", v-if="schema.browse !== false", @change="fileChanged")
+		input.form-control.link(type="text", v-model="wrappedValue", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly")
+		input.form-control.file(type="file", v-if="schema.browse !== false", :autocomplete="schema.autocomplete", :disabled="disabled", :readonly="schema.readonly", @change="fileChanged")
 		.preview(:style="previewStyle")
 			.remove(title="Remove image", @click="remove")
 </template>
