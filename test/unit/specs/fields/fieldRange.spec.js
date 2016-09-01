@@ -38,7 +38,6 @@ describe("fieldRange.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("range");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);	
 			expect(input.min).to.be.equal("1");	
 			expect(input.max).to.be.equal("10");	
 			expect(input.disabled).to.be.false;	
