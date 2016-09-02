@@ -39,6 +39,10 @@
 	import { users } from "./data";
 	import { filters } from "./utils";
 
+	// Test custom field
+	import FieldAwesome from "./fieldAwesome.vue";
+	Vue.component("fieldAwesome", FieldAwesome);
+
 	import {each, isFunction, cloneDeep, merge} from 'lodash';	
 
 	Vue.use(VueFormGenerator);
