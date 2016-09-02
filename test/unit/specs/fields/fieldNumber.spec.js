@@ -39,6 +39,7 @@ describe("fieldNumber.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("number");
 			expect(input.classList.contains("form-control")).to.be.true;
+			expect(input.placeholder).to.be.equal(schema.placeholder);
 			expect(input.readOnly).to.be.false;	
 			expect(input.min).to.be.equal("18");	
 			expect(input.max).to.be.equal("100");	
