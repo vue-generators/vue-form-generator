@@ -180,6 +180,10 @@ module.exports = {
 			model: "email",
 			placeholder: "User's e-mail address"
 		}, {
+			type: "awesome",
+			label: "Awesome (custom field)",
+			model: "userName"
+		}, {
 			type: "googleAddress",
 			label: "Location (googleAddress)",
 			model: "location",
