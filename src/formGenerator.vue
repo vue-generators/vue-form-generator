@@ -4,7 +4,7 @@ div
 		.form-group(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
 			label {{ field.label }}
 				span.help(v-if="field.help")
-					i.fa.fa-question-circle
+					i.icon
 					.helpText {{{field.help}}}
 			.field-wrap
 				component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
@@ -188,6 +188,15 @@ div
 		span.help {
 			margin-left: 0.3em;
 			position: relative;
+
+			.icon {
+				display: inline-block;
+				width: 16px;
+				height: 14px;
+				background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAA+UlEQVQ4ja3TS0oDQRAG4C8+lq7ceICICoLGK7iXuNBbeAMJuPVOIm7cqmDiIncIggg+cMZFaqCnZyYKWtB0df31V1VXdfNH6S2wD9CP8xT3KH8T9BiTcE7XBMOfyBcogvCFO9ziLWwFRosyV+QxthNsA9dJkEYlvazsQdi3sBv6Ol6TBLX+HWT3fcQZ3vGM5fBLk+ynAU41m1biCXvhs4OPBDuBpa6GxF0P8YAj3GA1d1qJfdoS4DOIcIm1DK9x8iaWeDF/SP3QU6zRROpjLDFLsFlibx1jJaMkSIGrWKntvItcyTBKzCcybsvc9ZmYz3kz9Ooz/b98A8yvW13B3ch6AAAAAElFTkSuQmCC');
+				background-repeat: no-repeat;
+				background-position: center center;
+			}
 
 			.helpText {
 				background-color: #444;
