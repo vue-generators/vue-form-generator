@@ -5,7 +5,6 @@
 <script>
 	import VueFormGenerator from "../src";
 
-	console.log(VueFormGenerator);
 	export default {
 		mixins: [ VueFormGenerator.abstractField ]
 	};
