@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldTextArea from "src/fields/fieldTextArea.vue";
@@ -20,9 +20,9 @@ describe("fieldTextArea.vue", function() {
 			type: "textarea",
 			label: "Description",
 			model: "desc",
-			readonly: false,
+			max: 500,
 			placeholder: "Field placeholder",
-			max: 500
+			readonly: false
 		};
 		let model = { desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." };
 		let input;
@@ -38,48 +38,39 @@ describe("fieldTextArea.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.readOnly).to.be.false;	
-			expect(input.disabled).to.be.false;	
 			expect(input.rows).to.be.equal(2);	// default value is 2
-			expect(input.maxLength).to.be.equal(500);	
+			expect(input.maxLength).to.be.equal(500);
 		});
 
 		it("should change rows to 4", (done) => {
 			field.$set("schema.rows", 4); // To be reactive
 			vm.$nextTick( () => {
-				expect(input.rows).to.be.equal(4);	
+				expect(input.rows).to.be.equal(4);
 				done();
 			});
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal(model.desc);	
+				expect(input.value).to.be.equal(model.desc);
 				done();
 			});
 		});
 
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
-				done();
-			});
-		});
+		describe("check optional attribute", () => {
+			let attributes = ["disabled", "placeholder", "readonly"];
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.desc = "Jane Doe";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("Jane Doe");	
+				expect(input.value).to.be.equal("Jane Doe");
 				done();
 			});
 
@@ -90,7 +81,7 @@ describe("fieldTextArea.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.desc).to.be.equal("John Smith");	
+				expect(model.desc).to.be.equal("John Smith");
 				done();
 			});
 

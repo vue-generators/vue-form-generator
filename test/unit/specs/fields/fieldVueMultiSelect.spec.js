@@ -47,8 +47,8 @@ describe("fieldVueMultiSelect.vue", function() {
 			expect(input.classList.contains("multiselect--disabled")).to.be.false;
 		});
 
-		it("should contain option elements", () => {					
-			let options = input.querySelectorAll("li.multiselect__option");			
+		it("should contain option elements", () => {
+			let options = input.querySelectorAll("li.multiselect__option");
 			expect(options.length).to.be.equal(schema.values.length);
 			expect(options[1].querySelector("span").textContent).to.be.equal("Paris");
 			expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;
@@ -67,9 +67,9 @@ describe("fieldVueMultiSelect.vue", function() {
 			model.city = "Rome";
 			vm.$nextTick( () => {
 				expect(input.querySelectorAll("li.multiselect__option--selected").length).to.be.equal(1);
-				let options = input.querySelectorAll("li.multiselect__option");			
+				let options = input.querySelectorAll("li.multiselect__option");
 				expect(options[2].querySelector("span").textContent).to.be.equal("Rome");
-				expect(options[2].classList.contains("multiselect__option--selected")).to.be.true;	
+				expect(options[2].classList.contains("multiselect__option--selected")).to.be.true;
 				done();
 			});
 		});
@@ -80,17 +80,17 @@ describe("fieldVueMultiSelect.vue", function() {
 				expect(input.querySelectorAll("li.multiselect__option--selected").length).to.be.equal(2);
 				let options = input.querySelectorAll("li.multiselect__option");
 				expect(options[1].querySelector("span").textContent).to.be.equal("Paris");
-				expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;	
+				expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;
 				expect(options[2].querySelector("span").textContent).to.be.equal("Rome");
-				expect(options[2].classList.contains("multiselect__option--selected")).to.be.true;	
+				expect(options[2].classList.contains("multiselect__option--selected")).to.be.true;
 				done();
 			});
 		});
 
 		it("model value should be the input value if changed", (done) => {
 			let options = input.querySelectorAll("li.multiselect__option");
-			trigger(options[2], "mousedown");			
-			
+			trigger(options[2], "mousedown");
+
 			vm.$nextTick( () => {
 				expect(model.city.length).to.be.equal(1);
 				expect(model.city[0]).to.be.equal("Paris");

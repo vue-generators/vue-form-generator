@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldPassword from "src/fields/fieldPassword.vue";
@@ -20,8 +20,9 @@ describe("fieldPassword.vue", function() {
 			type: "password",
 			label: "Password",
 			model: "password",
-			readonly: false,
-			placeholder: "Field placeholder"
+			autocomplete:"off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { password: "123456!" };
 		let input;
@@ -38,38 +39,29 @@ describe("fieldPassword.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("password");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.readOnly).to.be.false;	
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("123456!");	
+				expect(input.value).to.be.equal("123456!");
 				done();
 			});
 		});
 
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
-				done();
-			});
-		});
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.password = "J0hnD03!x4";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("J0hnD03!x4");	
+				expect(input.value).to.be.equal("J0hnD03!x4");
 				done();
 			});
 
@@ -80,7 +72,7 @@ describe("fieldPassword.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.password).to.be.equal("pass 1234&");	
+				expect(model.password).to.be.equal("pass 1234&");
 				done();
 			});
 

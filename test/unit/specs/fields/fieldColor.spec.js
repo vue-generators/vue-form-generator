@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldColor from "src/fields/fieldColor.vue";
@@ -18,7 +18,8 @@ describe("fieldColor.vue", function() {
 		let schema = {
 			type: "color",
 			label: "Color",
-			model: "color"
+			model: "color",
+			autocomplete: "off"
 		};
 		let model = { color: "#ff8822" };
 		let input;
@@ -34,29 +35,29 @@ describe("fieldColor.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("color");
-			//expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("#ff8822");	
+				expect(input.value).to.be.equal("#ff8822");
 				done();
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.color = "#ffff00";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("#ffff00");	
+				expect(input.value).to.be.equal("#ffff00");
 				done();
 			});
 
@@ -67,7 +68,7 @@ describe("fieldColor.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.color).to.be.equal("#123456");	
+				expect(model.color).to.be.equal("#123456");
 				done();
 			});
 

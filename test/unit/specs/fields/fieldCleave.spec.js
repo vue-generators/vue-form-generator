@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldCleave from "src/fields/fieldCleave.vue";
@@ -19,8 +19,9 @@ describe("fieldCleave.vue", function() {
 			type: "masked",
 			label: "Phone",
 			model: "phone",
+			autocomplete: "off",
+			placeholder: "",
 			readonly: false,
-			placeholder: "Field placeholder",
 			cleaveOptions: {
 				phone: true,
 				phoneRegionCode: "HU",
@@ -41,40 +42,29 @@ describe("fieldCleave.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.readOnly).to.be.false;	
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("30 123 4567");	
+				expect(input.value).to.be.equal("30 123 4567");
 				done();
 			});
 		});
 
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
-				schema.readonly = false;
-				done();
-			});
-		});
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "disabled", "readonly"];
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				field.disabled = false;
-				done();
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.phone = "70 555 4433";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("70 555 4433");	
+				expect(input.value).to.be.equal("70 555 4433");
 				done();
 			});
 
@@ -85,7 +75,7 @@ describe("fieldCleave.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.phone).to.be.equal("21 888 6655");	
+				expect(model.phone).to.be.equal("21 888 6655");
 				done();
 			});
 
@@ -93,15 +83,15 @@ describe("fieldCleave.vue", function() {
 
 		it("should be formatted data in model", (done) => {
 			field.cleave.setRawValue("301234567");
-			expect(input.value).to.be.equal("30 123 4567");	
+			expect(input.value).to.be.equal("30 123 4567");
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.phone).to.be.equal("30 123 4567");	
+				expect(model.phone).to.be.equal("30 123 4567");
 				done();
 			});
 
-		});		
+		});
 
 	});
 

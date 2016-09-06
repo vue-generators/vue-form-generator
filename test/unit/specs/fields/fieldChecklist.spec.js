@@ -64,14 +64,6 @@ describe("fieldChecklist.vue", function() {
 				expect(isChecked(6)).to.be.true;
 			});
 
-			/*it("should set disabled", (done) => {
-				field.disabled = true;
-				vm.$nextTick( () => {
-					expect(listbox.disabled).to.be.true;	
-					done();
-				});
-			});*/
-
 			it("listbox value should be the model value after changed", (done) => {
 				model.skills = ["ReactJS"];
 				vm.$nextTick( () => {
@@ -89,7 +81,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);	
+					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 					done();
 				});
 
@@ -153,7 +145,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal([3, 1]);	
+					expect(model.skills).to.be.deep.equal([3, 1]);
 					done();
 				});
 
@@ -219,13 +211,13 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal([3, 1]);	
+					expect(model.skills).to.be.deep.equal([3, 1]);
 					done();
 				});
 
 			});
 
-		});		
+		});
 
 	});
 
@@ -316,7 +308,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);	
+					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 					done();
 				});
 
@@ -327,7 +319,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["ReactJS"]);	
+					expect(model.skills).to.be.deep.equal(["ReactJS"]);
 					done();
 				});
 
@@ -339,11 +331,11 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["HTML5"]);	
+					expect(model.skills).to.be.deep.equal(["HTML5"]);
 					done();
 				});
 
-			});			
+			});
 
 		});
 

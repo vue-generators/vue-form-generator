@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSelectEx from "src/fields/fieldSelectEx.vue";
@@ -41,8 +41,6 @@ describe("fieldSelectEx.vue", function() {
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.disabled).to.be.false;	
-			expect(input.multiple).to.be.false;	
 		});
 
 		it("should contain option elements", () => {
@@ -58,27 +56,29 @@ describe("fieldSelectEx.vue", function() {
 			let options = input.querySelectorAll("option");
 			expect(options[0].disabled).to.be.false;
 			expect(options[0].textContent).to.be.equal("<Not selected>");
-		});		
+		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("Paris");	
+				expect(input.value).to.be.equal("Paris");
 				done();
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+		describe("check optional attribute", () => {
+			let attributes = ["disabled", "multiSelect"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.city = "Rome";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("Rome");	
+				expect(input.value).to.be.equal("Rome");
 				done();
 			});
 
@@ -89,7 +89,7 @@ describe("fieldSelectEx.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.city).to.be.equal("London");	
+				expect(model.city).to.be.equal("London");
 				done();
 			});
 
@@ -108,7 +108,7 @@ describe("fieldSelectEx.vue", function() {
 		it("should not be multiple", (done) => {
 			schema.multiSelect = true;
 			vm.$nextTick( () => {
-				expect(input.multiple).to.be.true;	
+				expect(input.multiple).to.be.true;
 				let options = input.querySelectorAll("option");
 				expect(options.length).to.be.equal(4); // no <non selected>
 
@@ -146,11 +146,11 @@ describe("fieldSelectEx.vue", function() {
 			expect(options[2].textContent).to.be.equal("Paris");
 			expect(options[2].selected).to.be.true;
 			expect(options[1].selected).to.be.false;
-		});		
+		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("2");	
+				expect(input.value).to.be.equal("2");
 				done();
 			});
 		});
@@ -158,7 +158,7 @@ describe("fieldSelectEx.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.city = 3;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("3");	
+				expect(input.value).to.be.equal("3");
 				done();
 			});
 
@@ -169,7 +169,7 @@ describe("fieldSelectEx.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.city).to.be.equal(4);	
+				expect(model.city).to.be.equal(4);
 				done();
 			});
 
@@ -201,7 +201,7 @@ describe("fieldSelectEx.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("2");	
+				expect(input.value).to.be.equal("2");
 				done();
 			});
 		});
@@ -209,7 +209,7 @@ describe("fieldSelectEx.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.city = 3;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("3");	
+				expect(input.value).to.be.equal("3");
 				done();
 			});
 
@@ -220,12 +220,12 @@ describe("fieldSelectEx.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.city).to.be.equal(4);	
+				expect(model.city).to.be.equal(4);
 				done();
 			});
 
 		});
 
-	});	
+	});
 
 });

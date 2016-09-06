@@ -1,5 +1,5 @@
 <template lang="jade">
-	textarea.form-control(v-model="value", :rows="schema.rows || 2", :readonly="schema.readonly", :placeholder="schema.placeholder", :disabled="disabled", :maxlength="schema.max")
+	textarea.form-control(v-model="value", :disabled="disabled", :maxlength="schema.max", :minlength="schema.min", :placeholder="schema.placeholder", :readonly="schema.readonly", :rows="schema.rows || 2")
 </template>
 
 <script>

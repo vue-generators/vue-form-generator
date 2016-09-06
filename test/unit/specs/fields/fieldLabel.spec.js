@@ -37,7 +37,7 @@ describe("fieldLabel.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(span.textContent).to.be.equal("2 days ago");	
+				expect(span.textContent).to.be.equal("2 days ago");
 				done();
 			});
 		});
@@ -45,7 +45,7 @@ describe("fieldLabel.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.timestamp = "Foo bar";
 			vm.$nextTick( () => {
-				expect(span.textContent).to.be.equal("Foo bar");	
+				expect(span.textContent).to.be.equal("Foo bar");
 				done();
 			});
 

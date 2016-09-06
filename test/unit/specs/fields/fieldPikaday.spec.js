@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField } from "../util";
+import { createVueField, checkAttribute } from "../util";
 import moment from "moment";
 
 import Vue from "vue";
@@ -19,7 +19,10 @@ describe("fieldPikaday.vue", function() {
 		let schema = {
 			type: "dateTime",
 			label: "Event",
-			model: "event"
+			model: "event",
+			autocomplete:"off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { event: 1462799081231 };
 		let input;
@@ -36,29 +39,29 @@ describe("fieldPikaday.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD") );	
+				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD") );
 				done();
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				field.disabled = false;
-				done();
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD") );	
+				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD") );
 				done();
 			});
 
@@ -69,8 +72,8 @@ describe("fieldPikaday.vue", function() {
 			field.picker.setDate(day);
 
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal(day);	
-				expect(moment(model.event).format("YYYY-MM-DD")).to.be.equal(day);	
+				expect(input.value).to.be.equal(day);
+				expect(moment(model.event).format("YYYY-MM-DD")).to.be.equal(day);
 				done();
 			});
 

@@ -1,12 +1,12 @@
 <template lang="jade">
 	.wrapper
-		.listbox.form-control(v-if="schema.listBox")
+		.listbox.form-control(v-if="schema.listBox", :disabled="disabled")
 			.list-row(v-for="item in items")
 				label
-					input(type="checkbox", :checked="getItemIsChecked(item)", @change="onChanged($event, item)")
+					input(type="checkbox", :checked="getItemIsChecked(item)", :disabled="disabled", @change="onChanged($event, item)")
 					| {{ getItemName(item) }}
 
-		.combobox.form-control(v-if="!schema.listBox")
+		.combobox.form-control(v-if="!schema.listBox", :disabled="disabled")
 			.mainRow(@click="onExpandCombo", :class="{ expanded: comboExpanded }")
 				.info {{ selectedCount }} selected
 				.arrow
@@ -14,7 +14,7 @@
 			.dropList
 				.list-row(v-if="comboExpanded", v-for="item in items")
 					label
-						input(type="checkbox", :checked="getItemIsChecked(item)", @change="onChanged($event, item)")
+						input(type="checkbox", :checked="getItemIsChecked(item)", :disabled="disabled", @change="onChanged($event, item)")
 						| {{ getItemName(item) }}
 </template>
 

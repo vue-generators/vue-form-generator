@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField } from "../util";
+import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSlider from "src/fields/fieldSlider.vue";
@@ -20,7 +20,10 @@ describe("fieldSlider.vue", function() {
 			label: "Rating",
 			model: "rating",
 			min: 1,
-			max: 10
+			max: 10,
+			autocomplete:"off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { rating: 8 };
 		let input;
@@ -36,32 +39,33 @@ describe("fieldSlider.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
-			expect(input.getAttribute("data-min")).to.be.equal("1");	
-			expect(input.getAttribute("data-max")).to.be.equal("10");	
-			expect(input.getAttribute("data-disable")).to.be.null;	
+			expect(input.getAttribute("data-min")).to.be.equal("1");
+			expect(input.getAttribute("data-max")).to.be.equal("10");
+			expect(input.getAttribute("data-disable")).to.be.null;
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				let origin = el.querySelector(".irs-slider.single");				
+				let origin = el.querySelector(".irs-slider.single");
 				expect(origin.style.left).to.be.within("70%", "90%");
 				done();
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.getAttribute("data-disable")).to.be.equal("");	
-				field.disabled = false;
-				done();
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "placeholder", "readonly"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			field.model = { rating: 3 };
 			vm.$nextTick( () => {
-				let origin = el.querySelector(".irs-slider.single");				
+				let origin = el.querySelector(".irs-slider.single");
 				expect(origin.style.left).to.be.within("20%", "40%");
 				done();
 			});
@@ -72,11 +76,11 @@ describe("fieldSlider.vue", function() {
 			field.slider.update({ from: 6 });
 			field.slider.callOnChange(field.slider); // trigger changes
 			vm.$nextTick( () => {
-				expect(field.model.rating).to.be.equal(6);	
+				expect(field.model.rating).to.be.equal(6);
 				done();
 			});
 
-		});		
+		});
 
 	});
 

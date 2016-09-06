@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSpectrum from "src/fields/fieldSpectrum.vue";
@@ -19,7 +19,10 @@ describe("fieldSpectrum.vue", function() {
 		let schema = {
 			type: "color",
 			label: "Color",
-			model: "color"
+			model: "color",
+			autocomplete:"off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { color: "#ff8822" };
 		let input;
@@ -35,31 +38,29 @@ describe("fieldSpectrum.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
-			//expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ff8822");	
+				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ff8822");
 				done();
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				expect(el.querySelectorAll(".sp-disabled").length).to.be.equal(1);
-				field.disabled = false;
-				done();
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			field.model = { color: "#ffff00" };
 			vm.$nextTick( () => {
-				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ffff00");	
+				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ffff00");
 				done();
 			});
 
@@ -70,7 +71,7 @@ describe("fieldSpectrum.vue", function() {
 			trigger(document.querySelector(".sp-input"), "change");
 
 			vm.$nextTick( () => {
-				expect(field.model.color).to.be.equal("#123456");	
+				expect(field.model.color).to.be.equal("#123456");
 				done();
 			});
 

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldCheckbox from "src/fields/fieldCheckbox.vue";
@@ -18,7 +18,8 @@ describe("FieldCheckbox.vue", function() {
 		let schema = {
 			type: "checkbox",
 			label: "Status",
-			model: "status"
+			model: "status",
+			autocomplete: "off"
 		};
 		let model = { status: true };
 		let input;
@@ -34,28 +35,29 @@ describe("FieldCheckbox.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("checkbox");
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.checked).to.be.true;	
+				expect(input.checked).to.be.true;
 				done();
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "disabled"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.status = false;
 			vm.$nextTick( () => {
-				expect(input.checked).to.be.false;	
+				expect(input.checked).to.be.false;
 				done();
 			});
 
@@ -66,7 +68,7 @@ describe("FieldCheckbox.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.status).to.be.true;	
+				expect(model.status).to.be.true;
 				done();
 			});
 

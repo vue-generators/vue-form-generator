@@ -56,7 +56,7 @@ describe("fieldNoUiSlider.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				let origin = input.querySelector(".noUi-origin");				
+				let origin = input.querySelector(".noUi-origin");
 				expect(origin.style.left).to.be.within("70%", "90%");
 				done();
 			});
@@ -65,22 +65,22 @@ describe("fieldNoUiSlider.vue", function() {
 		it("handle value should be the model value after changed", (done) => {
 			field.model = { rating: 10 };
 			setTimeout( () => {
-				let origin = input.querySelector(".noUi-origin");				
-				expect(origin.style.left).to.be.equal("100%");				
+				let origin = input.querySelector(".noUi-origin");
+				expect(origin.style.left).to.be.equal("100%");
 				done();
 			}, 100);
 		});
 
 		it("model value should be the handle value after changed", (done) => {
-			// `field.slider.noUiSlider.set(3);`	- It doesn't fired the onChange event 
+			// `field.slider.noUiSlider.set(3);`	- It doesn't fired the onChange event
 			field.onChange(3);
 			setTimeout( () => {
-				expect(vm.model.rating).to.be.equal(3);				
+				expect(vm.model.rating).to.be.equal(3);
 				done();
 			}, 100);
 		});
-		
-		it("should set disabled", (done) => {			
+
+		it("should set disabled", (done) => {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				// This is not real input, it is a div. So we can check the disabled attribute

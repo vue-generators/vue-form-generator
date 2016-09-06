@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 import moment from "moment";
 
 import Vue from "vue";
@@ -19,7 +19,10 @@ describe("fieldDateTime.vue", function() {
 		let schema = {
 			type: "dateTime",
 			label: "Event",
-			model: "event"
+			model: "event",
+			autocomplete: "off",
+			placeholder: "",
+			readonly: false
 		};
 		let model = { event: 1462799081231 };
 		let input;
@@ -36,25 +39,21 @@ describe("fieldDateTime.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD HH:mm:ss") );
 				done();
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
-				// Rollback
-				field.disabled = false;
-				vm.$nextTick( () => {
-					done();
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
 				});
 			});
 		});
@@ -62,7 +61,7 @@ describe("fieldDateTime.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD HH:mm:ss") );
 				done();
 			});
 
@@ -73,7 +72,7 @@ describe("fieldDateTime.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal(1420194153000);	
+				expect(model.event).to.be.equal(1420194153000);
 				done();
 			});
 
@@ -101,7 +100,7 @@ describe("fieldDateTime.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment("20160509", schema.format).format(schema.dateTimePickerOptions.format) );	
+				expect(input.value).to.be.equal( moment("20160509", schema.format).format(schema.dateTimePickerOptions.format) );
 				done();
 			});
 		});
@@ -111,11 +110,11 @@ describe("fieldDateTime.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal( "20150102" );	
+				expect(model.event).to.be.equal( "20150102" );
 				done();
 			});
 
-		});		
+		});
 	});
 
 });
