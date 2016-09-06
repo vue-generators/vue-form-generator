@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldRange from "src/fields/fieldRange.vue";
@@ -21,7 +21,7 @@ describe("fieldRange.vue", function() {
 			model: "rating",
 			min: 1,
 			max: 10,
-			placeholder: "Field placeholder"
+			autocomplete: "off"
 		};
 		let model = { rating: 8 };
 		let input;
@@ -50,11 +50,14 @@ describe("fieldRange.vue", function() {
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["autocomplete", "disabled"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 

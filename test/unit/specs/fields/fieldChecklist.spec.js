@@ -64,14 +64,6 @@ describe("fieldChecklist.vue", function() {
 				expect(isChecked(6)).to.be.true;
 			});
 
-			/*it("should set disabled", (done) => {
-				field.disabled = true;
-				vm.$nextTick( () => {
-					expect(listbox.disabled).to.be.true;	
-					done();
-				});
-			});*/
-
 			it("listbox value should be the model value after changed", (done) => {
 				model.skills = ["ReactJS"];
 				vm.$nextTick( () => {

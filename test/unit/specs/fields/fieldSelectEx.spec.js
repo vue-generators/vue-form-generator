@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSelectEx from "src/fields/fieldSelectEx.vue";
@@ -41,8 +41,8 @@ describe("fieldSelectEx.vue", function() {
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.disabled).to.be.false;	
-			expect(input.multiple).to.be.false;	
+			// expect(input.disabled).to.be.false;
+			expect(input.multiple).to.be.false;
 		});
 
 		it("should contain option elements", () => {
@@ -67,11 +67,14 @@ describe("fieldSelectEx.vue", function() {
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["disabled", "multiSelect"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 

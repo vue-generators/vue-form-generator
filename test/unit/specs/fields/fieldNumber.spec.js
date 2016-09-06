@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldNumber from "src/fields/fieldNumber.vue";
@@ -19,10 +19,11 @@ describe("fieldNumber.vue", function() {
 			type: "number",
 			label: "Age",
 			model: "age",
-			readonly: false,
 			min: 18,
 			max: 100,
-			placeholder: "Field placeholder"
+			autocomplete:"off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { age: 27 };
 		let input;
@@ -52,20 +53,14 @@ describe("fieldNumber.vue", function() {
 				done();
 			});
 		});
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
-				done();
-			});
-		});
-
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 

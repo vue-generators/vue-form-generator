@@ -1,7 +1,7 @@
 /* global sinon */
 
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldImage from "src/fields/fieldImage.vue";
@@ -21,8 +21,9 @@ describe("fieldImage.vue", function() {
 			type: "image",
 			label: "Avatar",
 			model: "avatar",
-			readonly: false,
-			placeholder: "Field placeholder"
+			autocomplete: "off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg" };
 		let input;
@@ -66,19 +67,14 @@ describe("fieldImage.vue", function() {
 			});
 		});
 
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
-				done();
-			});
-		});
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 

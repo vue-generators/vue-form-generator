@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldCleave from "src/fields/fieldCleave.vue";
@@ -19,8 +19,9 @@ describe("fieldCleave.vue", function() {
 			type: "masked",
 			label: "Phone",
 			model: "phone",
+			autocomplete: "off",
+			placeholder: "",
 			readonly: false,
-			placeholder: "Field placeholder",
 			cleaveOptions: {
 				phone: true,
 				phoneRegionCode: "HU",
@@ -41,9 +42,9 @@ describe("fieldCleave.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.readOnly).to.be.false;	
-			expect(input.disabled).to.be.false;	
+			// expect(input.placeholder).to.be.equal(schema.placeholder);
+			// expect(input.readOnly).to.be.false;
+			// expect(input.disabled).to.be.false;
 		});
 
 		it("should contain the value", (done) => {
@@ -53,21 +54,14 @@ describe("fieldCleave.vue", function() {
 			});
 		});
 
-		it("should set readOnly", (done) => {
-			schema.readonly = true;
-			vm.$nextTick( () => {
-				expect(input.readOnly).to.be.true;	
-				schema.readonly = false;
-				done();
-			});
-		});
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["autocomplete", "disabled", "readonly"];
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				field.disabled = false;
-				done();
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 

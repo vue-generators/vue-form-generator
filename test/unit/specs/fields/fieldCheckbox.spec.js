@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldCheckbox from "src/fields/fieldCheckbox.vue";
@@ -18,7 +18,8 @@ describe("FieldCheckbox.vue", function() {
 		let schema = {
 			type: "checkbox",
 			label: "Status",
-			model: "status"
+			model: "status",
+			autocomplete: "off"
 		};
 		let model = { status: true };
 		let input;
@@ -34,7 +35,7 @@ describe("FieldCheckbox.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("checkbox");
-			expect(input.disabled).to.be.false;	
+			// expect(input.disabled).to.be.false;
 		});
 
 		it("should contain the value", (done) => {
@@ -44,11 +45,14 @@ describe("FieldCheckbox.vue", function() {
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				done();
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["autocomplete", "disabled"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 

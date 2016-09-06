@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField } from "../util";
+import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSlider from "src/fields/fieldSlider.vue";
@@ -20,7 +20,10 @@ describe("fieldSlider.vue", function() {
 			label: "Rating",
 			model: "rating",
 			min: 1,
-			max: 10
+			max: 10,
+			autocomplete:"off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { rating: 8 };
 		let input;
@@ -49,12 +52,14 @@ describe("fieldSlider.vue", function() {
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.getAttribute("data-disable")).to.be.equal("");	
-				field.disabled = false;
-				done();
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["autocomplete", "placeholder", "readonly"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 

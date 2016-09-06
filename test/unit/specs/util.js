@@ -1,3 +1,4 @@
+import { expect } from "chai";
 import Vue from "vue";
 
 export function trigger (el, event, args) {
@@ -43,5 +44,36 @@ export function createVueField(test, type, schema = {}, model = null, disabled =
 	});
 	let field = vm.$refs.field;
 
-	return [ el, vm, field ];
+	return [el, vm, field];
+}
+
+export let attributesList = {
+	"autocomplete": { before: "on", after: "off" },
+	"disabled": { before: true, after: false, field: true },
+	"multiSelect": { before: true, after: false, name: "multiple" },
+	"placeholder": { before: "Field placeholder", after: "" },
+	"readonly": { before: true, after: false, name: "readOnly" }
+
+};
+
+export function checkAttribute(name, vm, input, field, schema, done) {
+
+	let schematic;
+	let attr = attributesList[name];
+
+	if (attr.field) {
+		schematic = field;
+	} else {
+		schematic = schema;
+	}
+	schematic[name] = attr.before;
+	vm.$nextTick(() => {
+		if (attr.name) {
+			expect(input[attr.name]).to.be.equal(schematic[name]);
+		} else {
+			expect(input[name]).to.be.equal(schematic[name]);
+		}
+		schematic[name] = attr.after;
+		return done();
+	});
 }

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField } from "../util";
+import { createVueField, checkAttribute } from "../util";
 import moment from "moment";
 
 import Vue from "vue";
@@ -19,7 +19,10 @@ describe("fieldPikaday.vue", function() {
 		let schema = {
 			type: "dateTime",
 			label: "Event",
-			model: "event"
+			model: "event",
+			autocomplete:"off",
+			placeholder: "Field placeholder",
+			readonly: false
 		};
 		let model = { event: 1462799081231 };
 		let input;
@@ -46,12 +49,14 @@ describe("fieldPikaday.vue", function() {
 			});
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;	
-				field.disabled = false;
-				done();
+		describe("check optional attribute", () => {
+			// name which attributes you want to test and that's it.
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
