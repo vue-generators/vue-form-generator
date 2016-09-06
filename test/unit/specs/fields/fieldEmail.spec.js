@@ -39,20 +39,16 @@ describe("fieldEmail.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("email");
 			expect(input.classList.contains("form-control")).to.be.true;
-			// expect(input.placeholder).to.be.equal(schema.placeholder);
-			// expect(input.readOnly).to.be.false;
-			// expect(input.disabled).to.be.false;
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("john.doe@company.org");	
+				expect(input.value).to.be.equal("john.doe@company.org");
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -65,7 +61,7 @@ describe("fieldEmail.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.email = "john.doe@gmail.com";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("john.doe@gmail.com");	
+				expect(input.value).to.be.equal("john.doe@gmail.com");
 				done();
 			});
 
@@ -76,7 +72,7 @@ describe("fieldEmail.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.email).to.be.equal("john.smith@company.org");	
+				expect(model.email).to.be.equal("john.smith@company.org");
 				done();
 			});
 

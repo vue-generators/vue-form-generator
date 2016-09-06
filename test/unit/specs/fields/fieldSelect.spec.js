@@ -42,7 +42,6 @@ describe("fieldSelect.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain option elements", () => {
@@ -62,13 +61,12 @@ describe("fieldSelect.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("Paris");	
+				expect(input.value).to.be.equal("Paris");
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["disabled"];
 
 			attributes.forEach(function(name) {
@@ -81,7 +79,7 @@ describe("fieldSelect.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.city = "Rome";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("Rome");	
+				expect(input.value).to.be.equal("Rome");
 				done();
 			});
 
@@ -92,7 +90,7 @@ describe("fieldSelect.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.city).to.be.equal("London");	
+				expect(model.city).to.be.equal("London");
 				done();
 			});
 
@@ -138,11 +136,11 @@ describe("fieldSelect.vue", function() {
 			expect(options[2].textContent).to.be.equal("Paris");
 			expect(options[2].selected).to.be.true;
 			expect(options[1].selected).to.be.false;
-		});		
+		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("2");	
+				expect(input.value).to.be.equal("2");
 				done();
 			});
 		});
@@ -150,7 +148,7 @@ describe("fieldSelect.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.city = 3;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("3");	
+				expect(input.value).to.be.equal("3");
 				done();
 			});
 
@@ -161,7 +159,7 @@ describe("fieldSelect.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.city).to.be.equal(4);	
+				expect(model.city).to.be.equal(4);
 				done();
 			});
 
@@ -193,7 +191,7 @@ describe("fieldSelect.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("2");	
+				expect(input.value).to.be.equal("2");
 				done();
 			});
 		});
@@ -201,7 +199,7 @@ describe("fieldSelect.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.city = 3;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("3");	
+				expect(input.value).to.be.equal("3");
 				done();
 			});
 
@@ -212,12 +210,12 @@ describe("fieldSelect.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.city).to.be.equal(4);	
+				expect(model.city).to.be.equal(4);
 				done();
 			});
 
 		});
 
-	});	
+	});
 
 });

@@ -35,18 +35,16 @@ describe("FieldCheckbox.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("checkbox");
-			// expect(input.disabled).to.be.false;
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.checked).to.be.true;	
+				expect(input.checked).to.be.true;
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled"];
 
 			attributes.forEach(function(name) {
@@ -59,7 +57,7 @@ describe("FieldCheckbox.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.status = false;
 			vm.$nextTick( () => {
-				expect(input.checked).to.be.false;	
+				expect(input.checked).to.be.false;
 				done();
 			});
 
@@ -70,7 +68,7 @@ describe("FieldCheckbox.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.status).to.be.true;	
+				expect(model.status).to.be.true;
 				done();
 			});
 

@@ -40,21 +40,17 @@ describe("fieldNumber.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("number");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);
-			expect(input.readOnly).to.be.false;	
-			expect(input.min).to.be.equal("18");	
-			expect(input.max).to.be.equal("100");	
-			expect(input.disabled).to.be.false;	
+			expect(input.min).to.be.equal("18");
+			expect(input.max).to.be.equal("100");
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("27");	
+				expect(input.value).to.be.equal("27");
 				done();
 			});
 		});
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -67,7 +63,7 @@ describe("fieldNumber.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.age = 35;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("35");	
+				expect(input.value).to.be.equal("35");
 				done();
 			});
 
@@ -78,7 +74,7 @@ describe("fieldNumber.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.age).to.be.equal(50);	
+				expect(model.age).to.be.equal(50);
 				done();
 			});
 

@@ -42,20 +42,16 @@ describe("fieldCleave.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
-			// expect(input.placeholder).to.be.equal(schema.placeholder);
-			// expect(input.readOnly).to.be.false;
-			// expect(input.disabled).to.be.false;
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("30 123 4567");	
+				expect(input.value).to.be.equal("30 123 4567");
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -68,7 +64,7 @@ describe("fieldCleave.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.phone = "70 555 4433";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("70 555 4433");	
+				expect(input.value).to.be.equal("70 555 4433");
 				done();
 			});
 
@@ -79,7 +75,7 @@ describe("fieldCleave.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.phone).to.be.equal("21 888 6655");	
+				expect(model.phone).to.be.equal("21 888 6655");
 				done();
 			});
 
@@ -87,15 +83,15 @@ describe("fieldCleave.vue", function() {
 
 		it("should be formatted data in model", (done) => {
 			field.cleave.setRawValue("301234567");
-			expect(input.value).to.be.equal("30 123 4567");	
+			expect(input.value).to.be.equal("30 123 4567");
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.phone).to.be.equal("30 123 4567");	
+				expect(model.phone).to.be.equal("30 123 4567");
 				done();
 			});
 
-		});		
+		});
 
 	});
 

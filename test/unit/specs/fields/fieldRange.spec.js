@@ -38,20 +38,18 @@ describe("fieldRange.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("range");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.min).to.be.equal("1");	
-			expect(input.max).to.be.equal("10");	
-			expect(input.disabled).to.be.false;	
+			expect(input.min).to.be.equal("1");
+			expect(input.max).to.be.equal("10");
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("8");	
+				expect(input.value).to.be.equal("8");
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled"];
 
 			attributes.forEach(function(name) {
@@ -64,7 +62,7 @@ describe("fieldRange.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.rating = 3;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("3");	
+				expect(input.value).to.be.equal("3");
 				done();
 			});
 
@@ -75,7 +73,7 @@ describe("fieldRange.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.rating).to.be.equal(6);	
+				expect(model.rating).to.be.equal(6);
 				done();
 			});
 

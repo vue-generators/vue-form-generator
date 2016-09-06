@@ -81,7 +81,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);	
+					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 					done();
 				});
 
@@ -145,7 +145,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal([3, 1]);	
+					expect(model.skills).to.be.deep.equal([3, 1]);
 					done();
 				});
 
@@ -211,13 +211,13 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal([3, 1]);	
+					expect(model.skills).to.be.deep.equal([3, 1]);
 					done();
 				});
 
 			});
 
-		});		
+		});
 
 	});
 
@@ -308,7 +308,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);	
+					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 					done();
 				});
 
@@ -319,7 +319,7 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["ReactJS"]);	
+					expect(model.skills).to.be.deep.equal(["ReactJS"]);
 					done();
 				});
 
@@ -331,11 +331,11 @@ describe("fieldChecklist.vue", function() {
 				trigger(checkboxes[0], "change");
 
 				vm.$nextTick( () => {
-					expect(model.skills).to.be.deep.equal(["HTML5"]);	
+					expect(model.skills).to.be.deep.equal(["HTML5"]);
 					done();
 				});
 
-			});			
+			});
 
 		});
 

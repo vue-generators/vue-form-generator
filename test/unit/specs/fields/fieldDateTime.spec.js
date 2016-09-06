@@ -39,18 +39,16 @@ describe("fieldDateTime.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD HH:mm:ss") );
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -63,7 +61,7 @@ describe("fieldDateTime.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD HH:mm:ss") );	
+				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD HH:mm:ss") );
 				done();
 			});
 
@@ -74,7 +72,7 @@ describe("fieldDateTime.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal(1420194153000);	
+				expect(model.event).to.be.equal(1420194153000);
 				done();
 			});
 
@@ -102,7 +100,7 @@ describe("fieldDateTime.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment("20160509", schema.format).format(schema.dateTimePickerOptions.format) );	
+				expect(input.value).to.be.equal( moment("20160509", schema.format).format(schema.dateTimePickerOptions.format) );
 				done();
 			});
 		});
@@ -112,11 +110,11 @@ describe("fieldDateTime.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.event).to.be.equal( "20150102" );	
+				expect(model.event).to.be.equal( "20150102" );
 				done();
 			});
 
-		});		
+		});
 	});
 
 });

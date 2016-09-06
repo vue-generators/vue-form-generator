@@ -37,7 +37,7 @@ describe("fieldSubmit.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("submit");
-			expect(input.value).to.be.equal("Submit form");	
+			expect(input.value).to.be.equal("Submit form");
 		});
 
 		it("should not call validate if validateBeforeSubmit is false", () => {
@@ -46,11 +46,11 @@ describe("fieldSubmit.vue", function() {
 			field.$parent.validate = cb;
 
 			input.click();
-			expect(cb.called).to.be.false;	
-			expect(schema.onSubmit.calledOnce).to.be.true;	
-			expect(schema.onSubmit.calledWith(model, schema)).to.be.true;	
+			expect(cb.called).to.be.false;
+			expect(schema.onSubmit.calledOnce).to.be.true;
+			expect(schema.onSubmit.calledWith(model, schema)).to.be.true;
 		});
-		
+
 
 		it("should call validate if validateBeforeSubmit is true", () => {
 			schema.validateBeforeSubmit = true;
@@ -59,9 +59,9 @@ describe("fieldSubmit.vue", function() {
 			field.$parent.validate = cb;
 
 			input.click();
-			expect(cb.called).to.be.true;	
-			expect(schema.onSubmit.called).to.be.false;	
-		});	
+			expect(cb.called).to.be.true;
+			expect(schema.onSubmit.called).to.be.false;
+		});
 
 	});
 

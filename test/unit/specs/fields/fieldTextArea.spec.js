@@ -38,30 +38,26 @@ describe("fieldTextArea.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.classList.contains("form-control")).to.be.true;
-			// expect(input.placeholder).to.be.equal(schema.placeholder);
-			// expect(input.readOnly).to.be.false;
-			// expect(input.disabled).to.be.false;
 			expect(input.rows).to.be.equal(2);	// default value is 2
-			expect(input.maxLength).to.be.equal(500);	
+			expect(input.maxLength).to.be.equal(500);
 		});
 
 		it("should change rows to 4", (done) => {
 			field.$set("schema.rows", 4); // To be reactive
 			vm.$nextTick( () => {
-				expect(input.rows).to.be.equal(4);	
+				expect(input.rows).to.be.equal(4);
 				done();
 			});
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal(model.desc);	
+				expect(input.value).to.be.equal(model.desc);
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["disabled", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -74,7 +70,7 @@ describe("fieldTextArea.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.desc = "Jane Doe";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("Jane Doe");	
+				expect(input.value).to.be.equal("Jane Doe");
 				done();
 			});
 
@@ -85,7 +81,7 @@ describe("fieldTextArea.vue", function() {
 			trigger(input, "input");
 
 			vm.$nextTick( () => {
-				expect(model.desc).to.be.equal("John Smith");	
+				expect(model.desc).to.be.equal("John Smith");
 				done();
 			});
 

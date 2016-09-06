@@ -39,21 +39,20 @@ describe("fieldSlider.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
-			expect(input.getAttribute("data-min")).to.be.equal("1");	
-			expect(input.getAttribute("data-max")).to.be.equal("10");	
-			expect(input.getAttribute("data-disable")).to.be.null;	
+			expect(input.getAttribute("data-min")).to.be.equal("1");
+			expect(input.getAttribute("data-max")).to.be.equal("10");
+			expect(input.getAttribute("data-disable")).to.be.null;
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				let origin = el.querySelector(".irs-slider.single");				
+				let origin = el.querySelector(".irs-slider.single");
 				expect(origin.style.left).to.be.within("70%", "90%");
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -66,7 +65,7 @@ describe("fieldSlider.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			field.model = { rating: 3 };
 			vm.$nextTick( () => {
-				let origin = el.querySelector(".irs-slider.single");				
+				let origin = el.querySelector(".irs-slider.single");
 				expect(origin.style.left).to.be.within("20%", "40%");
 				done();
 			});
@@ -77,11 +76,11 @@ describe("fieldSlider.vue", function() {
 			field.slider.update({ from: 6 });
 			field.slider.callOnChange(field.slider); // trigger changes
 			vm.$nextTick( () => {
-				expect(field.model.rating).to.be.equal(6);	
+				expect(field.model.rating).to.be.equal(6);
 				done();
 			});
 
-		});		
+		});
 
 	});
 

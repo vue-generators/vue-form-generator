@@ -38,19 +38,16 @@ describe("fieldSpectrum.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
-			//expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ff8822");	
+				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ff8822");
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -63,7 +60,7 @@ describe("fieldSpectrum.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			field.model = { color: "#ffff00" };
 			vm.$nextTick( () => {
-				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ffff00");	
+				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ffff00");
 				done();
 			});
 
@@ -74,7 +71,7 @@ describe("fieldSpectrum.vue", function() {
 			trigger(document.querySelector(".sp-input"), "change");
 
 			vm.$nextTick( () => {
-				expect(field.model.color).to.be.equal("#123456");	
+				expect(field.model.color).to.be.equal("#123456");
 				done();
 			});
 

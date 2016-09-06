@@ -21,11 +21,11 @@ describe("fieldStaticMap.vue", function() {
 			label: "Geo",
 			model: "geo"
 		};
-		let model = { 
+		let model = {
 			geo: {
 				lat: 13.4567,
 				lng: 20.3321
-			} 
+			}
 		};
 		let input;
 

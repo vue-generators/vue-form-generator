@@ -40,9 +40,9 @@ describe("fieldImage.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.classList.contains("form-control")).to.be.true;
 			expect(input.classList.contains("link")).to.be.true;
-			expect(input.placeholder).to.be.equal(schema.placeholder);	
-			expect(input.readOnly).to.be.false;	
-			expect(input.disabled).to.be.false;	
+			expect(input.placeholder).to.be.equal(schema.placeholder);
+			expect(input.readOnly).to.be.false;
+			expect(input.disabled).to.be.false;
 		});
 
 		it("should contain a file input element", () => {
@@ -50,25 +50,24 @@ describe("fieldImage.vue", function() {
 			expect(fileInput).to.be.defined;
 			expect(fileInput.classList.contains("form-control")).to.be.true;
 			expect(fileInput.classList.contains("file")).to.be.true;
-			expect(fileInput.readOnly).to.be.false;	
-			expect(fileInput.disabled).to.be.false;	
-		});	
+			expect(fileInput.readOnly).to.be.false;
+			expect(fileInput.disabled).to.be.false;
+		});
 
 		it("should not visible the preview div", () => {
 			let preview = el.querySelector(".preview");
 			expect(preview.style.display).to.be.equal("block");
-		});		
+		});
 
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal(model.avatar);	
+				expect(input.value).to.be.equal(model.avatar);
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -81,7 +80,7 @@ describe("fieldImage.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg");	
+				expect(input.value).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg");
 				done();
 			});
 
@@ -92,7 +91,7 @@ describe("fieldImage.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.avatar).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg");	
+				expect(model.avatar).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg");
 				done();
 			});
 
@@ -106,7 +105,7 @@ describe("fieldImage.vue", function() {
 				expect(fileInput).to.be.null;
 				done();
 			});
-		});	
+		});
 
 		it("should not visible the preview div", (done) => {
 			vm.$set("schema.preview", false);
@@ -116,7 +115,7 @@ describe("fieldImage.vue", function() {
 				expect(preview.style.display).to.be.equal("none");
 				done();
 			});
-		});			
+		});
 
 		it("should not show base64 data in input field", (done) => {
 			model.avatar = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ";
@@ -125,7 +124,7 @@ describe("fieldImage.vue", function() {
 				expect(input.value).to.be.equal("<inline base64 image>");
 				done();
 			});
-		});	
+		});
 
 		it("should clear input if press remove icon", (done) => {
 			vm.$set("schema.preview", true);
@@ -171,7 +170,7 @@ describe("fieldImage.vue", function() {
 				window.FileReader = FR;
 				done();
 			});
-		});		
+		});
 
 	});
 

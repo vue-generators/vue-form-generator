@@ -39,18 +39,16 @@ describe("fieldPikaday.vue", function() {
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("text");
 			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.disabled).to.be.false;	
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD") );	
+				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD") );
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
 
 			attributes.forEach(function(name) {
@@ -63,7 +61,7 @@ describe("fieldPikaday.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD") );	
+				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD") );
 				done();
 			});
 
@@ -74,8 +72,8 @@ describe("fieldPikaday.vue", function() {
 			field.picker.setDate(day);
 
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal(day);	
-				expect(moment(model.event).format("YYYY-MM-DD")).to.be.equal(day);	
+				expect(input.value).to.be.equal(day);
+				expect(moment(model.event).format("YYYY-MM-DD")).to.be.equal(day);
 				done();
 			});
 

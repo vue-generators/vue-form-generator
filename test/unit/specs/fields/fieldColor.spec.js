@@ -35,19 +35,16 @@ describe("fieldColor.vue", function() {
 
 			expect(input).to.be.defined;
 			expect(input.type).to.be.equal("color");
-			//expect(input.classList.contains("form-control")).to.be.true;
-			// expect(input.disabled).to.be.false;
 		});
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("#ff8822");	
+				expect(input.value).to.be.equal("#ff8822");
 				done();
 			});
 		});
 
 		describe("check optional attribute", () => {
-			// name which attributes you want to test and that's it.
 			let attributes = ["autocomplete"];
 
 			attributes.forEach(function(name) {
@@ -60,7 +57,7 @@ describe("fieldColor.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.color = "#ffff00";
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("#ffff00");	
+				expect(input.value).to.be.equal("#ffff00");
 				done();
 			});
 
@@ -71,7 +68,7 @@ describe("fieldColor.vue", function() {
 			trigger(input, "change");
 
 			vm.$nextTick( () => {
-				expect(model.color).to.be.equal("#123456");	
+				expect(model.color).to.be.equal("#123456");
 				done();
 			});
 
