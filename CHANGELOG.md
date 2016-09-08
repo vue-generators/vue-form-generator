@@ -1,3 +1,27 @@
+<a name="0.4.1"></a>
+## 0.4.1 (2016-09-08)
+
+* :arrow_up: change fontawesome help icon to img #61 ([70baca6](https://github.com/icebob/vue-form-generator/commit/70baca6))
+* :bug: bug: "Invalid date" message in pikaday field. Change dev schema for a simple one. Delete defau ([a45188a](https://github.com/icebob/vue-form-generator/commit/a45188a))
+* :package: build ([60dda5f](https://github.com/icebob/vue-form-generator/commit/60dda5f))
+* :package: build ([2e94d52](https://github.com/icebob/vue-form-generator/commit/2e94d52))
+* :package: Build v0.4.1 ([9fee72a](https://github.com/icebob/vue-form-generator/commit/9fee72a))
+* :white_check_mark: test: add test to custom field ([80d1025](https://github.com/icebob/vue-form-generator/commit/80d1025))
+* Bump version to v0.4.1 ([4e0e031](https://github.com/icebob/vue-form-generator/commit/4e0e031))
+* support custom fields & example #62 ([e61824a](https://github.com/icebob/vue-form-generator/commit/e61824a))
+* fix: change test depending on changes ([c645cea](https://github.com/icebob/vue-form-generator/commit/c645cea))
+* fix: re-added placeholder in field password and number (and corresponding test) ([79bfee6](https://github.com/icebob/vue-form-generator/commit/79bfee6))
+* fix: remove comment, trailing space and duplicate from tests ([e618253](https://github.com/icebob/vue-form-generator/commit/e618253))
+* fix: remove readonly attribute on select element ([2e5e16b](https://github.com/icebob/vue-form-generator/commit/2e5e16b))
+* fix: remove useless attributes ([5745318](https://github.com/icebob/vue-form-generator/commit/5745318))
+* fix: update of attributes of Checklist, Text and Textarea fields. ([ce3a91c](https://github.com/icebob/vue-form-generator/commit/ce3a91c))
+* test: update to many test to check optional attributes ([ebf3f01](https://github.com/icebob/vue-form-generator/commit/ebf3f01))
+* dev: remove console log ([3ffeef1](https://github.com/icebob/vue-form-generator/commit/3ffeef1))
+* enhancement: add minlength attribute to textarea ([a7e39d9](https://github.com/icebob/vue-form-generator/commit/a7e39d9))
+* enhancement: add missing "autocomplete", "placeholder" and "readonly" attr to input fields. Ordered  ([f5af70c](https://github.com/icebob/vue-form-generator/commit/f5af70c))
+
+
+
 <a name="0.4.0"></a>
 # 0.4.0 (2016-08-30)
 
