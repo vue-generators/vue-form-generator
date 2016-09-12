@@ -23,46 +23,52 @@
 <a id="vue-form-generator-" class="anchor" href="#vue-form-generator-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>vue-form-generator <a href="https://www.npmjs.com/package/vue-form-generator"><img src="https://img.shields.io/npm/v/vue-form-generator.svg" alt="NPM version"></a>
 </h1>
 
-<p>A schema-based form generator component for Vue.js</p>
+<p>A schema-based form generator component for Vue.js v1.x.x</p>
 
-<p><a href="https://www.npmjs.com/package/vue-form-generator"><img src="https://img.shields.io/npm/dt/vue-form-generator.svg" alt="Downloads"></a></p>
+<p><a href="https://www.codacy.com/app/mereg-norbert/vue-form-generator?utm_source=github.com&amp;amp;utm_medium=referral&amp;amp;utm_content=icebob/vue-form-generator&amp;amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/912039aa815e40de8315032519aa7e6c" alt="Codacy Badge"></a>
+<a href="https://travis-ci.org/icebob/vue-form-generator"><img src="https://travis-ci.org/icebob/vue-form-generator.svg?branch=master" alt="Build Status"></a>
+<a href="https://coveralls.io/github/icebob/vue-form-generator?branch=master"><img src="https://coveralls.io/repos/github/icebob/vue-form-generator/badge.svg?branch=master" alt="Coverage Status"></a></p>
+
+<p><a href="https://david-dm.org/icebob/vue-form-generator"><img src="https://david-dm.org/icebob/vue-form-generator.svg" alt="Dependency Status"></a>
+<a href="https://david-dm.org/icebob/vue-form-generator#info=devDependencies"><img src="https://david-dm.org/icebob/vue-form-generator/dev-status.svg" alt="devDependency Status"></a>
+<a href="https://www.npmjs.com/package/vue-form-generator"><img src="https://img.shields.io/npm/dt/vue-form-generator.svg" alt="Downloads"></a></p>
+
+<p><strong>Vue v2.x is not supported!</strong></p>
 
 <h2>
 <a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h2>
 
 <p><a href="https://jsfiddle.net/icebob/0mg1v81e/">JSFiddle simple example</a></p>
 
+<p><a href="https://jsfiddle.net/icebob/0mg1v81e/"><img src="https://icebob.gitbooks.io/vueformgenerator/content/assets/vfg-example1.png" alt="Screenshot"></a></p>
+
 <h2>
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h2>
 
 <ul>
 <li>multiple objects editing</li>
-<li>18 built-in field types</li>
-<li>built-in validations</li>
+<li>24 field types</li>
+<li>built-in validators</li>
 <li>Bootstrap friendly templates</li>
+<li>customizable styles</li>
 <li>...etc</li>
 </ul>
 
 <h2>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h2>
+
+<p><a href="https://icebob.gitbooks.io/vueformgenerator/content/">Online documentation on Gitbook</a></p>
+
+<h2>
 <a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependencies</h2>
 
-<ul>
-<li><a href="http://www.jquery.com">jQuery</a></li>
-<li>
-<a href="http://momentjs.com/">Moment.js</a> (built-in)</li>
-<li>
-<a href="https://lodash.com/">lodash</a> (built-in)</li>
-<li>
-<a href="http://getbootstrap.com/">BootStrap</a> (optional)</li>
-<li>
-<a href="https://silviomoreto.github.io/bootstrap-select/">bootstrap-select</a> for <code>selectEx</code> fields (optional)</li>
-<li>
-<a href="https://github.com/Eonasdan/bootstrap-datetimepicker">bootstrap-datetimepicker</a> for <code>datetime</code> fields (optional)</li>
-<li>
-<a href="https://github.com/bgrins/spectrum">spectrum</a> for <code>spectrum</code> color picker fields (optional)</li>
-<li>
-<a href="http://digitalbush.com/projects/masked-input-plugin/">maskedinput</a> for <code>masked</code> fields</li>
-</ul>
+<p>vue-form-generator use <a href="http://momentjs.com/">Moment.js</a> and <a href="https://lodash.com/">lodash</a> internally.</p>
+
+<p>While built-in fields don't need external dependencies, optional fields may need other libraries.<br>
+These dependency fall in two camp: jQuery or Vanilla. You can find almost the same functionality in both flavor.<br>
+That way, it's your choice to depend on jQuery or not.</p>
+
+<p>You can find details about dependencies in <a href="https://icebob.gitbooks.io/vueformgenerator/content/">documentation</a>.</p>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
@@ -70,7 +76,7 @@
 <h3>
 <a id="npm" class="anchor" href="#npm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>NPM</h3>
 
-<p>Installation uses the <a href="http://npmjs.org/">npm</a> package manager. Just type the following command after installing npm.</p>
+<p>You can install it via <a href="http://npmjs.org/">NPM</a>.</p>
 
 <pre><code>$ npm install vue-form-generator
 </code></pre>
@@ -78,7 +84,7 @@
 <h3>
 <a id="manual" class="anchor" href="#manual" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Manual</h3>
 
-<p>Download zip package and unpack and add the <code>vue-form-generator.js</code> or <code>vue-form-generator.min.js</code> file to your project from dist folder.</p>
+<p>Download zip package and unpack and add the <code>vue-form-generator.css</code> and <code>vue-form-generator.js</code> file to your project from dist folder.</p>
 
 <pre><code>https://github.com/icebob/vue-form-generator/archive/master.zip
 </code></pre>
@@ -91,92 +97,71 @@
     &lt;<span class="pl-ent">vue</span><span class="pl-e">-form-generator</span> :<span class="pl-e">schema</span>=<span class="pl-s"><span class="pl-pds">"</span>schema<span class="pl-pds">"</span></span> :<span class="pl-e">model</span>=<span class="pl-s"><span class="pl-pds">"</span>model<span class="pl-pds">"</span></span> :<span class="pl-e">options</span>=<span class="pl-s"><span class="pl-pds">"</span>formOptions<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">vue</span><span class="pl-e">-form-generator</span>&gt;
   &lt;/<span class="pl-ent">div</span>&gt;
 &lt;/<span class="pl-ent">template</span>&gt;
-</pre></div>
 
-<div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>script<span class="pl-k">&gt;</span>
-<span class="pl-k">import</span> <span class="pl-smi">VueFormGenerator</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>vue-form-generator<span class="pl-pds">"</span></span>;
-
-<span class="pl-k">export</span> <span class="pl-v">default</span> {
-  <span class="pl-k">...</span>
-  components<span class="pl-k">:</span> {
-    VueFormGenerator<span class="pl-k">:</span> <span class="pl-smi">VueFormGenerator</span>.<span class="pl-smi">component</span>
-  },
-
-  data<span class="pl-k">:</span> {
-    schema<span class="pl-k">:</span> { <span class="pl-k">...</span> },
-    model<span class="pl-k">:</span>             
-      id<span class="pl-k">:</span> <span class="pl-c1">1</span>,
-      name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>John Doe<span class="pl-pds">"</span></span>,
-      password<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>J0hnD03!x4<span class="pl-pds">"</span></span>,
-      skills<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>Javascript<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>VueJS<span class="pl-pds">"</span></span>],
-      email<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>john.doe@gmail.com<span class="pl-pds">"</span></span>,
-      status<span class="pl-k">:</span> <span class="pl-c1">true</span>
-    },
-    formOptions<span class="pl-k">:</span> {
-      validateAfterLoad<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-      validateAfterChanged<span class="pl-k">:</span> <span class="pl-c1">true</span>
-    }
-  }
-  <span class="pl-k">...</span>
-<span class="pl-k">&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span></pre></div>
-
-<h2>
-<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h2>
-
-<h3>
-<a id="schema-sample" class="anchor" href="#schema-sample" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Schema sample</h3>
-
-<div class="highlight highlight-source-js"><pre>{
-    fields<span class="pl-k">:</span> [{
-        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>,
-        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>ID<span class="pl-pds">"</span></span>,
-        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,
-        readonly<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        featured<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-        disabled<span class="pl-k">:</span> <span class="pl-c1">true</span>
-    }, {
-        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>,
-        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>,
-        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>,
-        readonly<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-        featured<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        required<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        disabled<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-        placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>User's name<span class="pl-pds">"</span></span>,
-        validator<span class="pl-k">:</span> <span class="pl-smi">VueFormGenerator</span>.<span class="pl-smi">validators</span>.<span class="pl-smi">string</span>
-    }, {
-        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>,
-        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Password<span class="pl-pds">"</span></span>,
-        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>,
-        min<span class="pl-k">:</span> <span class="pl-c1">6</span>,
-        required<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        hint<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Minimum 6 characters<span class="pl-pds">"</span></span>,
-        validator<span class="pl-k">:</span> <span class="pl-smi">VueFormGenerator</span>.<span class="pl-smi">validators</span>.<span class="pl-smi">string</span>
-    }, {
-        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>,
-        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>E-mail<span class="pl-pds">"</span></span>,
-        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>,
-        placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>User's e-mail address<span class="pl-pds">"</span></span>,
-        validator<span class="pl-k">:</span> <span class="pl-smi">VueFormGenerator</span>.<span class="pl-smi">validators</span>.<span class="pl-smi">email</span>
-    }, {
-        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>checklist<span class="pl-pds">"</span></span>,
-        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Skills<span class="pl-pds">"</span></span>,
-        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>skills<span class="pl-pds">"</span></span>,
-        multi<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        required<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        multiSelect<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        values<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>HTML5<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>Javascript<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>CSS3<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>CoffeeScript<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>AngularJS<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>ReactJS<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>VueJS<span class="pl-pds">"</span></span>]
-    }, {
-        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>checkbox<span class="pl-pds">"</span></span>,
-        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Status<span class="pl-pds">"</span></span>,
-        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>,
-        multi<span class="pl-k">:</span> <span class="pl-c1">true</span>,
-        readonly<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-        featured<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-        disabled<span class="pl-k">:</span> <span class="pl-c1">false</span>,
-        <span class="pl-k">default</span><span class="pl-k">:</span> <span class="pl-c1">true</span>
-    }]
-}</pre></div>
+<span class="pl-s1">&lt;<span class="pl-ent">script</span>&gt;</span>
+<span class="pl-s1"><span class="pl-k">import</span> <span class="pl-smi">VueFormGenerator</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>vue-form-generator<span class="pl-pds">"</span></span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-smi">Vue</span>.<span class="pl-en">use</span>(VueFormGenerator);</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-k">export</span> <span class="pl-v">default</span> {</span>
+<span class="pl-s1">  data<span class="pl-k">:</span> {</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    model<span class="pl-k">:</span>             </span>
+<span class="pl-s1">      id<span class="pl-k">:</span> <span class="pl-c1">1</span>,</span>
+<span class="pl-s1">      name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>John Doe<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">      password<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>J0hnD03!x4<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">      skills<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>Javascript<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>VueJS<span class="pl-pds">"</span></span>],</span>
+<span class="pl-s1">      email<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>john.doe@gmail.com<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">      status<span class="pl-k">:</span> <span class="pl-c1">true</span></span>
+<span class="pl-s1">    },</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    schema<span class="pl-k">:</span> {</span>
+<span class="pl-s1">      fields<span class="pl-k">:</span> [{</span>
+<span class="pl-s1">        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>ID (disabled text field)<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>id<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        readonly<span class="pl-k">:</span> <span class="pl-c1">true</span>,         </span>
+<span class="pl-s1">        disabled<span class="pl-k">:</span> <span class="pl-c1">true</span></span>
+<span class="pl-s1">      },{</span>
+<span class="pl-s1">        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Name<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Your name<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        featured<span class="pl-k">:</span> <span class="pl-c1">true</span>,</span>
+<span class="pl-s1">        required<span class="pl-k">:</span> <span class="pl-c1">true</span></span>
+<span class="pl-s1">      },{</span>
+<span class="pl-s1">        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Password<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        min<span class="pl-k">:</span> <span class="pl-c1">6</span>,</span>
+<span class="pl-s1">        required<span class="pl-k">:</span> <span class="pl-c1">true</span>,</span>
+<span class="pl-s1">        hint<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Minimum 6 characters<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        validator<span class="pl-k">:</span> <span class="pl-smi">validators</span>.<span class="pl-smi">string</span></span>
+<span class="pl-s1">      },{</span>
+<span class="pl-s1">        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>select<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>skills<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>type<span class="pl-pds">"</span></span>,      </span>
+<span class="pl-s1">        values<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>Javascript<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>VueJS<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>CSS3<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>HTML5<span class="pl-pds">"</span></span>]</span>
+<span class="pl-s1">      },{</span>
+<span class="pl-s1">        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>E-mail<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>email<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        placeholder<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>User's e-mail address<span class="pl-pds">"</span></span></span>
+<span class="pl-s1">      },{</span>
+<span class="pl-s1">        type<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>checkbox<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        label<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Status<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        model<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>status<span class="pl-pds">"</span></span>,</span>
+<span class="pl-s1">        default<span class="pl-k">:</span> <span class="pl-c1">true</span></span>
+<span class="pl-s1">      }]</span>
+<span class="pl-s1">    },</span>
+<span class="pl-s1"></span>
+<span class="pl-s1">    formOptions<span class="pl-k">:</span> {</span>
+<span class="pl-s1">      validateAfterLoad<span class="pl-k">:</span> <span class="pl-c1">true</span>,</span>
+<span class="pl-s1">      validateAfterChanged<span class="pl-k">:</span> <span class="pl-c1">true</span></span>
+<span class="pl-s1">    }</span>
+<span class="pl-s1">  }</span>
+<span class="pl-s1">}</span>
+<span class="pl-s1">&lt;/<span class="pl-ent">script</span>&gt;</span></pre></div>
 
 <h2>
 <a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h2>
@@ -195,24 +180,21 @@
 <h2>
 <a id="test" class="anchor" href="#test" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test</h2>
 
-<p>TODO</p>
+<div class="highlight highlight-source-shell"><pre>npm run <span class="pl-c1">test</span></pre></div>
 
 <h2>
 <a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
 
 <ul>
-<li>[x] Date picker with bootstrap-datepicker</li>
-<li>[x] Time picker</li>
-<li>[x] HTML5 Color picker</li>
-<li>[x] Color picker with spectrum</li>
-<li>[x] Image editor</li>
-<li>[ ] Better slider</li>
+<li>[ ] sortable checkbox list</li>
 <li>[ ] Groupable fields</li>
 <li>[ ] Validation handling with multiple models</li>
-<li>[ ] Bundle for vendor files</li>
-<li>[ ] Unit tests, coverage and CI</li>
-<li>[ ] try <a href="https://www.npmjs.com/package/joi">joi</a> for validation</li>
 </ul>
+
+<h2>
+<a id="contribution" class="anchor" href="#contribution" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contribution</h2>
+
+<p>Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.</p>
 
 <h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
