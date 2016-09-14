@@ -4,14 +4,36 @@
 
 <script>
 	import abstractField from "./abstractField";
+	import { defaults } from "lodash";
 
 	export default {
 		mixins: [ abstractField ],
 
 		computed: {
 			mapLink() {
-				if (this.value && this.value.lat && this.value.lng)
-					return `http://maps.googleapis.com/maps/api/staticmap?center=${this.value.lat},${this.value.lng}&zoom=8&scale=false&size=800x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000`;
+				if (this.value) {
+					let lat, lng;
+					let options = defaults(this.schema.staticMapOptions || {}, {
+						lat: "lat",
+						lng: "lng",
+						zoom: 8,
+						sizeX:640,
+						sizeY:640,
+					});
+
+					lat = this.value[options.lat];
+					lng = this.value[options.lng];
+					
+					let url = `http://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${options.zoom}&size=${options.sizeX}x${options.sizeY}`;
+					
+					let props = ["scale", "format", "maptype", "language", "region", "markers", "path", "visible", "style", "key", "signature"];
+					for (let prop of props) {
+						if (typeof options[prop] !== "undefined") {
+							url += `&${prop}=${options[prop]}`;
+						}
+					}
+					if (lat && lng){ return url; }
+				}
 			}
 		}
 	};
@@ -24,3 +46,5 @@
 		max-width: 100%;
 	}
 </style>
+
+

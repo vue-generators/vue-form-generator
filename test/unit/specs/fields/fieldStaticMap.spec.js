@@ -19,12 +19,24 @@ describe("fieldStaticMap.vue", function() {
 		let schema = {
 			type: "staticMap",
 			label: "Geo",
-			model: "geo"
+			model: "geo",
+			staticMapOptions: {
+				lat: "latitude",
+				lng: "longitude",
+				zoom: 6,
+				sizeX:640,
+				sizeY:640,
+				scale: 1,
+				format:"png",
+				maptype:"satellite",
+				language:"FR-fr",
+				markers:"size:mid%7Ccolor:0xff0000",
+			}
 		};
 		let model = {
 			geo: {
-				lat: 13.4567,
-				lng: 20.3321
+				latitude: 13.4567,
+				longitude: 20.3321
 			}
 		};
 		let input;
@@ -39,7 +51,7 @@ describe("fieldStaticMap.vue", function() {
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.src).to.be.equal("http://maps.googleapis.com/maps/api/staticmap?center=13.4567,20.3321&zoom=8&scale=false&size=800x300&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000");
+			expect(input.src).to.be.equal("http://maps.googleapis.com/maps/api/staticmap?center=13.4567,20.3321&zoom=6&size=640x640&scale=1&format=png&maptype=satellite&language=FR-fr&markers=size:mid%7Ccolor:0xff0000");
 		});
 
 	});
