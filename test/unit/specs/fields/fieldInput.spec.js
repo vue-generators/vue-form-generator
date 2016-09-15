@@ -2,21 +2,21 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import fieldHtml5 from "src/fields/fieldHtml5.vue";
+import fieldInput from "src/fields/fieldInput.vue";
 
-Vue.component("fieldHtml5", fieldHtml5);
+Vue.component("fieldInput", fieldInput);
 
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[el, vm, field] = createVueField(test, "fieldHtml5", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldInput", schema, model, disabled, options);
 }
 
-describe("fieldHtml5.vue", function() {
+describe("fieldInput.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
-			type: "html5",
+			type: "input",
 			inputType: "text",
 			label: "Name",
 			model: "name",

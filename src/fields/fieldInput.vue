@@ -43,7 +43,7 @@
 </script>
 
 <style lang="sass">
-	.vue-form-generator .field-html5 {
+	.vue-form-generator .field-input {
 		.wrapper {
 			width: 100%;
 		}
