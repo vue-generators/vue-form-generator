@@ -53,7 +53,6 @@
 				}
 			},
 			formatValueToModel(value) {
-				console.log(this.schema.inputType, typeof value);
 				if (value != null) {
 					if (this.schema.inputType === "date" ||
 						this.schema.inputType === "datetime" ||
