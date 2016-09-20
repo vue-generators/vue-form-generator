@@ -37,7 +37,35 @@
 	import abstractField from "./abstractField";
 
 	export default {
-		mixins: [ abstractField ]
+		mixins: [ abstractField ],
+		methods: {
+			formatValueToField(value) {
+				switch(this.schema.inputType){
+					case "date":
+						return moment(value).format("YYYY-MM-DD");
+					case "datetime":
+						return moment(value).format();
+					case "datetime-local":
+						return moment(value).format("YYYY-MM-DDTHH:mm:ss");
+					default:
+						return value;
+				}
+			},
+			formatValueToModel(value) {
+				console.log(this.schema.inputType, typeof value);
+				if (value != null) {
+				    if (this.schema.inputType === "date" ||
+				        this.schema.inputType === "datetime" ||
+				        this.schema.inputType === "datetimelocal") {
+						return new Date(value).getTime();
+				    }else{
+				    	return value;
+				    }
+				} else {
+					return value;
+				}
+			}
+		}
 	};
 	
 </script>
