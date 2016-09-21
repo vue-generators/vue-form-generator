@@ -32,6 +32,16 @@
 					// Single value
 					this.value = parseFloat(value);
 				}
+			getStartValue(){
+				if (this.value != null) {
+					return this.value;
+				}else{
+					if (this.schema.noUiSliderOptions.double) {
+						return [this.schema.min, this.schema.min];
+					}else{
+						return this.schema.min;
+					}
+				}
 			}
 		},
 
