@@ -2,21 +2,21 @@ import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldSlider from "src/fields/fieldSlider.vue";
+import FieldRangeSlider from "src/fields/fieldRangeSlider.vue";
 
-Vue.component("FieldSlider", FieldSlider);
+Vue.component("FieldRangeSlider", FieldRangeSlider);
 
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldSlider", schema, model, disabled, options);
+	[ el, vm, field ] = createVueField(test, "fieldRangeSlider", schema, model, disabled, options);
 }
 
-describe("fieldSlider.vue", function() {
+describe("fieldRangeSlider.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
-			type: "range",
+			type: "rangeSlider",
 			label: "Rating",
 			model: "rating",
 			min: 1,

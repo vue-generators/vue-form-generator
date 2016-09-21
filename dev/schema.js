@@ -390,13 +390,13 @@ module.exports = {
 	validator: validators.required
 }, 
 {
-	type: "slider",
+	type: "rangeSlider",
 	label: "Income",
 	model: "income",
 	multi: true,
 	min: 0,
 	max: 100000,
-	sliderOptions: {
+	rangeSliderOptions: {
 		type: "double",
 		prefix: "$",
 		step: 1000
@@ -431,8 +431,8 @@ module.exports = {
 	validator: validators.array
 },
 {
-	type: "slider",
-	label: "Rank (slider field)",
+	type: "rangeSlider",
+	label: "Rank (rangeSlider field)",
 	model: "rank",
 	multi: true,
 	min: 1,
@@ -444,8 +444,8 @@ module.exports = {
 	// validator: validators.integer
 },
 {
-	type: "dateTime",
-	label: "DOB (dateTime field)",
+	type: "dateTimePicker",
+	label: "DOB (dateTimePicker field)",
 	model: "dob",
 	required: true,
 	placeholder: "User's birth of date",
@@ -462,7 +462,7 @@ module.exports = {
 	}
 }, 
 {
-	type: "dateTime",
+	type: "dateTimePicker",
 	label: "DT",
 	model: "dob",
 	multi: true,
@@ -474,7 +474,7 @@ module.exports = {
 	}
 },
 {
-	type: "dateTime",
+	type: "dateTimePicker",
 	label: "Time",
 	model: "time",
 	multi: true,

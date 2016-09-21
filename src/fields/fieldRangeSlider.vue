@@ -44,7 +44,7 @@
 					valueFrom = this.value;
 
 				let self = this;
-				$(this.$el).ionRangeSlider(defaults(this.schema.sliderOptions || {}, {
+				$(this.$el).ionRangeSlider(defaults(this.schema.rangeSliderOptions || {}, {
 					type: "single",
 					grid: true,
 					hide_min_max: true,
@@ -73,7 +73,7 @@
 
 
 <style lang="sass">
-	.vue-form-generator .field-slider .irs {
+	.vue-form-generator .field-rangeSlider .irs {
 		width: 100%;
 	}
 </style>
