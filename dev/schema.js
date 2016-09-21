@@ -136,7 +136,7 @@ module.exports = {
     type: "input",
     inputType: "range",
     label: "Range",
-    model: "range",
+    model: "age",
     styleClasses: "half-width"
 },
 {
@@ -149,7 +149,7 @@ module.exports = {
 {
     type: "input",
     inputType: "checkbox",
-    label: "Checkbox",
+    label: "Checkbox (show useless)",
     model: "checkbox",
     styleClasses: "half-width"
 },
@@ -159,48 +159,55 @@ module.exports = {
     label: "Search USELESS",
     model: "search",
     placeholder: "Entrez un mot-clef",
-    styleClasses: "half-width"
+    styleClasses: "half-width",
+    visible(model){return model.checkbox} 
 },
 {
     type: "input",
     inputType: "radio",
     label: "radio USELESS",
     model: "radio",
-    styleClasses: "half-width"
+    styleClasses: "half-width",
+    visible(model){return model.checkbox} 
 },
 {
     type: "input",
     inputType: "file",
     label: "File USELESS",
     model: "file",
+    visible(model){return model.checkbox} 
 },
 {
     type: "input",
     inputType: "image",
     label: "Image USELESS",
     model: "image",
-    styleClasses: "half-width"
+    styleClasses: "half-width",
+    visible(model){return model.checkbox} 
 },
 {
     type: "input",
     inputType: "button",
     label: "Button USELESS",
     model: "button",
-    styleClasses: "half-width"
+    styleClasses: "half-width",
+    visible(model){return model.checkbox} 
 },
 {
     type: "input",
     inputType: "reset",
     label: "Reset USELESS",
     model: "reset",
-    styleClasses: "half-width"
+    styleClasses: "half-width",
+    visible(model){return model.checkbox} 
 },
 {
     type: "input",
     inputType: "submit",
     label: "Submit USELESS",
     model: "submit",
-    styleClasses: "half-width"
+    styleClasses: "half-width",
+    visible(model){return model.checkbox} 
 },
 
 /**************/
@@ -355,23 +362,6 @@ module.exports = {
     styleClasses: "alert alert-info"
 },
 {
-	type: "selectEx",
-	label: "Country (selectEx field)",
-	model: "address.country",
-	multi: true,
-	required: true,
-	values: ["United Kingdom", "France", "Germany"],
-	//default: "United Kingdom",
-	multiSelect: false,
-	selectOptions: {
-		// https://silviomoreto.github.io/bootstrap-select/options/
-		liveSearch: true,
-		size: 10
-	},
-	styleClasses: ["half-width", "first"],
-	validator: validators.required
-}, 
-{
 	type: "spectrum",
 	label: "Color (spectrum field)",
 	model: "favoriteColor",
@@ -386,22 +376,26 @@ module.exports = {
 	label: "Mobile  (masked field)",
 	model: "mobile",
 	mask: "(99) 999-9999",
+	styleClasses: ["half-width", "first"],
+	validator: validators.required
+},
+{
+	type: "selectEx",
+	label: "Country (selectEx field)",
+	model: "address.country",
+	multi: true,
+	required: true,
+	values: ["United Kingdom", "France", "Germany"],
+	//default: "United Kingdom",
+	multiSelect: false,
+	selectOptions: {
+		// https://silviomoreto.github.io/bootstrap-select/options/
+		liveSearch: true,
+		size: 10
+	},
 	styleClasses: "half-width",
 	validator: validators.required
 }, 
-{
-	type: "rangeSlider",
-	label: "Income",
-	model: "income",
-	multi: true,
-	min: 0,
-	max: 100000,
-	rangeSliderOptions: {
-		type: "double",
-		prefix: "$",
-		step: 1000
-	}
-},
 {
 	type: "selectEx",
 	label: "Skills (selectEx field)",
@@ -435,14 +429,28 @@ module.exports = {
 	label: "Rank (rangeSlider field)",
 	model: "rank",
 	multi: true,
-	min: 1,
+	min: 0,
 	max: 10,
 	required: true,
-	sliderOptions: {
+	rangeSliderOptions: {
 		grid: true
 	},
-	// validator: validators.integer
+	validator: validators.integer
 },
+// {
+// 	type: "rangeSlider",
+// 	label: "Income",
+// 	model: "income",
+// 	multi: true,
+// 	min: 0,
+// 	max: 100000,
+// 	rangeSliderOptions: {
+// 		type: "double",
+// 		prefix: "$",
+// 		step: 1000,
+// 		force_edges: true
+// 	}
+// },
 {
 	type: "dateTimePicker",
 	label: "DOB (dateTimePicker field)",
@@ -519,8 +527,8 @@ module.exports = {
 	max: 10,
 	required: true,
 	disabled: false,
-	sliderOptions: {
-		// connect: "lower",	// "lower", "upper", true, false
+	noUiSliderOptions: {
+		connect: "lower",	// "lower", "upper", true, false
 		// margin: 2 //number
 		// limit: 2 //number
 		step:1,
@@ -538,8 +546,38 @@ module.exports = {
 			density: 10,
 			stepped: true
 		}
-	},
-	// validator: validators.integer
+	}
+},
+{
+	type: "noUiSlider",
+	label: "Rank (noUiSlider field)",
+	model: "income",
+	multi: true,
+	min: 0,
+	max: 100000,
+	required: true,
+	disabled: false,
+	noUiSliderOptions: {
+		double:true,
+		connect: true,	// "lower", "upper", true, false
+		// margin: 2 //number
+		// limit: 2 //number
+		step: 1000,
+		// orientation:"vertical", //"vertical", "horizontal"
+		// direction: "ltr", //"ltr", "rtl"
+		tooltips: true, // false, true, formatter, array[formatter or false]
+		animate: false,
+		range:{
+			'min': [  0 ],
+			'max': [ 100000 ]
+		},
+		pips: {
+			mode: 'count',
+			values: 6,
+			density: 10,
+			stepped: true
+		}
+	}
 },
 {
 	type: "cleave",
