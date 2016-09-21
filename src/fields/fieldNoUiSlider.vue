@@ -32,6 +32,7 @@
 					// Single value
 					this.value = parseFloat(value);
 				}
+			},
 			getStartValue(){
 				if (this.value != null) {
 					return this.value;
