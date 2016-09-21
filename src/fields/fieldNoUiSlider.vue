@@ -38,8 +38,8 @@
 		ready() {
 			if (window.noUiSlider) {
 				this.slider = this.$el;
-				window.noUiSlider.create(this.slider, defaults(this.schema.sliderOptions || {}, {
-					start: this.value != null ? this.value : this.schema.min,
+				window.noUiSlider.create(this.slider, defaults(this.schema.noUiSliderOptions || {}, {
+					start: this.getStartValue(),
 					range: {
 						"min": this.schema.min,
 						"max": this.schema.max
