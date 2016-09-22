@@ -52,7 +52,7 @@
 				if (this.value != null) {
 					return this.value;
 				}else{
-					if (this.schema.noUiSliderOptions.double) {
+					if (typeof this.schema.noUiSliderOptions !== "undefined" && this.schema.noUiSliderOptions.double) {
 						return [this.schema.min, this.schema.min];
 					}else{
 						return this.schema.min;
