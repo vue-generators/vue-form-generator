@@ -145,6 +145,8 @@ npm run test
 * [ ] Groupable fields
 * [ ] Validation handling with multiple models
 
+See: https://github.com/icebob/vue-form-generator/projects/1
+
 ## Contribution
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
 
