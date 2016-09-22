@@ -1,10 +1,7 @@
 import moment from "moment";
-import Fakerator from "fakerator";
 import {} from "lodash";
 
 import { validators } from "../src";
-
-let fakerator = new Fakerator();
 
 module.exports = {
 	fields: [
@@ -437,20 +434,20 @@ module.exports = {
 	},
 	validator: validators.integer
 },
-// {
-// 	type: "rangeSlider",
-// 	label: "Income",
-// 	model: "income",
-// 	multi: true,
-// 	min: 0,
-// 	max: 100000,
-// 	rangeSliderOptions: {
-// 		type: "double",
-// 		prefix: "$",
-// 		step: 1000,
-// 		force_edges: true
-// 	}
-// },
+{
+	type: "rangeSlider",
+	label: "Income",
+	model: "income",
+	multi: true,
+	min: 0,
+	max: 100000,
+	rangeSliderOptions: {
+		type: "double",
+		prefix: "$",
+		step: 1000,
+		force_edges: true
+	}
+},
 {
 	type: "dateTimePicker",
 	label: "DOB (dateTimePicker field)",

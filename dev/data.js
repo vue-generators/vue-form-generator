@@ -45,6 +45,8 @@ module.exports = {
 			if (user.type == "business")
 				user.company = fakerator.entity.company();
 			
+			user.income = [ fakerator.random.number(50000), fakerator.random.number(50000, 100000)];			
+
 			res.push(user);
 			console.log(user);
 		}
