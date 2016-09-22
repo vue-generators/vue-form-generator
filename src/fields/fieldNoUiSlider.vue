@@ -1,5 +1,5 @@
-<template lang="jade">
-	div.slider(:disabled="disabled")
+<template>
+	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': typeof schema.noUiSliderOptions.pips !== 'undefined', 'contain-tooltip': schema.noUiSliderOptions.tooltips }"></div>  
 </template>
 
 <script>
@@ -33,11 +33,26 @@
 					this.value = parseFloat(value);
 				}
 			},
+			formatValueToField(value) {
+				if(this.slider !== null && typeof this.slider.noUiSlider !== "undefined"){
+					this.slider.noUiSlider.set(value);
+				}
+			},
+			formatValueToModel() {				
+				if(typeof this.slider.noUiSlider !== "undefined"){
+					let val = this.slider.noUiSlider.get();
+					if (val instanceof Array) {
+						return [Number(val[0]), Number(val[1])];
+					}else{
+						return Number(val);
+					}
+				}
+			},
 			getStartValue(){
 				if (this.value != null) {
 					return this.value;
 				}else{
-					if (this.schema.noUiSliderOptions.double) {
+					if (typeof this.schema.noUiSliderOptions !== "undefined" && this.schema.noUiSliderOptions.double) {
 						return [this.schema.min, this.schema.min];
 					}else{
 						return this.schema.min;
@@ -76,7 +91,16 @@
 		.field-wrap {
 			display: block;
 		}
-		
+		.contain-pips {
+		    margin-bottom: 30px;
+		}
+		.contain-tooltip {
+		    margin-top: 30px;
+		}
+		.noUi-vertical {
+			height: 200px;
+		    margin: 10px 0;
+		}
 	}
 
 </style>
