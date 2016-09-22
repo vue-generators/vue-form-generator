@@ -1,5 +1,5 @@
-<template lang="jade">
-	div.slider(:disabled="disabled")
+<template>
+	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': typeof schema.noUiSliderOptions.pips !== 'undefined', 'contain-tooltip': schema.noUiSliderOptions.tooltips }"></div>  
 </template>
 
 <script>
@@ -91,7 +91,16 @@
 		.field-wrap {
 			display: block;
 		}
-		
+		.contain-pips {
+		    margin-bottom: 30px;
+		}
+		.contain-tooltip {
+		    margin-top: 30px;
+		}
+		.noUi-vertical {
+			height: 200px;
+		    margin: 10px 0;
+		}
 	}
 
 </style>
