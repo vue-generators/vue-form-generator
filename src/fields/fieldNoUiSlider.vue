@@ -33,6 +33,21 @@
 					this.value = parseFloat(value);
 				}
 			},
+			formatValueToField(value) {
+				if(this.slider !== null && typeof this.slider.noUiSlider !== "undefined"){
+					this.slider.noUiSlider.set(value);
+				}
+			},
+			formatValueToModel() {				
+				if(typeof this.slider.noUiSlider !== "undefined"){
+					let val = this.slider.noUiSlider.get();
+					if (val instanceof Array) {
+						return [Number(val[0]), Number(val[1])];
+					}else{
+						return Number(val);
+					}
+				}
+			},
 			getStartValue(){
 				if (this.value != null) {
 					return this.value;
