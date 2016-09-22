@@ -17,7 +17,7 @@ describe("fieldNoUiSlider.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
-			type: "range",
+			type: "noUiSlider",
 			label: "Rating",
 			model: "rating",
 			min: 1,

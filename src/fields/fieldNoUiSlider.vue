@@ -32,14 +32,25 @@
 					// Single value
 					this.value = parseFloat(value);
 				}
+			},
+			getStartValue(){
+				if (this.value != null) {
+					return this.value;
+				}else{
+					if (this.schema.noUiSliderOptions.double) {
+						return [this.schema.min, this.schema.min];
+					}else{
+						return this.schema.min;
+					}
+				}
 			}
 		},
 
 		ready() {
 			if (window.noUiSlider) {
 				this.slider = this.$el;
-				window.noUiSlider.create(this.slider, defaults(this.schema.sliderOptions || {}, {
-					start: this.value != null ? this.value : this.schema.min,
+				window.noUiSlider.create(this.slider, defaults(this.schema.noUiSliderOptions || {}, {
+					start: this.getStartValue(),
 					range: {
 						"min": this.schema.min,
 						"max": this.schema.max

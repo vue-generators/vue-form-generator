@@ -3,21 +3,21 @@ import { createVueField, trigger, checkAttribute } from "../util";
 import moment from "moment";
 
 import Vue from "vue";
-import FieldDateTime from "src/fields/fieldDateTime.vue";
+import FieldDateTimePicker from "src/fields/fieldDateTimePicker.vue";
 
-Vue.component("FieldDateTime", FieldDateTime);
+Vue.component("FieldDateTimePicker", FieldDateTimePicker);
 
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldDateTime", schema, model, disabled, options);
+	[ el, vm, field ] = createVueField(test, "fieldDateTimePicker", schema, model, disabled, options);
 }
 
-describe("fieldDateTime.vue", function() {
+describe("fieldDateTimePicker.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
-			type: "dateTime",
+			type: "dateTimePicker",
 			label: "Event",
 			model: "event",
 			autocomplete: "off",
@@ -82,7 +82,7 @@ describe("fieldDateTime.vue", function() {
 
 	describe("check YYYYMMDD format", () => {
 		let schema = {
-			type: "dateTime",
+			type: "dateTimePicker",
 			label: "Event",
 			model: "event",
 			format: "YYYYMMDD",
