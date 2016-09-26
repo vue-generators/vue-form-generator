@@ -137,13 +137,8 @@ npm run build
 
 ## Test
 ```bash
-npm run test
+npm test
 ```
-
-## TODO
-* [ ] sortable checkbox list
-* [ ] Groupable fields
-* [ ] Validation handling with multiple models
 
 See: https://github.com/icebob/vue-form-generator/projects/1
 
