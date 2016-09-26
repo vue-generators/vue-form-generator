@@ -117,6 +117,19 @@ describe("fieldImage.vue", function() {
 			});
 		});
 
+		it("should not show the link input element if hideInput is true", (done) => {
+			vm.$set("schema.hideInput", true);
+
+			vm.$nextTick( () => {
+				let fileInput = el.querySelector("input[type=text]");
+				expect(fileInput.style.display).to.be.equal("none");
+
+				// Restore
+				vm.$set("schema.hideInput", false);
+				done();
+			});
+		});		
+
 		it("should not show base64 data in input field", (done) => {
 			model.avatar = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ";
 
