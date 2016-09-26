@@ -1,15 +1,15 @@
 var path = require("path");
-var webpack = require('webpack');
-var sourceDir = path.resolve(__dirname, '../../src');
+var webpack = require("webpack");
+var sourceDir = path.resolve(__dirname, "../../src");
 
 module.exports = {
-	devtool: '#inline-source-map',
+	devtool: "#inline-source-map",
 	
 	module: {
 		preLoaders: [
 			{
 				test: /\.js$/,
-				loader: 'isparta',
+				loader: "isparta",
 				include: sourceDir,
 				exclude: /node_modules/
 			}
@@ -40,12 +40,12 @@ module.exports = {
 			},
 			{ 
 				test: /\.(woff2?|svg)$/, 
-				loader: 'url' 
-				//loader: 'url?limit=10000' 
+				loader: "url" 
+				//loader: "url?limit=10000" 
 			},
 			{ 
 				test: /\.(ttf|eot)$/, 
-				loader: 'url' 
+				loader: "url" 
 			}
 		],
 		noParse: [
@@ -54,10 +54,10 @@ module.exports = {
 	},
 
 	resolve: {
-		packageAlias: 'browser',   
+		packageAlias: "browser",   
 		alias: {
-			'src': sourceDir,
-			'sinon': 'sinon/pkg/sinon'
+			"src": sourceDir,
+			"sinon": "sinon/pkg/sinon"
 		}
 	},
 	plugins: [
@@ -65,10 +65,10 @@ module.exports = {
 
 	vue: {
 		autoprefixer: {
-			browsers: ['last 2 versions']
+			browsers: ["last 2 versions"]
 		},
 		loaders: {
-			js: 'isparta'
+			js: "isparta"
 		}
 	}
  

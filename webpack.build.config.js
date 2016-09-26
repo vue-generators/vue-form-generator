@@ -49,7 +49,7 @@ module.exports = [
 		],
 
 		module: {
-			loaders: loaders
+			loaders
 		},
 
 		vue: {

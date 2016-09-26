@@ -1,3 +1,4 @@
+/* global Vue */
 $(function() {
 	let App = require("./App.vue");
 
