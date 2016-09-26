@@ -17,7 +17,6 @@ div
 
 <script>
 	import Vue from "vue";
-	//import Joi from "joi";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
 
 	// Load all fields from '../fields' folder
@@ -161,7 +160,7 @@ div
 
 <style lang="sass">
 	
-	$errorColor: lighten(#F00, 0%);
+	$errorColor: #F00;
 
 	fieldset.vue-form-generator {
 
@@ -183,7 +182,8 @@ div
 			border-radius: 4px;
 			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;	
-		}
+
+		} // .form-control
 		
 		span.help {
 			margin-left: 0.3em;
@@ -196,7 +196,8 @@ div
 				background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAA+UlEQVQ4ja3TS0oDQRAG4C8+lq7ceICICoLGK7iXuNBbeAMJuPVOIm7cqmDiIncIggg+cMZFaqCnZyYKWtB0df31V1VXdfNH6S2wD9CP8xT3KH8T9BiTcE7XBMOfyBcogvCFO9ziLWwFRosyV+QxthNsA9dJkEYlvazsQdi3sBv6Ol6TBLX+HWT3fcQZ3vGM5fBLk+ynAU41m1biCXvhs4OPBDuBpa6GxF0P8YAj3GA1d1qJfdoS4DOIcIm1DK9x8iaWeDF/SP3QU6zRROpjLDFLsFlibx1jJaMkSIGrWKntvItcyTBKzCcybsvc9ZmYz3kz9Ooz/b98A8yvW13B3ch6AAAAAElFTkSuQmCC');
 				background-repeat: no-repeat;
 				background-position: center center;
-			}
+
+			} // .icon
 
 			.helpText {
 				background-color: #444;
@@ -219,8 +220,9 @@ div
 				a {
 					font-weight: bold;
 					text-decoration: underline;
-				}
-			}
+				} // a
+
+			} // .helpText
 
 			/* This bridges the gap so you can mouse into the tooltip without it disappearing */
 			.helpText:before {
@@ -237,7 +239,8 @@ div
 				opacity: 1;
 				pointer-events: auto;
 				transform: translateY(0px);
-			}					
+			}		
+
 		} // span.help
 
 		.field-wrap {
@@ -284,14 +287,16 @@ div
 					outline: 0;
 					box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 				}
-			}
-		}		
+
+			} // button, input[submit]
+
+		} // .field-wrap		
 
 		.hint {
 			font-style: italic;
 			font-size: 0.8em;
-		}
 
+		} // .hint
 
 		.form-group {
 			display: inline-block;
@@ -329,10 +334,6 @@ div
 			}
 
 			&.error {
-
-				label {
-					//color: $errorColor;
-				}			
 
 				input:not([type="checkbox"]), textarea, select {
 					border: 1px solid $errorColor;
