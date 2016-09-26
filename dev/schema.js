@@ -227,6 +227,7 @@ module.exports = {
 	required: true,
 	browse: true,
 	hideInput: false,
+	inputName: "photo",
 	validator: validators.required
 },
 {
