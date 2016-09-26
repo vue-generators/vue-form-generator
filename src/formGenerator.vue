@@ -62,10 +62,10 @@ div
 		watch: {
 			// new model loaded
 			model: function(newModel, oldModel) {
-				if (oldModel == newModel) // model got a new property
+				if (oldModel == newModel) // model got a new property, skip
 					return;
 
-				//console.log("Model changed!");
+				// Model changed!
 				if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 					this.validate();
 				else
@@ -74,7 +74,7 @@ div
 		},
 
 		compiled() {
-			// First load
+			// First load, running validation if neccessary
 			if (this.options && this.options.validateAfterLoad === true && this.isNewModel !== true)
 				this.validate();
 			else
@@ -82,6 +82,7 @@ div
 		},
 	
 		methods: {
+			// Get style classes of field
 			getFieldRowClasses(field) {
 				let baseClasses = {
 					error: field.errors && field.errors.length > 0, 
@@ -103,10 +104,12 @@ div
 				return baseClasses;
 			},
 
+			// Get type of field 'field-xxx'. It'll be the name of HTML element
 			getFieldType(fieldSchema) {
 				return "field-" + fieldSchema.type;
 			},
 
+			// Get disabled attr of field
 			fieldDisabled(field) {
 				if (isFunction(field.disabled))
 					return field.disabled(this.model);
@@ -117,6 +120,7 @@ div
 				return field.disabled;
 			},
 
+			// Get visible prop of field
 			fieldVisible(field) {
 				if (isFunction(field.visible))
 					return field.visible(this.model);
@@ -127,6 +131,7 @@ div
 				return field.visible;
 			},		
 
+			// Validating the model properties
 			validate() {
 				this.clearValidationErrors();
 
@@ -146,6 +151,7 @@ div
 				return this.errors.length == 0;
 			},
 
+			// Clear validation errors
 			clearValidationErrors() {
 				this.errors.splice(0);
 
