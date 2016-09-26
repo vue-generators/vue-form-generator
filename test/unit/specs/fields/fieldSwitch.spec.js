@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSwitch from "src/fields/fieldSwitch.vue";
@@ -41,6 +41,16 @@ describe("FieldSwitch.vue", function() {
 			vm.$nextTick( () => {
 				expect(input.checked).to.be.true;
 				done();
+			});
+		});
+
+		describe("check optional attribute", () => {
+			let attributes = ["autocomplete", "disabled", "inputName"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
 			});
 		});
 
