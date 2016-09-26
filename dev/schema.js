@@ -224,6 +224,7 @@ module.exports = {
 	model: "avatar",
 	required: true,
 	browse: true,
+	hideInput: false,
 	validator: validators.required
 },
 {
