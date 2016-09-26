@@ -52,8 +52,8 @@ export let attributesList = {
 	"disabled": { before: true, after: false, field: true },
 	"multiSelect": { before: true, after: false, name: "multiple" },
 	"placeholder": { before: "Field placeholder", after: "" },
-	"readonly": { before: true, after: false, name: "readOnly" }
-
+	"readonly": { before: true, after: false, name: "readOnly" },
+	"inputName": { before: "test-name", after: "", name: "name" }
 };
 
 export function checkAttribute(name, vm, input, field, schema, done) {
@@ -66,14 +66,15 @@ export function checkAttribute(name, vm, input, field, schema, done) {
 	} else {
 		schematic = schema;
 	}
-	schematic[name] = attr.before;
+
+	vm.$set("schema." + name, attr.before);
 	vm.$nextTick(() => {
 		if (attr.name) {
 			expect(input[attr.name]).to.be.equal(schematic[name]);
 		} else {
 			expect(input[name]).to.be.equal(schematic[name]);
 		}
-		schematic[name] = attr.after;
+		vm.$set("schema." + name, attr.after);
 		return done();
 	});
 }

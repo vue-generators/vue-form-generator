@@ -1,6 +1,6 @@
 <template lang="jade">
 	.wrapper
-		input.form-control(type="range", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :max="schema.max", :min="schema.min")
+		input.form-control(type="range", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :max="schema.max", :min="schema.min", :name="schema.inputName")
 		.helpText {{ value }}
 </template>
 

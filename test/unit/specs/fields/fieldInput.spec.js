@@ -49,9 +49,9 @@ describe("fieldInput.vue", function() {
 		});
 
 		let inputTypes = new Map([
-			["text", ["autocomplete", "disabled", "placeholder", "readonly"]],
-			["password", ["autocomplete", "disabled", "placeholder", "readonly"]],
-			["checkbox", ["autocomplete", "disabled"]],
+			["text", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
+			["password", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
+			["checkbox", ["autocomplete", "disabled", "inputName"]],
 			// ["radio", [] ],
 			// ["button", [] ],
 			// ["submit", [] ],
@@ -65,13 +65,13 @@ describe("fieldInput.vue", function() {
 			// ["month", ],
 			// ["time", ],
 			// ["week", ],
-			["number", ["autocomplete", "disabled", "placeholder", "readonly"]],
+			["number", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
 			// ["range", ["autocomplete"]],
-			["email", ["autocomplete", "disabled", "placeholder", "readonly"]],
-			["url", ["autocomplete", "disabled", "placeholder", "readonly"]],
+			["email", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
+			["url", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
 			// ["search", ],
-			["tel", ["autocomplete", "disabled", "placeholder", "readonly"]],
-			["color", ["autocomplete"]]
+			["tel", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
+			["color", ["autocomplete", "inputName"]]
 		]);
 		for (let [inputType, attributes] of inputTypes) {
 			

@@ -1,5 +1,5 @@
 <template lang="jade">
-	select.form-control(v-model="value", :disabled="disabled")
+	select.form-control(v-model="value", :disabled="disabled", :name="schema.inputName")
 		option(:disabled="schema.required", :value="null", :selected="value == undefined") &lt;Not selected&gt;
 		option(v-for="item in items", :value="getItemID(item)") {{ getItemName(item) }}
 </template>

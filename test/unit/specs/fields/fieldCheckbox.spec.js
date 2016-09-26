@@ -18,8 +18,7 @@ describe("FieldCheckbox.vue", function() {
 		let schema = {
 			type: "checkbox",
 			label: "Status",
-			model: "status",
-			autocomplete: "off"
+			model: "status"
 		};
 		let model = { status: true };
 		let input;
@@ -45,7 +44,7 @@ describe("FieldCheckbox.vue", function() {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled"];
+			let attributes = ["autocomplete", "disabled", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, function(done) {

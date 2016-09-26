@@ -49,7 +49,7 @@ describe("fieldMasked.vue", function() {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "placeholder", "readonly"];
+			let attributes = ["autocomplete", "disabled", "placeholder", "readonly", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, function(done) {
