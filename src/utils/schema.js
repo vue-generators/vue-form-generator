@@ -1,5 +1,6 @@
 import {get, set, each} from "lodash";
 
+// Create a new model by schema default values
 module.exports.createDefaultObject = function (schema, obj = {}){
 	each(schema.fields, (field) => {
 		if (get(obj, field.model) === undefined && field.default !== undefined)
@@ -8,6 +9,7 @@ module.exports.createDefaultObject = function (schema, obj = {}){
 	return obj;
 };
 
+// Get a new model which contains only properties of multi-edit fields
 module.exports.getMultipleFields = function(schema) {
 	let res = [];
 	each(schema.fields, (field) => {
@@ -18,6 +20,7 @@ module.exports.getMultipleFields = function(schema) {
 	return res;
 };
 
+// Merge many models to one 'work model' by schema
 module.exports.mergeMultiObjectFields = function(schema, objs) {
 	let model = {};
 
