@@ -34,8 +34,8 @@
 </template>
 
 <script>
-/* global moment */
 	import abstractField from "./abstractField";
+	import moment from "moment";
 
 	export default {
 		mixins: [ abstractField ],
