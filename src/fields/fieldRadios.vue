@@ -1,7 +1,7 @@
 <template lang="jade">
 	.radio-list(:disabled="disabled")
 		label(v-for="item in items")
-			input(type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)")
+			input(type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)" )
 			| {{ getItemName(item) }}
 
 </template>
@@ -48,7 +48,16 @@
 				}
 
 				return item;
-			}
+			},
+			isItemChecked(item) {
+				let currentValue;
+				if (isObject(item) && this.schema.radiosOptions.value && item[this.schema.radiosOptions.value]){
+					currentValue = item[this.schema.radiosOptions.value];
+				} else{
+					currentValue = item;
+				}
+				return (currentValue === this.value);
+			},
 		}
 	};
 </script>
