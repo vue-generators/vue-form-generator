@@ -224,7 +224,7 @@ module.exports = {
     model: "radios",
     values: [
 		{name: "HTML5", value:"HTML5-123"},
-		{name: "Javascript", value:{id:"Javascript-123", deep:true}},
+		{name: "Javascript", value:"Javascript-123"},
 		{name: "CSS3", value:"CSS3-123"},
 		{name: "CoffeeScript", value:"CoffeeScript-123"},
 		{name: "AngularJS", value:"AngularJS-123"},
