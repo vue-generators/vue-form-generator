@@ -47,9 +47,8 @@
 					this.slider.noUiSlider.set(value);
 				}
 			},
-			formatValueToModel() {				
+			formatValueToModel(val) {				
 				if(typeof this.slider.noUiSlider !== "undefined"){
-					let val = this.slider.noUiSlider.get();
 					if (val instanceof Array) {
 						return [Number(val[0]), Number(val[1])];
 					}else{
