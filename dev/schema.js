@@ -221,6 +221,38 @@ module.exports = {
     styleClasses: "alert alert-info"
 },
 {
+    type: "radios",
+    label: "RADIOS",
+    model: "radios",
+    values: [
+		{name: "HTML5", value:"HTML5-123"},
+		{name: "Javascript", value:"Javascript-123"},
+		{name: "CSS3", value:"CSS3-123"},
+		{name: "CoffeeScript", value:"CoffeeScript-123"},
+		{name: "AngularJS", value:"AngularJS-123"},
+		{name: "ReactJS", value:"ReactJS-123"},
+		{name: "VueJS", value:"VueJS-123"}
+	],
+	radiosOptions: {
+		value:"value",
+		name:"name"
+	}
+},
+{
+    type: "radios",
+    label: "RADIOS2",
+    model: "radios2",
+    values: [
+		"HTML5",
+		"Javascript",
+		"CSS3",
+		"CoffeeScript",
+		"AngularJS",
+		"ReactJS",
+		"VueJS"
+	]
+},
+{
 	type: "image",
 	label: "Avatar (image field)",
 	model: "avatar",

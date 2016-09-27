@@ -55,11 +55,11 @@ describe("fieldNoUiSlider.vue", function() {
 		});
 
 		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+			setTimeout( () => {
 				let origin = input.querySelector(".noUi-origin");
 				expect(origin.style.left).to.be.within("70%", "90%");
 				done();
-			});
+			}, 100);
 		});
 
 		it("handle value should be the model value after changed", (done) => {
@@ -71,11 +71,10 @@ describe("fieldNoUiSlider.vue", function() {
 			}, 100);
 		});
 
-		it.skip("model value should be the handle value after changed", (done) => {
-			// `field.slider.noUiSlider.set(3);`	- It doesn't fired the onChange event
+		it("model value should be the handle value after changed", (done) => {
 			field.onChange(3);
 			setTimeout( () => {
-				expect(vm.model.rating).to.be.equal(3);
+				expect(field.model.rating).to.be.equal(3);
 				done();
 			}, 100);
 		});

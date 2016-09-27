@@ -3,7 +3,7 @@ var webpack = require("webpack");
 var sourceDir = path.resolve(__dirname, "../../src");
 
 module.exports = {
-	devtool: "#inline-source-map",
+	devtool: "eval-source-map",
 	
 	module: {
 		preLoaders: [

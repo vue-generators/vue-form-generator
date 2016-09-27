@@ -1,5 +1,5 @@
 <template>
-	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': typeof schema.noUiSliderOptions.pips !== 'undefined', 'contain-tooltip': schema.noUiSliderOptions.tooltips }"></div>  
+	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': containPips, 'contain-tooltip': containTooltip }"></div>  
 </template>
 
 <script>
@@ -23,6 +23,15 @@
 			}
 		},
 
+		computed:{
+			containPips(){
+				return (this.schema.noUiSliderOptions && (typeof this.schema.noUiSliderOptions.pips) !== "undefined");
+			},
+			containTooltip(){
+				return (this.schema.noUiSliderOptions && this.schema.noUiSliderOptions.tooltips);
+			}
+		},
+
 		methods: {
 			onChange(value) {
 				if (isArray(value)) {
@@ -38,9 +47,8 @@
 					this.slider.noUiSlider.set(value);
 				}
 			},
-			formatValueToModel() {				
+			formatValueToModel(val) {				
 				if(typeof this.slider.noUiSlider !== "undefined"){
-					let val = this.slider.noUiSlider.get();
 					if (val instanceof Array) {
 						return [Number(val[0]), Number(val[1])];
 					}else{
