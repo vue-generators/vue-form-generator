@@ -1,5 +1,5 @@
 <template>
-	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': typeof schema.noUiSliderOptions.pips !== 'undefined', 'contain-tooltip': schema.noUiSliderOptions.tooltips }"></div>  
+	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': containPips, 'contain-tooltip': containTooltip }"></div>  
 </template>
 
 <script>
@@ -20,6 +20,15 @@
 				if (window.noUiSlider && this.slider && this.slider.noUiSlider) {
 					this.slider.noUiSlider.set(this.value);
 				}
+			}
+		},
+
+		computed:{
+			containPips(){
+				return (this.schema.noUiSliderOptions && (typeof this.schema.noUiSliderOptions.pips) !== "undefined");
+			},
+			containTooltip(){
+				return (this.schema.noUiSliderOptions && this.schema.noUiSliderOptions.tooltips);
 			}
 		},
 
