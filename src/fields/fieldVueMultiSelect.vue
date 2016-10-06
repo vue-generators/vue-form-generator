@@ -46,7 +46,7 @@
 		mixins: [abstractField],
 		computed: {
 			selectOptions() {
-				return this.schema.selectOptions || {}
+				return this.schema.selectOptions || {};
 			},
 
 			options() {

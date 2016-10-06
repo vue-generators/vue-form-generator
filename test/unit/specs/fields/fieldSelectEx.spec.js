@@ -95,16 +95,6 @@ describe("fieldSelectEx.vue", function() {
 
 		});
 
-		it("should contain a disabled <non selected> element if required", (done) => {
-			schema.required = true;
-			vm.$nextTick( () => {
-				let options = input.querySelectorAll("option");
-				//expect(options[0].disabled).to.be.true;
-				//expect(options[0].textContent).to.be.equal("<Not selected>");
-				done();
-			});
-		});
-
 		it("should not be multiple", (done) => {
 			schema.multiSelect = true;
 			vm.$nextTick( () => {

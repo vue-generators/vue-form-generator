@@ -13,7 +13,7 @@
 
 		computed: {
 			selectOptions() {
-				return this.schema.selectOptions || {}
+				return this.schema.selectOptions || {};
 			},
 
 			items() {
