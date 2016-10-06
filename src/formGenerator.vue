@@ -1,18 +1,17 @@
 <template lang="jade">
 div
 	fieldset.vue-form-generator(v-if="schema != null")
-		.form-group(v-for="field in fields", v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
-			label {{ field.label }}
-				span.help(v-if="field.help")
-					i.icon
-					.helpText {{{field.help}}}
-			.field-wrap
-				component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
-				.buttons(v-if="field.buttons && field.buttons.length > 0")
-					button(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
-			.hint(v-if="field.hint") {{ field.hint }}
-			.errors(v-if="field.errors && field.errors.length > 0")
-				span(v-for="error in field.errors", track-by="$index") {{ error }}
+				label {{ field.label }}
+					span.help(v-if="field.help")
+						i.icon
+						.helpText {{{field.help}}}
+				.field-wrap
+					component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
+					.buttons(v-if="field.buttons && field.buttons.length > 0")
+						button(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
+				.hint(v-if="field.hint") {{ field.hint }}
+				.errors(v-if="field.errors && field.errors.length > 0")
+					span(v-for="error in field.errors", track-by="$index") {{ error }}
 </template>
 
 <script>
