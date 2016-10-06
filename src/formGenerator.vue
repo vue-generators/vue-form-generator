@@ -1,30 +1,31 @@
-<template lang="jade">
-div
-	fieldset.vue-form-generator(v-if="schema != null")
-		template(v-for="field in fields")
-			.form-group(v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
-				label {{ field.label }}
-					span.help(v-if="field.help")
-						i.icon
-						.helpText {{{field.help}}}
-				.field-wrap
-					component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
-					.buttons(v-if="field.buttons && field.buttons.length > 0")
-						button(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
-				.hint(v-if="field.hint") {{ field.hint }}
-				.errors(v-if="field.errors && field.errors.length > 0")
-					span(v-for="error in field.errors", track-by="$index") {{ error }}
+<template>
+<div>
+  <fieldset v-if="schema != null" class="vue-form-generator">
+    <div v-for="field in fields" v-if="fieldVisible(field)" :class="getFieldRowClasses(field)" class="form-group">
+      <label>{{ field.label }}<span v-if="field.help" class="help"><i class="icon"></i>
+          <div v-html="field.help" class="helpText"></div></span></label>
+      <div class="field-wrap">
+        <component :is="getFieldType(field)" :disabled="fieldDisabled(field)" :model="model" :schema.sync="field" @model-updated="modelUpdated"></component>
+        <div v-if="buttonVisibility(field)" class="buttons">
+          <button v-for="btn in field.buttons" @click="btn.onclick(model, field)" :class="btn.classes">{{ btn.label }}</button>
+        </div>
+      </div>
+      <div v-if="field.hint" class="hint">{{ field.hint }}</div>
+      <div v-if="errorsVisibility(field)" class="errors"><span v-for="error in field.errors" track-by="$index">{{ error }}</span></div>
+    </div>
+  </fieldset>
+</div>
 </template>
 
 <script>
-	import Vue from "vue";
+	// import Vue from "vue";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
 
 	// Load all fields from '../fields' folder
 	let Fields = require.context("./fields/", false, /^\.\/field([\w-_]+)\.vue$/);
 	let fieldComponents = {};
 	each(Fields.keys(), (key) => {
-		let compName = Vue.util.classify(key.replace(/^\.\//, "").replace(/\.vue/, ""));
+		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
 		fieldComponents[compName] = Fields(key);
 	});
 
@@ -74,12 +75,13 @@ div
 			}
 		},
 
-		compiled() {
+		mounted() {
 			// First load, running validation if neccessary
-			if (this.options && this.options.validateAfterLoad === true && this.isNewModel !== true)
+			if (this.options && this.options.validateAfterLoad === true && this.isNewModel !== true){
 				this.validate();
-			else
+			} else {
 				this.clearValidationErrors();
+			}
 		},
 	
 		methods: {
@@ -159,6 +161,17 @@ div
 				each(this.$children, (child) => {
 					child.clearValidationErrors();
 				});				
+			},
+			modelUpdated(newVal, schema){
+				console.log("a child model has updated", newVal, schema);
+				this.model[schema] = newVal;
+				this.$emit("model-updated", this.model[schema], schema);
+			},
+			buttonVisibility(field) {
+				return field.buttons && field.buttons.length > 0;
+			},
+			errorsVisibility(field) {
+				return field.errors && field.errors.length > 0;
 			}
 		}
 	};

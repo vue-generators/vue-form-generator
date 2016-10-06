@@ -3,7 +3,7 @@
 		:id="selectOptions.id",
 		:options="options",
 		:multiple="schema.multiSelect",
-		:selected="value",
+		:value="value",
 		:key="selectOptions.key || null",
 		:label="selectOptions.label || null",
 		:searchable="selectOptions.searchable",
@@ -19,7 +19,7 @@
 		:taggable="selectOptions.taggable",
 		:tag-placeholder="selectOptions.tagPlaceholder",
 		:max="schema.max || null",
-		@update="updateSelected",
+		@input="updateSelected",
 		@tag="addTag",
 		@select="onSelect",
 		@remove="onRemove",
@@ -57,7 +57,7 @@
 				} else {
 					return values;
 				}
-			},			
+			},
 			customLabel(){
 				if (typeof this.schema.selectOptions !== "undefined" && typeof this.schema.selectOptions.customLabel !== "undefined" && this.schema.selectOptions.customLabel === "function") {
 					return this.schema.selectOptions.customLabel;

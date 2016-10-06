@@ -32,7 +32,7 @@ export function createVueField(test, type, schema = {}, model = null, disabled =
 	let el = document.createElement("fieldset");		
 	el.className = "vue-form-generator";
 	container.appendChild(el);
-	el.innerHTML = `<${elName} :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></${elName}>`;
+	el.innerHTML = `<${elName} :schema="schema" :model="model" :disabled="disabled" ref="field"></${elName}>`;
 	let vm = new Vue({
 		el: el,
 		data: {

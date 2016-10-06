@@ -45,11 +45,14 @@
 			}
 		},
 
-		ready() {
-			if ($.fn.selectpicker) 
-				$(this.$el).selectpicker("destroy").selectpicker(this.schema.selectOptions);
-			else
-				console.warn("Bootstrap-select library is missing. Please download from https://silviomoreto.github.io/bootstrap-select/ and load the script and CSS in the HTML head section!");
+		mounted() {
+			this.$nextTick(function () {
+				if ($.fn.selectpicker) {
+					$(this.$el).selectpicker("destroy").selectpicker(this.schema.selectOptions);
+				} else {
+					console.warn("Bootstrap-select library is missing. Please download from https://silviomoreto.github.io/bootstrap-select/ and load the script and CSS in the HTML head section!");
+				}
+			});
 
 		},
 

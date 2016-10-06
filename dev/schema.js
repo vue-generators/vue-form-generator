@@ -158,55 +158,48 @@ module.exports = {
     label: "Search USELESS",
     model: "search",
     placeholder: "Entrez un mot-clef",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "radio",
     label: "radio USELESS",
     model: "radio",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "file",
     label: "File USELESS",
-    model: "file",
-    visible(model){return model.checkbox} 
+    model: "file"
 },
 {
     type: "input",
     inputType: "image",
     label: "Image USELESS",
     model: "image",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "button",
     label: "Button USELESS",
     model: "button",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "reset",
     label: "Reset USELESS",
     model: "reset",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "submit",
     label: "Submit USELESS",
     model: "submit",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 
 /**************/
@@ -415,18 +408,18 @@ module.exports = {
 	styleClasses: ["half-width", "first"],
 	validator: validators.required
 },
-{
-	type: "selectEx",
-	label: "Country (selectEx field)",
-	model: "address.country",
-	multi: true,
-	required: true,
-	values: ["United Kingdom", "France", "Germany"],
-	//default: "United Kingdom",
-	multiSelect: false,
-	selectOptions: {
-		// https://silviomoreto.github.io/bootstrap-select/options/
-		liveSearch: true,
+// {
+// 	type: "selectEx",
+// 	label: "Country (selectEx field)",
+// 	model: "address.country",
+// 	multi: true,
+// 	required: true,
+// 	values: ["United Kingdom", "France", "Germany"],
+// 	//default: "United Kingdom",
+// 	multiSelect: false,
+// 	selectOptions: {
+// 		// https://silviomoreto.github.io/bootstrap-select/options/
+// 		liveSearch: true,
 		size: 10,
 		noneSelectedText: "Nincs kijelölve"
 	},
