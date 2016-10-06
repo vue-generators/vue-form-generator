@@ -1,23 +1,22 @@
 <template lang="jade">
 	multiselect(		
-		:id="schema.selectOptions.id",
+		:id="selectOptions.id",
 		:options="options",
 		:multiple="schema.multiSelect",
 		:selected="value",
-		:key="schema.selectOptions.key || null",
-		:label="schema.selectOptions.label || null",
-		:searchable="schema.selectOptions.searchable",
-		:local-search="schema.selectOptions.localSearch",
-		:clear-on-select="schema.selectOptions.clearOnSelect",
-		:hide-selected="schema.selectOptions.hideSelected",
+		:key="selectOptions.key || null",
+		:label="selectOptions.label || null",
+		:searchable="selectOptions.searchable",
+		:local-search="selectOptions.localSearch",
+		:clear-on-select="selectOptions.clearOnSelect",
+		:hide-selected="selectOptions.hideSelected",
 		:placeholder="schema.placeholder",
-		:max-height="schema.selectOptions.maxHeight",
-		:allow-empty="schema.selectOptions.allowEmpty",
-		:reset-after="schema.selectOptions.resetAfter",
-		:close-on-select="schema.selectOptions.closeOnSelect",
-		:custom-label="schema.selectOptions.customLabel || null",
-		:taggable="schema.selectOptions.taggable",
-		:tag-placeholder="schema.selectOptions.tagPlaceholder",
+		:max-height="selectOptions.maxHeight",
+		:allow-empty="selectOptions.allowEmpty",
+		:reset-after="selectOptions.resetAfter",
+		:close-on-select="selectOptions.closeOnSelect",
+		:taggable="selectOptions.taggable",
+		:tag-placeholder="selectOptions.tagPlaceholder",
 		:max="schema.max || null",
 		@update="updateSelected",
 		@tag="addTag",
@@ -26,17 +25,17 @@
 		@search-change="onSearchChange",
 		@open="onOpen",
 		@close="onClose",		
-		:select-label="schema.selectOptions.selectLabel",
-		:selected-label="schema.selectOptions.selectedLabel",
-		:deselect-label="schema.selectOptions.deselectLabel",
-		:show-labels="schema.selectOptions.showLabels",
-		:limit="schema.selectOptions.limit",
-		:limit-text="schema.selectOptions.limitText",
-		:loading="schema.selectOptions.loading",
+		:select-label="selectOptions.selectLabel",
+		:selected-label="selectOptions.selectedLabel",
+		:deselect-label="selectOptions.deselectLabel",
+		:show-labels="selectOptions.showLabels",
+		:limit="selectOptions.limit",
+		:limit-text="selectOptions.limitText",
+		:loading="selectOptions.loading",
 		:disabled="disabled",
-		:option-partial="schema.selectOptions.optionPartial",
-		:show-pointer="schema.selectOptions.showPointer",
-		:option-height="schema.selectOptions.optionHeight"
+		:option-partial="selectOptions.optionPartial",
+		:show-pointer="selectOptions.showPointer",
+		:option-height="selectOptions.optionHeight"
 	)
 </template>
 <script>
@@ -46,6 +45,10 @@
 	export default {
 		mixins: [abstractField],
 		computed: {
+			selectOptions() {
+				return this.schema.selectOptions || {};
+			},
+
 			options() {
 				let values = this.schema.values;
 				if (typeof(values) == "function") {
@@ -60,13 +63,13 @@
 				this.value = value;
 			},
 			addTag(newTag, id) {
-				let onNewTag = this.schema.selectOptions.onNewTag;
+				let onNewTag = this.selectOptions.onNewTag;
 				if (typeof(onNewTag) == "function") {
 					onNewTag(newTag, id, this.options, this.value);
 				}
 			},
 			onSearchChange(searchQuery, id) {
-				let onSearch = this.schema.selectOptions.onSearch;
+				let onSearch = this.selectOptions.onSearch;
 				if (typeof(onSearch) == "function") {
 					onSearch(searchQuery, id, this.options);
 				}

@@ -56,7 +56,7 @@ describe("fieldSelect.vue", function() {
 		it("should contain a <non selected> element", () => {
 			let options = input.querySelectorAll("option");
 			expect(options[0].disabled).to.be.false;
-			expect(options[0].textContent).to.be.equal("<Not selected>");
+			expect(options[0].textContent).to.be.equal("<Nothing selected>");
 		});
 
 		it("should contain the value", (done) => {
@@ -67,7 +67,7 @@ describe("fieldSelect.vue", function() {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["disabled"];
+			let attributes = ["disabled", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, function(done) {
@@ -101,7 +101,22 @@ describe("fieldSelect.vue", function() {
 			vm.$nextTick( () => {
 				let options = input.querySelectorAll("option");
 				expect(options[0].disabled).to.be.true;
-				expect(options[0].textContent).to.be.equal("<Not selected>");
+				expect(options[0].textContent).to.be.equal("<Nothing selected>");
+				done();
+			});
+		});
+
+		it("should show the customized <non selected> text", (done) => {
+			vm.$set("schema.selectOptions", {
+				noneSelectedText: "Empty list"
+			});
+			vm.$nextTick( () => {
+				let options = input.querySelectorAll("option");
+				expect(options[0].disabled).to.be.true;
+				expect(options[0].textContent).to.be.equal("Empty list");
+
+				schema.selectOptions = null;
+
 				done();
 			});
 		});

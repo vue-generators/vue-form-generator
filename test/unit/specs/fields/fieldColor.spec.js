@@ -45,7 +45,7 @@ describe("fieldColor.vue", function() {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete"];
+			let attributes = ["autocomplete", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, function(done) {

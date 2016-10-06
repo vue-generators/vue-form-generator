@@ -35,10 +35,7 @@ var vm = new Vue({
 			id: 1,
 			name: "John Doe",
 			password: "J0hnD03!x4",
-			skills: [
-				"Javascript",
-				"VueJS"
-			],
+			skills: "Javascript",
 			email: "john.doe@gmail.com",
 			status: true
 		},
@@ -48,6 +45,7 @@ var vm = new Vue({
 					type: "text",
 					label: "ID",
 					model: "id",
+					inputName: "id",
 					readonly: true,
 					featured: false,
 					disabled: true
@@ -56,6 +54,7 @@ var vm = new Vue({
 					type: "text",
 					label: "Name",
 					model: "name",
+					inputName: "name",
 					readonly: false,
 					featured: true,
 					required: true,
@@ -67,6 +66,7 @@ var vm = new Vue({
 					type: "password",
 					label: "Password",
 					model: "password",
+					inputName: "password",
 					min: 6,
 					required: true,
 					hint: "Minimum 6 characters",
@@ -76,13 +76,15 @@ var vm = new Vue({
 					type: "email",
 					label: "E-mail",
 					model: "email",
+					inputName: "email",
 					placeholder: "User's e-mail address",
 					validator: VueFormGenerator.validators.email
 				},					
 				{
-					type: "checklist",
+					type: "select",
 					label: "Skills",
 					model: "skills",
+					inputName: "skills",
 					required: true,
 					values: [
 						"HTML5",
@@ -93,24 +95,32 @@ var vm = new Vue({
 						"ReactJS",
 						"VueJS"
 					],
-					validator: VueFormGenerator.validators.array
+					validator: VueFormGenerator.validators.string
 				},
 				{
 					type: "checkbox",
 					label: "Status",
 					model: "status",
+					inputName: "status",
 					multi: true,
 					readonly: false,
 					featured: false,
 					disabled: false,
 					default: true
-				}			
+				},
+				{
+					type: "submit",
+					label: "",
+					buttonText: "Submit",
+					validateBeforeSubmit: true
+				}
+
 			]
 		},
 
 		formOptions: {
-			validateAfterLoad: true,
-			validateAfterChanged: true
+			validateAfterLoad: false,
+			validateAfterChanged: false
 		}
 	}
 });

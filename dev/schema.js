@@ -20,7 +20,8 @@ module.exports = {
     type: "input",
     inputType: "hidden",
     label: "Hidden",
-    model: "id"
+    model: "id",
+    inputName: "hiddenField"
 },
 {
     type: "input",
@@ -57,6 +58,7 @@ module.exports = {
     label: "URL",
     model: "website",
     placeholder: "Enter your website",
+    inputName: "website",
     validator: validators.url
 },
 {
@@ -257,6 +259,7 @@ module.exports = {
 	required: true,
 	browse: true,
 	hideInput: false,
+	inputName: "photo",
 	validator: validators.required
 },
 {
@@ -353,6 +356,9 @@ module.exports = {
 	label: "Role",
 	model: "role",
 	required: true,
+	selectOptions: {
+		noneSelectedText: "Nincs kijelölve"
+	},
 	values: [
 		{ id: "admin", name: "Administrator" },
 		{ id: "moderator", name: "Moderator" },
@@ -421,7 +427,8 @@ module.exports = {
 	selectOptions: {
 		// https://silviomoreto.github.io/bootstrap-select/options/
 		liveSearch: true,
-		size: 10
+		size: 10,
+		noneSelectedText: "Nincs kijelölve"
 	},
 	styleClasses: "half-width",
 	validator: validators.required
@@ -431,7 +438,7 @@ module.exports = {
 	label: "Skills (selectEx field)",
 	model: "skills",
 	multi: true,
-	required: true,
+	required: false,
 	multiSelect: true,
 	selectOptions: {
 		// https://silviomoreto.github.io/bootstrap-select/options/
