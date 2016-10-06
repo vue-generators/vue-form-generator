@@ -19,7 +19,7 @@ A schema-based form generator component for Vue.js v1.x.x
 
 ## Features
 - multiple objects editing
-- 24 field types
+- 27 field types
 - built-in validators
 - Bootstrap friendly templates
 - customizable styles
