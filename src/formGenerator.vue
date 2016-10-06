@@ -1,6 +1,8 @@
 <template lang="jade">
 div
 	fieldset.vue-form-generator(v-if="schema != null")
+		template(v-for="field in fields")
+			.form-group(v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
 				label {{ field.label }}
 					span.help(v-if="field.help")
 						i.icon
