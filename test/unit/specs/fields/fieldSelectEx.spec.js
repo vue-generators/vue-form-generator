@@ -66,7 +66,7 @@ describe("fieldSelectEx.vue", function() {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["disabled", "multiSelect"];
+			let attributes = ["disabled", "multiSelect", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, function(done) {

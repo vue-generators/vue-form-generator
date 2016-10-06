@@ -58,7 +58,7 @@ describe("fieldTextArea.vue", function() {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["disabled", "placeholder", "readonly"];
+			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, function(done) {

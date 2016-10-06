@@ -1,6 +1,6 @@
 /* global sinon */
 import { expect } from "chai";
-import { createVueField } from "../util";
+import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSubmit from "src/fields/fieldSubmit.vue";
@@ -63,6 +63,15 @@ describe("fieldSubmit.vue", function() {
 			expect(schema.onSubmit.called).to.be.false;
 		});
 
+		describe("check optional attribute", () => {
+			let attributes = ["inputName"];
+
+			attributes.forEach(function(name) {
+				it("should set " + name, function(done) {
+					checkAttribute(name, vm, input, field, schema, done);
+				});
+			});
+		});
 	});
 
 });

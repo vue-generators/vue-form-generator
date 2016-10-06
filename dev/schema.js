@@ -20,7 +20,8 @@ module.exports = {
     type: "input",
     inputType: "hidden",
     label: "Hidden",
-    model: "id"
+    model: "id",
+    inputName: "hiddenField"
 },
 {
     type: "input",
@@ -57,6 +58,7 @@ module.exports = {
     label: "URL",
     model: "website",
     placeholder: "Enter your website",
+    inputName: "website",
     validator: validators.url
 },
 {
@@ -257,6 +259,7 @@ module.exports = {
 	required: true,
 	browse: true,
 	hideInput: false,
+	inputName: "photo",
 	validator: validators.required
 },
 {

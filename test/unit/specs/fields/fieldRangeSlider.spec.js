@@ -53,7 +53,7 @@ describe("fieldRangeSlider.vue", function() {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "placeholder", "readonly"];
+			let attributes = ["autocomplete", "placeholder", "readonly", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, function(done) {
