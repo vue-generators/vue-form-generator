@@ -1,22 +1,20 @@
-<template>
-<div>
-  <fieldset v-if="schema != null" class="vue-form-generator">
-  <template v-for="field in fields">
-    <div v-if="fieldVisible(field)" :class="getFieldRowClasses(field)" class="form-group">
-      <label>{{ field.label }}<span v-if="field.help" class="help"><i class="icon"></i>
-          <div v-html="field.help" class="helpText"></div></span></label>
-      <div class="field-wrap">
-        <component :is="getFieldType(field)" :disabled="fieldDisabled(field)" :model="model" :schema.sync="field" @model-updated="modelUpdated"></component>
-        <div v-if="buttonVisibility(field)" class="buttons">
-          <button v-for="btn in field.buttons" @click="btn.onclick(model, field)" :class="btn.classes">{{ btn.label }}</button>
-        </div>
-      </div>
-      <div v-if="field.hint" class="hint">{{ field.hint }}</div>
-      <div v-if="errorsVisibility(field)" class="errors"><span v-for="error in field.errors" track-by="$index">{{ error }}</span></div>
-    </div>
-  </template>
-  </fieldset>
-</div>
+<template lang="jade">
+div
+	fieldset.vue-form-generator(v-if='schema != null')
+		template(v-for='field in fields')
+			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+				label
+					| {{ field.label }}
+					span.help(v-if='field.help')
+						i.icon
+						.helpText(v-html='field.help')
+				.field-wrap
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
+					.buttons(v-if='buttonVisibility(field)')
+						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
+				.hint(v-if='field.hint') {{ field.hint }}
+				.errors(v-if='errorsVisibility(field)')
+					span(v-for='error in field.errors', track-by='$index') {{ error }}
 </template>
 
 <script>

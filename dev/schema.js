@@ -408,25 +408,25 @@ module.exports = {
 	styleClasses: ["half-width", "first"],
 	validator: validators.required
 },
-// {
-// 	type: "selectEx",
-// 	label: "Country (selectEx field)",
-// 	model: "address.country",
-// 	multi: true,
-// 	required: true,
-// 	values: ["United Kingdom", "France", "Germany"],
-// 	//default: "United Kingdom",
-// 	multiSelect: false,
-// 	selectOptions: {
-// 		// https://silviomoreto.github.io/bootstrap-select/options/
-// 		liveSearch: true,
+/*{
+	type: "selectEx",
+	label: "Country (selectEx field)",
+	model: "address.country",
+	multi: true,
+	required: true,
+	values: ["United Kingdom", "France", "Germany"],
+	//default: "United Kingdom",
+	multiSelect: false,
+	selectOptions: {
+		// https://silviomoreto.github.io/bootstrap-select/options/
+		liveSearch: true,
 		size: 10,
 		noneSelectedText: "Nincs kijelölve"
 	},
 	styleClasses: "half-width",
 	validator: validators.required
-}, 
-{
+}, */
+/*{
 	type: "selectEx",
 	label: "Skills (selectEx field)",
 	model: "skills",
@@ -453,7 +453,7 @@ module.exports = {
 	min: 2,
 	max: 4,
 	validator: validators.array
-},
+},*/
 {
 	type: "rangeSlider",
 	label: "Rank (rangeSlider field)",
@@ -558,7 +558,7 @@ module.exports = {
 	required: true,
 	disabled: false,
 	noUiSliderOptions: {
-		connect: "lower",	// "lower", "upper", true, false
+		connect: [true, false],	// "lower", "upper", true, false
 		// margin: 2 //number
 		// limit: 2 //number
 		step:1,
@@ -589,7 +589,7 @@ module.exports = {
 	disabled: false,
 	noUiSliderOptions: {
 		double:true,
-		connect: true,	// "lower", "upper", true, false
+		connect: [false, true, false],	// "lower", "upper", true, false
 		// margin: 2 //number
 		// limit: 2 //number
 		step: 1000,
