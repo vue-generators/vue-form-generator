@@ -15,6 +15,7 @@
 		:allow-empty="selectOptions.allowEmpty",
 		:reset-after="selectOptions.resetAfter",
 		:close-on-select="selectOptions.closeOnSelect",
+		:custom-label="customLabel",
 		:taggable="selectOptions.taggable",
 		:tag-placeholder="selectOptions.tagPlaceholder",
 		:max="schema.max || null",
@@ -56,6 +57,13 @@
 				} else {
 					return values;
 				}
+			},			
+			customLabel(){
+				if (typeof this.schema.selectOptions !== "undefined" && typeof this.schema.selectOptions.customLabel !== "undefined" && this.schema.selectOptions.customLabel === "function") {
+					return this.schema.selectOptions.customLabel;
+				} else {
+					return function(currentLabel){return currentLabel;};
+				} 
 			}
 		},
 		methods: {
