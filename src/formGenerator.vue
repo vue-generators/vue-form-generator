@@ -1,7 +1,8 @@
 <template>
 <div>
   <fieldset v-if="schema != null" class="vue-form-generator">
-    <div v-for="field in fields" v-if="fieldVisible(field)" :class="getFieldRowClasses(field)" class="form-group">
+  <template v-for="field in fields">
+    <div v-if="fieldVisible(field)" :class="getFieldRowClasses(field)" class="form-group">
       <label>{{ field.label }}<span v-if="field.help" class="help"><i class="icon"></i>
           <div v-html="field.help" class="helpText"></div></span></label>
       <div class="field-wrap">
@@ -13,6 +14,7 @@
       <div v-if="field.hint" class="hint">{{ field.hint }}</div>
       <div v-if="errorsVisibility(field)" class="errors"><span v-for="error in field.errors" track-by="$index">{{ error }}</span></div>
     </div>
+  </template>
   </fieldset>
 </div>
 </template>
