@@ -5,6 +5,7 @@ A schema-based form generator component for Vue.js v1.x.x
 [![Build Status](https://travis-ci.org/icebob/vue-form-generator.svg?branch=master)](https://travis-ci.org/icebob/vue-form-generator)
 [![Coverage Status](https://coveralls.io/repos/github/icebob/vue-form-generator/badge.svg?branch=master)](https://coveralls.io/github/icebob/vue-form-generator?branch=master)
 [![NPMS.io score](https://badges.npms.io/cross-spawn.svg)]()
+[![Package Quality](http://npm.packagequality.com/shield/vue-form-generator.svg)](http://packagequality.com/#?package=vue-form-generator)
 
 [![Dependency Status](https://david-dm.org/icebob/vue-form-generator.svg)](https://david-dm.org/icebob/vue-form-generator)
 [![devDependency Status](https://david-dm.org/icebob/vue-form-generator/dev-status.svg)](https://david-dm.org/icebob/vue-form-generator#info=devDependencies)
