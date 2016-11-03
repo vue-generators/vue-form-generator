@@ -32,13 +32,31 @@ div
 	export default {
 		components: fieldComponents,
 		
-		props: [
-			"schema",
-			"options",
-			"model",
-			"multiple",
-			"isNewModel"
-		],
+		props: {
+			schema: Object,
+
+			model: Object,
+
+			options: {
+				type: Object,
+				default()  {
+					return {
+						validateAfterLoad: false,
+						validateAfterChanged: false
+					}
+				}
+			},
+
+			multiple: {
+				type: Boolean,
+				default: false
+			},
+
+			isNewModel: {
+				type: Boolean,
+				default: false
+			}
+		},
 		
 		data () {
 			return {
@@ -76,7 +94,7 @@ div
 
 		compiled() {
 			// First load, running validation if neccessary
-			if (this.options && this.options.validateAfterLoad === true && this.isNewModel !== true)
+			if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 				this.validate();
 			else
 				this.clearValidationErrors();
