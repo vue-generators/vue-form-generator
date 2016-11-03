@@ -56,7 +56,6 @@
     "eslint-plugin-vue": "0.1.1",
     "extract-text-webpack-plugin": "1.0.1",
     "fakerator": "0.3.0",
-    "git-commit-message-convention": "git://github.com/kazupon/git-commit-message-convention.git#065dfffbe2de5f6f16150aac9d4db7fdf5515e56",
     "gitbook-cli": "2.3.0",
     "inject-loader": "2.0.1",
     "isparta-loader": "2.0.0",
