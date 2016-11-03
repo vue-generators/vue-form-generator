@@ -43,7 +43,7 @@ div
 					return {
 						validateAfterLoad: false,
 						validateAfterChanged: false
-					}
+					};
 				}
 			},
 
