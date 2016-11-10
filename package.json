@@ -97,6 +97,6 @@
   },
   "dependencies": {
     "babel-runtime": "6.11.6",
-    "vue": "2.0.1"
+    "vue": "2.0.5"
   }
 }

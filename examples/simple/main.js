@@ -71,14 +71,14 @@ var vm = new Vue({
 					required: true,
 					hint: "Minimum 6 characters",
 					validator: VueFormGenerator.validators.string
-				},	
+				},
 				{
 					type: "email",
 					label: "E-mail",
 					model: "email",
 					placeholder: "User's e-mail address",
 					validator: VueFormGenerator.validators.email
-				},					
+				},
 				{
 					type: "checklist",
 					label: "Skills",
@@ -104,7 +104,46 @@ var vm = new Vue({
 					featured: false,
 					disabled: false,
 					default: true
-				}			
+				},
+				{
+					type: "color",
+					label: "Choose Color",
+					model: "color",
+					readonly: false,
+					featured: true,
+					required: true,
+					disabled: false,
+					validator: VueFormGenerator.validators.string
+				},
+				{
+					type: "pikaday",
+					label: "Choose day",
+					model: "pikaday",
+					readonly: false,
+					featured: true,
+					required: true,
+					disabled: false,
+					validator: VueFormGenerator.validators.string
+				},
+				{
+					type: "switch",
+					label: "Choose day",
+					model: "switch",
+					readonly: false,
+					featured: true,
+					required: true,
+					disabled: false,
+					validator: VueFormGenerator.validators.boolean
+				},
+				{
+					type: "googleAddress",
+					label: "Choose day",
+					model: "googleaddress",
+					readonly: false,
+					featured: true,
+					required: true,
+					disabled: false
+				},
 			]
 		},
 
