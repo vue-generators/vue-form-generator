@@ -1,37 +1,41 @@
 <template lang="jade">
 div
-	fieldset.vue-form-generator(v-if="schema != null")
-		template(v-for="field in fields")
-			.form-group(v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
-				label {{ field.label }}
-					span.help(v-if="field.help")
+	fieldset.vue-form-generator(v-if='schema != null')
+		template(v-for='field in fields')
+			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+				label
+					| {{ field.label }}
+					span.help(v-if='field.help')
 						i.icon
-						.helpText {{{field.help}}}
+						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
-					.buttons(v-if="field.buttons && field.buttons.length > 0")
-						button(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
-				.hint(v-if="field.hint") {{ field.hint }}
-				.errors(v-if="field.errors && field.errors.length > 0")
-					span(v-for="error in field.errors", track-by="$index") {{ error }}
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
+					.buttons(v-if='buttonVisibility(field)')
+						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
+				.hint(v-if='field.hint') {{ field.hint }}
+				.errors(v-if='errorsVisibility(field)')
+					span(v-for='error in field.errors', track-by='$index') {{ error }}
 </template>
 
 <script>
-	import Vue from "vue";
+	// import Vue from "vue";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
-
+	// Load the full build.
+	const _ = require('lodash');
 	// Load all fields from '../fields' folder
 	let Fields = require.context("./fields/", false, /^\.\/field([\w-_]+)\.vue$/);
 	let fieldComponents = {};
 	each(Fields.keys(), (key) => {
-		let compName = Vue.util.classify(key.replace(/^\.\//, "").replace(/\.vue/, ""));
+		let compName = _.upperFirst(key.replace(/^\.\//, "").replace(/\.vue/, ""));
+
+			console.log(_.upperFirst(compName));
 		fieldComponents[compName] = Fields(key);
 	});
-
+console.log(fieldComponents);
 
 	export default {
 		components: fieldComponents,
-		
+
 		props: [
 			"schema",
 			"options",
@@ -39,7 +43,7 @@ div
 			"multiple",
 			"isNewModel"
 		],
-		
+
 		data () {
 			return {
 				errors: [] // Validation errors
@@ -74,22 +78,23 @@ div
 			}
 		},
 
-		compiled() {
+		mounted() {
 			// First load, running validation if neccessary
-			if (this.options && this.options.validateAfterLoad === true && this.isNewModel !== true)
+			if (this.options && this.options.validateAfterLoad === true && this.isNewModel !== true){
 				this.validate();
-			else
+			} else {
 				this.clearValidationErrors();
+			}
 		},
-	
+
 		methods: {
 			// Get style classes of field
 			getFieldRowClasses(field) {
 				let baseClasses = {
-					error: field.errors && field.errors.length > 0, 
-					disabled: this.fieldDisabled(field), 
-					readonly: field.readonly, 
-					featured: field.featured, 
+					error: field.errors && field.errors.length > 0,
+					disabled: this.fieldDisabled(field),
+					readonly: field.readonly,
+					featured: field.featured,
 					required: field.required
 				};
 
@@ -130,7 +135,7 @@ div
 					return true;
 
 				return field.visible;
-			},		
+			},
 
 			// Validating the model properties
 			validate() {
@@ -158,23 +163,34 @@ div
 
 				each(this.$children, (child) => {
 					child.clearValidationErrors();
-				});				
+				});
+			},
+			modelUpdated(newVal, schema){
+				console.log("a child model has updated", newVal, schema);
+				this.model[schema] = newVal;
+				this.$emit("model-updated", this.model[schema], schema);
+			},
+			buttonVisibility(field) {
+				return field.buttons && field.buttons.length > 0;
+			},
+			errorsVisibility(field) {
+				return field.errors && field.errors.length > 0;
 			}
 		}
 	};
-	
+
 </script>
 
 <style lang="sass">
-	
+
 	$errorColor: #F00;
 
 	fieldset.vue-form-generator {
 
 		* {
 			box-sizing: border-box;
-		}		
-		
+		}
+
 		.form-control {
 			// Default Bootstrap .form-control style
 			display: block;
@@ -188,10 +204,10 @@ div
 			border: 1px solid #ccc;
 			border-radius: 4px;
 			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;	
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
 		} // .form-control
-		
+
 		span.help {
 			margin-left: 0.3em;
 			position: relative;
@@ -240,13 +256,13 @@ div
 				left: 0;
 				position: absolute;
 				width: 100%;
-			}  
+			}
 
 			&:hover .helpText {
 				opacity: 1;
 				pointer-events: auto;
 				transform: translateY(0px);
-			}		
+			}
 
 		} // span.help
 
@@ -258,11 +274,11 @@ div
 				margin-left: 4px;
 			}
 
-			button, input[type=submit] {					
+			button, input[type=submit] {
 				// Default Bootstrap button style
 				display: inline-block;
 				padding: 6px 12px;
-				margin: 0px;					
+				margin: 0px;
 				font-size: 14px;
 				font-weight: normal;
 				line-height: 1.42857143;
@@ -297,7 +313,7 @@ div
 
 			} // button, input[submit]
 
-		} // .field-wrap		
+		} // .field-wrap
 
 		.hint {
 			font-style: italic;
@@ -319,7 +335,7 @@ div
 			&.featured {
 				label {
 					font-weight: bold;
-				}			
+				}
 			}
 
 			&.required {
@@ -330,14 +346,14 @@ div
 					position: absolute;
 					padding-left: 0.2em;
 					font-size: 1em;
-				}	
+				}
 			}
 
 			&.disabled {
 				label {
 					color: #666;
 					font-style: italic;
-				}			
+				}
 			}
 
 			&.error {
@@ -360,7 +376,7 @@ div
 							font-weight: 600;
 					}
 
-				} // .errors	
+				} // .errors
 
 			} // .error
 

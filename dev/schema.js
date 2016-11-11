@@ -158,55 +158,48 @@ module.exports = {
     label: "Search USELESS",
     model: "search",
     placeholder: "Entrez un mot-clef",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "radio",
     label: "radio USELESS",
     model: "radio",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "file",
     label: "File USELESS",
-    model: "file",
-    visible(model){return model.checkbox} 
+    model: "file"
 },
 {
     type: "input",
     inputType: "image",
     label: "Image USELESS",
     model: "image",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "button",
     label: "Button USELESS",
     model: "button",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "reset",
     label: "Reset USELESS",
     model: "reset",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "submit",
     label: "Submit USELESS",
     model: "submit",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 
 /**************/
@@ -415,7 +408,7 @@ module.exports = {
 	styleClasses: ["half-width", "first"],
 	validator: validators.required
 },
-{
+/*{
 	type: "selectEx",
 	label: "Country (selectEx field)",
 	model: "address.country",
@@ -432,8 +425,8 @@ module.exports = {
 	},
 	styleClasses: "half-width",
 	validator: validators.required
-}, 
-{
+}, */
+/*{
 	type: "selectEx",
 	label: "Skills (selectEx field)",
 	model: "skills",
@@ -460,7 +453,7 @@ module.exports = {
 	min: 2,
 	max: 4,
 	validator: validators.array
-},
+},*/
 {
 	type: "rangeSlider",
 	label: "Rank (rangeSlider field)",
@@ -565,7 +558,7 @@ module.exports = {
 	required: true,
 	disabled: false,
 	noUiSliderOptions: {
-		connect: "lower",	// "lower", "upper", true, false
+		connect: [true, false],	// "lower", "upper", true, false
 		// margin: 2 //number
 		// limit: 2 //number
 		step:1,
@@ -596,7 +589,7 @@ module.exports = {
 	disabled: false,
 	noUiSliderOptions: {
 		double:true,
-		connect: true,	// "lower", "upper", true, false
+		connect: [false, true, false],	// "lower", "upper", true, false
 		// margin: 2 //number
 		// limit: 2 //number
 		step: 1000,

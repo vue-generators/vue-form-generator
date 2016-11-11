@@ -1,10 +1,9 @@
 <template lang="jade">
 .wrapper
 	input.form-control(
-		:type="schema.inputType", 
-		v-model="value",
+		:type="schema.inputType",
+	  v-model="value",
 		:disabled="disabled",
-
 		:accept="schema.accept",
 		:alt="schema.alt",
 		:autocomplete="schema.autocomplete",
@@ -68,7 +67,7 @@
 			}
 		}
 	};
-	
+
 </script>
 
 <style lang="sass">
