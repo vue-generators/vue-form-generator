@@ -6,7 +6,7 @@
   "main": "dist/vue-form-generator.js",
   "scripts": {
     "prebuild": "npm run test",
-    "build": "webpack --progress -p --config webpack.build.config.js",
+    "build": "webpack --progress --config webpack.build.config.js",
     "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
     "lint": "eslint --ext=.js,.vue src test/unit/specs",
     "coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
