@@ -1,3 +1,13 @@
+<a name="0.6.1"></a>
+## 0.6.1 (2016-11-28)
+
+* :package: Build v0.6.1 ([79580a2](https://github.com/icebob/vue-form-generator/commit/79580a2))
+* Add missing opening brace ([6842f1b](https://github.com/icebob/vue-form-generator/commit/6842f1b))
+* bump version ([1976b4a](https://github.com/icebob/vue-form-generator/commit/1976b4a))
+* Fixed bower file syntax error #98 ([06b0022](https://github.com/icebob/vue-form-generator/commit/06b0022)), closes [#98](https://github.com/icebob/vue-form-generator/issues/98)
+
+
+
 <a name="0.6.0"></a>
 # 0.6.0 (2016-11-14)
 
