@@ -3,6 +3,7 @@
 	input.form-control(
 		:type="schema.inputType", 
 		v-model="value",
+		number="schema.inputType == 'number'"
 		:disabled="disabled",
 
 		:accept="schema.accept",
@@ -59,12 +60,10 @@
 						this.schema.inputType === "datetime" ||
 						this.schema.inputType === "datetimelocal") {
 						return new Date(value).getTime();
-					}else{
-						return value;
 					}
-				} else {
-					return value;
 				}
+				
+				return value;
 			}
 		}
 	};

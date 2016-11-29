@@ -4,13 +4,14 @@ A schema-based form generator component for Vue.js v1.x.x
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/912039aa815e40de8315032519aa7e6c)](https://www.codacy.com/app/mereg-norbert/vue-form-generator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=icebob/vue-form-generator&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://travis-ci.org/icebob/vue-form-generator.svg?branch=master)](https://travis-ci.org/icebob/vue-form-generator)
 [![Coverage Status](https://coveralls.io/repos/github/icebob/vue-form-generator/badge.svg?branch=master)](https://coveralls.io/github/icebob/vue-form-generator?branch=master)
-[![NPMS.io score](https://badges.npms.io/cross-spawn.svg)]()
+[![NPMS.io score](https://badges.npms.io/vue-form-generator.svg)]()
+[![Package Quality](http://npm.packagequality.com/shield/vue-form-generator.svg)](http://packagequality.com/#?package=vue-form-generator)
 
 [![Dependency Status](https://david-dm.org/icebob/vue-form-generator.svg)](https://david-dm.org/icebob/vue-form-generator)
 [![devDependency Status](https://david-dm.org/icebob/vue-form-generator/dev-status.svg)](https://david-dm.org/icebob/vue-form-generator#info=devDependencies)
 [![Downloads](https://img.shields.io/npm/dt/vue-form-generator.svg)](https://www.npmjs.com/package/vue-form-generator)
 
-**Vue v2.x is not supported!**
+**Vue v2.x support is under development!**
 
 ## Demo
 [JSFiddle simple example](https://jsfiddle.net/icebob/0mg1v81e/)
@@ -65,7 +66,7 @@ Vue.use(VueFormGenerator);
 export default {
   data: {
   
-    model:             
+    model: {             
       id: 1,
       name: "John Doe",
       password: "J0hnD03!x4",
