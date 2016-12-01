@@ -1,3 +1,44 @@
+<a name="0.6.1"></a>
+## 0.6.1 (2016-11-28)
+
+* :package: Build v0.6.1 ([79580a2](https://github.com/icebob/vue-form-generator/commit/79580a2))
+* Add missing opening brace ([6842f1b](https://github.com/icebob/vue-form-generator/commit/6842f1b))
+* bump version ([1976b4a](https://github.com/icebob/vue-form-generator/commit/1976b4a))
+* Fixed bower file syntax error #98 ([06b0022](https://github.com/icebob/vue-form-generator/commit/06b0022)), closes [#98](https://github.com/icebob/vue-form-generator/issues/98)
+
+
+
+<a name="0.6.0"></a>
+# 0.6.0 (2016-11-14)
+
+* :bug: Fix options prop default #91 ([3d2e821](https://github.com/icebob/vue-form-generator/commit/3d2e821)), closes [#91](https://github.com/icebob/vue-form-generator/issues/91)
+* :package: build ([51abcca](https://github.com/icebob/vue-form-generator/commit/51abcca))
+* :package: Build ([ce72dc4](https://github.com/icebob/vue-form-generator/commit/ce72dc4))
+* :package: bump version & build ([d56f93c](https://github.com/icebob/vue-form-generator/commit/d56f93c))
+* add bower ([ce44822](https://github.com/icebob/vue-form-generator/commit/ce44822))
+* add number prop to input field ([a40e23c](https://github.com/icebob/vue-form-generator/commit/a40e23c))
+* add step attribute to number field #92 ([ce64c4e](https://github.com/icebob/vue-form-generator/commit/ce64c4e))
+* Fix #82 ([7a83777](https://github.com/icebob/vue-form-generator/commit/7a83777)), closes [#82](https://github.com/icebob/vue-form-generator/issues/82)
+* Fix #84 ([2c36001](https://github.com/icebob/vue-form-generator/commit/2c36001)), closes [#84](https://github.com/icebob/vue-form-generator/issues/84)
+* Fix #84 ([58093c7](https://github.com/icebob/vue-form-generator/commit/58093c7)), closes [#84](https://github.com/icebob/vue-form-generator/issues/84)
+* fix lints ([1f8f3d9](https://github.com/icebob/vue-form-generator/commit/1f8f3d9))
+* Implement #78 ([f92b193](https://github.com/icebob/vue-form-generator/commit/f92b193))
+* quick fix for #85 ([cad76da](https://github.com/icebob/vue-form-generator/commit/cad76da)), closes [#85](https://github.com/icebob/vue-form-generator/issues/85)
+* remote customLabel prop from multiselect because give errors ([5dfc5bb](https://github.com/icebob/vue-form-generator/commit/5dfc5bb))
+* remove commit message package ([682c6ab](https://github.com/icebob/vue-form-generator/commit/682c6ab))
+* Update README.md ([8128a52](https://github.com/icebob/vue-form-generator/commit/8128a52))
+* docs: fix npms.io badge url ([475eb91](https://github.com/icebob/vue-form-generator/commit/475eb91))
+* test: add attr checker to switch field ([2ed434e](https://github.com/icebob/vue-form-generator/commit/2ed434e))
+* test: add file input attr test ([352fb20](https://github.com/icebob/vue-form-generator/commit/352fb20))
+* test: add test to #82 ([aefdbac](https://github.com/icebob/vue-form-generator/commit/aefdbac))
+* test: attr test to submit field ([1627c71](https://github.com/icebob/vue-form-generator/commit/1627c71))
+* test: lock multiselect version ([5b0a4d0](https://github.com/icebob/vue-form-generator/commit/5b0a4d0))
+* fix: customLabel return a basic function when undefined instead of null ([9b3d51d](https://github.com/icebob/vue-form-generator/commit/9b3d51d))
+* bug: fix quotes ([13d6e0f](https://github.com/icebob/vue-form-generator/commit/13d6e0f))
+* new: add form POST example ([08412c7](https://github.com/icebob/vue-form-generator/commit/08412c7))
+
+
+
 <a name="0.5.0"></a>
 # 0.5.0 (2016-09-28)
 

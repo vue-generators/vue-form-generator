@@ -20,7 +20,7 @@ module.exports = function(config) {
 			"https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.js",
 			"https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js",
 			"https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.1.4/js/ion.rangeSlider.js",
-			"https://rawgit.com/monterail/vue-multiselect/master/lib/vue-multiselect.min.js",
+			"https://rawgit.com/monterail/vue-multiselect/v1.1.4/lib/vue-multiselect.min.js",
 			"https://rawgit.com/nosir/cleave.js/master/dist/cleave.js",
 			"https://nosir.github.io/cleave.js/lib/cleave-phone.i18n.js",
 			"https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.js",

@@ -1,31 +1,27 @@
-<template lang="jade">
-	.row
-		.col-md-10.col-md-offset-1
-			data-table(:rows="rows", :selected="selected", :select="selectRow")
-
-	.row(v-show="model")
-		.col-md-5.col-md-offset-1
-			.control-buttons.text-center
-				button.btn.btn-default.new(@click="newModel") 
-					i.fa.fa-plus
-					| New
-				button.btn.btn-primary.save(@click="saveModel") 
-					i.fa.fa-floppy-o
-					| Save
-					i.fa.fa-warning(v-if="showWarning()")
-				button.btn.btn-danger.delete(@click="deleteModel") 
-					i.fa.fa-trash
-					| Delete
-
-			.errors.text-center
-				div.alert.alert-danger(v-for="item in validationErrors", track-by="$index") {{ item.field.label}}: 
-					strong {{ item.error }}
-
-			vue-form-generator(:schema='schema', :model='model', :options='formOptions', :multiple="selected.length > 1", v-ref:form, :is-new-model="isNewModel")
-
-
-		.col-md-6
-			pre(v-if='model') {{{ model | prettyJSON }}}   
+<template>
+<div>
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <data-table :rows="rows" :selected="selected" :select="selectRow"></data-table>
+    </div>
+  </div>
+  <div v-show="model" class="row">
+    <div class="col-md-5 col-md-offset-1">
+      <div class="control-buttons text-center">
+        <button @click="newModel" class="btn btn-default new"> <i class="fa fa-plus"></i>New</button>
+        <button @click="saveModel" class="btn btn-primary save"> <i class="fa fa-floppy-o"></i>Save<i v-if="showWarning()" class="fa fa-warning"></i></button>
+        <button @click="deleteModel" class="btn btn-danger delete"> <i class="fa fa-trash"></i>Delete</button>
+      </div>
+      <div class="errors text-center">
+        <div v-for="item in validationErrors" track-by="$index" class="alert alert-danger">{{ item.field.label}}: <strong>{{ item.error }}</strong></div>
+      </div>
+      <vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated"></vue-form-generator>
+    </div>
+    <div class="col-md-6">
+      <pre v-if="model" v-html="prettyModel"></pre>
+    </div>
+  </div>
+</div>
 
 </template>
 
@@ -82,6 +78,9 @@
 					return this.$refs.form.errors;
 
 				return [];
+			},
+			prettyModel(){
+				return filters.prettyJSON(this.model);
 			}
 		},
 
@@ -95,10 +94,12 @@
 			selectRow(event, row, add) {
 				this.isNewModel = false;
 				if ( (add || (event && event.ctrlKey))) {
-					if (this.selected.indexOf(row) != -1)
-						this.selected.$remove(row);
-					else
+					if (this.selected.indexOf(row) != -1){
+						var index = this.selected.indexOf(row);
+						this.selected.splice(index, 1);
+					} else {
 						this.selected.push(row);
+					}
 				} else {
 					this.clearSelection();
 					this.selected.push(row);
@@ -114,12 +115,11 @@
 			generateModel() {
 				if (this.selected.length == 1) {
 					this.model = cloneDeep(this.selected[0]);
-				}
-				else if (this.selected.length > 1) {
+				} else if (this.selected.length > 1) {
 					this.model = VueFormGenerator.schema.mergeMultiObjectFields(Schema, this.selected);
-				}
-				else
+				} else {
 					this.model = null;				
+				}
 			},
 
 			newModel() {
@@ -146,6 +146,7 @@
 					}
 
 				} else {
+					console.warn("Error saving model...");
 					// Validation error
 				}
 			},
@@ -162,7 +163,8 @@
 			deleteModel() {
 				if (this.selected.length > 0) {
 					each(this.selected, (row) => {
-						this.rows.$remove(row);
+						let index = this.rows.indexOf(row);
+						this.rows.splice(index, 1)
 					})
 					this.clearSelection();
 				}
@@ -180,22 +182,30 @@
 			},
 
 			validate()	{
+				console.log("validate", this.$refs.form, this.$refs.form.validate());
 				return this.$refs.form.validate();
+			},
+
+			modelUpdated(newVal, schema) {
+				console.log("main model has updated", newVal, schema);
+				// this.model[schema] = newVal;
 			}
 
 			 
 		},
 		
-		ready() {
-			window.app = this;
+		mounted() {
+			this.$nextTick(function () {
+				window.app = this;
 
-			if (users.length > 0) {
-				this.selectRow(null, fakerator.random.arrayElement(users));
-			}
+				if (users.length > 0) {
+					this.selectRow(null, fakerator.random.arrayElement(users));
+				}
 
-			// Localize validate errors
-			VueFormGenerator.validators.resources.fieldIsRequired = "Ezt a mezőt kötelező kitölteni!";
-			VueFormGenerator.validators.resources.textTooSmall = "A szöveg túl rövid! Jelenleg: {0}, minimum: {1}";
+				// Localize validate errors
+				// VueFormGenerator.validators.resources.fieldIsRequired = "Ezt a mezőt kötelező kitölteni!";
+				// VueFormGenerator.validators.resources.textTooSmall = "A szöveg túl rövid! Jelenleg: {0}, minimum: {1}";
+			})
 		}
 	}
 

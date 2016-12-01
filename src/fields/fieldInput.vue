@@ -2,9 +2,10 @@
 .wrapper
 	input.form-control(
 		:type="schema.inputType", 
-		v-model="value",
+		:value="value",
+		@input="value = $event.target.value",
+		number="schema.inputType == 'number'"
 		:disabled="disabled",
-
 		:accept="schema.accept",
 		:alt="schema.alt",
 		:autocomplete="schema.autocomplete",
@@ -59,12 +60,10 @@
 						this.schema.inputType === "datetime" ||
 						this.schema.inputType === "datetimelocal") {
 						return new Date(value).getTime();
-					}else{
-						return value;
 					}
-				} else {
-					return value;
 				}
+				
+				return value;
 			}
 		}
 	};

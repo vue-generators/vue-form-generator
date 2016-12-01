@@ -7,19 +7,18 @@ Vue.use(VueFormGenerator);
 
 let el, vm;
 
-function createFormGenerator(schema = {}, model = null, options = {}, multiple = false) {
+function createFormGenerator(schema = {}, model = null, options, multiple) {
 	el = document.createElement("div");		
 	// eslint-disable-next-line quotes
-	el.innerHTML = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" v-ref:form></vue-form-generator>`;
+	el.innerHTML = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" ref="form"></vue-form-generator>`;
 	vm = new Vue({
-		el: el,
 		data: {
 			schema,
 			model,
 			options,
 			multiple
 		}
-	});
+	}).$mount(el);
 
 	// console.log(el);
 
@@ -27,7 +26,11 @@ function createFormGenerator(schema = {}, model = null, options = {}, multiple =
 }
 
 describe("VueFormGenerator.vue", () => {
-
+	describe.only("nothing", () => {
+		it("should do nothing", () => {
+			expect([]).to.be.length(0);
+		});
+	});
 	describe("with empty schema", () => {
 		let schema = {};
 
@@ -414,6 +417,39 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check if option null", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name"
+				}
+			]
+		};
+
+		let model = { name: "Me" };
+		let form, el, vm;
+
+		before( () => {
+			[el, vm] = createFormGenerator(schema, model);
+			form = vm.$refs.form;
+			document.body.appendChild(el);
+		});
+
+		after( () => {
+			document.body.removeChild(el);
+		});
+
+		it("should be validation error at ready()", (done) => {
+			vm.$nextTick( () => {
+				expect(form).to.be.defined;
+				expect(form.options).to.be.defined;
+				done();
+			});
+		});
+	});
+
 	describe("check validateAfterLoad option", () => {
 		let schema = {
 			fields: [
@@ -435,7 +471,7 @@ describe("VueFormGenerator.vue", () => {
 			form = vm.$refs.form;
 		});
 
-		it("should be validation error at ready()", (done) => {
+		it("should be validation error at mounted()", (done) => {
 			vm.$nextTick( () => {
 				expect(form.errors).to.be.length(1);
 				done();

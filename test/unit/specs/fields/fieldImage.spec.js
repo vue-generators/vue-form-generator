@@ -109,7 +109,7 @@ describe("fieldImage.vue", function() {
 		});
 
 		it("should not contain a file input element if browse is false", (done) => {
-			vm.$set("schema.browse", false);
+			vm.$set(vm.schema, "browse", false);
 
 			vm.$nextTick( () => {
 				let fileInput = el.querySelector("input[type=file]");
@@ -119,7 +119,7 @@ describe("fieldImage.vue", function() {
 		});
 
 		it("should not visible the preview div", (done) => {
-			vm.$set("schema.preview", false);
+			vm.$set(vm.schema, "preview", false);
 
 			vm.$nextTick( () => {
 				let preview = el.querySelector(".preview");
@@ -129,14 +129,14 @@ describe("fieldImage.vue", function() {
 		});
 
 		it("should not show the link input element if hideInput is true", (done) => {
-			vm.$set("schema.hideInput", true);
+			vm.$set(vm.schema, "hideInput", true);
 
 			vm.$nextTick( () => {
 				let fileInput = el.querySelector("input[type=text]");
 				expect(fileInput.style.display).to.be.equal("none");
 
 				// Restore
-				vm.$set("schema.hideInput", false);
+				vm.$set(vm.schema, "hideInput", false);
 				done();
 			});
 		});		
@@ -151,7 +151,7 @@ describe("fieldImage.vue", function() {
 		});
 
 		it("should clear input if press remove icon", (done) => {
-			vm.$set("schema.preview", true);
+			vm.$set(vm.schema, "preview", true);
 			vm.$nextTick( () => {
 				let remove = el.querySelector(".remove");
 				expect(input.value).to.be.not.equal("");

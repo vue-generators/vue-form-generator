@@ -135,7 +135,9 @@ module.exports = {
     type: "input",
     inputType: "range",
     label: "Range",
-    model: "age",
+    model: "rank",
+    min: 0,
+    max: 10,
     styleClasses: "half-width"
 },
 {
@@ -158,55 +160,48 @@ module.exports = {
     label: "Search USELESS",
     model: "search",
     placeholder: "Entrez un mot-clef",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "radio",
     label: "radio USELESS",
     model: "radio",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "file",
     label: "File USELESS",
-    model: "file",
-    visible(model){return model.checkbox} 
+    model: "file"
 },
 {
     type: "input",
     inputType: "image",
     label: "Image USELESS",
     model: "image",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "button",
     label: "Button USELESS",
     model: "button",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "reset",
     label: "Reset USELESS",
     model: "reset",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 {
     type: "input",
     inputType: "submit",
     label: "Submit USELESS",
     model: "submit",
-    styleClasses: "half-width",
-    visible(model){return model.checkbox} 
+    styleClasses: "half-width"
 },
 
 /**************/
@@ -273,10 +268,62 @@ module.exports = {
 	validator: validators.string
 },
 {
+	type: "text",
+	label: "Field with buttons",
+	model: "address.geo",
+	disabled: false,
+	get(model) {
+		if (model && model.address && model.address.geo)
+			return model.address.geo.latitude + ", " + model.address.geo.longitude;
+	},
+	set(model, val) {
+		let values = val.split(",");
+		if (!model.address)
+			model.address = {};
+		if (!model.address.geo)
+			model.address.geo = {};
+		if (values.length > 0 && values[0].trim() != "")
+			model.address.geo.latitude = parseFloat(values[0].trim());
+		else
+			model.address.geo.latitude = 0
+		if (values.length > 1 && values[1].trim() != "")
+			model.address.geo.longitude = parseFloat(values[1].trim());
+		else
+			model.address.geo.longitude = 0
+	},
+	buttons: [{
+		classes: "btn-location",
+		label: "Current location",
+		onclick: function(model) {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition((pos) => {
+					if (!model.address)
+						model.address = {};
+					if (!model.address.geo)
+						model.address.geo = {};
+					model.address.geo.latitude = pos.coords.latitude.toFixed(5);
+					model.address.geo.longitude = pos.coords.longitude.toFixed(5);
+				});
+			} else {
+				alert("Geolocation is not supported by this browser.");
+			}
+		}
+	}, {
+		classes: "btn-clear",
+		label: "Clear",
+		onclick: function(model) {
+			model.address.geo = {
+				latitude: 0,
+				longitude: 0
+			};
+		}
+	}]
+}, 
+{
 	type: "staticMap",
 	label: "Map",
 	model: "address.geo",
-	visible: true,
+	visible: false,
 	staticMapOptions: {
         lat: "latitude",
         lng: "longitude",
@@ -415,7 +462,7 @@ module.exports = {
 	styleClasses: ["half-width", "first"],
 	validator: validators.required
 },
-{
+/*{
 	type: "selectEx",
 	label: "Country (selectEx field)",
 	model: "address.country",
@@ -432,8 +479,8 @@ module.exports = {
 	},
 	styleClasses: "half-width",
 	validator: validators.required
-}, 
-{
+}, */
+/*{
 	type: "selectEx",
 	label: "Skills (selectEx field)",
 	model: "skills",
@@ -460,7 +507,7 @@ module.exports = {
 	min: 2,
 	max: 4,
 	validator: validators.array
-},
+},*/
 {
 	type: "rangeSlider",
 	label: "Rank (rangeSlider field)",
@@ -503,7 +550,7 @@ module.exports = {
 		format: "YYYY-MM-DD"
 	},
 	onChanged(model, newVal, oldVal, field) {
-		model.age = moment().year() - moment(newVal).year();
+		//model.age = moment().year() - moment(newVal).year();
 	}
 }, 
 {
@@ -565,7 +612,7 @@ module.exports = {
 	required: true,
 	disabled: false,
 	noUiSliderOptions: {
-		connect: "lower",	// "lower", "upper", true, false
+		connect: [true, false],	// "lower", "upper", true, false
 		// margin: 2 //number
 		// limit: 2 //number
 		step:1,
@@ -596,7 +643,7 @@ module.exports = {
 	disabled: false,
 	noUiSliderOptions: {
 		double:true,
-		connect: true,	// "lower", "upper", true, false
+		connect: [false, true, false],	// "lower", "upper", true, false
 		// margin: 2 //number
 		// limit: 2 //number
 		step: 1000,

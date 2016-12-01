@@ -18,7 +18,7 @@ var loaders = [
 
 module.exports = [
 	{
-		entry: "./src/index",
+		entry: "./src/index.js",
 		output: {
 			path: "./dist",
 			filename: "vue-form-generator.js",

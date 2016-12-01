@@ -55,6 +55,7 @@ module.exports = {
 	resources,
 	
 	required(value, field) {
+		console.log("required", value, field);
 		return checkEmpty(value, field.required); 
 	},
 

@@ -30,23 +30,25 @@
 			}
 		},
 
-		ready() {
-			if ($.fn.spectrum) {
-				this.picker = $(this.$el).spectrum("destroy").spectrum(defaults(this.schema.colorOptions || {}, {
-					showInput: true,
-					showAlpha: true,
-					disabled: this.schema.disabled,
-					allowEmpty: !this.schema.required,
-					preferredFormat: "hex",
-					change: (color) => {
-						this.value = color ? color.toString() : null;
-					}
-				}));
-				this.picker.spectrum("set", this.value);
+		mounted() {
+			this.$nextTick(function () {
+				if ($.fn.spectrum) {
+					this.picker = $(this.$el).spectrum("destroy").spectrum(defaults(this.schema.colorOptions || {}, {
+						showInput: true,
+						showAlpha: true,
+						disabled: this.schema.disabled,
+						allowEmpty: !this.schema.required,
+						preferredFormat: "hex",
+						change: (color) => {
+							this.value = color ? color.toString() : null;
+						}
+					}));
+					this.picker.spectrum("set", this.value);
 
-			} else {
-				console.warn("Spectrum color library is missing. Please download from http://bgrins.github.io/spectrum/ and load the script and CSS in the HTML head section!");
-			}
+				} else {
+					console.warn("Spectrum color library is missing. Please download from http://bgrins.github.io/spectrum/ and load the script and CSS in the HTML head section!");
+				}
+			});
 		},
 
 		beforeDestroy() {
