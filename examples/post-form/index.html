@@ -91,12 +91,12 @@
     <div class="panel panel-default">
       <div class="panel-heading">Model</div>
       <div class="panel-body">
-        <pre v-if="model">{{{ model | prettyJSON }}}</pre>
+        <pre v-if="model" v-html="model | prettyJSON"></pre>
       </div>
     </div>
 
   </div>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.21/vue.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.4/vue.min.js"></script>
   <script type="text/javascript" src="../../dist/vue-form-generator.js"></script>
   <script type="text/javascript" src="./main.js"></script>
 </body>

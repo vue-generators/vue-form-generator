@@ -13,7 +13,7 @@
         <button @click="deleteModel" class="btn btn-danger delete"> <i class="fa fa-trash"></i>Delete</button>
       </div>
       <div class="errors text-center">
-        <div v-for="item in validationErrors" track-by="$index" class="alert alert-danger">{{ item.field.label}}: <strong>{{ item.error }}</strong></div>
+        <div v-for="(item, index) in validationErrors" track-by="index" class="alert alert-danger">{{ item.field.label}}: <strong>{{ item.error }}</strong></div>
       </div>
       <vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated"></vue-form-generator>
     </div>
