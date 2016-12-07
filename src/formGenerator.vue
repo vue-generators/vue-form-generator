@@ -14,7 +14,7 @@ div
 						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
 				.errors(v-if='errorsVisibility(field)')
-					span(v-for='error in field.errors', track-by='$index') {{ error }}
+					span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
 </template>
 
 <script>
