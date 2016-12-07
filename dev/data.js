@@ -1,5 +1,5 @@
-import Fakerator from 'fakerator';
-import moment from 'moment';
+import Fakerator from "fakerator";
+import moment from "moment";
 
 let fakerator = new Fakerator();
 
@@ -8,7 +8,7 @@ let roles = [
 	{ id: "moderator", name: "Moderator"},
 	{ id: "user", name: "Registered User"},
 	{ id: "visitor", name: "Visitor"}
-]
+];
 
 let skills = [ "HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS" ];
 
@@ -19,7 +19,7 @@ module.exports = {
 	users: (function() {
 		let res = [];
 		for (let i = 0; i < 5; i++) {
-			let lang = fakerator.random.arrayElement(['en-US', 'en-GB', 'de', 'fr', 'it']);
+			let lang = fakerator.random.arrayElement(["en-US", "en-GB", "de", "fr", "it"]);
 			let user = fakerator.entity.user();
 			user.id = i + 1;
 			user.type = fakerator.random.arrayElement(["personal", "business"]);
@@ -41,6 +41,7 @@ module.exports = {
 			user.created = fakerator.date.recent(30).valueOf();
 			user.dt = fakerator.date.recent(30).valueOf();
 			user.favoriteColor = "#" + fakerator.internet.color();
+			user.color = "#" + fakerator.internet.color();
 
 			if (user.type == "business")
 				user.company = fakerator.entity.company();
@@ -48,9 +49,9 @@ module.exports = {
 			user.income = [ fakerator.random.number(50000), fakerator.random.number(50000, 100000)];			
 
 			res.push(user);
-			console.log(user);
+			// console.log(user);
 		}
-		//console.log(res);
+		// console.log(res);
 		return res;
 	})()
-}
+};

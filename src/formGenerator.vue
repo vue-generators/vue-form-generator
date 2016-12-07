@@ -85,21 +85,31 @@ div
 				if (oldModel == newModel) // model got a new property, skip
 					return;
 
-				// Model changed!
-				if (this.options.validateAfterLoad === true && this.isNewModel !== true)
-					this.validate();
-				else
-					this.clearValidationErrors();
+				if (newModel != null) {
+					this.$nextTick(() => {
+
+						// console.log("Model changed!", oldModel, newModel);
+						// Model changed!
+						if (this.options.validateAfterLoad === true && this.isNewModel !== true)
+							this.validate();
+						else
+							this.clearValidationErrors();
+					});
+				}
 			}
 		},
 
 		mounted() {
-			// First load, running validation if neccessary
-			if (this.options.validateAfterLoad === true && this.isNewModel !== true){
-				this.validate();
-			} else {
-				this.clearValidationErrors();
-			}
+			this.$nextTick(() => {
+				if (this.model) {
+					// First load, running validation if neccessary
+					if (this.options.validateAfterLoad === true && this.isNewModel !== true){
+						this.validate();
+					} else {
+						this.clearValidationErrors();
+					}
+				}
+			});
 		},
 	
 		methods: {

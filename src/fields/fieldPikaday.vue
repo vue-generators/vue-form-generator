@@ -45,7 +45,7 @@
 		},
 
 		mounted() {
-			this.$nextTick(function () {
+			this.$nextTick(() => {
 				if (window.Pikaday){
 					this.picker = new window.Pikaday(defaults(this.schema.pikadayOptions || {}, {
 						field: this.$el, // bind the datepicker to a form field
