@@ -99,7 +99,7 @@ describe("fieldImage.vue", function() {
 
 		it("model value should be the input value if changed", (done) => {
 			input.value = "https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg";
-			trigger(input, "change");
+			trigger(input, "input");
 
 			vm.$nextTick( () => {
 				expect(model.avatar).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg");

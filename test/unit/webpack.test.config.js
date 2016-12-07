@@ -49,7 +49,7 @@ module.exports = {
 			}
 		],
 		noParse: [
-				/node_modules\/sinon\//,
+			/node_modules\/sinon\//,
 		]
 	},
 
@@ -57,7 +57,8 @@ module.exports = {
 		packageAlias: "browser",   
 		alias: {
 			"src": sourceDir,
-			"sinon": "sinon/pkg/sinon"
+			"sinon": "sinon/pkg/sinon",
+			"vue$": "vue/dist/vue.common.js"
 		}
 	},
 	plugins: [

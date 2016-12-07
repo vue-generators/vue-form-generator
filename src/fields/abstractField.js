@@ -25,18 +25,18 @@ export default {
 			},
 
 			set(newValue) {
-
+				// console.log("Model value changed!", newValue);
 				if (isFunction(this.formatValueToModel))
 					newValue = this.formatValueToModel(newValue);
 
 				if (isFunction(this.schema.set)) {
 					this.schema.set(this.model, newValue);
-					console.log("model-updated via schema", this.model[this.schema.model]);
+					// console.log("model-updated via schema", this.model[this.schema.model]);
 					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
 
 				} else if (this.schema.model) {
 					this.$set(this.model, this.schema.model, newValue);
-					console.log("model-updated via normal", this.model[this.schema.model]);
+					// console.log("model-updated via normal", this.model[this.schema.model]);
 					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
 				}
 			}
@@ -44,7 +44,7 @@ export default {
 	},
 
 	watch: {
-		value: function(newVal, oldVal) {
+		value(newVal, oldVal) {
 			// console.log("Changed", newVal, oldVal);
 			if (isFunction(this.schema.onChanged)) {
 				this.schema.onChanged(this.model, newVal, oldVal, this.schema);

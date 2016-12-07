@@ -107,7 +107,7 @@ describe("fieldSelect.vue", function() {
 		});
 
 		it("should show the customized <non selected> text", (done) => {
-			vm.$set("schema.selectOptions", {
+			Vue.set(vm.schema, "selectOptions", {
 				noneSelectedText: "Empty list"
 			});
 			vm.$nextTick( () => {

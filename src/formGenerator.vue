@@ -164,11 +164,13 @@ div
 
 			// Validating the model properties
 			validate() {
+				// console.log("Validate!", this.model);
 				this.clearValidationErrors();
 
 				each(this.$children, (child) => {
 					if (isFunction(child.validate))
 					{
+						// console.log("Validate ", child.model)
 						let err = child.validate();
 						each(err, (err) => {
 							this.errors.push({
