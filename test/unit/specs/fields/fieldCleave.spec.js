@@ -12,7 +12,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldCleave", schema, model, disabled, options);
 }
 
-describe.skip("fieldCleave.vue", function() {
+describe("fieldCleave.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -84,7 +84,7 @@ describe.skip("fieldCleave.vue", function() {
 		it("should be formatted data in model", (done) => {
 			field.cleave.setRawValue("301234567");
 			expect(input.value).to.be.equal("30 123 4567");
-			trigger(input, "change");
+			trigger(input, "input");
 
 			vm.$nextTick( () => {
 				expect(model.phone).to.be.equal("30 123 4567");
