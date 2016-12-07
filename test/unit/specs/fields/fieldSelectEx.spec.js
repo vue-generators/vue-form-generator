@@ -12,7 +12,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldSelectEx", schema, model, disabled, options);
 }
 
-describe.skip("fieldSelectEx.vue", function() {
+describe("fieldSelectEx.vue", function() {
 
 	describe("check template", () => {
 		let schema = {
@@ -96,6 +96,7 @@ describe.skip("fieldSelectEx.vue", function() {
 		});
 
 		it("should not be multiple", (done) => {
+			model.city = []; // For multiselect need empty array
 			schema.multiSelect = true;
 			vm.$nextTick( () => {
 				expect(input.multiple).to.be.true;
@@ -120,7 +121,7 @@ describe.skip("fieldSelectEx.vue", function() {
 				{ id: 4, name: "Berlin" }
 			]
 		};
-		let model = { city: 2 };
+		let model = { city: [2] };
 		let input;
 
 		before( () => {
@@ -181,7 +182,7 @@ describe.skip("fieldSelectEx.vue", function() {
 				];
 			}
 		};
-		let model = { city: 2 };
+		let model = { city: [2] };
 		let input;
 
 		before( () => {
