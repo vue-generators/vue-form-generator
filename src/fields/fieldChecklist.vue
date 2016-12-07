@@ -73,8 +73,9 @@
 
 				if (event.target.checked)
 					this.value.push(this.getItemID(item));
-				else
-					this.value.$remove(this.getItemID(item));
+				else {
+					this.value.splice(this.value.indexOf(this.getItemID(item)), 1);
+				}
 			},
 
 			onExpandCombo() {

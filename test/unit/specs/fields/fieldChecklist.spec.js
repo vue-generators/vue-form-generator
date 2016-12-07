@@ -12,7 +12,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldChecklist", schema, model, disabled, options);
 }
 
-describe.skip("fieldChecklist.vue", function() {
+describe("fieldChecklist.vue", function() {
 
 	describe("check listbox template", () => {
 
