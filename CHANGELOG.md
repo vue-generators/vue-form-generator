@@ -1,3 +1,23 @@
+<a name="2.0.0-beta1"></a>
+# 2.0.0-beta1 (2016-12-12)
+
+* :bug: fix $index ([80ecf31](https://github.com/icebob/vue-form-generator/commit/80ecf31))
+* :bug: fix examples ([8ab6894](https://github.com/icebob/vue-form-generator/commit/8ab6894))
+* :package: first build for Vue 2.x ([393461b](https://github.com/icebob/vue-form-generator/commit/393461b))
+* [wip] modification to work with vuejs 2.0. ([0b1df2c](https://github.com/icebob/vue-form-generator/commit/0b1df2c))
+* Fix a bug with v-model and dynamic type on input. ([1d090df](https://github.com/icebob/vue-form-generator/commit/1d090df))
+* fix validator error ([d671057](https://github.com/icebob/vue-form-generator/commit/d671057))
+* Update README.md ([acd1e22](https://github.com/icebob/vue-form-generator/commit/acd1e22))
+* Update vuejs version to 2.1.3, and made change accordingly (added vue-template-compiler). Update vue ([61b76c1](https://github.com/icebob/vue-form-generator/commit/61b76c1))
+* test: fix checklist tests ([f3202fa](https://github.com/icebob/vue-form-generator/commit/f3202fa))
+* test: fix fieldCleave tests ([caae630](https://github.com/icebob/vue-form-generator/commit/caae630))
+* test: fix selectEx tests ([b240183](https://github.com/icebob/vue-form-generator/commit/b240183))
+* test: fix test cases ([8044f9e](https://github.com/icebob/vue-form-generator/commit/8044f9e))
+* fix: aligned with issue #84 ([5d6c0c7](https://github.com/icebob/vue-form-generator/commit/5d6c0c7))
+* fix: rewrite in jade and commenting problematic fields ([35be49e](https://github.com/icebob/vue-form-generator/commit/35be49e))
+
+
+
 <a name="0.6.1"></a>
 ## 0.6.1 (2016-11-28)
 
