@@ -82,14 +82,14 @@
     <div class="panel panel-default">
       <div class="panel-heading">Form</div>
       <div class="panel-body">
-        <vue-form-generator :schema="schema", :model="model", :options="formOptions"></vue-form-generator>
+        <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
       </div>
     </div>
 
     <div class="panel panel-default">
       <div class="panel-heading">Model</div>
       <div class="panel-body">
-        <pre v-if="model" v-html="model | prettyJSON"></pre>
+        <pre v-if="model" v-html="prettyJSON(model)"></pre>
       </div>
     </div>
 
