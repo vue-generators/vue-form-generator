@@ -6,7 +6,7 @@ var vm = new Vue({
 		"vue-form-generator": VueFormGenerator.component
 	},
 
-	filters: {
+	methods: {
 		prettyJSON: function(json) {
 			if (json) {
 				json = JSON.stringify(json, undefined, 4);
