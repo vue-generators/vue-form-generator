@@ -13,7 +13,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldVueMultiSelect", schema, model, disabled, options);
 }
 
-describe("fieldVueMultiSelect.vue", function() {
+describe.skip("fieldVueMultiSelect.vue", function() {
 
 	describe("check template", () => {
 		let schema = {

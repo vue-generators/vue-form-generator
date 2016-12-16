@@ -8,20 +8,25 @@ Vue.use(VueFormGenerator);
 let el, vm;
 
 function createFormGenerator(schema = {}, model = null, options, multiple) {
-	el = document.createElement("div");		
-	// eslint-disable-next-line quotes
-	el.innerHTML = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" v-ref:form></vue-form-generator>`;
+	let elm = document.createElement("div");
 	vm = new Vue({
-		el: el,
+		// eslint-disable-next-line quotes
+		template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" ref="form"></vue-form-generator>`,
 		data: {
 			schema,
 			model,
 			options,
 			multiple
 		}
-	});
+	}).$mount(elm);
+	/*
+	vm.$nextTick(() => {
+		console.log(el);
+		console.log(vm.$el);
 
-	// console.log(el);
+	});
+	*/
+	el = vm.$el;
 
 	return [el, vm];
 }
@@ -102,7 +107,7 @@ describe("VueFormGenerator.vue", () => {
 		});		
 
 		it("should be error class", (done) => {
-			vm.$set("schema.fields[0].errors", [ "!!!" ]);
+			Vue.set(vm.schema.fields[0], "errors", [ "!!!" ]);
 			vm.$nextTick(() => {
 				expect(group.classList.contains("error")).to.be.true;
 				done();
@@ -110,7 +115,7 @@ describe("VueFormGenerator.vue", () => {
 		});		
 
 		it("should be add a custom classes", (done) => {
-			vm.$set("schema.fields[0].styleClasses", "classA");
+			Vue.set(vm.schema.fields[0], "styleClasses", "classA");
 			vm.$nextTick(() => {
 				expect(group.classList.contains("classA")).to.be.true;
 				done();
@@ -118,7 +123,7 @@ describe("VueFormGenerator.vue", () => {
 		});		
 
 		it("should be add more custom classes", (done) => {
-			vm.$set("schema.fields[0].styleClasses", [ "classB", "classC" ]);
+			Vue.set(vm.schema.fields[0], "styleClasses", [ "classB", "classC" ]);
 			vm.$nextTick(() => {
 				expect(group.classList.contains("classB")).to.be.true;
 				expect(group.classList.contains("classC")).to.be.true;
@@ -463,12 +468,15 @@ describe("VueFormGenerator.vue", () => {
 		let model = { name: "Me" };
 		let form;
 
-		before( () => {
+		before( (done) => {
 			createFormGenerator(schema, model, { validateAfterLoad: true });
-			form = vm.$refs.form;
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				done();
+			});
 		});
 
-		it("should be validation error at ready()", (done) => {
+		it("should be validation error at mounted()", (done) => {
 			vm.$nextTick( () => {
 				expect(form.errors).to.be.length(1);
 				done();
@@ -477,27 +485,27 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should be validation error if model is changed", (done) => {
 			form.model = { name: "Al" };
-			vm.$nextTick( () => {
+			setTimeout(() => {
 				expect(form.errors).to.be.length(1);
 				done();
-			});
+			}, 150);
 		});		
 
 		it("should be no errors if model is correct", (done) => {
 			form.model = { name: "Bob" };
-			vm.$nextTick( () => {
+			setTimeout(() => {
 				expect(form.errors).to.be.length(0);
 				done();
-			});
+			}, 150);
 		});		
 
 		it("should be no errors if validateAfterLoad is false", (done) => {
 			form.options.validateAfterLoad = false;
 			form.model = { name: "Ed" };
-			vm.$nextTick( () => {
+			setTimeout(() => {
 				expect(form.errors).to.be.length(0);
 				done();
-			});
+			}, 150);
 		});		
 
 	});

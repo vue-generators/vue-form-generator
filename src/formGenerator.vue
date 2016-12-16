@@ -1,30 +1,31 @@
 <template lang="jade">
 div
-	fieldset.vue-form-generator(v-if="schema != null")
-		template(v-for="field in fields")
-			.form-group(v-if="fieldVisible(field)", :class="getFieldRowClasses(field)")
-				label {{ field.label }}
-					span.help(v-if="field.help")
+	fieldset.vue-form-generator(v-if='schema != null')
+		template(v-for='field in fields')
+			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+				label
+					| {{ field.label }}
+					span.help(v-if='field.help')
 						i.icon
-						.helpText {{{field.help}}}
+						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is="getFieldType(field)", :disabled="fieldDisabled(field)", :model.sync="model", :schema.sync="field")
-					.buttons(v-if="field.buttons && field.buttons.length > 0")
-						button(v-for="btn in field.buttons", @click="btn.onclick(model, field)", :class="btn.classes") {{ btn.label }}
-				.hint(v-if="field.hint") {{ field.hint }}
-				.errors(v-if="field.errors && field.errors.length > 0")
-					span(v-for="error in field.errors", track-by="$index") {{ error }}
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
+					.buttons(v-if='buttonVisibility(field)')
+						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
+				.hint(v-if='field.hint') {{ field.hint }}
+				.errors(v-if='errorsVisibility(field)')
+					span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
 </template>
 
 <script>
-	import Vue from "vue";
+	// import Vue from "vue";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
 
 	// Load all fields from '../fields' folder
 	let Fields = require.context("./fields/", false, /^\.\/field([\w-_]+)\.vue$/);
 	let fieldComponents = {};
 	each(Fields.keys(), (key) => {
-		let compName = Vue.util.classify(key.replace(/^\.\//, "").replace(/\.vue/, ""));
+		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
 		fieldComponents[compName] = Fields(key);
 	});
 
@@ -84,20 +85,31 @@ div
 				if (oldModel == newModel) // model got a new property, skip
 					return;
 
-				// Model changed!
-				if (this.options.validateAfterLoad === true && this.isNewModel !== true)
-					this.validate();
-				else
-					this.clearValidationErrors();
+				if (newModel != null) {
+					this.$nextTick(() => {
+
+						// console.log("Model changed!", oldModel, newModel);
+						// Model changed!
+						if (this.options.validateAfterLoad === true && this.isNewModel !== true)
+							this.validate();
+						else
+							this.clearValidationErrors();
+					});
+				}
 			}
 		},
 
-		compiled() {
-			// First load, running validation if neccessary
-			if (this.options.validateAfterLoad === true && this.isNewModel !== true)
-				this.validate();
-			else
-				this.clearValidationErrors();
+		mounted() {
+			this.$nextTick(() => {
+				if (this.model) {
+					// First load, running validation if neccessary
+					if (this.options.validateAfterLoad === true && this.isNewModel !== true){
+						this.validate();
+					} else {
+						this.clearValidationErrors();
+					}
+				}
+			});
 		},
 	
 		methods: {
@@ -152,11 +164,13 @@ div
 
 			// Validating the model properties
 			validate() {
+				// console.log("Validate!", this.model);
 				this.clearValidationErrors();
 
 				each(this.$children, (child) => {
 					if (isFunction(child.validate))
 					{
+						// console.log("Validate ", child.model)
 						let err = child.validate();
 						each(err, (err) => {
 							this.errors.push({
@@ -177,6 +191,17 @@ div
 				each(this.$children, (child) => {
 					child.clearValidationErrors();
 				});				
+			},
+			modelUpdated(newVal, schema){
+				console.log("a child model has updated", newVal, schema);
+				this.model[schema] = newVal;
+				this.$emit("model-updated", this.model[schema], schema);
+			},
+			buttonVisibility(field) {
+				return field.buttons && field.buttons.length > 0;
+			},
+			errorsVisibility(field) {
+				return field.errors && field.errors.length > 0;
 			}
 		}
 	};

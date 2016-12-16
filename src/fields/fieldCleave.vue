@@ -15,34 +15,36 @@ export default {
 		};
 	},
 
-	ready() {
-		if (window.Cleave) {
-			this.cleave = new window.Cleave(this.$el, defaults(this.schema.cleaveOptions || {}, {
-				// Credit Card
-				creditCard: false,
-				// onCreditCardTypeChanged: onCreditCardTypeChanged.bind(this),
-				// Phone
-				phone: false,
-				phoneRegionCode: "AU",
-				// Date
-				date: false,
-				datePattern: ["d", "m", "Y"],
-				// Numerals
-				numeral: false,
-				numeralThousandsGroupStyle: "thousand",
-				numeralDecimalScale: 2,
-				numeralDecimalMark: ".",
-				// General
-				blocks: [],
-				delimiter: " ",
-				prefix: null,
-				numericOnly: false,
-				uppercase: false,
-				lowercase: false
-			}));
-		} else {
-			console.warn("Cleave is missing. Please download from https://github.com/nosir/cleave.js/ and load the script in the HTML head section!");
-		}
+	mounted() {
+		this.$nextTick(function () {
+			if (window.Cleave) {
+				this.cleave = new window.Cleave(this.$el, defaults(this.schema.cleaveOptions || {}, {
+					// Credit Card
+					creditCard: false,
+					// onCreditCardTypeChanged: onCreditCardTypeChanged.bind(this),
+					// Phone
+					phone: false,
+					phoneRegionCode: "AU",
+					// Date
+					date: false,
+					datePattern: ["d", "m", "Y"],
+					// Numerals
+					numeral: false,
+					numeralThousandsGroupStyle: "thousand",
+					numeralDecimalScale: 2,
+					numeralDecimalMark: ".",
+					// General
+					blocks: [],
+					delimiter: " ",
+					prefix: null,
+					numericOnly: false,
+					uppercase: false,
+					lowercase: false
+				}));
+			} else {
+				console.warn("Cleave is missing. Please download from https://github.com/nosir/cleave.js/ and load the script in the HTML head section!");
+			}
+		});
 	},
 
 	beforeDestroy() {

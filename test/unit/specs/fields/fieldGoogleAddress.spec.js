@@ -68,7 +68,7 @@ describe("fieldGoogleAddress.vue", function() {
 
 		it("model value should be the input value if changed", (done) => {
 			input.value = "Budapest, Hungary";
-			trigger(input, "change");
+			trigger(input, "input");
 
 			vm.$nextTick( () => {
 				expect(model.address).to.be.equal("Budapest, Hungary");

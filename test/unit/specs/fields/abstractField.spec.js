@@ -3,25 +3,25 @@ import { expect } from "chai";
 
 import Vue from "vue";
 import AbstractField from "src/fields/abstractField";
-
+AbstractField.template = "<div></div>";
 Vue.component("AbstractField", AbstractField);
 
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	el = document.createElement("div");		
+	let elm = document.createElement("div");		
 
-	// eslint-disable-next-line quotes
-	el.innerHTML = `<abstract-field :schema="schema" :model="model" :disabled="disabled" v-ref:field></abstract-field>`;
 	vm = new Vue({
-		el: el,
+		// eslint-disable-next-line quotes
+		template: `<abstract-field :schema="schema" :model="model" :disabled="disabled" ref="field"></abstract-field>`,
 		data: {
 			schema,
 			model,
 			disabled,
 			options
 		}
-	});
+	}).$mount(elm);
+	el = vm.$el;
 
 	field = vm.$refs.field;
 	// console.log(el);

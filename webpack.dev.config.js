@@ -1,27 +1,21 @@
 var path = require("path");
 var webpack = require("webpack");
+var projectRoot = path.resolve(__dirname, '../');
 
 var loaders = [
 	{
-		"test": /\.js?$/,
-		"exclude": /node_modules/,
-		"loader": "babel"
+		test: /\.vue$/,
+		loader: 'vue'
 	},
 	{
-		"test": /\.css?$/,
-		"loader": "style!css"
+		test: /\.js$/,
+		loader: 'babel',
+		include: projectRoot,
+		exclude: /node_modules/
 	},
 	{
-		"test": /\.scss?$/,
-		"loader": "style!css!sass"
-	},
-	{
-		"test": /\.jade?$/,
-		"loader": "jade"
-	},
-	{
-		"test": /\.vue?$/,
-		"loader": "vue"
+		test: /\.json$/,
+		loader: 'json'
 	},
 	{ 
 		test: /\.(woff2?|svg)$/, 

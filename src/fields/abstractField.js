@@ -1,4 +1,4 @@
-import {each, isFunction, isString, isArray, isUndefined} from "lodash";
+import { each, isFunction, isString, isArray, isUndefined } from "lodash";
 
 export default {
 	props: [
@@ -16,36 +16,43 @@ export default {
 					val = this.schema.get(this.model);
 
 				else if (this.model && this.schema.model)
-					val = this.$get("model." + this.schema.model);
+					val = this.model[this.schema.model];
 
 				if (isFunction(this.formatValueToField))
 					val = this.formatValueToField(val);
 
 				return val;
 			},
-			
+
 			set(newValue) {
+				// console.log("Model value changed!", newValue);
 				if (isFunction(this.formatValueToModel))
 					newValue = this.formatValueToModel(newValue);
-				
-				if (isFunction(this.schema.set))
+
+				if (isFunction(this.schema.set)) {
 					this.schema.set(this.model, newValue);
-				
-				else if (this.schema.model)
-					this.$set("model." + this.schema.model, newValue);
+					// console.log("model-updated via schema", this.model[this.schema.model]);
+					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
+
+				} else if (this.schema.model) {
+					this.$set(this.model, this.schema.model, newValue);
+					// console.log("model-updated via normal", this.model[this.schema.model]);
+					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
+				}
 			}
 		}
 	},
 
 	watch: {
-		value: function(newVal, oldVal) {
+		value(newVal, oldVal) {
 			// console.log("Changed", newVal, oldVal);
 			if (isFunction(this.schema.onChanged)) {
 				this.schema.onChanged(this.model, newVal, oldVal, this.schema);
 			}
 
-			if (this.$parent.options && this.$parent.options.validateAfterChanged === true)
+			if (this.$parent.options && this.$parent.options.validateAfterChanged === true){
 				this.validate();
+			}
 		}
 	},
 
@@ -85,7 +92,7 @@ export default {
 
 		clearValidationErrors() {
 			if (isUndefined(this.schema.errors))
-				this.$set("schema.errors", []); // Be reactive
+				this.$set(this.schema, "errors", []); // Be reactive
 			else
 				this.schema.errors.splice(0); // Clear
 		}

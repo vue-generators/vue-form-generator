@@ -2,10 +2,10 @@
 .wrapper
 	input.form-control(
 		:type="schema.inputType", 
-		v-model="value",
+		:value="value",
+		@input="value = $event.target.value",
 		number="schema.inputType == 'number'"
 		:disabled="disabled",
-
 		:accept="schema.accept",
 		:alt="schema.alt",
 		:autocomplete="schema.autocomplete",

@@ -34,16 +34,18 @@
 			};
 		},
 
-		ready() {
-			if (window.google && window.google.maps && window.google.maps.places && window.google.maps.places.Autocomplete) {
-				this.autocomplete = new google.maps.places.Autocomplete(this.$el,	{
-					types: ["geocode"]
-				});
+		mounted() {
+			this.$nextTick(function () {
+				if (window.google && window.google.maps && window.google.maps.places && window.google.maps.places.Autocomplete) {
+					this.autocomplete = new google.maps.places.Autocomplete(this.$el,	{
+						types: ["geocode"]
+					});
 
-				this.autocomplete.addListener("place_changed", this.pipeAddress);
-			}
-			else
-				console.warn("Google Maps API is missing. Please add https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&libraries=places script in the HTML head section!");
+					this.autocomplete.addListener("place_changed", this.pipeAddress);
+				} else {
+					console.warn("Google Maps API is missing. Please add https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&libraries=places script in the HTML head section!");
+				}
+			});
 		},
 
 		methods: {

@@ -63,9 +63,10 @@ describe("fieldColor.vue", function() {
 
 		});
 
+		// Similar: https://github.com/ElemeFE/element/blob/648c498fd9014e14ab15d4481989087f5037794f/test/unit/specs/input-number.spec.js
 		it("model value should be the input value if changed", (done) => {
 			input.value = "#123456";
-			trigger(input, "change");
+			trigger(input, "input");
 
 			vm.$nextTick( () => {
 				expect(model.color).to.be.equal("#123456");

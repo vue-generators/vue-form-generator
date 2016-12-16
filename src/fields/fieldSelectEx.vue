@@ -1,6 +1,6 @@
 <template lang="jade">
 	select.selectpicker(v-model="value", :disabled="disabled", :multiple="schema.multiSelect", :title="schema.placeholder", data-width="100%", :name="schema.inputName")
-		option(:disabled="schema.required", v-if="schema.multiSelect !== true", :value="null", :selected="value == undefined")
+		option(:disabled="schema.required", v-if="schema.multiSelect !== true", :value="null", :selected="value == undefined") {{ schema.selectOptions.noneSelectedText }}
 		option(v-for="item in items", :value="getItemID(item)") {{ getItemName(item) }}
 </template>
 
@@ -45,11 +45,14 @@
 			}
 		},
 
-		ready() {
-			if ($.fn.selectpicker) 
-				$(this.$el).selectpicker("destroy").selectpicker(this.schema.selectOptions);
-			else
-				console.warn("Bootstrap-select library is missing. Please download from https://silviomoreto.github.io/bootstrap-select/ and load the script and CSS in the HTML head section!");
+		mounted() {
+			this.$nextTick(function () {
+				if ($.fn.selectpicker) {
+					$(this.$el).selectpicker("destroy").selectpicker(this.schema.selectOptions);
+				} else {
+					console.warn("Bootstrap-select library is missing. Please download from https://silviomoreto.github.io/bootstrap-select/ and load the script and CSS in the HTML head section!");
+				}
+			});
 
 		},
 

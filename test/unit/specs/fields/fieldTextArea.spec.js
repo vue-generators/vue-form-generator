@@ -43,7 +43,7 @@ describe("fieldTextArea.vue", function() {
 		});
 
 		it("should change rows to 4", (done) => {
-			field.$set("schema.rows", 4); // To be reactive
+			Vue.set(field.schema, "rows", 4);
 			vm.$nextTick( () => {
 				expect(input.rows).to.be.equal(4);
 				done();

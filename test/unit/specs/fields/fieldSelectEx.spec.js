@@ -96,6 +96,7 @@ describe("fieldSelectEx.vue", function() {
 		});
 
 		it("should not be multiple", (done) => {
+			model.city = []; // For multiselect need empty array
 			schema.multiSelect = true;
 			vm.$nextTick( () => {
 				expect(input.multiple).to.be.true;
@@ -120,7 +121,7 @@ describe("fieldSelectEx.vue", function() {
 				{ id: 4, name: "Berlin" }
 			]
 		};
-		let model = { city: 2 };
+		let model = { city: [2] };
 		let input;
 
 		before( () => {
@@ -181,7 +182,7 @@ describe("fieldSelectEx.vue", function() {
 				];
 			}
 		};
-		let model = { city: 2 };
+		let model = { city: [2] };
 		let input;
 
 		before( () => {
