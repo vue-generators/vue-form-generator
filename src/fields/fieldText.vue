@@ -1,5 +1,9 @@
 <template lang="jade">
-	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :maxlength="schema.max", :pattern="schema.pattern", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+    div.inputWrapper(v-if="schema.leftText || schema.rightText" class="clearfix")
+        label.left(v-if="schema.leftText" class="left fl") {{ schema.leftText }}
+        input.form-control(class="left fl" type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :maxlength="schema.max", :pattern="schema.pattern", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+        label.right(class="fl" v-if="schema.rightText") {{ schema.rightText }}
+    input.form-control(v-else type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :maxlength="schema.max", :pattern="schema.pattern", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
 </template>
 
 <script>

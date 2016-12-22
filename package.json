@@ -28,7 +28,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/icebob/vue-form-generator.git"
+    "url": "git+https://github.com/icebob/vue-form-generator.git"
   },
   "files": [
     "dist/vue-form-generator.js",
@@ -97,5 +97,12 @@
   "dependencies": {
     "babel-runtime": "6.11.6",
     "vue": "2.1.3"
+  },
+  "bugs": {
+    "url": "https://github.com/icebob/vue-form-generator/issues"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "test"
   }
 }

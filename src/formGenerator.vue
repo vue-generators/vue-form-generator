@@ -1,20 +1,28 @@
 <template lang="jade">
+mixin renderField(field)
+    label.title
+        | {{ field.label }}
+        span.help(v-if='field.help')
+            i.icon
+            .helpText(v-html='field.help')
+    .field-wrap
+        component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
+        .buttons(v-if='buttonVisibility(field)')
+            button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
+    .hint(v-if='field.hint') {{ field.hint }}
+    .errors(v-if='errorsVisibility(field)')
+        span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
+
 div
-	fieldset.vue-form-generator(v-if='schema != null')
-		template(v-for='field in fields')
-			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
-				label
-					| {{ field.label }}
-					span.help(v-if='field.help')
-						i.icon
-						.helpText(v-html='field.help')
-				.field-wrap
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
-					.buttons(v-if='buttonVisibility(field)')
-						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
-				.hint(v-if='field.hint') {{ field.hint }}
-				.errors(v-if='errorsVisibility(field)')
-					span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
+    fieldset.vue-form-generator(v-if='schema != null')
+        template(v-for='field in fields')
+            .form-section(v-if='field.type=="section"', :class='getFieldRowClasses(field)')
+                template(v-for='field in field.fields')
+                    .form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+                        +renderField(field)
+            .form-group(v-else-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+                +renderField(field)
+
 </template>
 
 <script>
@@ -355,18 +363,18 @@ div
 			// margin: 0.5rem 0.26rem;
 			margin-bottom: 1rem;
 
-			label {
+			label.title {
 				font-weight: 400;
 			}
 
 			&.featured {
-				label {
+				label.title {
 					font-weight: bold;
 				}			
 			}
 
 			&.required {
-				label:after {
+				label.title:after {
 					content: "*";
 					font-weight: normal;
 					color: Red;
@@ -377,7 +385,7 @@ div
 			}
 
 			&.disabled {
-				label {
+				label.title {
 					color: #666;
 					font-style: italic;
 				}			
