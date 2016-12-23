@@ -1,21 +1,10 @@
 <template lang="jade">
-	.wrapper
-		.listbox.form-control(v-if="schema.listBox", :disabled="disabled")
-			.list-row(v-for="item in items")
-				label
-					input(type="checkbox", :checked="getItemIsChecked(item)", :disabled="disabled", @change="onChanged($event, item)")
-					| {{ getItemName(item) }}
 
-		.combobox.form-control(v-if="!schema.listBox", :disabled="disabled")
-			.mainRow(@click="onExpandCombo", :class="{ expanded: comboExpanded }")
-				.info {{ selectedCount }} selected
-				.arrow
+	.checkbox-list(:disabled="disabled")
+		label(v-for="item in items")
+			input(type="checkbox", :checked="getItemIsChecked(item)", :disabled="disabled", @change="onChanged($event, item)")
+			| {{ getItemName(item) }}
 
-			.dropList
-				.list-row(v-if="comboExpanded", v-for="item in items")
-					label
-						input(type="checkbox", :checked="getItemIsChecked(item)", :disabled="disabled", @change="onChanged($event, item)")
-						| {{ getItemName(item) }}
 </template>
 
 <script>
@@ -87,57 +76,11 @@
 
 
 <style lang="sass">
-	.vue-form-generator .field-checklist {
-
-		.listbox, .dropList {
-			height: auto;
-			max-height: 150px;
-			overflow: auto;
-
-			.list-row {
-				label {
-					font-weight: initial;
-				}
-
-				input {
-					margin-right: 0.3em;
-				}
-			}
-		}
-
-		.combobox {
-			height: initial;
-			overflow: hidden;
-
-			.mainRow {
-				cursor: pointer;
-				position: relative;
-		
-				.arrow {
-					position: absolute;
-					right: -6px;
-					top: 4px;
-					width: 16px;
-					height: 16px;
-
-					transform: rotate(0deg);
-					transition: transform 0.5s;
-
-					background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAGdJREFUOI3tzjsOwjAURNGDUqSgTxU5K2AVrJtswjUsgHSR0qdxAZZFPrS+3ZvRzBsqf9MUtBtazJk+oMe0VTriiZCFX8nbpENMgfARjsn74vKj5IFruhfc8d6zIF9S/Hyk5HS4spMVeFcOjszaOwMAAAAASUVORK5CYII=');
-					background-repeat: no-repeat;
-
-				}
-
-				&.expanded {
-					.arrow {
-						transform: rotate(-180deg);
-					}
-				}
-			}
-
-			.dropList {
-				transition: height 0.5s;
-				//margin-top: 0.5em;
+	.checkbox-list {
+		label {
+			display: block;
+			input[type="checkbox"]{
+				margin-right: 10px;
 			}
 		}
 	}

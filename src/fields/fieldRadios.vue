@@ -1,4 +1,5 @@
 <template lang="jade">
+
 	.radio-list(:disabled="disabled")
 		label(v-for="item in items")
 			input(type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)" )
@@ -69,7 +70,7 @@
 			label {
 				display: block;
 				input[type="radio"]{
-					margin-right: 5px;
+					margin-right: 10px;
 				}
 			}
 		}

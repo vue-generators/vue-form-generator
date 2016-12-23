@@ -2,7 +2,7 @@ import { isNil, isNumber, isString, isArray } from "lodash";
 import moment from "moment";
 
 function checkEmpty(value, required) {
-	if (isNil(value) || value === "") {
+	if (isNil(value) || value === "" || value.length == 0) {
 		if (required)
 			return [msg(resources.fieldIsRequired)];
 		else
