@@ -1,5 +1,5 @@
 <template lang="jade">
-	span {{ value }}
+	span {{ schema.value }}
 </template>
 
 <script>
@@ -14,6 +14,6 @@
 	.vue-form-generator .field-label span {
 		display: block;
 		width: 100%;
-		margin-left: 12px;
+		text-align: center;
 	}
 </style>
