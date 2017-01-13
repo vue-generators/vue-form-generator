@@ -108,7 +108,7 @@ div
 					disabled: this.fieldDisabled(field), 
 					readonly: field.readonly, 
 					featured: field.featured, 
-					required: field.required
+					required: this.fieldRequired(field)
 				};
 
 				if (isArray(field.styleClasses)) {
@@ -137,6 +137,17 @@ div
 					return false;
 
 				return field.disabled;
+			},
+
+			// Get required prop of field
+			fieldRequired(field) {
+				if (isFunction(field.required))
+					return field.required(this.model);
+
+				if (isNil(field.required))
+					return false;
+
+				return field.required;
 			},
 
 			// Get visible prop of field

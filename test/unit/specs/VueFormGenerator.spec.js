@@ -306,6 +306,41 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check fieldRequired with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					required(model) { return model.status; }	
+				}
+			]
+		};
+		
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be required", () => {
+			expect(el.querySelector(".form-group").classList.contains("required")).to.be.true;
+		});	
+
+		it("should be optional", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector(".form-group").classList.contains("required")).to.be.false;
+				done();
+			});
+		});	
+
+	});
+
 	describe("check fieldVisible with function", () => {
 		let schema = {
 			fields: [
