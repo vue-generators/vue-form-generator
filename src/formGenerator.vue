@@ -146,11 +146,11 @@ div
 			// Should field type have a label?
 			fieldTypeHasLabel(field) {
 				switch (field.type) {
-					case 'button':
-					case 'submit':
-						return false;
-					default:
-						return true;
+				case "button":
+				case "submit":
+					return false;
+				default:
+					return true;
 				}
 			},
 
