@@ -1,7 +1,8 @@
 <template lang="jade">
 .wrapper
 	input.form-control(
-		:type="schema.inputType", 
+		:id="getFieldID(schema)",
+		:type="schema.inputType",
 		:value="value",
 		@input="value = $event.target.value",
 		number="schema.inputType == 'number'"
@@ -62,12 +63,12 @@
 						return new Date(value).getTime();
 					}
 				}
-				
+
 				return value;
 			}
 		}
 	};
-	
+
 </script>
 
 <style lang="sass">

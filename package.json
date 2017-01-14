@@ -7,7 +7,7 @@
   "scripts": {
     "prebuild": "npm run test",
     "build": "webpack --progress --config webpack.build.config.js",
-    "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
+    "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/ --port 8082",
     "lint": "eslint --ext=.js,.vue src test/unit/specs",
     "coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "npm run test && npm run coverall",
