@@ -1,5 +1,5 @@
 <template lang="jade">
-	input(type="text", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+	input(type="text", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
 </template>
 
 <script>
@@ -15,7 +15,7 @@
 			};
 		},
 
-		watch: { 
+		watch: {
 			model() {
 				if ($.fn.spectrum) {
 					this.picker.spectrum("set", this.value);

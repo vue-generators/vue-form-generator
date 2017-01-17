@@ -145,9 +145,18 @@ div
 
 			// Should field type have a label?
 			fieldTypeHasLabel(field) {
-				switch (field.type) {
+				let relevantType = "";
+				if (field.type === "input") {
+					relevantType = field.inputType;
+				} else {
+					relevantType = field.type;
+				}
+
+				switch (relevantType) {
 				case "button":
+				case "image":
 				case "submit":
+				case "reset":
 					return false;
 				default:
 					return true;

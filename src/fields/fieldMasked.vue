@@ -1,5 +1,5 @@
 <template lang="jade">
-	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
 </template>
 
 <script>
@@ -22,7 +22,7 @@
 		beforeDestroy() {
 			if ($.fn.mask)
 				$(this.$el).unmask();
-		}	
+		}
 	};
 </script>
 
