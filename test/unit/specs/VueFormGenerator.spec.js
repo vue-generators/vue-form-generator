@@ -306,6 +306,76 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check fieldReadonly with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					readonly(model) { return model.status; }	
+				}
+			]
+		};
+		
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be readonly", () => {
+			expect(el.querySelector(".form-group").classList.contains("readonly")).to.be.true;
+		});	
+
+		it("should be writable", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector(".form-group").classList.contains("readonly")).to.be.false;
+				done();
+			});
+		});	
+
+	});
+
+	describe("check fieldFeatured with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "text",		
+					label: "Name", 
+					model: "name", 
+					featured(model) { return model.status; }	
+				}
+			]
+		};
+		
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be featured", () => {
+			expect(el.querySelector(".form-group").classList.contains("featured")).to.be.true;
+		});	
+
+		it("should not be featured", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector(".form-group").classList.contains("featured")).to.be.false;
+				done();
+			});
+		});	
+
+	});
+
 	describe("check fieldRequired with function", () => {
 		let schema = {
 			fields: [
