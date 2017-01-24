@@ -46,10 +46,13 @@
 
 		mounted() {
 			this.$nextTick(() => {
-				if (window.Pikaday){
-					this.picker = new window.Pikaday(defaults(this.schema.pikadayOptions || {}, {
-						field: this.$el, // bind the datepicker to a form field
-						// trigger: , // use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
+				if (window.Pikaday) {
+					var that = this
+					this.picker = new window.Pikaday(defaults({}, this.schema.pikadayOptions, {
+						field: that.$el, // bind the datepicker to a form field
+						onSelect: function(date) {
+							that.value = date
+						}
 					}));
 				} else {
 					console.warn("Pikaday is missing. Please download from https://github.com/dbushell/Pikaday/ and load the script and CSS in the HTML head section!");

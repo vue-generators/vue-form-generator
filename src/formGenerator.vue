@@ -8,7 +8,7 @@ mixin renderField(field)
     .field-wrap
         component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
         .buttons(v-if='buttonVisibility(field)')
-            button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
+            button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes', :ref='btn.ref') {{ btn.label }}
     .hint(v-if='field.hint') {{ field.hint }}
     .errors(v-if='errorsVisibility(field)')
         span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
@@ -16,7 +16,7 @@ mixin renderField(field)
 div
     fieldset.vue-form-generator(v-if='schema != null')
         template(v-for='field in fields')
-            .form-section(v-if='field.type=="section"', :class='getFieldRowClasses(field)')
+            .form-section(v-if='field.type=="section" && fieldVisible(field)', :class='getFieldRowClasses(field)')
                 template(v-for='field in field.fields')
                     .form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
                         +renderField(field)

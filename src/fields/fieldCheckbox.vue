@@ -1,5 +1,9 @@
 <template lang="jade">
-	input(type="checkbox", v-model="value",  :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName")
+	div.input-wrapper(v-if="schema.title" class="clearfix")
+		input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName")
+		a(v-if="schema.href", :href="schema.href") {{ schema.title }}
+		span(v-else) {{ schema.title }}
+	input(v-else type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName")
 </template>
 
 <script>
@@ -11,7 +15,9 @@
 </script>
 
 <style lang="sass">
-	.vue-form-generator .field-checkbox input {
-		margin-left: 12px;
+	.vue-form-generator .field-checkbox {
+	    a, span {
+		    margin: 0 1rem;
+	    }
 	}
 </style>

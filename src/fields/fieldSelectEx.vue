@@ -16,6 +16,10 @@
 			items() {
 				let values = this.schema.values;
 				if (typeof(values) == "function") {
+					var that = this;
+					setTimeout(function() {
+						$(that.$el).selectpicker("refresh");
+					});
 					return values.apply(this, [this.model, this.schema]);
 				} else
 					return values;
@@ -40,8 +44,12 @@
 
 		watch: {
 			model: function() {
-				if ($.fn.selectpicker)
-					$(this.$el).selectpicker("refresh");	
+				if ($.fn.selectpicker) {
+					$(this.$el).selectpicker("refresh");
+				}
+			},
+			value: function(value) {
+				$(this.$el).selectpicker("val", value);
 			}
 		},
 
@@ -53,7 +61,6 @@
 					console.warn("Bootstrap-select library is missing. Please download from https://silviomoreto.github.io/bootstrap-select/ and load the script and CSS in the HTML head section!");
 				}
 			});
-
 		},
 
 		beforeDestroy() {

@@ -20,7 +20,7 @@
 		label {
 			line-height: 48px;
 		}
-		input {
+		input[type=text] {
 			width: 50%;
 		}
 	}

@@ -1,5 +1,5 @@
 <template lang="jade">
-	span {{ schema.value }}
+	span(v-if="schema.value") {{ schema.value }}
 </template>
 
 <script>

@@ -8,6 +8,7 @@
 
 <script>
 	import abstractField from "./abstractField";
+	import { isFunction } from "lodash";
 
 	export default {
 		mixins: [ abstractField ],
@@ -44,6 +45,12 @@
 		watch: {
 			model() {
 				this.$el.querySelector("input.file").value = "";
+			}
+		},
+
+		mounted() {
+			if (isFunction(this.schema.mounted)) {
+				this.schema.mounted(this.$el)
 			}
 		},
 
