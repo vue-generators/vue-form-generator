@@ -112,11 +112,12 @@
 			.mainRow {
 				cursor: pointer;
 				position: relative;
+				padding-right: 10px;
 		
 				.arrow {
 					position: absolute;
-					right: -6px;
-					top: 4px;
+					right: -9px;
+					top: 3px;
 					width: 16px;
 					height: 16px;
 

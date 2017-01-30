@@ -393,13 +393,13 @@ div
 			}
 
 			&.featured {
-				label {
+				> label {
 					font-weight: bold;
 				}			
 			}
 
 			&.required {
-				label:after {
+				> label:after {
 					content: "*";
 					font-weight: normal;
 					color: Red;
@@ -410,7 +410,7 @@ div
 			}
 
 			&.disabled {
-				label {
+				> label {
 					color: #666;
 					font-style: italic;
 				}			
