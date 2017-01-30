@@ -2,7 +2,7 @@ import moment from "moment";
 
 import {
 	validators
-} from "../src";
+} from "../../src";
 
 module.exports = {
 	fields: [

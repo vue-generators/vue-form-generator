@@ -27,7 +27,7 @@
 
 <script>
 	import Vue from "vue";
-	import VueFormGenerator from "../src";
+	import VueFormGenerator from "../../src";
 	import DataTable from "./dataTable.vue";
 	import Fakerator from "fakerator";
 

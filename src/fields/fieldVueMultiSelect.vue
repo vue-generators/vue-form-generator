@@ -98,7 +98,7 @@
 		created() {
 			// Check if the component is loaded
 			if (window.VueMultiselect) {
-				Vue.component("multiselect", window.VueMultiselect.default);
+				Vue.component("multiselect", window.VueMultiselect.default ? window.VueMultiselect.default : window.VueMultiselect);
 			} else {
 				console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and load the script in the HTML head section!");
 			}
