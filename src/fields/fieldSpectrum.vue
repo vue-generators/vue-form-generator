@@ -17,7 +17,7 @@
 
 		watch: { 
 			model() {
-				if ($.fn.spectrum) {
+				if (window.$ && window.$.fn.spectrum) {
 					this.picker.spectrum("set", this.value);
 				}
 			},
@@ -32,7 +32,7 @@
 
 		mounted() {
 			this.$nextTick(function () {
-				if ($.fn.spectrum) {
+				if (window.$ && window.$.fn.spectrum) {
 					this.picker = $(this.$el).spectrum("destroy").spectrum(defaults(this.schema.colorOptions || {}, {
 						showInput: true,
 						showAlpha: true,

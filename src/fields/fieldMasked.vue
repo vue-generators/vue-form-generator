@@ -11,7 +11,7 @@
 
 		mounted() {
 			this.$nextTick(function () {
-				if ($.fn.mask) {
+				if (window.$ && window.$.fn.mask) {
 					$(this.$el).unmask().mask(this.schema.mask, this.schema.maskOptions);
 				} else {
 					console.warn("JQuery MaskedInput library is missing. Please download from https://github.com/digitalBush/jquery.maskedinput and load the script in the HTML head section!");
@@ -20,7 +20,7 @@
 		},
 
 		beforeDestroy() {
-			if ($.fn.mask)
+			if (window.$ && window.$.fn.mask)
 				$(this.$el).unmask();
 		}	
 	};

@@ -48,7 +48,7 @@
 
 		mounted() {
 			this.$nextTick(function () {
-				if ($.fn.datetimepicker) {
+				if (window.$ && window.$.fn.datetimepicker) {
 					$(this.$el).datetimepicker(defaults(this.schema.dateTimePickerOptions || {}, {
 						format: inputFormat
 					}));
@@ -59,7 +59,7 @@
 		},
 
 		beforeDestroy() {
-			if ($.fn.datetimepicker){
+			if (window.$ && window.$.fn.datetimepicker){
 				$(this.$el).data("DateTimePicker").destroy();
 			}
 		}		

@@ -18,7 +18,7 @@
 
 		watch: {
 			model: function() {
-				if ($.fn.ionRangeSlider) {
+				if (window.$ && window.$.fn.ionRangeSlider) {
 					let valueFrom, valueTo;
 					if (isArray(this.value)) {
 						[ valueFrom, valueTo ] = this.value;
@@ -37,7 +37,7 @@
 
 		mounted() {
 			this.$nextTick(function () {
-				if ($.fn.ionRangeSlider) {
+				if (window.$ && window.$.fn.ionRangeSlider) {
 					let valueFrom, valueTo;
 					if (isArray(this.value)) {
 						[ valueFrom, valueTo ] = this.value;
