@@ -40,10 +40,18 @@ You can find details about dependencies in [documentation](https://icebob.gitboo
 
 ## Installation
 ### NPM
-You can install it via [NPM](http://npmjs.org/).
+You can install it via [NPM](http://npmjs.org/) or [yarn](https://yarnpkg.com/).
+
+#### Latest version for Vue 2.x
 ```
 $ npm install vue-form-generator
 ```
+
+#### Legacy version for Vue 1.0.x
+```
+$ npm install vue-form-generator@0.6.1
+```
+
 ### Manual
 Download zip package and unpack and add the `vue-form-generator.css` and `vue-form-generator.js` file to your project from dist folder.
 ```
@@ -140,8 +148,10 @@ npm run build
 ```bash
 npm test
 ```
-
-See: https://github.com/icebob/vue-form-generator/projects/1
+or 
+```bash
+npm run ci
+```
 
 ## Contribution
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
