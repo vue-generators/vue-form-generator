@@ -4,7 +4,7 @@
 		:options="options",
 		:multiple="schema.multiSelect",
 		:value="value",
-		:key="selectOptions.key || null",
+		:track-by="selectOptions.trackBy || null",
 		:label="selectOptions.label || null",
 		:searchable="selectOptions.searchable",
 		:local-search="selectOptions.localSearch",
