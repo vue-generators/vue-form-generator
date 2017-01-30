@@ -118,9 +118,9 @@ div
 				let baseClasses = {
 					error: field.errors && field.errors.length > 0, 
 					disabled: this.fieldDisabled(field), 
-					readonly: field.readonly, 
-					featured: field.featured, 
-					required: field.required
+					readonly: this.fieldReadonly(field), 
+					featured: this.fieldFeatured(field), 
+					required: this.fieldRequired(field)
 				};
 
 				if (isArray(field.styleClasses)) {
@@ -151,6 +151,17 @@ div
 				return field.disabled;
 			},
 
+			// Get required prop of field
+			fieldRequired(field) {
+				if (isFunction(field.required))
+					return field.required(this.model);
+
+				if (isNil(field.required))
+					return false;
+
+				return field.required;
+			},
+
 			// Get visible prop of field
 			fieldVisible(field) {
 				if (isFunction(field.visible))
@@ -161,6 +172,28 @@ div
 
 				return field.visible;
 			},		
+
+			// Get readonly prop of field
+			fieldReadonly(field) {
+				if (isFunction(field.readonly))
+					return field.readonly(this.model);
+
+				if (isNil(field.readonly))
+					return false;
+
+				return field.readonly;
+			},		
+
+			// Get featured prop of field
+			fieldFeatured(field) {
+				if (isFunction(field.featured))
+					return field.featured(this.model);
+
+				if (isNil(field.featured))
+					return false;
+
+				return field.featured;
+			},
 
 			// Validating the model properties
 			validate() {
