@@ -1,3 +1,14 @@
+<a name="2.0.0-beta3"></a>
+# 2.0.0-beta3 (2017-02-10)
+
+* :package: build ([dfe78a0](https://github.com/icebob/vue-form-generator/commit/dfe78a0))
+* bump version ([665d6c1](https://github.com/icebob/vue-form-generator/commit/665d6c1))
+* fix nested models ([3e8d1a1](https://github.com/icebob/vue-form-generator/commit/3e8d1a1))
+* remove unused codes ([ce999d0](https://github.com/icebob/vue-form-generator/commit/ce999d0))
+* update changelog ([8636178](https://github.com/icebob/vue-form-generator/commit/8636178))
+
+
+
 <a name="2.0.0-beta2"></a>
 # 2.0.0-beta2 (2017-01-30)
 
