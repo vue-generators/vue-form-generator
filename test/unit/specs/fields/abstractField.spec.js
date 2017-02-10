@@ -55,6 +55,34 @@ describe("abstractField.vue", function() {
 
 	});
 	
+	describe("check nested value", () => {
+		let schema = {
+			type: "text",
+			label: "Name",
+			model: "user.name"
+		};
+		let model = { 
+			user: {
+				name: "John Doe" 
+			}
+		};
+
+		beforeEach( () => {
+			createField(this, schema, model);
+		});
+
+		it("should give the model static value", () => {
+			expect(field).to.be.exist;
+			expect(field.value).to.be.equal("John Doe");
+		});
+
+		it("should set new value to model if value changed", () => {
+			field.value = "Foo Bar";
+			expect(model.user.name).to.be.equal("Foo Bar");
+		});
+
+	});
+
 	describe("check value as get/set function", () => {
 		let schema = {
 			type: "text",

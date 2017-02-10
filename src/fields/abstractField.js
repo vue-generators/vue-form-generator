@@ -1,4 +1,5 @@
-import { each, isFunction, isString, isArray, isUndefined } from "lodash";
+import Vue from "vue";
+import { get as objGet, set as objSet, each, isFunction, isString, isArray, isUndefined } from "lodash";
 
 export default {
 	props: [
@@ -16,7 +17,7 @@ export default {
 					val = this.schema.get(this.model);
 
 				else if (this.model && this.schema.model)
-					val = this.model[this.schema.model];
+					val = objGet(this.model, this.schema.model);
 
 				if (isFunction(this.formatValueToField))
 					val = this.formatValueToField(val);
@@ -35,7 +36,8 @@ export default {
 					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
 
 				} else if (this.schema.model) {
-					this.$set(this.model, this.schema.model, newValue);
+					objSet(this.model, this.schema.model, newValue);
+
 					// console.log("model-updated via normal", this.model[this.schema.model]);
 					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
 				}
