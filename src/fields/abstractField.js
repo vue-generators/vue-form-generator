@@ -1,4 +1,3 @@
-import Vue from "vue";
 import { get as objGet, set as objSet, each, isFunction, isString, isArray, isUndefined } from "lodash";
 
 export default {
