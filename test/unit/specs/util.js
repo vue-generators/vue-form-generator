@@ -13,7 +13,9 @@ export function trigger (el, event, args) {
 
 	// Due to Firefox bug, events fired on disabled
 	// non-attached form controls can throw errors
-	try { el.dispatchEvent(e); } catch (e) {
+	try { 
+		el.dispatchEvent ? el.dispatchEvent(e) : el.fireEvent("on" + event, e);		
+	} catch (e) {
 		// Ignored
 	}
 }
@@ -32,19 +34,18 @@ export function createVueField(test, type, schema = {}, model = null, disabled =
 	let el = document.createElement("fieldset");		
 	el.className = "vue-form-generator";
 	container.appendChild(el);
-	el.innerHTML = `<${elName} :schema.sync="schema" :model.sync="model" :disabled="disabled" v-ref:field></${elName}>`;
 	let vm = new Vue({
-		el: el,
+		template: `<div><${elName} :schema="schema" :model="model" :disabled="disabled" ref="field"></${elName}></div>`,
 		data: {
 			schema,
 			model,
 			disabled,
 			options
 		}
-	});
+	}).$mount(el);
 	let field = vm.$refs.field;
 
-	return [el, vm, field];
+	return [vm.$el, vm, field];
 }
 
 export let attributesList = {
@@ -67,14 +68,14 @@ export function checkAttribute(name, vm, input, field, schema, done) {
 		schematic = schema;
 	}
 
-	vm.$set("schema." + name, attr.before);
+	Vue.set(vm.schema, name, attr.before);
 	vm.$nextTick(() => {
 		if (attr.name) {
 			expect(input[attr.name]).to.be.equal(schematic[name]);
 		} else {
 			expect(input[name]).to.be.equal(schematic[name]);
 		}
-		vm.$set("schema." + name, attr.after);
+		Vue.set(vm.schema, name, attr.after);
 		return done();
 	});
 }

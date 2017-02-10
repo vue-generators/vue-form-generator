@@ -73,8 +73,9 @@
 
 				if (event.target.checked)
 					this.value.push(this.getItemID(item));
-				else
-					this.value.$remove(this.getItemID(item));
+				else {
+					this.value.splice(this.value.indexOf(this.getItemID(item)), 1);
+				}
 			},
 
 			onExpandCombo() {
@@ -111,11 +112,12 @@
 			.mainRow {
 				cursor: pointer;
 				position: relative;
+				padding-right: 10px;
 		
 				.arrow {
 					position: absolute;
-					right: -6px;
-					top: 4px;
+					right: -9px;
+					top: 3px;
 					width: 16px;
 					height: 16px;
 

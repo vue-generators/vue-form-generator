@@ -69,20 +69,22 @@
 			}
 		},
 
-		ready() {
-			if (window.noUiSlider) {
-				this.slider = this.$el;
-				window.noUiSlider.create(this.slider, defaults(this.schema.noUiSliderOptions || {}, {
-					start: this.getStartValue(),
-					range: {
-						"min": this.schema.min,
-						"max": this.schema.max
-					}
-				}));
-				this.slider.noUiSlider.on("change", this.onChange.bind(this));
-			} else {
-				console.warn("noUiSlider is missing. Please download from https://github.com/leongersen/noUiSlider and load the script and CSS in the HTML head section!");
-			}
+		mounted() {
+			this.$nextTick(function () {
+				if (window.noUiSlider) {
+					this.slider = this.$el;
+					window.noUiSlider.create(this.slider, defaults(this.schema.noUiSliderOptions || {}, {
+						start: this.getStartValue(),
+						range: {
+							"min": this.schema.min,
+							"max": this.schema.max
+						}
+					}));
+					this.slider.noUiSlider.on("change", this.onChange.bind(this));
+				} else {
+					console.warn("noUiSlider is missing. Please download from https://github.com/leongersen/noUiSlider and load the script and CSS in the HTML head section!");
+				}
+			});
 		},
 
 		beforeDestroy() {

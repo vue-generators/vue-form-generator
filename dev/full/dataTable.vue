@@ -25,7 +25,7 @@
 
 <script>
 	import Vue from "vue";
-	import VueFormGenerator from "../src";
+	import VueFormGenerator from "../../src";
 	import Schema from "./schema";
 	import { find } from "lodash";
 	import { users, roles } from "./data";

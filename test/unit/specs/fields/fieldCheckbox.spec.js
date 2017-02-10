@@ -64,7 +64,7 @@ describe("FieldCheckbox.vue", function() {
 
 		it("model value should be the input value if changed", (done) => {
 			input.checked = true;
-			trigger(input, "change");
+			trigger(input, "click");
 
 			vm.$nextTick( () => {
 				expect(model.status).to.be.true;

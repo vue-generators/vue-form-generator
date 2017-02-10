@@ -84,7 +84,7 @@ describe("fieldCleave.vue", function() {
 		it("should be formatted data in model", (done) => {
 			field.cleave.setRawValue("301234567");
 			expect(input.value).to.be.equal("30 123 4567");
-			trigger(input, "change");
+			trigger(input, "input");
 
 			vm.$nextTick( () => {
 				expect(model.phone).to.be.equal("30 123 4567");

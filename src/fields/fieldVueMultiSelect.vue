@@ -3,8 +3,8 @@
 		:id="selectOptions.id",
 		:options="options",
 		:multiple="schema.multiSelect",
-		:selected="value",
-		:key="selectOptions.key || null",
+		:value="value",
+		:track-by="selectOptions.trackBy || null",
 		:label="selectOptions.label || null",
 		:searchable="selectOptions.searchable",
 		:local-search="selectOptions.localSearch",
@@ -19,7 +19,7 @@
 		:taggable="selectOptions.taggable",
 		:tag-placeholder="selectOptions.tagPlaceholder",
 		:max="schema.max || null",
-		@update="updateSelected",
+		@input="updateSelected",
 		@tag="addTag",
 		@select="onSelect",
 		@remove="onRemove",
@@ -57,7 +57,7 @@
 				} else {
 					return values;
 				}
-			},			
+			},
 			customLabel(){
 				if (typeof this.schema.selectOptions !== "undefined" && typeof this.schema.selectOptions.customLabel !== "undefined" && this.schema.selectOptions.customLabel === "function") {
 					return this.schema.selectOptions.customLabel;
@@ -98,7 +98,7 @@
 		created() {
 			// Check if the component is loaded
 			if (window.VueMultiselect) {
-				Vue.component("multiselect", window.VueMultiselect.default);
+				Vue.component("multiselect", window.VueMultiselect.default ? window.VueMultiselect.default : window.VueMultiselect);
 			} else {
 				console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and load the script in the HTML head section!");
 			}

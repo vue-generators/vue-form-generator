@@ -61,10 +61,10 @@ describe("fieldNumber.vue", function() {
 		});
 
 		it("check step attribute", (done) => {
-			vm.$set("schema.step", 0.1);
+			Vue.set(vm.schema, "step", 0.1);
 			vm.$nextTick(() => {
 				expect(input.step).to.be.equal("0.1");
-				vm.$set("schema.step", null);
+				Vue.set(vm.schema, "step", 0);
 				done();
 			});
 		});
