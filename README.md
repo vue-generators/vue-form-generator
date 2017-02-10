@@ -159,6 +159,6 @@ vue-form-generator is available under the [MIT license](https://tldrlegal.com/li
 
 ## Contact
 
-Copyright (C) 2016 Icebob
+Copyright (C) 2017 Icebob
 
 [![@icebob](https://img.shields.io/badge/github-icebob-green.svg)](https://github.com/icebob) [![@icebob](https://img.shields.io/badge/twitter-Icebobcsi-blue.svg)](https://twitter.com/Icebobcsi)
