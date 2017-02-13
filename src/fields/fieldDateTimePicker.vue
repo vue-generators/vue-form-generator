@@ -8,7 +8,7 @@
 <script>
 	/* global $ */
 	import abstractField from "./abstractField";
-	import moment from "moment";
+	import moment from "moment/min/moment.min";
 	import { defaults } from "lodash";
 
 	let inputFormat = "YYYY-MM-DD HH:mm:ss";

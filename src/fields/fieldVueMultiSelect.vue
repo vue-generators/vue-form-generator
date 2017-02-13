@@ -40,7 +40,6 @@
 	)
 </template>
 <script>
-	import Vue from "vue";
 	import abstractField from "./abstractField";
 
 	export default {
@@ -96,11 +95,9 @@
 			}
 		},
 		created() {
-			// Check if the component is loaded
-			if (window.VueMultiselect) {
-				Vue.component("multiselect", window.VueMultiselect.default ? window.VueMultiselect.default : window.VueMultiselect);
-			} else {
-				console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and load the script in the HTML head section!");
+			// Check if the component is loaded globally
+			if (!this.$root.$options.components["multiselect"]) {
+				console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and register the component globally!");
 			}
 		}
 	};
