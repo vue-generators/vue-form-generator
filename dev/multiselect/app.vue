@@ -5,14 +5,11 @@
 </template>
 
 <script>
+import Vue from "vue";
 import Multiselect from "vue-multiselect"
-window.VueMultiselect = Multiselect
+Vue.component("multiselect", Multiselect);
 
 export default {
-	components: { 
-		Multiselect 
-	},
-
 	data () {
 		return {
 			model: {
