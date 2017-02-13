@@ -1,5 +1,8 @@
 import { isNil, isNumber, isString, isArray } from "lodash";
-import moment from "moment/min/moment.min";
+import format from "date-fns/format";
+import isAfter from "date-fns/is_after";
+import isBefore from "date-fns/is_before";
+import isValid from "date-fns/is_valid";
 
 function checkEmpty(value, required) {
 	if (isNil(value) || value === "") {
@@ -130,24 +133,20 @@ module.exports = {
 	date(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
-		let m = moment(value);
-		if (!m.isValid()) 
+		let dateToCompare=new Date(value);
+		if (!isValid(dateToCompare))
 			return [msg(resources.invalidDate)];
 
 		let err = [];
-
 		if (!isNil(field.min)) {
-			let min = moment(field.min);
-			if (m.isBefore(min))
-				err.push(msg(resources.dateIsEarly, m.format("L"), min.format("L")));
+			if (isBefore(dateToCompare,field.min))
+				err.push(msg(resources.dateIsEarly, format(dateToCompare,"L"), format(dateToCompare,"L")));
 		}
 
 		if (!isNil(field.max)) {
-			let max = moment(field.max);
-			if (m.isAfter(max))
-				err.push(msg(resources.dateIsLate, m.format("L"), max.format("L")));
+			if (isAfter(dateToCompare,field.max))
+				err.push(msg(resources.dateIsLate, format(dateToCompare,"L"), format(dateToCompare,"L")));
 		}
-
 		return err;
 	},
 

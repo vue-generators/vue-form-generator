@@ -4,7 +4,8 @@
 
 <script>
 	import abstractField from "./abstractField";
-	import moment from "moment/min/moment.min";
+	import format from "date-fns/format";
+	import parseDate from "date-fns/parse";
 	import { defaults } from "lodash";
 
 	let inputFormat = "YYYY-MM-DD";
@@ -25,19 +26,20 @@
 			},
 
 			formatValueToField(value) {
-				if (value != null)
-					return moment(value, this.schema.format).format(this.getDateFormat());
-
+				if (value != null){
+					let dateFormat = this.schema.format || this.getDateFormat();
+					return format(value, dateFormat);
+				}
 				return value;
 			},
 
 			formatValueToModel(value) {
 				if (value != null) {
-					let m = moment(value, this.getDateFormat());
+					let date = parseDate(value);
 					if (this.schema.format)
-						value = m.format(this.schema.format);
+						value = format(value, this.schema.format);
 					else
-						value = m.toDate().valueOf();
+                        value = date.valueOf();
 				}
 				return value;
 			}
