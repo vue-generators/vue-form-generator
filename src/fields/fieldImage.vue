@@ -17,7 +17,7 @@
 				if (this.schema.preview !== false) {
 					return {
 						display: "block",
-						"background-image": "url(" + this.value + ")"
+						"background-image": this.value != null ? "url(" + this.value + ")" : "none"
 					};
 				} else {
 					return {
