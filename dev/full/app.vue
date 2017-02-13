@@ -35,6 +35,9 @@
 	import { users } from "./data";
 	import { filters } from "./utils";
 
+	import Multiselect from "vue-multiselect"
+	Vue.component("multiselect", Multiselect);	
+
 	// Test custom field
 	import FieldAwesome from "./fieldAwesome.vue";
 	Vue.component("fieldAwesome", FieldAwesome);
