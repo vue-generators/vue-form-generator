@@ -82,13 +82,11 @@ div
 		watch: {
 			// new model loaded
 			model: function(newModel, oldModel) {
-				if (oldModel == newModel) // model got a new property, skip
+				if (oldModel == newModel) // model property changed, skip
 					return;
 
 				if (newModel != null) {
 					this.$nextTick(() => {
-
-						// console.log("Model changed!", oldModel, newModel);
 						// Model changed!
 						if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 							this.validate();
@@ -197,13 +195,11 @@ div
 
 			// Validating the model properties
 			validate() {
-				// console.log("Validate!", this.model);
 				this.clearValidationErrors();
 
 				each(this.$children, (child) => {
 					if (isFunction(child.validate))
 					{
-						// console.log("Validate ", child.model)
 						let err = child.validate();
 						each(err, (err) => {
 							this.errors.push({
@@ -225,12 +221,15 @@ div
 					child.clearValidationErrors();
 				});				
 			},
+
 			modelUpdated(newVal, schema){
 				this.$emit("model-updated", newVal, schema);
 			},
+
 			buttonVisibility(field) {
 				return field.buttons && field.buttons.length > 0;
 			},
+			
 			errorsVisibility(field) {
 				return field.errors && field.errors.length > 0;
 			}
