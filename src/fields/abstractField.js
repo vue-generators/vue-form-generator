@@ -31,14 +31,11 @@ export default {
 
 				if (isFunction(this.schema.set)) {
 					this.schema.set(this.model, newValue);
-					// console.log("model-updated via schema", this.model[this.schema.model]);
-					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
+					this.$emit("model-updated", newValue, this.schema.model);
 
 				} else if (this.schema.model) {
 					this.setModelValueByPath(this.schema.model, newValue);
-
-					// console.log("model-updated via normal", this.model[this.schema.model]);
-					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
+					this.$emit("model-updated", newValue, this.schema.model);
 				}
 			}
 		}
@@ -93,7 +90,7 @@ export default {
 
 		clearValidationErrors() {
 			if (isUndefined(this.schema.errors))
-				this.$set(this.schema, "errors", []); // Be reactive
+				this.$root.$set(this.schema, "errors", []); // Be reactive
 			else
 				this.schema.errors.splice(0); // Clear
 		},

@@ -191,7 +191,6 @@
 
 			modelUpdated(newVal, schema) {
 				console.log("main model has updated", newVal, schema);
-				// this.model[schema] = newVal;
 			}
 
 			 

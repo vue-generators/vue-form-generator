@@ -226,7 +226,6 @@ div
 				});				
 			},
 			modelUpdated(newVal, schema){
-				// console.log("a child model has updated", newVal, schema);
 				this.$emit("model-updated", newVal, schema);
 			},
 			buttonVisibility(field) {
