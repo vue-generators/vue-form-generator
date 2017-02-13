@@ -1,4 +1,4 @@
-import { get as objGet, set as objSet, each, isFunction, isString, isArray, isUndefined } from "lodash";
+import { get as objGet, each, isFunction, isString, isArray, isUndefined } from "lodash";
 
 export default {
 	props: [
@@ -35,7 +35,7 @@ export default {
 					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
 
 				} else if (this.schema.model) {
-					objSet(this.model, this.schema.model, newValue);
+					this.setModelValueByPath(this.schema.model, newValue);
 
 					// console.log("model-updated via normal", this.model[this.schema.model]);
 					this.$emit("model-updated", this.model[this.schema.model], this.schema.model);
@@ -96,6 +96,38 @@ export default {
 				this.$set(this.schema, "errors", []); // Be reactive
 			else
 				this.schema.errors.splice(0); // Clear
+		},
+
+		setModelValueByPath(path, value) {
+			// convert array indexes to properties
+			let s = path.replace(/\[(\w+)\]/g, ".$1");
+			
+			// strip a leading dot
+			s = s.replace(/^\./, "");
+
+			let o = this.model;
+			const a = s.split(".");
+			let i = 0;
+			const n = a.length;
+			while (i < n) {
+				let k = a[i];
+				if (i < n - 1)
+					if (o[k] !== undefined) {
+						// Found parent property. Step in
+						o = o[k];
+					} else {
+						// Create missing property (new level)
+						this.$root.$set(o, k, {});
+						o = o[k];
+					}
+				else {
+					// Set final property value
+					this.$root.$set(o, k, value);
+					return;
+				}
+				
+				++i;
+			}
 		}
 	}
 };
