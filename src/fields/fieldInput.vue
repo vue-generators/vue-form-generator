@@ -37,7 +37,7 @@
 
 <script>
 	import abstractField from "./abstractField";
-	import moment from "moment";
+	import moment from "moment/min/moment.min";
 
 	export default {
 		mixins: [ abstractField ],

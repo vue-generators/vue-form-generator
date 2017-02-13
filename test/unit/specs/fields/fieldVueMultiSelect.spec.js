@@ -3,8 +3,10 @@ import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
 import fieldVueMultiSelect from "src/fields/fieldVueMultiSelect.vue";
+import VueMultiSelect from "vue-multiselect";
 
 Vue.component("fieldVueMultiSelect", fieldVueMultiSelect);
+Vue.component("multiselect", VueMultiSelect);
 
 // eslint-disable-next-line
 let el, vm, field;

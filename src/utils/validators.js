@@ -1,5 +1,5 @@
 import { isNil, isNumber, isString, isArray } from "lodash";
-import moment from "moment";
+import moment from "moment/min/moment.min";
 
 function checkEmpty(value, required) {
 	if (isNil(value) || value === "") {
