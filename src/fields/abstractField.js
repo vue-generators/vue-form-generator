@@ -25,7 +25,6 @@ export default {
 			},
 
 			set(newValue) {
-				// console.log("Model value changed!", newValue);
 				if (isFunction(this.formatValueToModel))
 					newValue = this.formatValueToModel(newValue);
 
@@ -43,7 +42,6 @@ export default {
 
 	watch: {
 		value(newVal, oldVal) {
-			// console.log("Changed", newVal, oldVal);
 			if (isFunction(this.schema.onChanged)) {
 				this.schema.onChanged(this.model, newVal, oldVal, this.schema);
 			}
