@@ -37,7 +37,7 @@
 
 <script>
 	import abstractField from "./abstractField";
-	import moment from "moment/min/moment.min";
+	import format from "date-fns/format";
 
 	export default {
 		mixins: [ abstractField ],
@@ -45,11 +45,11 @@
 			formatValueToField(value) {
 				switch(this.schema.inputType){
 				case "date":
-					return moment(value).format("YYYY-MM-DD");
+					return format(new Date(value), "YYYY-MM-DD");
 				case "datetime":
-					return moment(value).format();
+					return format(new Date(value));
 				case "datetime-local":
-					return moment(value).format("YYYY-MM-DDTHH:mm:ss");
+					return format(new Date(value), "YYYY-MM-DDTHH:mm:ss");
 				default:
 					return value;
 				}
