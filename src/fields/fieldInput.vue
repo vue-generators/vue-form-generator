@@ -43,15 +43,17 @@
 		mixins: [ abstractField ],
 		methods: {
 			formatValueToField(value) {
-				switch(this.schema.inputType){
-				case "date":
-					return fecha.format(value, "YYYY-MM-DD");
-				case "datetime":
-					return fecha.format(value);
-				case "datetime-local":
-					return fecha.format(value, "YYYY-MM-DDTHH:mm:ss");
-				default:
-					return value;
+				if (value != null) {
+					switch(this.schema.inputType){
+					case "date":
+						return fecha.format(value, "YYYY-MM-DD");
+					case "datetime":
+						return fecha.format(value);
+					case "datetime-local":
+						return fecha.format(value, "YYYY-MM-DDTHH:mm:ss");
+					default:
+						return value;
+					}
 				}
 			},
 			formatValueToModel(value) {
