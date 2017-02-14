@@ -8,7 +8,7 @@
 <script>
 	/* global $ */
 	import abstractField from "./abstractField";
-	import moment from "moment/min/moment.min";
+	import fecha from "fecha";
 	import { defaults } from "lodash";
 
 	let inputFormat = "YYYY-MM-DD HH:mm:ss";
@@ -26,19 +26,21 @@
 			},
 
 			formatValueToField(value) {
-				if (value != null)
-					return moment(value, this.schema.format).format(this.getDateFormat());
+				if (value != null) {
+					let dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
+					return fecha.format(dt, this.getDateFormat());
+				}
 
 				return value;
 			},
 
 			formatValueToModel(value) {
 				if (value != null) {
-					let m = moment(value, this.getDateFormat());
+					let m = fecha.parse(value, this.getDateFormat());
 					if (this.schema.format)
-						value = m.format(this.schema.format);
+						value = fecha.format(m, this.schema.format);
 					else
-						value = m.toDate().valueOf();
+						value = m.valueOf();
 				}
 
 				return value;
