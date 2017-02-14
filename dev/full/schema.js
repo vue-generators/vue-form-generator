@@ -536,7 +536,7 @@ module.exports = {
 			required: true,
 			placeholder: "User's birth of date",
 			min: moment("1900-01-01").toDate(),
-			max: moment("2016-01-01").toDate(),
+			max: moment("2018-01-01").toDate(),
 			validator: [
 				validators.date
 			],
