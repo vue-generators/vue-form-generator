@@ -774,7 +774,7 @@ module.exports = {
 				"VueJS"
 			],
 			onChanged(model, newVal, oldVal, field) {
-				console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
+				console.log(`Model's skills changed from ${oldVal} to ${newVal}. Model:`, model);
 			},
 			max: 4,
 			placeholder: "placeholder",

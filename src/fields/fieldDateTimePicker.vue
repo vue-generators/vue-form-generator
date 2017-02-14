@@ -8,8 +8,8 @@
 <script>
 	/* global $ */
 	import abstractField from "./abstractField";
-	import fecha from "fecha";
 	import { defaults } from "lodash";
+	import dateFieldHelper from "../utils/dateFieldHelper";
 
 	let inputFormat = "YYYY-MM-DD HH:mm:ss";
 
@@ -25,35 +25,18 @@
 					return inputFormat;
 			},
 
-			formatValueToField(value) {
-				if (value != null) {
-					let dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
-					return fecha.format(dt, this.getDateFormat());
-				}
-
-				return value;
-			},
-
-			formatValueToModel(value) {
-				if (value != null) {
-					let m = fecha.parse(value, this.getDateFormat());
-					if (this.schema.format)
-						value = fecha.format(m, this.schema.format);
-					else
-						value = m.valueOf();
-				}
-
-				return value;
-			}
-
+			...dateFieldHelper
 		},
 
 		mounted() {
 			this.$nextTick(function () {
 				if (window.$ && window.$.fn.datetimepicker) {
+					let input = this.$el.querySelector(".form-control");
 					$(this.$el).datetimepicker(defaults(this.schema.dateTimePickerOptions || {}, {
 						format: inputFormat
-					}));
+					})).on("dp.change", e => {
+						this.value = this.$el.querySelector(".form-control").value;
+					});
 				} else {
 					console.warn("Bootstrap datetimepicker library is missing. Please download from https://eonasdan.github.io/bootstrap-datetimepicker/ and load the script and CSS in the HTML head section!");
 				}
