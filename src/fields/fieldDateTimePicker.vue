@@ -34,8 +34,8 @@
 					let input = this.$el.querySelector(".form-control");
 					$(this.$el).datetimepicker(defaults(this.schema.dateTimePickerOptions || {}, {
 						format: inputFormat
-					})).on("dp.change", e => {
-						this.value = this.$el.querySelector(".form-control").value;
+					})).on("dp.change", () => {
+						this.value = input.value;
 					});
 				} else {
 					console.warn("Bootstrap datetimepicker library is missing. Please download from https://eonasdan.github.io/bootstrap-datetimepicker/ and load the script and CSS in the HTML head section!");

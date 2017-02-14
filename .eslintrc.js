@@ -5,11 +5,15 @@ module.exports = {
         "commonjs": true,
         "es6": true,
         "jquery": false,
-        mocha: true
+        "mocha": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaVersion": 6,
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true
+        }
     },
     "plugins": [
         "html"
