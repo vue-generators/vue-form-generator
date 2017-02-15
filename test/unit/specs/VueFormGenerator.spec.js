@@ -52,7 +52,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{
-					type: "text",
+					type: "input",
+					inputType: "text",
 					label: "Name",
 					model: "name",
 					readonly: false,
@@ -71,7 +72,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be minimal classes", () => {
 			expect(group.classList.length).to.be.equal(2);
 			expect(group.classList.contains("form-group")).to.be.true;
-			expect(group.classList.contains("field-text")).to.be.true;
+			expect(group.classList.contains("field-input")).to.be.true;
 		});
 
 		it("should be featured class", (done) => {
@@ -138,7 +139,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{
-					type: "text",
+					type: "input", 
+					inputType: "text",
 					label: "Name",
 					model: "name",
 					help: null
@@ -176,7 +178,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{
-					type: "text",
+					type: "input", 
+					inputType: "text",
 					label: "Name",
 					model: "name",
 					hint: "Hint text",
