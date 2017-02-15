@@ -1,5 +1,5 @@
 import Fakerator from "fakerator";
-import moment from "moment";
+import fecha from "fecha";
 
 let fakerator = new Fakerator();
 
@@ -26,8 +26,8 @@ module.exports = {
 			user.bio = fakerator.lorem.paragraph();
 			let dob = fakerator.date.past(40, "1998-01-01");
 			user.dob = dob.valueOf();
-			user.time = moment().format("hh:mm:ss");
-			user.age = moment().year() - moment(dob).year();
+			user.time = fecha.format(new Date(), "hh:mm:ss");
+			user.age = fecha.format(new Date().getFullYear() - dob, "YY");
 			user.rank = fakerator.random.number(1, 10);
 			user.role = fakerator.random.arrayElement(roles).id;
 			//user.mobile = fakerator.phone.phoneNumber();
