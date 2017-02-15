@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldSwitch from "src/fields/fieldSwitch.vue";
+import FieldSwitch from "src/fields/optional/fieldSwitch.vue";
 
 Vue.component("FieldSwitch", FieldSwitch);
 

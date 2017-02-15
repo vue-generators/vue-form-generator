@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import abstractField from "./abstractField";
+	import abstractField from "../abstractField";
 	import { defaults } from "lodash";
 
 	export default {

@@ -1,4 +1,4 @@
-import moment from "moment";
+import fecha from "fecha";
 
 import {
 	validators
@@ -352,7 +352,7 @@ module.exports = {
 			label: "Created (label field)",
 			model: "created",
 			get(model) {
-				return model && model.created ? moment(model.created).format("LLL") : "-";
+				// return model && model.created ? fecha.format(model.created,"MMMM  D YYYY H") : "-";
 			},
 			styleClasses: "half-width"
 		}, {
@@ -535,8 +535,8 @@ module.exports = {
 			model: "dob",
 			required: true,
 			placeholder: "User's birth of date",
-			min: moment("1900-01-01").toDate(),
-			max: moment("2018-01-01").toDate(),
+			min: fecha.parse("1900-01-01", "YYYY-MM-DD"),
+			max: fecha.parse("2018-01-01", "YYYY-MM-DD"),
 			validator: [
 				validators.date
 			],

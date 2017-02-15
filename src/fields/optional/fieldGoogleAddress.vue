@@ -8,7 +8,7 @@
 	 * https://github.com/gocanto/google-autocomplete
 	 */
 
-	import abstractField from "./abstractField";
+	import abstractField from "../abstractField";
 	import { isFunction } from "lodash";
 
 	/* global google */

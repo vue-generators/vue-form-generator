@@ -36,19 +36,22 @@
 </template>
 
 <script>
-	import abstractField from "./abstractField";
+	import abstractField from "../abstractField";
 	import fecha from "fecha";
 
 	export default {
 		mixins: [ abstractField ],
 		methods: {
 			formatValueToField(value) {
-				if (value != null) {
+				console.info(value);
+				if (typeof value === "undefined") {
+					return value;
+				}else{
 					switch(this.schema.inputType){
 					case "date":
 						return fecha.format(value, "YYYY-MM-DD");
 					case "datetime":
-						return fecha.format(value);
+						return fecha.format(value, "YYYY-MM-DD HH:mm:ss");
 					case "datetime-local":
 						return fecha.format(value, "YYYY-MM-DDTHH:mm:ss");
 					default:

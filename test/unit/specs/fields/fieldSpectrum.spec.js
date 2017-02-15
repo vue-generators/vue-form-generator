@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldSpectrum from "src/fields/fieldSpectrum.vue";
+import FieldSpectrum from "src/fields/optional/fieldSpectrum.vue";
 
 Vue.component("FieldSpectrum", FieldSpectrum);
 

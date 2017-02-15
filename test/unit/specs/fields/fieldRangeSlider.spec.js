@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldRangeSlider from "src/fields/fieldRangeSlider.vue";
+import FieldRangeSlider from "src/fields/optional/fieldRangeSlider.vue";
 
 Vue.component("FieldRangeSlider", FieldRangeSlider);
 

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-	import abstractField from "./abstractField";
+	import abstractField from "../abstractField";
 	import { isFunction } from "lodash";
 
 	export default {

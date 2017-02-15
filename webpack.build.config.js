@@ -15,6 +15,10 @@ var loaders = [
 		"loader": "vue"
 	}
 ];
+var cssFileName = "vue-form-generator.css";
+if (!process.env.FULL_BUNDLE) {
+	var cssFileName = "vue-form-generator-core.css";
+}
 
 module.exports = [
 	{
@@ -41,7 +45,7 @@ module.exports = [
 			new webpack.BannerPlugin(banner, {
 				raw: true
 			}),
-			new ExtractTextPlugin("vue-form-generator.css", { allChunks: true }),
+			new ExtractTextPlugin(cssFileName, { allChunks: true }),
 			new StatsPlugin("../stats.json", {
 				chunkModules: true
 				//exclude: [/node_modules[\\\/]react/]
