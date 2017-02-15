@@ -43,10 +43,9 @@
 		mixins: [ abstractField ],
 		methods: {
 			formatValueToField(value) {
-				console.info(value);
 				if (typeof value === "undefined") {
 					return value;
-				}else{
+				} else {
 					switch(this.schema.inputType){
 					case "date":
 						return fecha.format(value, "YYYY-MM-DD");
