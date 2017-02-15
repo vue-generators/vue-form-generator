@@ -15,9 +15,12 @@ var loaders = [
 		"loader": "vue"
 	}
 ];
-var cssFileName = "vue-form-generator.css";
-if (!process.env.FULL_BUNDLE) {
-	var cssFileName = "vue-form-generator-core.css";
+var cssFileName;
+console.warn(process.env.FULL_BUNDLE)
+if (process.env.FULL_BUNDLE) {
+	cssFileName = "vfg.css";
+} else {
+	cssFileName = "vfg-core.css";
 }
 
 module.exports = [
@@ -25,7 +28,7 @@ module.exports = [
 		entry: "./src/index.js",
 		output: {
 			path: "./dist",
-			filename: "vue-form-generator.js",
+			filename: "vfg.js",
 			library: "VueFormGenerator",
 			libraryTarget: "umd"
 		},
