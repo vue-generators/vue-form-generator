@@ -1,7 +1,7 @@
 language: node_js
-cache:
-  directories:
-  - node_modules
+#cache:
+#  directories:
+#  - node_modules
 node_js:
     - "7"
     - "6"
