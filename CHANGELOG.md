@@ -1,3 +1,36 @@
+<a name="2.0.0-beta4"></a>
+# 2.0.0-beta4 (2017-02-15)
+
+* :package: build ([a69e244](https://github.com/icebob/vue-form-generator/commit/a69e244))
+* :package: build ([0c84de0](https://github.com/icebob/vue-form-generator/commit/0c84de0))
+* :package: build ([0f8aea5](https://github.com/icebob/vue-form-generator/commit/0f8aea5))
+* :package: build ([9f707dc](https://github.com/icebob/vue-form-generator/commit/9f707dc))
+* :package: build ([3f25fca](https://github.com/icebob/vue-form-generator/commit/3f25fca))
+* #112 Get rid of Vue dependency in the code. ([01fa81b](https://github.com/icebob/vue-form-generator/commit/01fa81b))
+* add fecha ([4751917](https://github.com/icebob/vue-form-generator/commit/4751917))
+* add fecha instead of moment ([dcaa273](https://github.com/icebob/vue-form-generator/commit/dcaa273))
+* add lodash babel plugin ([8dce56d](https://github.com/icebob/vue-form-generator/commit/8dce56d))
+* Amend error message for vue-multi-select ([dc0ace9](https://github.com/icebob/vue-form-generator/commit/dc0ace9))
+* bump version ([ede7fd8](https://github.com/icebob/vue-form-generator/commit/ede7fd8))
+* fix dateTimePicker ([53d3867](https://github.com/icebob/vue-form-generator/commit/53d3867))
+* fix dev example ([ecd812f](https://github.com/icebob/vue-form-generator/commit/ecd812f))
+* fix dev example ([8be80aa](https://github.com/icebob/vue-form-generator/commit/8be80aa))
+* fix eslint restspread error ([cc7a436](https://github.com/icebob/vue-form-generator/commit/cc7a436))
+* fix fieldImage url if undefined ([d199677](https://github.com/icebob/vue-form-generator/commit/d199677))
+* fix model-changed event value ([364a1ce](https://github.com/icebob/vue-form-generator/commit/364a1ce))
+* fix pikaday ([e7589b3](https://github.com/icebob/vue-form-generator/commit/e7589b3))
+* fix unreactive model sets (again) ([2bef826](https://github.com/icebob/vue-form-generator/commit/2bef826))
+* handle null value ([97213a8](https://github.com/icebob/vue-form-generator/commit/97213a8))
+* remove skip from pikaday tests ([39ce4c6](https://github.com/icebob/vue-form-generator/commit/39ce4c6))
+* remove unused comment ([8c47cf9](https://github.com/icebob/vue-form-generator/commit/8c47cf9))
+* remove unused comments ([c61ab6b](https://github.com/icebob/vue-form-generator/commit/c61ab6b))
+* update datetimepicker version ([d3faf1c](https://github.com/icebob/vue-form-generator/commit/d3faf1c))
+* Update README.md ([2095c08](https://github.com/icebob/vue-form-generator/commit/2095c08))
+* Update README.md ([b095166](https://github.com/icebob/vue-form-generator/commit/b095166))
+* update year ([afe5e74](https://github.com/icebob/vue-form-generator/commit/afe5e74))
+
+
+
 <a name="2.0.0-beta3"></a>
 # 2.0.0-beta3 (2017-02-10)
 
