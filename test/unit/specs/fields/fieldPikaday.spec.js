@@ -3,7 +3,7 @@ import { createVueField, checkAttribute } from "../util";
 import moment from "moment";
 
 import Vue from "vue";
-import FieldPikaday from "src/fields/fieldPikaday.vue";
+import FieldPikaday from "src/fields/optional/fieldPikaday.vue";
 
 Vue.component("FieldPikaday", FieldPikaday);
 

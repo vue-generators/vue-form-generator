@@ -7,7 +7,7 @@
 
 <script>
 	/* global $ */
-	import abstractField from "./abstractField";
+	import abstractField from "../abstractField";
 	import fecha from "fecha";
 	import { defaults } from "lodash";
 

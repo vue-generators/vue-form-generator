@@ -3,7 +3,7 @@ import { createVueField, trigger, checkAttribute } from "../util";
 import moment from "moment";
 
 import Vue from "vue";
-import FieldDateTimePicker from "src/fields/fieldDateTimePicker.vue";
+import FieldDateTimePicker from "src/fields/optional/fieldDateTimePicker.vue";
 
 Vue.component("FieldDateTimePicker", FieldDateTimePicker);
 

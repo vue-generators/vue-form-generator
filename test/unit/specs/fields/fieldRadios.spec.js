@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField } from "../util";
 
 import Vue from "vue";
-import FieldRadios from "src/fields/fieldRadios.vue";
+import FieldRadios from "src/fields/core/fieldRadios.vue";
 
 Vue.component("FieldRadios", FieldRadios);
 

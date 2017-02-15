@@ -4,7 +4,7 @@
 
 <script>
 	/* global $ */
-	import abstractField from "./abstractField";
+	import abstractField from "../abstractField";
 	import { defaults, isArray } from "lodash";
 
 	export default {

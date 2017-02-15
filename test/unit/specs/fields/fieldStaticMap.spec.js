@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField } from "../util";
 
 import Vue from "vue";
-import FieldStaticMap from "src/fields/fieldStaticMap.vue";
+import FieldStaticMap from "src/fields/optional/fieldStaticMap.vue";
 
 Vue.component("FieldStaticMap", FieldStaticMap);
 

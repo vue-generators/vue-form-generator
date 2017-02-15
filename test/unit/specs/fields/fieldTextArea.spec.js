@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldTextArea from "src/fields/fieldTextArea.vue";
+import FieldTextArea from "src/fields/core/fieldTextArea.vue";
 
 Vue.component("FieldTextArea", FieldTextArea);
 

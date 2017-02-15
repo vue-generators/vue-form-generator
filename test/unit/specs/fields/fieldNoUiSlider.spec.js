@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField } from "../util";
 
 import Vue from "vue";
-import fieldNoUiSlider from "src/fields/fieldNoUiSlider.vue";
+import fieldNoUiSlider from "src/fields/optional/fieldNoUiSlider.vue";
 
 Vue.component("fieldNoUiSlider", fieldNoUiSlider);
 
