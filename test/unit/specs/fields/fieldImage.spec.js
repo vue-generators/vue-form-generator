@@ -4,7 +4,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldImage from "src/fields/fieldImage.vue";
+import FieldImage from "src/fields/optional/fieldImage.vue";
 
 Vue.component("FieldImage", FieldImage);
 

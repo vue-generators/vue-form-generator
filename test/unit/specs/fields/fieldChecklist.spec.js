@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
-import FieldChecklist from "src/fields/fieldChecklist.vue";
+import FieldChecklist from "src/fields/core/fieldChecklist.vue";
 
 Vue.component("FieldChecklist", FieldChecklist);
 

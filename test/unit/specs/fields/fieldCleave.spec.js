@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldCleave from "src/fields/fieldCleave.vue";
+import FieldCleave from "src/fields/optional/fieldCleave.vue";
 
 Vue.component("FieldCleave", FieldCleave);
 

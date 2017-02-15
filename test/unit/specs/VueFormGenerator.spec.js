@@ -220,9 +220,9 @@ describe("VueFormGenerator.vue", () => {
 	describe("check computed fields if multiple is true", () => {
 		let schema = {
 			fields: [
-				{	type: "text",	label: "name", model: "name", multi: false	},
-				{	type: "text",	label: "phone", model: "phone", multi: true	}, 
-				{	type: "text",	label: "email", model: "email"	} // multi is undefined
+				{	type: "input", inputType: "text", label: "name", model: "name", multi: false	},
+				{	type: "input", inputType: "text", label: "phone", model: "phone", multi: true	}, 
+				{	type: "input", inputType: "text", label: "email", model: "email"	} // multi is undefined
 			]
 		};
 		let form;
@@ -242,7 +242,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					disabled(model) { return !model.status; }	
@@ -280,7 +281,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					disabled: false
@@ -315,7 +317,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					readonly(model) { return model.status; }	
@@ -350,7 +353,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					featured(model) { return model.status; }	
@@ -385,7 +389,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					required(model) { return model.status; }	
@@ -420,7 +425,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					visible(model) { return model.status; }	
@@ -455,7 +461,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					visible: true
@@ -487,7 +494,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					min: 3,
@@ -528,7 +536,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name"
 				}
@@ -561,7 +570,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",	
+					inputType: "text", 	
 					label: "Name", 
 					model: "name", 
 					min: 3,

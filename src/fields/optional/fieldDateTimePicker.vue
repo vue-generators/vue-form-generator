@@ -7,9 +7,9 @@
 
 <script>
 	/* global $ */
-	import abstractField from "./abstractField";
+	import abstractField from "../abstractField";
 	import { defaults } from "lodash";
-	import dateFieldHelper from "../utils/dateFieldHelper";
+	import dateFieldHelper from "../../utils/dateFieldHelper";
 
 	let inputFormat = "YYYY-MM-DD HH:mm:ss";
 

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldGoogleAddress from "src/fields/fieldGoogleAddress.vue";
+import FieldGoogleAddress from "src/fields/optional/fieldGoogleAddress.vue";
 
 Vue.component("FieldGoogleAddress", FieldGoogleAddress);
 

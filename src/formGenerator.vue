@@ -22,12 +22,24 @@ div
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
 
 	// Load all fields from '../fields' folder
-	let Fields = require.context("./fields/", false, /^\.\/field([\w-_]+)\.vue$/);
 	let fieldComponents = {};
-	each(Fields.keys(), (key) => {
+
+	let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
+				
+	each(coreFields.keys(), (key) => {
 		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-		fieldComponents[compName] = Fields(key);
+		fieldComponents[compName] = coreFields(key);
 	});
+
+	if (process.env.FULL_BUNDLE) {  // eslint-disable-line
+		let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
+				
+		each(Fields.keys(), (key) => {
+			let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
+			fieldComponents[compName] = Fields(key);
+		});
+	}
+
 
 
 	export default {

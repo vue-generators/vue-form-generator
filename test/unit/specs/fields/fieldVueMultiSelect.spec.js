@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
-import fieldVueMultiSelect from "src/fields/fieldVueMultiSelect.vue";
+import fieldVueMultiSelect from "src/fields/optional/fieldVueMultiSelect.vue";
 import VueMultiSelect from "vue-multiselect";
 
 Vue.component("fieldVueMultiSelect", fieldVueMultiSelect);
