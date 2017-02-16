@@ -25,29 +25,32 @@ export default {
 			},
 
 			set(newValue) {
+				let oldValue = this.value;
+
 				if (isFunction(this.formatValueToModel))
 					newValue = this.formatValueToModel(newValue);
 
+				let changed = false;
 				if (isFunction(this.schema.set)) {
 					this.schema.set(this.model, newValue);
-					this.$emit("model-updated", newValue, this.schema.model);
-
+					changed = true;
+					
 				} else if (this.schema.model) {
 					this.setModelValueByPath(this.schema.model, newValue);
-					this.$emit("model-updated", newValue, this.schema.model);
+					changed = true;
 				}
-			}
-		}
-	},
 
-	watch: {
-		value(newVal, oldVal) {
-			if (isFunction(this.schema.onChanged)) {
-				this.schema.onChanged(this.model, newVal, oldVal, this.schema);
-			}
+				if (changed) {
+					this.$emit("model-updated", newValue, this.schema.model);
 
-			if (this.$parent.options && this.$parent.options.validateAfterChanged === true){
-				this.validate();
+					if (isFunction(this.schema.onChanged)) {
+						this.schema.onChanged(this.model, newValue, oldValue, this.schema);
+					}
+
+					if (this.$parent.options && this.$parent.options.validateAfterChanged === true){
+						this.validate();
+					}					
+				}
 			}
 		}
 	},

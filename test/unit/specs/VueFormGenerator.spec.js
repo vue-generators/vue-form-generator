@@ -1,3 +1,4 @@
+/* global sinon */
 import { expect } from "chai";
 
 import Vue from "vue";
@@ -625,6 +626,41 @@ describe("VueFormGenerator.vue", () => {
 				done();
 			}, 150);
 		});		
+
+	});
+
+	describe("check schema.onChanged when the model changed", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "Name", 
+					model: "name", 
+					onChanged: sinon.spy()
+				}
+			]
+		};
+
+		let model = { name: "Me" };
+		let form;
+
+		before( (done) => {
+			createFormGenerator(schema, model, {});
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				done();
+			});
+		});
+
+		it("should NOT called the schema.onChanged", (done) => {
+			schema.fields[0].onChanged.reset();
+			form.model = { name: "Bob" };
+			vm.$nextTick(() => {
+				expect(schema.fields[0].onChanged.called).to.be.false;
+				done();
+			});
+		});	
 
 	});
 

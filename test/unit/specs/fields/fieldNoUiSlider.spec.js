@@ -54,7 +54,7 @@ describe("fieldNoUiSlider.vue", function() {
 			}
 		});
 
-		it("should contain the value", (done) => {
+		it.skip("should contain the value", (done) => {
 			setTimeout( () => {
 				let origin = input.querySelector(".noUi-origin");
 				expect(origin.style.left).to.be.within("70%", "90%");
