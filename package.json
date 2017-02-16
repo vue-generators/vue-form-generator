@@ -6,8 +6,8 @@
   "main": "dist/vfg.js",
   "scripts": {
     "prebuild": "npm run test",
-    "build:core": "webpack --progress --config webpack.build.config.js --define process.env.FULL_BUNDLE=false --output-filename=vfg-core.js",
-    "build:full": "cross-env FULL_BUNDLE=true webpack --progress --config webpack.build.config.js --define process.env.FULL_BUNDLE=true",
+    "build:core": "cross-env FULL_BUNDLE=false webpack --progress --config webpack.build.config.js --define process.env.FULL_BUNDLE=false --output-filename=vfg-core.js",
+    "build:full": "cross-env FULL_BUNDLE=true  webpack --progress --config webpack.build.config.js --define process.env.FULL_BUNDLE=true",
     "build": "npm run build:core && npm run build:full",
     "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
     "lint": "eslint --ext=.js,.vue src test/unit/specs",

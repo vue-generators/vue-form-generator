@@ -16,7 +16,6 @@ var loaders = [
 	}
 ];
 var cssFileName;
-console.warn(process.env.FULL_BUNDLE)
 if (process.env.FULL_BUNDLE) {
 	cssFileName = "vfg.css";
 } else {
