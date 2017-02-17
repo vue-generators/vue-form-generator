@@ -45,6 +45,8 @@ div
 
 			model: Object,
 
+			errors: Array,
+
 			options: {
 				type: Object,
 				default()  {
@@ -66,12 +68,6 @@ div
 			}
 		},
 		
-		data () {
-			return {
-				errors: [] // Validation errors
-			};
-		},
-
 		computed: {
 			fields() {
 				let res = [];
@@ -103,6 +99,18 @@ div
 							this.clearValidationErrors();
 					});
 				}
+			},
+
+			errors: function(newErrors, oldErrors) {
+				this.clearValidationErrors();
+				each(newErrors, (error) => {
+					each(this.$children, (child) => {
+						if (error.key == child.schema.model) {
+							child.schema.errors.push(error.msg)
+							return;
+						}
+					});
+				});
 			}
 		},
 
@@ -120,6 +128,7 @@ div
 		},
 	
 		methods: {
+
 			// Get style classes of field
 			getFieldRowClasses(field) {
 				let baseClasses = {
@@ -173,27 +182,23 @@ div
 			validate() {
 				// console.log("Validate!", this.model);
 				this.clearValidationErrors();
-
+				let hasError = false;
 				each(this.$children, (child) => {
 					if (isFunction(child.validate))
 					{
 						// console.log("Validate ", child.model)
 						let err = child.validate();
-						each(err, (err) => {
-							this.errors.push({
-								field: child.schema,
-								error: err
-							});
-						});
+						if (err.length > 0) {
+							hasError = true;
+						}
 					}
 				});
 
-				return this.errors.length == 0;
+				return !hasError
 			},
 
 			// Clear validation errors
 			clearValidationErrors() {
-				this.errors.splice(0);
 
 				each(this.$children, (child) => {
 					child.clearValidationErrors();

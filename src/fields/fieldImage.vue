@@ -1,7 +1,9 @@
 <template lang="jade">
 	div.wrapper
-		input.form-control.link(type="text", v-show="schema.hideInput !== true", v-model="wrappedValue", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly")
-		input.form-control.file(type="file", v-if="schema.browse !== false", :disabled="disabled", @change="fileChanged", :name="schema.inputName")
+		button.form-control.btn
+			{{ schema.upload ? schema.upload : "上传" }}
+			input.form-control.link(type="text", v-show="schema.hideInput !== true", v-model="wrappedValue", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly")
+			input.form-control.file(type="file", v-if="schema.browse !== false", :disabled="disabled", @change="fileChanged", :name="schema.inputName")
 		.preview(:style="previewStyle")
 			.remove(title="Remove image", @click="remove")
 </template>
@@ -79,6 +81,29 @@
 		
 		.wrapper {
 			width: 100%;
+			position: relative;
+			overflow: hidden;
+		}
+
+		button.btn {
+			position: relative;
+			margin-left: 20px;
+			color: #fff;
+			background-color: #337ab7;
+			border-color: #2e6da4;
+			width: auto;
+		}
+
+		input.file {
+			position: absolute;
+			top: 0;
+			right: 0;
+			margin: 0;
+			padding: 0;
+			font-size: 40px;
+			opacity: 0;
+			cursor: pointer;
+			overflow: hidden;
 		}
 
 		.preview {
