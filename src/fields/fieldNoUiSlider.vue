@@ -3,8 +3,9 @@
 </template>
 
 <script>
-	import abstractField from "./abstractField";
-	import { isArray, defaults } from "lodash";
+	import isArray from 'lodash/isArray';
+	import defaults from 'lodash/defaults';
+	import abstractField from './abstractField';
 
 	export default {
 		mixins: [abstractField],

@@ -4,8 +4,9 @@
 
 <script>
 	/* global $ */
+	import defaults from 'lodash/defaults';
+	import isArray from 'lodash/isArray';
 	import abstractField from "./abstractField";
-	import { defaults, isArray } from "lodash";
 
 	export default {
 		mixins: [ abstractField ],

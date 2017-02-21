@@ -8,8 +8,8 @@
 </template>
 
 <script>
-	import {isObject} from "lodash";
-	import abstractField from "./abstractField";
+	import isObject from 'lodash/isObject';
+	import abstractField from './abstractField';
 	
 	export default {
 		mixins: [ abstractField ],

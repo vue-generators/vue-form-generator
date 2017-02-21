@@ -1,4 +1,8 @@
-import { each, isFunction, isString, isArray, isUndefined } from "lodash";
+import each from 'lodash/each';
+import isFunction from 'lodash/isFunction';
+import isString from 'lodash/isString';
+import isArray from 'lodash/isArray';
+import isUndefined from 'lodash/isUndefined';
 
 export default {
 	props: [

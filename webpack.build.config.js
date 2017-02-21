@@ -45,7 +45,8 @@ module.exports = [
 			new StatsPlugin("../stats.json", {
 				chunkModules: true
 				//exclude: [/node_modules[\\\/]react/]
-			})
+			}),
+            new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en|zh-cn)$/)
 		],
 
 		module: {

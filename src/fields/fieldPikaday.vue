@@ -3,9 +3,9 @@
 </template>
 
 <script>
-	import abstractField from "./abstractField";
-	import moment from "moment";
-	import { defaults } from "lodash";
+	import moment from 'moment';
+	import defaults from 'lodash/defaults';
+	import abstractField from './abstractField';
 
 	let inputFormat = "YYYY-MM-DD";
 

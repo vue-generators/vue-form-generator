@@ -8,7 +8,8 @@
 </template>
 
 <script>
-	import {isObject, isNil} from "lodash";
+	import isObject from 'lodash/isObject';
+	import isNil from 'lodash/isNil';
 	import abstractField from "./abstractField";
 	
 	export default {

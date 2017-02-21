@@ -27,7 +27,12 @@ div
 
 <script>
 	// import Vue from "vue";
-	import {each, isFunction, isNil, isArray, isString} from "lodash";
+	// import {each, isFunction, isNil, isArray, isString} from "lodash";
+	import each from 'lodash/each';
+	import isFunction from 'lodash/isFunction';
+	import isNil from 'lodash/isNil';
+	import isArray from 'lodash/isArray';
+	import isString from 'lodash/isString';
 
 	// Load all fields from '../fields' folder
 	let Fields = require.context("./fields/", false, /^\.\/field([\w-_]+)\.vue$/);

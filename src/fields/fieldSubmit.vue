@@ -3,8 +3,8 @@
 </template>
 
 <script>
+	import isFunction from 'lodash/isFunction';
 	import abstractField from "./abstractField";
-	import { isFunction } from "lodash";
 
 	export default {
 		mixins: [ abstractField ],
