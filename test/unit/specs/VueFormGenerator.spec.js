@@ -681,7 +681,7 @@ describe("VueFormGenerator.vue", () => {
 			let elm = document.createElement("div");
 			vm = new Vue({
 				// eslint-disable-next-line quotes
-				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @on-validated="onValidated"></vue-form-generator>`,
+				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`,
 				data: {
 					schema,
 					model,

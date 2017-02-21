@@ -223,7 +223,7 @@ div
 				});
 
 				let isValid = this.errors.length == 0;
-				this.$emit('on-validated', isValid, this.errors);
+				this.$emit("validated", isValid, this.errors);
 				return isValid;
 			},
 
