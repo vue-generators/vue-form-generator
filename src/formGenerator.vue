@@ -13,8 +13,8 @@ div
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
-				.errors(v-if='errorsVisibility(field)')
-					span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
+				.errors(v-if='fieldErrors(field).length > 0')
+					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
 </template>
 
 <script>
@@ -126,7 +126,7 @@ div
 			// Get style classes of field
 			getFieldRowClasses(field) {
 				let baseClasses = {
-					error: field.errors && field.errors.length > 0, 
+					error: this.fieldErrors(field).length > 0, 
 					disabled: this.fieldDisabled(field), 
 					readonly: this.fieldReadonly(field), 
 					featured: this.fieldFeatured(field), 
@@ -208,7 +208,7 @@ div
 			// Child field executed validation
 			onFieldValidated(res, errors, field) {
 				this.errors = this.errors.filter(e => e.field != field.schema);
-				
+
 				// Remove old errors for this field
 				if (!res && errors && errors.length > 0) {
 					// Add errors with this field
@@ -263,8 +263,14 @@ div
 				return field.buttons && field.buttons.length > 0;
 			},
 			
-			errorsVisibility(field) {
-				return field.errors && field.errors.length > 0;
+			fieldErrors(field) {
+				let res = this.errors.filter(e => e.field == field);
+				if (res.length > 0)
+					console.log("res", res);
+				let res2 = res.map(item => item.error);
+				if (res2.length > 0)
+					console.log("res2", res2);
+				return res2;
 			}
 		}
 	};
