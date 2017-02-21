@@ -351,7 +351,7 @@ describe("abstractField.vue", function() {
 			expect(res[0]).to.be.equal("Validation error!");
 
 			expect(schema.onValidated.calledOnce).to.be.true;
-			expect(schema.onValidated.calledWith(model, field.schema.errors, schema)).to.be.true;
+			expect(schema.onValidated.calledWith(model, field.errors, schema)).to.be.true;
 		});
 
 	});		
@@ -370,19 +370,19 @@ describe("abstractField.vue", function() {
 		});
 
 		it("should be undefined", () => {
-			expect(schema.errors).to.be.undefined;
+			expect(field.errors).to.be.an.array;
 		});
 
 		it("should be an empty array", () => {
 			field.clearValidationErrors();
-			expect(schema.errors).to.be.defined;
-			expect(schema.errors).to.be.length(0);
+			expect(field.errors).to.be.defined;
+			expect(field.errors).to.be.length(0);
 		});
 
 		it("should contain one error string", () => {
 			field.validate();
-			expect(schema.errors).to.be.length(1);
-			expect(schema.errors[0]).to.be.equal("Validation error!");
+			expect(field.errors).to.be.length(1);
+			expect(field.errors[0]).to.be.equal("Validation error!");
 		});
 
 	});	

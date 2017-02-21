@@ -9,7 +9,7 @@ div
 						i.icon
 						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
@@ -205,15 +205,33 @@ div
 				return field.featured;
 			},
 
+			// Child field executed validation
+			onFieldValidated(res, errors, field) {
+				this.errors = this.errors.filter(e => e.field == field.schema);
+				// Remove old errors for this field
+				if (!res && errors && errors.length > 0) {
+					// Add errors with this field
+					errors.forEach((err) => {
+						this.errors.push({
+							field: field.schema,
+							error: err
+						});
+					});
+				}
+
+				let isValid = this.errors.length == 0;
+				this.$emit("validated", isValid, this.errors);
+			},
+
 			// Validating the model properties
 			validate() {
 				this.clearValidationErrors();
 
-				each(this.$children, (child) => {
+				this.$children.forEach((child) => {
 					if (isFunction(child.validate))
 					{
-						let err = child.validate();
-						each(err, (err) => {
+						let errors = child.validate(true);
+						errors.forEach((err) => {
 							this.errors.push({
 								field: child.schema,
 								error: err
