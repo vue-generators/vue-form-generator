@@ -281,6 +281,36 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check fieldDisabled function parameters", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",		
+					inputType: "text",
+					label: "Name", 
+					model: "name", 
+					disabled: sinon.spy()
+				}
+			]
+		};
+
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be called with correct params", () => {
+			let spy = schema.fields[0].disabled;
+			expect(spy.called).to.be.true;
+			expect(spy.calledWith(model, schema.fields[0], vm.$children[0])).to.be.true;
+		});	
+
+	});
+
 	describe("check fieldDisabled with const", () => {
 		let schema = {
 			fields: [
@@ -629,7 +659,7 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
-	describe.only("check onValidated event", () => {
+	describe("check onValidated event", () => {
 		let schema = {
 			fields: [
 				{	

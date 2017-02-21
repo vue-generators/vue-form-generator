@@ -153,7 +153,7 @@ div
 			// Get disabled attr of field
 			fieldDisabled(field) {
 				if (isFunction(field.disabled))
-					return field.disabled(this.model);
+					return field.disabled.call(this, this.model, field, this);
 
 				if (isNil(field.disabled))
 					return false;
@@ -164,7 +164,7 @@ div
 			// Get required prop of field
 			fieldRequired(field) {
 				if (isFunction(field.required))
-					return field.required(this.model);
+					return field.required.call(this, this.model, field, this);
 
 				if (isNil(field.required))
 					return false;
@@ -175,7 +175,7 @@ div
 			// Get visible prop of field
 			fieldVisible(field) {
 				if (isFunction(field.visible))
-					return field.visible(this.model);
+					return field.visible.call(this, this.model, field, this);
 
 				if (isNil(field.visible))
 					return true;
@@ -186,7 +186,7 @@ div
 			// Get readonly prop of field
 			fieldReadonly(field) {
 				if (isFunction(field.readonly))
-					return field.readonly(this.model);
+					return field.readonly.call(this, this.model, field, this);
 
 				if (isNil(field.readonly))
 					return false;
@@ -197,7 +197,7 @@ div
 			// Get featured prop of field
 			fieldFeatured(field) {
 				if (isFunction(field.featured))
-					return field.featured(this.model);
+					return field.featured.call(this, this.model, field, this);
 
 				if (isNil(field.featured))
 					return false;
