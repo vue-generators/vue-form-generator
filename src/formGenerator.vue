@@ -9,12 +9,12 @@ div
 						i.icon
 						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
-				.errors(v-if='errorsVisibility(field)')
-					span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
+				.errors(v-if='fieldErrors(field).length > 0')
+					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
 </template>
 
 <script>
@@ -126,7 +126,7 @@ div
 			// Get style classes of field
 			getFieldRowClasses(field) {
 				let baseClasses = {
-					error: field.errors && field.errors.length > 0, 
+					error: this.fieldErrors(field).length > 0, 
 					disabled: this.fieldDisabled(field), 
 					readonly: this.fieldReadonly(field), 
 					featured: this.fieldFeatured(field), 
@@ -153,7 +153,7 @@ div
 			// Get disabled attr of field
 			fieldDisabled(field) {
 				if (isFunction(field.disabled))
-					return field.disabled(this.model);
+					return field.disabled.call(this, this.model, field, this);
 
 				if (isNil(field.disabled))
 					return false;
@@ -164,7 +164,7 @@ div
 			// Get required prop of field
 			fieldRequired(field) {
 				if (isFunction(field.required))
-					return field.required(this.model);
+					return field.required.call(this, this.model, field, this);
 
 				if (isNil(field.required))
 					return false;
@@ -175,7 +175,7 @@ div
 			// Get visible prop of field
 			fieldVisible(field) {
 				if (isFunction(field.visible))
-					return field.visible(this.model);
+					return field.visible.call(this, this.model, field, this);
 
 				if (isNil(field.visible))
 					return true;
@@ -186,7 +186,7 @@ div
 			// Get readonly prop of field
 			fieldReadonly(field) {
 				if (isFunction(field.readonly))
-					return field.readonly(this.model);
+					return field.readonly.call(this, this.model, field, this);
 
 				if (isNil(field.readonly))
 					return false;
@@ -197,7 +197,7 @@ div
 			// Get featured prop of field
 			fieldFeatured(field) {
 				if (isFunction(field.featured))
-					return field.featured(this.model);
+					return field.featured.call(this, this.model, field, this);
 
 				if (isNil(field.featured))
 					return false;
@@ -205,15 +205,34 @@ div
 				return field.featured;
 			},
 
+			// Child field executed validation
+			onFieldValidated(res, errors, field) {
+				// Remove old errors for this field
+				this.errors = this.errors.filter(e => e.field != field.schema);
+
+				if (!res && errors && errors.length > 0) {
+					// Add errors with this field
+					errors.forEach((err) => {
+						this.errors.push({
+							field: field.schema,
+							error: err
+						});
+					});
+				}
+
+				let isValid = this.errors.length == 0;
+				this.$emit("validated", isValid, this.errors);
+			},
+
 			// Validating the model properties
 			validate() {
 				this.clearValidationErrors();
 
-				each(this.$children, (child) => {
+				this.$children.forEach((child) => {
 					if (isFunction(child.validate))
 					{
-						let err = child.validate();
-						each(err, (err) => {
+						let errors = child.validate(true);
+						errors.forEach((err) => {
 							this.errors.push({
 								field: child.schema,
 								error: err
@@ -222,7 +241,9 @@ div
 					}
 				});
 
-				return this.errors.length == 0;
+				let isValid = this.errors.length == 0;
+				this.$emit("validated", isValid, this.errors);
+				return isValid;
 			},
 
 			// Clear validation errors
@@ -242,8 +263,9 @@ div
 				return field.buttons && field.buttons.length > 0;
 			},
 			
-			errorsVisibility(field) {
-				return field.errors && field.errors.length > 0;
+			fieldErrors(field) {
+				let res = this.errors.filter(e => e.field == field);
+				return res.map(item => item.error);
 			}
 		}
 	};

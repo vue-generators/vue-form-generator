@@ -1,4 +1,4 @@
-import { get as objGet, each, isFunction, isString, isArray, isUndefined } from "lodash";
+import { get as objGet, each, isFunction, isString, isArray } from "lodash";
 
 export default {
 	props: [
@@ -6,6 +6,12 @@ export default {
 		"schema",
 		"disabled"
 	],
+
+	data() {
+		return {
+			errors: []
+		};
+	},
 
 	computed: {
 		value: {
@@ -44,7 +50,7 @@ export default {
 					this.$emit("model-updated", newValue, this.schema.model);
 
 					if (isFunction(this.schema.onChanged)) {
-						this.schema.onChanged(this.model, newValue, oldValue, this.schema);
+						this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 					}
 
 					if (this.$parent.options && this.$parent.options.validateAfterChanged === true){
@@ -56,7 +62,7 @@ export default {
 	},
 
 	methods: {
-		validate() {
+		validate(calledParent) {
 			this.clearValidationErrors();
 
 			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
@@ -74,26 +80,27 @@ export default {
 					let err = validator(this.value, this.schema, this.model);
 					if (err) {
 						if (isArray(err))
-							Array.prototype.push.apply(this.schema.errors, err);
+							Array.prototype.push.apply(this.errors, err);
 						else if (isString(err))
-							this.schema.errors.push(err);
+							this.errors.push(err);
 					}
 				});
 
 			}
 
 			if (isFunction(this.schema.onValidated)) {
-				this.schema.onValidated(this.model, this.schema.errors, this.schema);
+				this.schema.onValidated.call(this, this.model, this.errors, this.schema);
 			}
 
-			return this.schema.errors;
+			let isValid = this.errors.length == 0;
+			if (!calledParent)
+				this.$emit("validated", isValid, this.errors, this);
+
+			return this.errors;
 		},
 
 		clearValidationErrors() {
-			if (isUndefined(this.schema.errors))
-				this.$root.$set(this.schema, "errors", []); // Be reactive
-			else
-				this.schema.errors.splice(0); // Clear
+			this.errors.splice(0);
 		},
 
 		setModelValueByPath(path, value) {

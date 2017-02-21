@@ -15,7 +15,7 @@
       <div class="errors text-center">
         <div v-for="(item, index) in validationErrors" track-by="index" class="alert alert-danger">{{ item.field.label}}: <strong>{{ item.error }}</strong></div>
       </div>
-      <vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated"></vue-form-generator>
+      <vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
     </div>
     <div class="col-md-6">
       <pre v-if="model" v-html="prettyModel"></pre>
@@ -113,7 +113,11 @@
 			clearSelection() {
 				this.selected.splice(0);
 				this.generateModel();
-			},			
+			},	
+
+			onValidated(res, errors) {
+				console.log("VFG validated:", res, errors);
+			},
 
 			generateModel() {
 				if (this.selected.length == 1) {
@@ -185,7 +189,7 @@
 			},
 
 			validate()	{
-				console.log("validate", this.$refs.form, this.$refs.form.validate());
+				//console.log("validate", this.$refs.form, this.$refs.form.validate());
 				return this.$refs.form.validate();
 			},
 
