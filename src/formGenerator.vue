@@ -20,7 +20,7 @@ div
                 template(v-for='field in field.fields')
                     .form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
                         +renderField(field)
-            .form-group(v-else v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+            .form-group(v-else-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
                 +renderField(field)
 
 </template>

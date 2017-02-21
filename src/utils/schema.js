@@ -1,4 +1,6 @@
-import {get, set, each} from "lodash";
+import get from 'lodash/get';
+import set from 'lodash/set';
+import each from 'lodash/each';
 
 // Create a new model by schema default values
 module.exports.createDefaultObject = function (schema, obj = {}){

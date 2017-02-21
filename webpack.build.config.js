@@ -46,7 +46,7 @@ module.exports = [
 				chunkModules: true
 				//exclude: [/node_modules[\\\/]react/]
 			}),
-            new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en|zh-cn)$/)
+			new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en|zh-cn)$/)
 		],
 
 		module: {
