@@ -68,10 +68,11 @@ module.exports = {
 		autoprefixer: {
 			browsers: ["last 2 versions"]
 		},
-		// Comment this, if you would like to debug under `npm run ci`
-		/*loaders: {
+
+		// Comment out this, if you would like to debug under `npm run ci`
+		loaders: {
 			js: "isparta"
-		}*/
+		}
 	}
  
 };
