@@ -1,4 +1,4 @@
-import { get as objGet, each, isFunction, isString, isArray, isUndefined } from "lodash";
+import { get as objGet, each, isFunction, isString, isArray } from "lodash";
 
 export default {
 	props: [

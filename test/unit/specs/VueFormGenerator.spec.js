@@ -109,7 +109,7 @@ describe("VueFormGenerator.vue", () => {
 		});		
 
 		it("should be error class", (done) => {
-			Vue.set(vm.schema.fields[0], "errors", [ "!!!" ]);
+			vm.$refs.form.errors.push({ field: vm.schema.fields[0], error: "Validation error!" });
 			vm.$nextTick(() => {
 				expect(group.classList.contains("error")).to.be.true;
 				done();
@@ -207,7 +207,8 @@ describe("VueFormGenerator.vue", () => {
 		});
 
 		it("should be .errors div if there are errors in fields", (done) => {
-			vm.schema.fields[0].errors.push("Some error!", "Another error!");
+			vm.$refs.form.errors.push({ field: vm.schema.fields[0], error: "Some error!" });
+			vm.$refs.form.errors.push({ field: vm.schema.fields[0], error: "Another error!" });
 			vm.$nextTick(() => {
 				let div = group.querySelector(".errors");
 				expect(div).to.be.exist;

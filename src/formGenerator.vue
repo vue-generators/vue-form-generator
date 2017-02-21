@@ -265,12 +265,7 @@ div
 			
 			fieldErrors(field) {
 				let res = this.errors.filter(e => e.field == field);
-				if (res.length > 0)
-					console.log("res", res);
-				let res2 = res.map(item => item.error);
-				if (res2.length > 0)
-					console.log("res2", res2);
-				return res2;
+				return res.map(item => item.error);
 			}
 		}
 	};
