@@ -629,6 +629,76 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe.only("check onValidated event", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "Name", 
+					model: "name", 
+					min: 3,
+					validator: VueFormGenerator.validators.string
+				}
+			]
+		};
+
+		let model = { name: "Bob" };
+		let form;
+		let onValidated = sinon.spy();
+
+		before( (done) => {
+			let elm = document.createElement("div");
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @on-validated="onValidated"></vue-form-generator>`,
+				data: {
+					schema,
+					model,
+					options: {}
+				},
+				methods: {
+					onValidated
+				}
+			}).$mount(elm);
+
+			el = vm.$el;
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				done();
+			});
+		});
+
+		it("should no errors after mounted()", (done) => {
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(0);
+				done();
+			});
+		});
+
+		it("should be validation error if model value is not valid", () => {
+			vm.model.name = "A";
+			onValidated.reset();
+			form.validate();
+
+			expect(form.errors).to.be.length(1);
+			expect(onValidated.callCount).to.be.equal(1);
+			// console.log(onValidated.getCall(0).args[1][0].field);
+			// console.log(schema.fields[0]);
+			expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "The length of text is too small! Current: 1, Minimum: 3"}] )).to.be.true;
+		});		
+
+		it("should no validation error if model valie is valid", () => {
+			vm.model.name = "Alan";
+			onValidated.reset();
+			form.validate();
+
+			expect(form.errors).to.be.length(0);
+			expect(onValidated.callCount).to.be.equal(1);
+			expect(onValidated.calledWith(true, [] )).to.be.true;
+		});	
+	});
+
 	describe("check schema.onChanged when the model changed", () => {
 		let schema = {
 			fields: [

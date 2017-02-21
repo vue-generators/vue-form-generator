@@ -222,7 +222,9 @@ div
 					}
 				});
 
-				return this.errors.length == 0;
+				let isValid = this.errors.length == 0;
+				this.$emit('on-validated', isValid, this.errors);
+				return isValid;
 			},
 
 			// Clear validation errors
