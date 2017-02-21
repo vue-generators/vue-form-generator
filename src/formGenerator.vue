@@ -207,7 +207,8 @@ div
 
 			// Child field executed validation
 			onFieldValidated(res, errors, field) {
-				this.errors = this.errors.filter(e => e.field == field.schema);
+				this.errors = this.errors.filter(e => e.field != field.schema);
+				
 				// Remove old errors for this field
 				if (!res && errors && errors.length > 0) {
 					// Add errors with this field
