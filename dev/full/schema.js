@@ -364,7 +364,11 @@ module.exports = {
 				console.log("Form submitted!", model);
 				alert("Form submitted!");
 			},
-			styleClasses: "half-width"
+			styleClasses: "half-width",
+			disabled() {
+				//console.log("Disabled: ", this.errors.length > 0);
+				return this.errors.length > 0;
+			}
 		}, {
 			type: "select",
 			label: "Type (select field)",
