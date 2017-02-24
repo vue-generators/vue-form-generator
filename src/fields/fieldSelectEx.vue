@@ -64,7 +64,7 @@
 		},
 
 		beforeDestroy() {
-			if ($.fn.selectpicker) 
+			if ($.fn.selectpicker)
 				$(this.$el).selectpicker("destroy");
 		}
 	};

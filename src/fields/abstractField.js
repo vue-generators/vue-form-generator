@@ -8,7 +8,7 @@ export default {
 	props: [
 		"model",
 		"schema",
-		"disabled"
+		"disabled",
 	],
 
 	computed: {

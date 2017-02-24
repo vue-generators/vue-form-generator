@@ -1,6 +1,6 @@
 <template lang="jade">
 mixin renderField(field)
-    label.title
+    label.title(v-if="field.label")
         | {{ field.label }}
         span.help(v-if='field.help')
             i.icon
@@ -386,7 +386,7 @@ div
 				label.title:after {
 					content: "*";
 					font-weight: normal;
-					color: Red;
+					color: #e60808;
 					position: absolute;
 					padding-left: 0.2em;
 					font-size: 1em;

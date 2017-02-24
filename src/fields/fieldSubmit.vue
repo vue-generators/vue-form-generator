@@ -1,5 +1,5 @@
 <template lang="jade">
-	input(type="submit", :value="schema.buttonText", @click="click", :name="schema.inputName")
+	input(type="submit", :value="buttonText()", @click="click", :name="schema.inputName")
 </template>
 
 <script>
@@ -11,16 +11,24 @@
 
 		methods: {
 			click() {
-				if (this.schema.validateBeforeSubmit === true)
-				{
+				if (this.schema.validateBeforeSubmit === true) {
 					if (!this.$parent.validate()) {
 						// There are validation errors. Stop the submit
 						return;
 					}
 				}
 
-				if (isFunction(this.schema.onSubmit))
+				if (isFunction(this.schema.onSubmit)) {
 					this.schema.onSubmit(this.model, this.schema);
+				}
+			},
+
+			buttonText() {
+				if (isFunction(this.schema.buttonText)) {
+					return this.schema.buttonText()
+				}
+
+				return this.schema.buttonText
 			}
 		}
 	};
@@ -33,5 +41,6 @@
 		color: #fff !important;
 		background-color: #337ab7 !important;
 		border-color: #2e6da4 !important;
+		margin: 0 auto !important;
 	}
 </style>
