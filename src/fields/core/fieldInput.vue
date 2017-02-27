@@ -1,10 +1,10 @@
-<template lang="jade">
+<template lang="pug">
 .wrapper
 	input.form-control(
 		:type="schema.inputType", 
 		:value="value",
 		@input="value = $event.target.value",
-		number="schema.inputType == 'number'"
+		number="schema.inputType == 'number'",
 		:disabled="disabled",
 		:accept="schema.accept",
 		:alt="schema.alt",

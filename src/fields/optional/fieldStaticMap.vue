@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	img(:src="mapLink")
 </template>
 

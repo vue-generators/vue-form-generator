@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	.radio-list(:disabled="disabled")
 		label(v-for="item in items")
 			input(type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)" )

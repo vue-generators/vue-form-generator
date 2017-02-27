@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	multiselect(		
 		:id="selectOptions.id",
 		:options="options",

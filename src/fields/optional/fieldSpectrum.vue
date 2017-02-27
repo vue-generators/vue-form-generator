@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	input(type="text", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
 </template>
 

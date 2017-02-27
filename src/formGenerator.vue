@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 div
 	fieldset.vue-form-generator(v-if='schema != null')
 		template(v-for='field in fields')

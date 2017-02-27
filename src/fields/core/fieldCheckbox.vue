@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName")
 </template>
 
