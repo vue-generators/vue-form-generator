@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	input(type="submit", :value="schema.buttonText", @click="click", :name="schema.inputName", :disabled="disabled")
 </template>
 

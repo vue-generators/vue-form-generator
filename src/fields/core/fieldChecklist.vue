@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	.wrapper
 		.listbox.form-control(v-if="schema.listBox", :disabled="disabled")
 			.list-row(v-for="item in items")

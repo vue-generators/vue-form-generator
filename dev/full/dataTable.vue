@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 	table.table.table-hover.table-bordered
 		thead
 			tr
