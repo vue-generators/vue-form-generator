@@ -18,17 +18,19 @@ A schema-based form generator component for Vue.js.
 
 ## Features
 - multiple objects editing
-- 27 field types
+- core & full bundles
+- 21 field types
 - built-in validators
 - Bootstrap friendly templates
 - customizable styles
+- extendable with custom fields
 - ...etc
 
 ## Documentation
 [Online documentation on Gitbook](https://icebob.gitbooks.io/vueformgenerator/content/)
 
 ## Dependencies
-vue-form-generator use [Moment.js](http://momentjs.com/) and [lodash](https://lodash.com/) internally.
+vue-form-generator use [fecha](https://github.com/taylorhakes/fecha) and [lodash](https://lodash.com/) internally.
 
 While built-in fields don't need external dependencies, optional fields may need other libraries.  
 These dependency fall in two camp: jQuery or Vanilla. You can find almost the same functionality in both flavor.  
@@ -51,9 +53,29 @@ $ npm install vue-form-generator@0.6.1
 ```
 
 ### Manual
-Download zip package and unpack and add the `vue-form-generator.css` and `vue-form-generator.js` file to your project from dist folder.
+Download zip package and unpack and add the vfg.css and vfg.js file to your project from dist folder.
 ```
 https://github.com/icebob/vue-form-generator/archive/master.zip
+```
+
+### Core vs Full version
+
+VueFormGenerator come in two version : `core` and `full`.
+Core is a more minimal version with only half the fields.
+Full is core + other fields.
+
+* Full bundle: 75 kB (gzipped: 19 kB)
+* Core bundle: 39 kB (gzipped: 11 kB)
+
+If you don't know what to choose, don't worry, the full is the default version.  
+If you want the slim down version, here is the changes:
+
+```js
+// the "core" way
+<script>
+  import VueFormGenerator from "vue-form-generator/dist/vfg-core.js";
+  import "vue-form-generator/dist/vfg-core.css";
+</script>
 ```
 
 ## Usage
@@ -83,33 +105,37 @@ export default {
   
     schema: {
       fields: [{
-        type: "text",
+        type: "input",
+        inputType: "text",
         label: "ID (disabled text field)",
         model: "id",
         readonly: true,         
         disabled: true
       },{
-        type: "text",
+        type: "input",
+        inputType: "text",
         label: "Name",
         model: "name",
         placeholder: "Your name",
         featured: true,
         required: true
       },{
-        type: "password",
+        type: "input",
+        inputType: "password",
         label: "Password",
         model: "password",
         min: 6,
         required: true,
         hint: "Minimum 6 characters",
-        validator: validators.string
+        validator: VueFormGenerator.validators.string
       },{
         type: "select",
         label: "skills",
         model: "type",      
         values: ["Javascript", "VueJS", "CSS3", "HTML5"]
       },{
-        type: "email",
+        type: "input",
+        inputType: "email",
         label: "E-mail",
         model: "email",
         placeholder: "User's e-mail address"
@@ -150,6 +176,15 @@ or
 ```bash
 npm run ci
 ```
+
+## More fields *new*
+VueFormGenerator support custom fields. If you decide to release your custom field into the wild, please open a new issue so we can add you to a list here! Please try to use this naming convention for your custom field : vfg-field-* Example :
+
+- `vfg-field-myfield`
+- `vfg-field-calendar`
+- `vfg-field-awesome-dropdown`
+
+This way, it will be easier for everyone to find it. Thank you !
 
 ## Contribution
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
