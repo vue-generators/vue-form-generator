@@ -7,8 +7,8 @@
   ],
   "description": "A schema-based form generator component for Vue.js",
   "main": [
-    "dist/vue-form-generator.js",
-    "dist/vue-form-generator.css"
+    "dist/vfg.js",
+    "dist/vfg.css"
   ],
   "moduleType": [
     "amd"
