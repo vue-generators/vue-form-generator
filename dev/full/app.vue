@@ -69,7 +69,7 @@
 
 				formOptions: {
 					validateAfterLoad: true,
-					validateAfterChanged: false,
+					validateAfterChanged: true,
 					validateBeforeSave: true
 				}
 			}

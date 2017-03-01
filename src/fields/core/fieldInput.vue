@@ -4,7 +4,6 @@
 		:type="schema.inputType", 
 		:value="value",
 		@input="value = $event.target.value",
-		number="schema.inputType == 'number'",
 		:disabled="disabled",
 		:accept="schema.accept",
 		:alt="schema.alt",
@@ -65,6 +64,8 @@
 						return fecha.parse(value, "YYYY-MM-DD HH:mm:ss");
 					case "datetime-local":
 						return fecha.parse(value, "YYYY-MM-DDTHH:mm:ss");
+					case "number":
+						return Number(value);
 					}
 				}
 				

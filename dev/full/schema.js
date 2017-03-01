@@ -117,7 +117,8 @@ module.exports = {
 			inputType: "number",
 			label: "Number",
 			model: "age",
-			styleClasses: "half-width"
+			styleClasses: "half-width",
+			validator: validators.number
 		}, {
 			type: "input",
 			inputType: "range",
