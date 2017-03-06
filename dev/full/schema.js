@@ -194,6 +194,60 @@ module.exports = {
 			model: "",
 			styleClasses: "alert alert-info"
 		}, {
+            type: "checklist",
+            label: "CHECKLIST combobox",
+            model: "checklistcombobox",
+            listBox: false,
+            values: [{
+                name: "HTML5",
+                value: "HTML5-123"
+            }, {
+                name: "Javascript",
+                value: "Javascript-123"
+            }, {
+                name: "CSS3",
+                value: "CSS3-123"
+            }, {
+                name: "CoffeeScript",
+                value: "CoffeeScript-123"
+            }, {
+                name: "AngularJS",
+                value: "AngularJS-123"
+            }, {
+                name: "ReactJS",
+                value: "ReactJS-123"
+            }, {
+                name: "VueJS",
+                value: "VueJS-123"
+            }],
+        }, {
+            type: "checklist",
+            label: "CHECKLIST listBox",
+            model: "checklistlistbox",
+            listBox: true,
+            values: [{
+                name: "HTML5",
+                value: "HTML5-123"
+            }, {
+                name: "Javascript",
+                value: "Javascript-123"
+            }, {
+                name: "CSS3",
+                value: "CSS3-123"
+            }, {
+                name: "CoffeeScript",
+                value: "CoffeeScript-123"
+            }, {
+                name: "AngularJS",
+                value: "AngularJS-123"
+            }, {
+                name: "ReactJS",
+                value: "ReactJS-123"
+            }, {
+                name: "VueJS",
+                value: "VueJS-123"
+            }],
+        }, {
 			type: "radios",
 			label: "RADIOS",
 			model: "radios",
