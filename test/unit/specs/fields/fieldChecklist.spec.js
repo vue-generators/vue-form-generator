@@ -78,7 +78,7 @@ describe("fieldChecklist.vue", function() {
 
 			it("model value should be the listbox value if changed", (done) => {
 				checkboxes[0].checked = true;
-				trigger(checkboxes[0], "change");
+				trigger(checkboxes[0], "input");
 
 				vm.$nextTick( () => {
 					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
@@ -142,7 +142,7 @@ describe("fieldChecklist.vue", function() {
 
 			it("model value should be the listbox value if changed", (done) => {
 				checkboxes[0].checked = true;
-				trigger(checkboxes[0], "change");
+				trigger(checkboxes[0], "input");
 
 				vm.$nextTick( () => {
 					expect(model.skills).to.be.deep.equal([3, 1]);
@@ -208,7 +208,7 @@ describe("fieldChecklist.vue", function() {
 
 			it("model value should be the listbox value if changed", (done) => {
 				checkboxes[0].checked = true;
-				trigger(checkboxes[0], "change");
+				trigger(checkboxes[0], "input");
 
 				vm.$nextTick( () => {
 					expect(model.skills).to.be.deep.equal([3, 1]);
@@ -305,7 +305,7 @@ describe("fieldChecklist.vue", function() {
 
 			it("model value should be the dropList value if changed (add)", (done) => {
 				checkboxes[0].checked = true;
-				trigger(checkboxes[0], "change");
+				trigger(checkboxes[0], "input");
 
 				vm.$nextTick( () => {
 					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
@@ -316,7 +316,7 @@ describe("fieldChecklist.vue", function() {
 
 			it("model value should be the checklist value if changed (remove)", (done) => {
 				checkboxes[0].checked = false;
-				trigger(checkboxes[0], "change");
+				trigger(checkboxes[0], "input");
 
 				vm.$nextTick( () => {
 					expect(model.skills).to.be.deep.equal(["ReactJS"]);
@@ -328,7 +328,7 @@ describe("fieldChecklist.vue", function() {
 			it("model value should be the dropList value if changed (null)", (done) => {
 				model.skills = null;
 				checkboxes[0].checked = true;
-				trigger(checkboxes[0], "change");
+				trigger(checkboxes[0], "input");
 
 				vm.$nextTick( () => {
 					expect(model.skills).to.be.deep.equal(["HTML5"]);
