@@ -32,6 +32,7 @@ describe("FieldRadios.vue", function() {
 		let model = { skills: "Javascript" };
 		let radioList;
 		let radios;
+		let labelList;
 
 		function isChecked(idx) {
 			return(radios[idx].checked);
@@ -41,6 +42,7 @@ describe("FieldRadios.vue", function() {
 			createField(this, schema, model, false);
 			radioList = el.querySelector(".radio-list");
 			radios = radioList.querySelectorAll("input[type=radio]");
+			labelList = radioList.querySelectorAll("label");
 		});
 
 		it("should contain a checkbox element", () => {
@@ -64,30 +66,76 @@ describe("FieldRadios.vue", function() {
 			expect(isChecked(6)).to.be.false;
 		});
 
-		it("radioList value should be the model value after changed", (done) => {
-			model.skills = "ReactJS";
-			vm.$nextTick( () => {
-				expect(isChecked(0)).to.be.false;
-				expect(isChecked(1)).to.be.false;
-				expect(isChecked(2)).to.be.false;
-				expect(isChecked(3)).to.be.false;
-				expect(isChecked(4)).to.be.false;
-				expect(isChecked(5)).to.be.true;
-				expect(isChecked(6)).to.be.false;
-				done();
-			});
-
+		it("label with checked input should have a 'is-checked' class", () =>{
+			expect(labelList[0].classList.contains("is-checked")).to.be.false;
+			expect(labelList[1].classList.contains("is-checked")).to.be.true;
+			expect(labelList[2].classList.contains("is-checked")).to.be.false;
+			expect(labelList[3].classList.contains("is-checked")).to.be.false;
+			expect(labelList[4].classList.contains("is-checked")).to.be.false;
+			expect(labelList[5].classList.contains("is-checked")).to.be.false;
+			expect(labelList[6].classList.contains("is-checked")).to.be.false;
 		});
 
-		it("model value should be the radioList value if changed", (done) => {
-			radios[0].click();
 
-			vm.$nextTick( () => {
-				expect(model.skills).to.be.equal("HTML5");
-				done();
+		describe("test values reactivity to changes", () => {
+			
+			it("radioList value should be the model value after changed", (done) => {
+				model.skills = "ReactJS";
+				vm.$nextTick( () => {
+					expect(isChecked(0)).to.be.false;
+					expect(isChecked(1)).to.be.false;
+					expect(isChecked(2)).to.be.false;
+					expect(isChecked(3)).to.be.false;
+					expect(isChecked(4)).to.be.false;
+					expect(isChecked(5)).to.be.true;
+					expect(isChecked(6)).to.be.false;
+					done();
+				});
 			});
 
+			it("model value should be the radioList value if changed", (done) => {
+				radios[0].click();
+
+				vm.$nextTick( () => {
+					expect(model.skills).to.be.equal("HTML5");
+					done();
+				});
+			});
 		});
+
+		describe("test 'is-checked' class attribution reactivity to changes", () => {
+			
+			it("label with checked input should have a 'is-checked' class after model value is changed", (done) =>{
+				model.skills = "ReactJS";
+				vm.$nextTick( () => {
+					expect(labelList[0].classList.contains("is-checked")).to.be.false;
+					expect(labelList[1].classList.contains("is-checked")).to.be.false;
+					expect(labelList[2].classList.contains("is-checked")).to.be.false;
+					expect(labelList[3].classList.contains("is-checked")).to.be.false;
+					expect(labelList[4].classList.contains("is-checked")).to.be.false;
+					expect(labelList[5].classList.contains("is-checked")).to.be.true;
+					expect(labelList[6].classList.contains("is-checked")).to.be.false;
+					done();
+				});
+			});
+
+			it("label with checked input should have a 'is-checked' class after radioList value is changed", (done) =>{
+				radios[2].click();
+
+				vm.$nextTick( () => {
+					expect(labelList[0].classList.contains("is-checked")).to.be.false;
+					expect(labelList[1].classList.contains("is-checked")).to.be.false;
+					expect(labelList[2].classList.contains("is-checked")).to.be.true;
+					expect(labelList[3].classList.contains("is-checked")).to.be.false;
+					expect(labelList[4].classList.contains("is-checked")).to.be.false;
+					expect(labelList[5].classList.contains("is-checked")).to.be.false;
+					expect(labelList[6].classList.contains("is-checked")).to.be.false;
+					done();
+				});
+			});
+		});
+
+
 
 	});
 
@@ -113,6 +161,7 @@ describe("FieldRadios.vue", function() {
 		let model = { skills: "CSS3-123" };
 		let radioList;
 		let radios;
+		let labelList;
 
 		function isChecked(idx) {
 			return(radios[idx].checked);
@@ -122,6 +171,7 @@ describe("FieldRadios.vue", function() {
 			createField(this, schema, model, false);
 			radioList = el.querySelector(".radio-list");
 			radios = radioList.querySelectorAll("input[type=radio]");
+			labelList = radioList.querySelectorAll("label");
 		});
 
 		it("should contain a checkbox element", () => {
@@ -145,28 +195,71 @@ describe("FieldRadios.vue", function() {
 			expect(isChecked(6)).to.be.false;
 		});
 
-		it("radioList value should be the model value after changed", (done) => {
-			model.skills = "ReactJS-123";
-			vm.$nextTick( () => {
-				expect(isChecked(0)).to.be.false;
-				expect(isChecked(1)).to.be.false;
-				expect(isChecked(2)).to.be.false;
-				expect(isChecked(3)).to.be.false;
-				expect(isChecked(4)).to.be.false;
-				expect(isChecked(5)).to.be.true;
-				expect(isChecked(6)).to.be.false;
-				done();
+		it("label with checked input should have a 'is-checked' class", () =>{
+			expect(labelList[0].classList.contains("is-checked")).to.be.false;
+			expect(labelList[1].classList.contains("is-checked")).to.be.false;
+			expect(labelList[2].classList.contains("is-checked")).to.be.true;
+			expect(labelList[3].classList.contains("is-checked")).to.be.false;
+			expect(labelList[4].classList.contains("is-checked")).to.be.false;
+			expect(labelList[5].classList.contains("is-checked")).to.be.false;
+			expect(labelList[6].classList.contains("is-checked")).to.be.false;
+		});
+		describe("test values reactivity to changes", () => {
+			
+			it("radioList value should be the model value after changed", (done) => {
+				model.skills = "ReactJS-123";
+				vm.$nextTick( () => {
+					expect(isChecked(0)).to.be.false;
+					expect(isChecked(1)).to.be.false;
+					expect(isChecked(2)).to.be.false;
+					expect(isChecked(3)).to.be.false;
+					expect(isChecked(4)).to.be.false;
+					expect(isChecked(5)).to.be.true;
+					expect(isChecked(6)).to.be.false;
+					done();
+				});
+			});
+
+			it("model value should be the radioList value if changed", (done) => {
+				radios[0].click();
+
+				vm.$nextTick( () => {
+					expect(model.skills).to.be.equal("HTML5-123");
+					done();
+				});
 			});
 		});
+		
+		describe("test 'is-checked' class attribution reactivity to changes", () => {
 
-		it("model value should be the radioList value if changed", (done) => {
-			radios[0].click();
-
-			vm.$nextTick( () => {
-				expect(model.skills).to.be.equal("HTML5-123");
-				done();
+			it("label with checked input should have a 'is-checked' class after model value is changed", (done) =>{
+				model.skills = "ReactJS-123";
+				vm.$nextTick( () => {
+					expect(labelList[0].classList.contains("is-checked")).to.be.false;
+					expect(labelList[1].classList.contains("is-checked")).to.be.false;
+					expect(labelList[2].classList.contains("is-checked")).to.be.false;
+					expect(labelList[3].classList.contains("is-checked")).to.be.false;
+					expect(labelList[4].classList.contains("is-checked")).to.be.false;
+					expect(labelList[5].classList.contains("is-checked")).to.be.true;
+					expect(labelList[6].classList.contains("is-checked")).to.be.false;
+					done();
+				});
 			});
 
+			it("label with checked input should have a 'is-checked' class after radioList value is changed", (done) =>{
+				radios[2].click();
+
+				vm.$nextTick( () => {
+					expect(labelList[0].classList.contains("is-checked")).to.be.false;
+					expect(labelList[1].classList.contains("is-checked")).to.be.false;
+					expect(labelList[2].classList.contains("is-checked")).to.be.true;
+					expect(labelList[3].classList.contains("is-checked")).to.be.false;
+					expect(labelList[4].classList.contains("is-checked")).to.be.false;
+					expect(labelList[5].classList.contains("is-checked")).to.be.false;
+					expect(labelList[6].classList.contains("is-checked")).to.be.false;
+					done();
+				});
+			});
 		});
 
 	});
