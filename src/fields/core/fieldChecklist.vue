@@ -69,7 +69,7 @@
 
 			onChanged(event, item) {
 				if (isNil(this.value))
-					this.value = [];
+					this.$set(this, "value", []);
 
 				if (event.target.checked)
 					this.value.push(this.getItemID(item));
