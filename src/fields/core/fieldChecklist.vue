@@ -55,7 +55,7 @@
 						return item[this.schema.checklistOptions.value];
 					} else {
 						if (typeof item["value"] !== "undefined") {
-							return item.value
+							return item.value;
 						} else {
 							throw "value is not defined. If you want to use another key name, add a `value` property under `checklistOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/checklist.html#checklist-field-with-object-values";
 						}
@@ -70,7 +70,7 @@
 						return item[this.schema.checklistOptions.name];
 					} else {
 						if (typeof item["name"] !== "undefined") {
-							return item.name
+							return item.name;
 						} else {
 							throw "name is not defined. If you want to use another key name, add a `name` property under `checklistOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/checklist.html#checklist-field-with-object-values";
 						}

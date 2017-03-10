@@ -34,7 +34,7 @@
 						return item[this.schema.radiosOptions.value];
 					} else {
 						if (typeof item["value"] !== "undefined") {
-							return item.value
+							return item.value;
 						} else {
 							throw "value is not defined. If you want to use another key name, add a `value` property under `radiosOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/radios.html#radios-field-with-object-values";
 						}
@@ -49,7 +49,7 @@
 						return item[this.schema.radiosOptions.name];
 					} else {
 						if (typeof item["name"] !== "undefined") {
-							return item.name
+							return item.name;
 						} else {
 							throw "name is not defined. If you want to use another key name, add a `name` property under `radiosOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/radios.html#radios-field-with-object-values";
 						}
