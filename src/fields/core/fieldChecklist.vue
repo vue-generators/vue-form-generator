@@ -68,12 +68,13 @@
 			},
 
 			onChanged(event, item) {
-				if (isNil(this.value))
+				if (isNil(this.value) || !Array.isArray(this.value)){
 					this.$set(this, "value", []);
+				}
 
-				if (event.target.checked)
+				if (event.target.checked) {
 					this.value.push(this.getItemID(item));
-				else {
+				} else {
 					this.value.splice(this.value.indexOf(this.getItemID(item)), 1);
 				}
 			},
