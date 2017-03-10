@@ -28,34 +28,41 @@
 		},
 
 		methods: {
-			onSelection(item) {
-				if (isObject(item) && this.schema.radiosOptions.value && item[this.schema.radiosOptions.value]){
-					this.value = item[this.schema.radiosOptions.value];
-				} else{
-					this.value = item;
-				}
-			},
 			getItemValue(item) {
-				if (isObject(item) && this.schema.radiosOptions.value && item[this.schema.radiosOptions.value]){
-					return item[this.schema.radiosOptions.value];
+				if (isObject(item)){
+					if (typeof this.schema["radiosOptions"] !== "undefined" && typeof this.schema["radiosOptions"]["value"] !== "undefined") {
+						return item[this.schema.radiosOptions.value];
+					} else {
+						if (typeof item["value"] !== "undefined") {
+							return item.value
+						} else {
+							throw "value is not defined.\r If you want to use another key name, add a `value` property under `radiosOptions` in the schema.\r  https://icebob.gitbooks.io/vueformgenerator/content/fields/radios.html#radios-field-with-object-values";
+						}
+					}
+				} else {
+					return item;
 				}
-
-				return item;
 			},
 			getItemName(item) {
-				if (isObject(item) && this.schema.radiosOptions.name && item[this.schema.radiosOptions.name]){
-					return item[this.schema.radiosOptions.name];
+				if (isObject(item)){
+					if (typeof this.schema["radiosOptions"] !== "undefined" && typeof this.schema["radiosOptions"]["name"] !== "undefined") {
+						return item[this.schema.radiosOptions.name];
+					} else {
+						if (typeof item["name"] !== "undefined") {
+							return item.name
+						} else {
+							throw "name is not defined.\r If you want to use another key name, add a `name` property under `radiosOptions` in the schema.\r  https://icebob.gitbooks.io/vueformgenerator/content/fields/radios.html#radios-field-with-object-values";
+						}
+					}
+				} else {
+					return item;
 				}
-
-				return item;
+			},
+			onSelection(item) {
+				this.value = this.getItemValue(item);
 			},
 			isItemChecked(item) {
-				let currentValue;
-				if (isObject(item) && this.schema.radiosOptions.value && item[this.schema.radiosOptions.value]){
-					currentValue = item[this.schema.radiosOptions.value];
-				} else{
-					currentValue = item;
-				}
+				let currentValue = this.getItemValue(item);
 				return (currentValue === this.value);
 			},
 		}
