@@ -1,7 +1,7 @@
 <template lang="pug">
 	.wrapper
 		.listbox.form-control(v-if="schema.listBox", :disabled="disabled")
-			.list-row(v-for="item in items")
+			.list-row(v-for="item in items", :class="{'is-checked': getItemIsChecked(item)}")
 				label
 					input(type="checkbox", :checked="getItemIsChecked(item)", :disabled="disabled", @input="onChanged($event, item)")
 					| {{ getItemName(item) }}
@@ -12,7 +12,7 @@
 				.arrow
 
 			.dropList
-				.list-row(v-if="comboExpanded", v-for="item in items")
+				.list-row(v-if="comboExpanded", v-for="item in items", :class="{'is-checked': getItemIsChecked(item)}")
 					label
 						input(type="checkbox", :checked="getItemIsChecked(item)", :disabled="disabled", @input="onChanged($event, item)")
 						| {{ getItemName(item) }}
