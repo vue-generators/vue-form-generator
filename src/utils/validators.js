@@ -85,7 +85,7 @@ module.exports = {
 	double(value, field) {
 		let res = checkEmpty(value, field.required); if (res != null) return res;
 
-		if (!(Number(value) === value && value % 1 !== 0))
+		if (!isNumber(value) || isNaN(value))
 			return [msg(resources.invalidNumber)];
 	},
 
