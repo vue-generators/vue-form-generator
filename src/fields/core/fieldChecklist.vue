@@ -86,7 +86,7 @@
 
 			onChanged(event, item) {
 				if (isNil(this.value) || !Array.isArray(this.value)){
-					this.$set(this, "value", []);
+					this.value = [];
 				}
 
 				if (event.target.checked) {
