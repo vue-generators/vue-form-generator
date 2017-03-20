@@ -100,5 +100,67 @@ describe("fieldVueMultiSelect.vue", function() {
 			});
 
 		});
+
+		describe("with objects", () => {
+			const option = {
+				name: "Vue.js",
+				language: "JavaScript"
+			};
+			let schema = {...schema};
+			let model = {
+				city: [option]
+			};
+			schema.values = [
+				{
+					name: "Vue.js",
+					language: "JavaScript"
+				},
+				{
+					name: "Rails",
+					language: "Ruby"
+				},
+				{
+					name: "Sinatra",
+					language: "Ruby"
+				}];
+			schema.selectOptions = {};
+			before(() => {
+				createField(this, schema, model, false);
+				input = el.querySelector(".multiselect");
+			});
+
+			it("model value should work with objects", (done) => {
+				schema.selectOptions = {label: "name", trackBy: "name"};
+				vm.$nextTick(() => {
+					expect(model.city.length).to.be.equal(1);
+					expect(model.city[0]).to.be.eql(schema.values[0]);
+					done();
+				});
+			});
+
+			it("options should contain only text specified in label", (done) => {
+				schema.selectOptions = {label: "language", trackBy: "language"};
+				vm.$nextTick(() => {
+					let options = input.querySelectorAll("li .multiselect__option");
+					expect(options[0].querySelector("span").textContent).to.be.equal("JavaScript");
+					done();
+				});
+			});
+
+			it("options should contain custom text specified in customLabel", (done) => {
+				schema.selectOptions = {
+					label: "name",
+					trackBy: "name",
+					customLabel: ({name, language}) => {
+						return `${name}-${language}`;
+					}
+				};
+				vm.$nextTick(() => {
+					let options = input.querySelectorAll("li .multiselect__option");
+					expect(options[0].querySelector("span").textContent).to.be.equal("Vue.js-JavaScript");
+					done();
+				});
+			});
+		});
 	});
 });
