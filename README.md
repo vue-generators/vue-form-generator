@@ -17,26 +17,27 @@ A schema-based form generator component for Vue.js.
 [![Screenshot](https://icebob.gitbooks.io/vueformgenerator/content/assets/vfg-example1.png)](https://jsfiddle.net/icebob/0mg1v81e/)
 
 ## Features
-- multiple objects editing
-- core & full bundles
+- reactive forms based on schemas
+- multiple object editing
 - 21 field types
 - built-in validators
+- core & full bundles (11kb and 19kb gzipped)
 - Bootstrap friendly templates
 - customizable styles
-- extendable with custom fields
+- can be extended easily with custom fields
 - ...etc
 
 ## Documentation
 [Online documentation on Gitbook](https://icebob.gitbooks.io/vueformgenerator/content/)
 
 ## Dependencies
-vue-form-generator use [fecha](https://github.com/taylorhakes/fecha) and [lodash](https://lodash.com/) internally.
+vue-form-generator uses [fecha](https://github.com/taylorhakes/fecha) and [lodash](https://lodash.com/) internally.
 
 While built-in fields don't need external dependencies, optional fields may need other libraries.  
-These dependency fall in two camp: jQuery or Vanilla. You can find almost the same functionality in both flavor.  
-That way, it's your choice to depend on jQuery or not.
+These dependencies fall into two camps: jQuery or Vanilla. You can find almost the same functionality in both flavors.
+In the end, it's your choice to depend on jQuery or not.
 
-You can find details about dependencies in [documentation](https://icebob.gitbooks.io/vueformgenerator/content/).
+You can find details about dependencies in the official [documentation](https://icebob.gitbooks.io/vueformgenerator/content/) under each specific component.
 
 ## Installation
 ### NPM
@@ -156,6 +157,17 @@ export default {
 </script>
 ```
 
+Usage in local components
+```
+import VueFormGenerator from "vue-form-generator";
+
+//component javascript
+export default{
+  components:{
+    "vue-form-generator": VueFormGenerator.component
+  }
+}
+```
 ## Development
 This command will start a `webpack-dev-server` with content of `dev` folder.
 ```bash
@@ -178,7 +190,7 @@ npm run ci
 ```
 
 ## More fields *new*
-VueFormGenerator support custom fields. If you decide to release your custom field into the wild, please open a new issue so we can add you to a list here! Please try to use this naming convention for your custom field : vfg-field-* Example :
+VueFormGenerator supports custom fields. If you decide to release your custom field into the wild, please open a new issue so we can add you to a list here! Please try to use this naming convention for your custom field : vfg-field-* Example :
 
 - `vfg-field-myfield`
 - `vfg-field-calendar`
