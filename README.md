@@ -158,7 +158,7 @@ export default {
 ```
 
 Usage in local components
-```
+```js
 import VueFormGenerator from "vue-form-generator";
 
 //component javascript
