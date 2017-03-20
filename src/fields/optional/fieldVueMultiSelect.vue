@@ -58,10 +58,11 @@
 				}
 			},
 			customLabel(){
-				if (typeof this.schema.selectOptions !== "undefined" && typeof this.schema.selectOptions.customLabel !== "undefined" && this.schema.selectOptions.customLabel === "function") {
+				if (typeof this.schema.selectOptions !== "undefined" && typeof this.schema.selectOptions.customLabel !== "undefined" && typeof this.schema.selectOptions.customLabel === "function") {
 					return this.schema.selectOptions.customLabel;
 				} else {
-					return function(currentLabel){return currentLabel;};
+					//this will let the multiselect library use the default behavior if customLabel is not specified
+					return undefined;
 				} 
 			}
 		},
