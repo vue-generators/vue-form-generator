@@ -1,4 +1,17 @@
 import { get as objGet, each, isFunction, isString, isArray } from "lodash";
+import validators from "../utils/validators";
+
+function convertValidator(validator) {
+	if (isString(validator)) {
+		if (validators[validator] != null)
+			return validators[validator];
+		else {
+			console.warn(`'${validator}' is not a validator function!`);
+			return null; // caller need to handle null
+		}
+	}
+	return validator;
+}
 
 export default {
 	props: [
@@ -69,10 +82,10 @@ export default {
 
 				let validators = [];
 				if (!isArray(this.schema.validator)) {
-					validators.push(this.schema.validator.bind(this));
+					validators.push(convertValidator(this.schema.validator).bind(this));
 				} else {
 					each(this.schema.validator, (validator) => {
-						validators.push(validator.bind(this));
+						validators.push(convertValidator(validator).bind(this));
 					});
 				}
 
