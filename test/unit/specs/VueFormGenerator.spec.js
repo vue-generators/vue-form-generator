@@ -523,18 +523,60 @@ describe("VueFormGenerator.vue", () => {
 			});
 		});	
 
-	});	
+	});
 
 	describe("check validate", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
+					label: "Name",
+					model: "name",
 					min: 3,
 					validator: VueFormGenerator.validators.string
+				}
+			]
+		};
+
+		let model = { name: "John Doe" };
+		let form;
+
+		before( () => {
+			createFormGenerator(schema, model);
+			form = vm.$refs.form;
+		});
+
+		it("should empty the errors", () => {
+			expect(form.errors).to.be.length(0);
+			expect(form.validate()).to.be.true;
+			expect(form.errors).to.be.length(0);
+		});
+
+		it("should give an validation error", () => {
+			model.name = "Ab";
+			expect(form.validate()).to.be.false;
+			expect(form.errors).to.be.length(1);
+		});
+
+		it("should no validation error", () => {
+			model.name = "Abc";
+			expect(form.validate()).to.be.true;
+			expect(form.errors).to.be.length(0);
+		});
+
+	});
+
+	describe("check validate with validator as string instead of object", () => {
+		let schema = {
+			fields: [
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
+					min: 3,
+					validator: "string"
 				}
 			]
 		};
