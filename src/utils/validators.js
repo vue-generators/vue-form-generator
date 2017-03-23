@@ -233,9 +233,6 @@ module.exports = {
 Object.keys(module.exports).forEach(name => {
 	const fn = module.exports[name];
 	if (isFunction(fn)) {
-		fn.locale = (customMessages) => {
-			const messages = defaults(customMessages, resources);
-			return (value, field, model) => fn(value, field, model, messages);
-		};
+		fn.locale = customMessages => (value, field, model) => fn(value, field, model, defaults(customMessages, resources));
 	}
 });
