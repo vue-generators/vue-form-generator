@@ -74,7 +74,10 @@ module.exports = {
 			required: true,
 			hint: "Minimum 6 characters",
 			styleClasses: "half-width",
-			validator: validators.string
+			validator: validators.string.locale({ 
+				fieldIsRequired: "The password is required!",
+				textTooSmall: "Password must be at least {1} characters"
+			})
 		}, {
 			type: "input",
 			inputType: "date",
