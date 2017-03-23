@@ -11,7 +11,7 @@ function check(validator, value, field, errorCount) {
 	return res;
 }
 
-describe.only("Validators", () => {
+describe("Validators", () => {
 
 	describe("test Validators.required", () => {
 
