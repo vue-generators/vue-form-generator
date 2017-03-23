@@ -11,7 +11,7 @@ function check(validator, value, field, errorCount) {
 	return res;
 }
 
-describe("Validators", () => {
+describe.only("Validators", () => {
 
 	describe("test Validators.required", () => {
 
@@ -426,5 +426,28 @@ describe("Validators", () => {
 			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. 2 helyett 5");
 		});
 
+	});
+
+	describe("test local custom error messages", () => {
+
+		let field = {
+			min: 5,
+			max: 10,
+			required: true
+		};
+
+		let locNumber = v.number.locale({
+			fieldIsRequired: "Ezt a mezőt kötelező kitölteni!",
+			numberTooSmall: "Ez a szám nem lehet kisebb mint {0}!"
+		});
+
+		it("should give the custom error message", () => {
+			expect(locNumber(null, field)[0]).to.be.equal("Ezt a mezőt kötelező kitölteni!");
+			expect(locNumber(2, field)[0]).to.be.equal("Ez a szám nem lehet kisebb mint 5!");
+		});
+
+		it("should give the default error message", () => {
+			expect(locNumber(30, field)[0]).to.be.equal("The number is too big! Maximum: 10");
+		});
 	});
 });
