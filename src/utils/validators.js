@@ -1,24 +1,6 @@
 import { defaults, isNil, isNumber, isString, isArray, isFunction } from "lodash";
 import fecha from "fecha";
 
-function checkEmpty(value, required, messages) {
-	if (isNil(value) || value === "") {
-		if (required)
-			return [msg(messages.fieldIsRequired)];
-		else
-			return [];
-	}
-	return null;
-}
-
-function msg(text) {
-	if (text != null && arguments.length > 1)
-		for (let i = 1; i < arguments.length; i++)
-			text = text.replace(/\{\d+?\}/, arguments[i]);
-
-	return text;
-}
-
 let resources = {
 	fieldIsRequired: "This field is required!",
 	invalidFormat: "Invalid format!",
@@ -50,15 +32,34 @@ let resources = {
 	invalidTextContainSpec: "Invalid text! Cannot contains special characters"
 };
 
+
+function checkEmpty(value, required, messages = resources) {
+	if (isNil(value) || value === "") {
+		if (required)
+			return [msg(messages.fieldIsRequired)];
+		else
+			return [];
+	}
+	return null;
+}
+
+function msg(text) {
+	if (text != null && arguments.length > 1)
+		for (let i = 1; i < arguments.length; i++)
+			text = text.replace(/\{\d+?\}/, arguments[i]);
+
+	return text;
+}
+
 module.exports = {
 
 	resources,
 	
-	required(value, field, messages = resources) {
+	required(value, field, model, messages = resources) {
 		return checkEmpty(value, field.required, messages); 
 	},
 
-	number(value, field, messages = resources) {
+	number(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		let err = [];
@@ -75,21 +76,21 @@ module.exports = {
 		return err;
 	},
 
-	integer(value, field, messages = resources) {
+	integer(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		if (!(Number(value) === value && value % 1 === 0))
 			return [msg(messages.invalidNumber)];
 	},
 
-	double(value, field, messages = resources) {
+	double(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		if (!isNumber(value) || isNaN(value))
 			return [msg(messages.invalidNumber)];
 	},
 
-	string(value, field, messages = resources) {
+	string(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		let err = [];
@@ -106,7 +107,7 @@ module.exports = {
 		return err;
 	},
 
-	array(value, field, messages = resources) {
+	array(value, field, model, messages = resources) {
 		if (field.required) {
 
 			if (!isArray(value))
@@ -127,7 +128,7 @@ module.exports = {
 		}
 	},	
 
-	date(value, field, messages = resources) {
+	date(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		let m = new Date(value);
@@ -151,7 +152,7 @@ module.exports = {
 		return err;
 	},
 
-	regexp(value, field, messages = resources) {
+	regexp(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		if (!isNil(field.pattern)) {
@@ -161,7 +162,7 @@ module.exports = {
 		}
 	},
 
-	email(value, field, messages = resources) {
+	email(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -169,7 +170,7 @@ module.exports = {
 			return [msg(messages.invalidEmail)];
 	},	
 
-	url(value, field, messages = resources) {
+	url(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
@@ -177,7 +178,7 @@ module.exports = {
 			return [msg(messages.invalidURL)];
 	},	
 
-	creditCard(value, field, messages = resources) {
+	creditCard(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		/*  From validator.js code 
@@ -212,7 +213,7 @@ module.exports = {
 			return [msg(messages.invalidCardNumber)];
 	},
 
-	alpha(value, field, messages = resources) {
+	alpha(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		let re = /^[a-zA-Z]*$/;		
@@ -220,7 +221,7 @@ module.exports = {
 			return [msg(messages.invalidTextContainNumber)];
 	},
 
-	alphaNumeric(value, field, messages = resources) {
+	alphaNumeric(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
 		let re = /^[a-zA-Z0-9]*$/;	
@@ -234,7 +235,7 @@ Object.keys(module.exports).forEach(name => {
 	if (isFunction(fn)) {
 		fn.locale = (customMessages) => {
 			const messages = defaults(customMessages, resources);
-			return (value, field) => fn(value, field, messages);
+			return (value, field, model) => fn(value, field, model, messages);
 		};
 	}
 });
