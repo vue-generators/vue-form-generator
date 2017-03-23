@@ -420,10 +420,10 @@ describe("Validators", () => {
 
 		it("should give the localized error message", () => {
 			v.resources.fieldIsRequired = "A mezőt kötelező kitölteni!";
-			v.resources.textTooSmall = "A szöveg túl rövid. {1} helyett {0}";
+			v.resources.textTooSmall = "A szöveg túl rövid. Minimum {1} a {0} helyett";
 
 			expect(v.number(null, field)[0]).to.be.equal("A mezőt kötelező kitölteni!");
-			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. 2 helyett 5");
+			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. Minimum 5 a 2 helyett");
 		});
 
 	});

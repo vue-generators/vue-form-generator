@@ -76,7 +76,7 @@ module.exports = {
 			styleClasses: "half-width",
 			validator: validators.string.locale({ 
 				fieldIsRequired: "The password is required!",
-				textTooSmall: "Password must be at least {1} characters"
+				textTooSmall: "Password must be at least {1} characters!"
 			})
 		}, {
 			type: "input",
