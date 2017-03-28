@@ -6,14 +6,14 @@ module.exports = {
 	devtool: "eval-source-map",
 	
 	module: {
-		preLoaders: [
+		/*preLoaders: [
 			{
 				test: /\.js$/,
 				loader: "isparta",
 				include: sourceDir,
 				exclude: /node_modules/
 			}
-		],
+		],*/
 
 		loaders: [
 			{
@@ -70,9 +70,9 @@ module.exports = {
 		},
 
 		// Comment out this, if you would like to debug under `npm run ci`
-		loaders: {
+		/*loaders: {
 			js: "isparta"
-		}
+		}*/
 	}
  
 };

@@ -893,4 +893,76 @@ describe("VueFormGenerator.vue", () => {
 		});	
 	});
 
+
+	describe("check async validator", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "Name", 
+					model: "name",
+					validator(value) {
+						return new Promise((resolve, reject) => {
+							setTimeout(() => {
+								if (value.length >= 3)
+									resolve();
+								else
+									resolve([ "Invalid name" ]);
+							}, 50);
+						});
+					}
+				}
+			]
+		};
+
+		let model = { name: "Bob" };
+		let form;
+		let field;
+		let onValidated = sinon.spy();
+
+		before( (done) => {
+			let elm = document.createElement("div");
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`,
+				data: {
+					schema,
+					model,
+					options: {}
+				},
+				methods: {
+					onValidated
+				}
+			}).$mount(elm);
+
+			el = vm.$el;
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				field = form.$children[0];
+				done();
+			});
+		});
+
+		it("should no errors after mounted()", (done) => {
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(0);
+				done();
+			});
+		});
+
+		it("should be validation error if model value is not valid", cb => {
+			onValidated.reset();
+			vm.model.name = "A";
+			field.validate();
+
+			setTimeout(() => {
+				expect(form.errors).to.be.length(1);
+				expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "Invalid name"}] )).to.be.true;
+
+				cb();
+			}, 100);
+		});		
+	});
+
 });
