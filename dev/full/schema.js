@@ -4,6 +4,17 @@ import {
 	validators
 } from "../../src";
 
+let customAsyncValidator = function(value) {
+	return new Promise((resolve, reject) => {
+		setTimeout(() => {
+			if (value)
+				resolve();
+			else
+				resolve([ "Invalid value from async validator" ]);
+		}, 1000);
+	});
+};
+
 module.exports = {
 	fields: [
 
@@ -56,7 +67,7 @@ module.exports = {
 			model: "website",
 			placeholder: "Enter your website",
 			inputName: "website",
-			validator: validators.url
+			validator: customAsyncValidator //validators.url
 		}, {
 			type: "input",
 			inputType: "tel",
@@ -120,8 +131,8 @@ module.exports = {
 			inputType: "number",
 			label: "Number",
 			model: "age",
-			styleClasses: "half-width",
-			validator: validators.number
+			styleClasses: "half-width"
+			//validator: validators.number
 		}, {
 			type: "input",
 			inputType: "range",
@@ -312,7 +323,8 @@ module.exports = {
 			rows: 4,
 			validator: validators.string
 		}, {
-			type: "text",
+			type: "input",
+			inputType: "text",
 			label: "Field with buttons",
 			model: "address.geo",
 			disabled: false,
