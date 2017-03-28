@@ -903,7 +903,7 @@ describe("VueFormGenerator.vue", () => {
 					label: "Name", 
 					model: "name",
 					validator(value) {
-						return new Promise((resolve, reject) => {
+						return new Promise(resolve => {
 							setTimeout(() => {
 								if (value.length >= 3)
 									resolve();
