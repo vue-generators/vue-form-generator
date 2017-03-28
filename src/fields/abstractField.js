@@ -90,12 +90,26 @@ export default {
 				}
 
 				each(validators, (validator) => {
-					let err = validator(this.value, this.schema, this.model);
-					if (err) {
+					let addErrors = err => {
 						if (isArray(err))
 							Array.prototype.push.apply(this.errors, err);
 						else if (isString(err))
 							this.errors.push(err);
+					};
+
+					let res = validator(this.value, this.schema, this.model);
+					if (res && isFunction(res.then)) {
+						// It is a Promise, async validator
+						res.then(err => {
+							if (err) {
+								addErrors(err);
+								let isValid = this.errors.length == 0;
+								this.$emit("validated", isValid, this.errors, this);
+							}
+						});
+					} else {
+						if (res)
+							addErrors(res);
 					}
 				});
 
