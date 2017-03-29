@@ -420,11 +420,34 @@ describe("Validators", () => {
 
 		it("should give the localized error message", () => {
 			v.resources.fieldIsRequired = "A mezőt kötelező kitölteni!";
-			v.resources.textTooSmall = "A szöveg túl rövid. {1} helyett {0}";
+			v.resources.textTooSmall = "A szöveg túl rövid. Minimum {1} a {0} helyett";
 
 			expect(v.number(null, field)[0]).to.be.equal("A mezőt kötelező kitölteni!");
-			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. 2 helyett 5");
+			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. Minimum 5 a 2 helyett");
 		});
 
+	});
+
+	describe("test local custom error messages", () => {
+
+		let field = {
+			min: 5,
+			max: 10,
+			required: true
+		};
+
+		let locNumber = v.number.locale({
+			fieldIsRequired: "Ezt a mezőt kötelező kitölteni!",
+			numberTooSmall: "Ez a szám nem lehet kisebb mint {0}!"
+		});
+
+		it("should give the custom error message", () => {
+			expect(locNumber(null, field)[0]).to.be.equal("Ezt a mezőt kötelező kitölteni!");
+			expect(locNumber(2, field)[0]).to.be.equal("Ez a szám nem lehet kisebb mint 5!");
+		});
+
+		it("should give the default error message", () => {
+			expect(locNumber(30, field)[0]).to.be.equal("The number is too big! Maximum: 10");
+		});
 	});
 });
