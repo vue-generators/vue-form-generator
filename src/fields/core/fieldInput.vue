@@ -4,6 +4,7 @@
 		:type="schema.inputType", 
 		:value="value",
 		@input="value = $event.target.value",
+		@change="onChange",
 		:disabled="disabled",
 		:accept="schema.accept",
 		:alt="schema.alt",
@@ -41,6 +42,11 @@
 	export default {
 		mixins: [ abstractField ],
 		methods: {
+			onChange(event){
+				if (this.schema.inputType === "file") {
+					this.value = event.target.files;
+				}
+			},
 			formatValueToField(value) {
 				if (value != null) {
 					switch(this.schema.inputType){
