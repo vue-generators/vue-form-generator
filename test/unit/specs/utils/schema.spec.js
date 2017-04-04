@@ -1,3 +1,4 @@
+/* global sinon */
 import { expect } from "chai";
 import { clone } from "lodash";
 
@@ -7,6 +8,11 @@ describe("SchemaUtils", () => {
 
 	describe("test createDefaultObject function", () => {
 
+		let obj = { a: 5 };
+		let arr = [5, 3];
+
+		let cb = sinon.stub().returns(100);
+
 		let schema = {
 			fields: [
 				{	model: "id"									},
@@ -14,7 +20,9 @@ describe("SchemaUtils", () => {
 				{	model: "password"							},	
 				{	model: "age",		default: 30 			},	
 				{	model: "email"								},					
-				{	model: "skills",	default: [] 			},
+				{	model: "skills",	default: arr 			},
+				{	model: "data",		default: obj 			},
+				{	model: "fromFn",	default: cb 			},
 				{	model: "status",	default: true 			}
 			]
 		};
@@ -28,9 +36,17 @@ describe("SchemaUtils", () => {
 				id: 5,
 				name: "Anonymous",
 				age: 45,
-				skills: [],
+				skills: [5, 3],
+				data: { a: 5 },
+				fromFn: 100,
 				status: true
 			});
+
+			// Need to clone Object & Array
+			expect(res.skills).to.not.equal(arr);
+			expect(res.data).to.not.equal(obj);
+
+			expect(cb.calledOnce).to.be.true;
 		});
 
 
