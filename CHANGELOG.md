@@ -1,3 +1,41 @@
+<a name="2.0.0-beta6"></a>
+# 2.0.0-beta6 (2017-04-04)
+
+* :package: build ([dd33ea0](https://github.com/icebob/vue-form-generator/commit/dd33ea0))
+* #159 Fix customLabel function from multi-select field to work with object values ([84d3e41](https://github.com/icebob/vue-form-generator/commit/84d3e41))
+* #172 Sync model value with files from file upload input ([4ac96e4](https://github.com/icebob/vue-form-generator/commit/4ac96e4))
+* `checklist` field now support array of string or array of objects (with `name` and `value` propertie ([be09146](https://github.com/icebob/vue-form-generator/commit/be09146))
+* `radios` field now support array of string or array of objects (with `name` and `value` properties)  ([0f48c30](https://github.com/icebob/vue-form-generator/commit/0f48c30))
+* add `.locale` method to every validator ([1dc7fb7](https://github.com/icebob/vue-form-generator/commit/1dc7fb7))
+* Add a `is-checked` class to element where the input is checked to ease customisation. Add checklist  ([3facc08](https://github.com/icebob/vue-form-generator/commit/3facc08))
+* add example to dev ([267073c](https://github.com/icebob/vue-form-generator/commit/267073c))
+* add test for async validator ([e9463c2](https://github.com/icebob/vue-form-generator/commit/e9463c2))
+* bump version ([8ced4af](https://github.com/icebob/vue-form-generator/commit/8ced4af))
+* change `input` event to `change` on checlist field ([e6a2b9a](https://github.com/icebob/vue-form-generator/commit/e6a2b9a))
+* Change `onChange` trigger event from `change` to `input` for `checklist` ([67a3659](https://github.com/icebob/vue-form-generator/commit/67a3659))
+* fix #174 ([d939c95](https://github.com/icebob/vue-form-generator/commit/d939c95)), closes [#174](https://github.com/icebob/vue-form-generator/issues/174)
+* Fix a problem with value define but not an Array ([190f67a](https://github.com/icebob/vue-form-generator/commit/190f67a))
+* fix double validator ([7c6d658](https://github.com/icebob/vue-form-generator/commit/7c6d658))
+* Fix error "TypeError: this.value.push is not a function" in `checklist` ([c66b0e9](https://github.com/icebob/vue-form-generator/commit/c66b0e9))
+* fix lint ([1f99ab6](https://github.com/icebob/vue-form-generator/commit/1f99ab6))
+* fix parameters of validators ([d97c917](https://github.com/icebob/vue-form-generator/commit/d97c917))
+* Fix test to reflect changes ([6126f25](https://github.com/icebob/vue-form-generator/commit/6126f25))
+* fix usage example in readme ([596b302](https://github.com/icebob/vue-form-generator/commit/596b302))
+* Fix validator messages interpolation ([6b44e39](https://github.com/icebob/vue-form-generator/commit/6b44e39))
+* Improve readme file. ([846cf15](https://github.com/icebob/vue-form-generator/commit/846cf15))
+* Move some dependency to devDependency ([b00e4bb](https://github.com/icebob/vue-form-generator/commit/b00e4bb))
+* Provides ability to use strings as validators ([36c7829](https://github.com/icebob/vue-form-generator/commit/36c7829))
+* remove only from test ([560d234](https://github.com/icebob/vue-form-generator/commit/560d234))
+* simplify code ([cd922ee](https://github.com/icebob/vue-form-generator/commit/cd922ee))
+* support async (promised) validators #170 ([d50a756](https://github.com/icebob/vue-form-generator/commit/d50a756))
+* update code language in readme ([3ee0865](https://github.com/icebob/vue-form-generator/commit/3ee0865))
+* Update the unit test to reflect the changes and test for the new behavior. Fix lint error. ([1f6150f](https://github.com/icebob/vue-form-generator/commit/1f6150f))
+* Update unit test for `checklist` ([24eb17f](https://github.com/icebob/vue-form-generator/commit/24eb17f))
+* Update unit test for `radios` ([8a94e81](https://github.com/icebob/vue-form-generator/commit/8a94e81))
+* Use `this.$set` instead of a direct assignation ([4b7e118](https://github.com/icebob/vue-form-generator/commit/4b7e118))
+
+
+
 <a name="2.0.0-beta5"></a>
 # 2.0.0-beta5 (2017-03-01)
 
