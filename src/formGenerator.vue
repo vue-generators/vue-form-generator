@@ -13,7 +13,7 @@ div
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
-				.errors(v-if='fieldErrors(field).length > 0')
+				.errors.help-block(v-if='fieldErrors(field).length > 0')
 					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
 </template>
 
@@ -55,7 +55,9 @@ div
 				default()  {
 					return {
 						validateAfterLoad: false,
-						validateAfterChanged: false
+						validateAfterChanged: false,
+						validationErrorClass: "error",
+						validationSuccessClass: "",
 					};
 				}
 			},
@@ -125,13 +127,25 @@ div
 		methods: {
 			// Get style classes of field
 			getFieldRowClasses(field) {
+				const hasErrors = this.fieldErrors(field).length > 0;
 				let baseClasses = {
-					error: this.fieldErrors(field).length > 0, 
+					error: hasErrors,
 					disabled: this.fieldDisabled(field), 
 					readonly: this.fieldReadonly(field), 
 					featured: this.fieldFeatured(field), 
 					required: this.fieldRequired(field)
 				};
+
+				let {validationErrorClass, validationSuccessClass} = this.options;
+				if (validationErrorClass && validationSuccessClass) {
+					if (hasErrors) {
+						baseClasses[validationErrorClass] = true;
+						baseClasses.error = false;
+					}
+					else {
+						baseClasses[validationSuccessClass] = true;
+					}
+				}
 
 				if (isArray(field.styleClasses)) {
 					each(field.styleClasses, (c) => baseClasses[c] = true);
@@ -252,7 +266,7 @@ div
 
 				each(this.$children, (child) => {
 					child.clearValidationErrors();
-				});				
+				});
 			},
 
 			modelUpdated(newVal, schema){
@@ -262,7 +276,7 @@ div
 			buttonVisibility(field) {
 				return field.buttons && field.buttons.length > 0;
 			},
-			
+
 			fieldErrors(field) {
 				let res = this.errors.filter(e => e.field == field);
 				return res.map(item => item.error);
@@ -349,7 +363,7 @@ div
 				left: 0;
 				position: absolute;
 				width: 100%;
-			}  
+			}
 
 			&:hover .helpText {
 				opacity: 1;
