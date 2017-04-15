@@ -116,6 +116,33 @@ describe("VueFormGenerator.vue", () => {
 			});
 		});		
 
+		describe("custom validation classes", () => {
+			before(() => {
+				let options = {
+					validationErrorClass: "has-error",
+					validationSuccessClass: "has-success",
+				};
+				createFormGenerator(schema, null, options);
+				group = el.querySelector(".form-group");
+			});
+
+			it("error class", (done) => {
+				vm.$refs.form.errors.push({field: vm.schema.fields[0], error: "Validation error!"});
+				vm.$nextTick(() => {
+					expect(group.classList.contains("has-error")).to.be.true;
+					done();
+				});
+			});
+
+			it("success class", (done) => {
+				vm.$refs.form.errors = [];
+				vm.$nextTick(() => {
+					expect(group.classList.contains("has-success")).to.be.true;
+					done();
+				});
+			});
+		});
+
 		it("should be add a custom classes", (done) => {
 			Vue.set(vm.schema.fields[0], "styleClasses", "classA");
 			vm.$nextTick(() => {
