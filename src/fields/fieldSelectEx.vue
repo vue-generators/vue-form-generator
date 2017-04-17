@@ -28,14 +28,14 @@
 
 		methods: {
 			getItemID(item) {
-				if (isObject(item) && item.id)
+				if (isObject(item) && item.hasOwnProperty('id'))
 					return item.id;
 
 				return item;
 			},
 
 			getItemName(item) {
-				if (isObject(item) && item.name)
+				if (isObject(item) && item.hasOwnProperty('name'))
 					return item.name;
 
 				return item;
@@ -44,12 +44,16 @@
 
 		watch: {
 			model: function() {
-				if ($.fn.selectpicker) {
-					$(this.$el).selectpicker("refresh");
-				}
+				this.$nextTick(function () {
+					if ($.fn.selectpicker) {
+						$(this.$el).selectpicker("refresh");
+					}
+				})
 			},
 			value: function(value) {
-				$(this.$el).selectpicker("val", value);
+				this.$nextTick(function () {
+					$(this.$el).selectpicker("val", value);
+				})
 			}
 		},
 

@@ -1,6 +1,6 @@
 <template lang="jade">
 	div.wrapper
-		button.form-control.btn
+		label.form-control.btn
 			{{ schema.upload ? schema.upload : "上传" }}
 			input.form-control.link(type="text", v-show="schema.hideInput !== true", v-model="wrappedValue", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly")
 			input.form-control.file(type="file", v-if="schema.browse !== false", :disabled="disabled", @change="fileChanged", :name="schema.inputName")
@@ -85,13 +85,14 @@
 			overflow: hidden;
 		}
 
-		button.btn {
+		label.btn {
+			display: inline-block !important;
 			position: relative;
 			margin-left: 20px;
+			width: 4rem;
 			color: #fff;
 			background-color: #337ab7;
 			border-color: #2e6da4;
-			width: auto;
 		}
 
 		input.file {

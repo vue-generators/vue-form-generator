@@ -70,11 +70,14 @@ fieldset.vue-form-generator span.help:hover .helpText {
     transform: translateY(0px);
 }
 fieldset.vue-form-generator .field-wrap {
-  display: flex;
+  display: table;
+  display: -webkit-flex;
+  width: 100%;
 }
 fieldset.vue-form-generator .field-wrap .buttons {
     white-space: nowrap;
     margin-left: 4px;
+    display: table-cell;
 }
 fieldset.vue-form-generator .field-wrap button, fieldset.vue-form-generator .field-wrap input[type=submit] {
     display: inline-block;
@@ -138,11 +141,11 @@ fieldset.vue-form-generator .form-group.disabled label.title {
     font-style: italic;
 }
 fieldset.vue-form-generator .form-group.error input:not([type="checkbox"]), fieldset.vue-form-generator .form-group.error textarea, fieldset.vue-form-generator .form-group.error select {
-    border: 1px solid #F00;
-    background-color: rgba(255, 0, 0, 0.15);
+    border: 1px solid #b94a48;
+    background-color: rgba(185, 74, 72, 0.15);
 }
 fieldset.vue-form-generator .form-group.error .errors {
-    color: #F00;
+    color: #b94a48;
     font-size: 0.80em;
 }
 fieldset.vue-form-generator .form-group.error .errors span {
@@ -188,13 +191,14 @@ fieldset.vue-form-generator .form-group.error .errors span {
   position: relative;
   overflow: hidden;
 }
-.vue-form-generator .field-image button.btn {
+.vue-form-generator .field-image label.btn {
+  display: inline-block !important;
   position: relative;
   margin-left: 20px;
+  width: 4rem;
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4;
-  width: auto;
 }
 .vue-form-generator .field-image input.file {
   position: absolute;
@@ -254,35 +258,6 @@ fieldset.vue-form-generator .form-group.error .errors span {
   width: 100%;
   text-align: center;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -539,10 +514,6 @@ fieldset.vue-form-generator .form-group.error .errors span {
   margin: auto 0.5em;
 }
 
-.vue-form-generator .field-rangeSlider .irs {
-  width: 100%;
-}
-
 
 
 
@@ -596,8 +567,7 @@ fieldset.vue-form-generator .form-group.error .errors span {
 
 .vue-form-generator .field-submit input {
   color: #fff !important;
-  background-color: #337ab7 !important;
-  border-color: #2e6da4 !important;
+  background-color: #37578d !important;
   margin: 0 auto !important;
 }
 

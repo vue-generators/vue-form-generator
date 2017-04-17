@@ -39,8 +39,7 @@
 	.vue-form-generator .field-submit input {
 		// Default bootstrap primary button style
 		color: #fff !important;
-		background-color: #337ab7 !important;
-		border-color: #2e6da4 !important;
+		background-color: #37578d !important;
 		margin: 0 auto !important;
 	}
 </style>

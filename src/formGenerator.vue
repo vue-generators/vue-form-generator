@@ -227,14 +227,14 @@ div
 
 <style lang="sass">
 	
-	$errorColor: #F00;
+	$errorColor: #b94a48;
 
 	fieldset.vue-form-generator {
 
 		* {
 			box-sizing: border-box;
-		}		
-		
+		}
+
 		.form-control {
 			// Default Bootstrap .form-control style
 			display: block;
@@ -248,10 +248,10 @@ div
 			border: 1px solid #ccc;
 			border-radius: 4px;
 			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;	
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
 		} // .form-control
-		
+
 		span.help {
 			margin-left: 0.3em;
 			position: relative;
@@ -300,29 +300,32 @@ div
 				left: 0;
 				position: absolute;
 				width: 100%;
-			}  
+			}
 
 			&:hover .helpText {
 				opacity: 1;
 				pointer-events: auto;
 				transform: translateY(0px);
-			}		
+			}
 
 		} // span.help
 
 		.field-wrap {
-			display: flex;
+			display: table;
+			display: -webkit-flex;
+			width: 100%;
 
 			.buttons {
 				white-space: nowrap;
 				margin-left: 4px;
+				display: table-cell;
 			}
 
-			button, input[type=submit] {					
+			button, input[type=submit] {
 				// Default Bootstrap button style
 				display: inline-block;
 				padding: 6px 12px;
-				margin: 0px;					
+				margin: 0px;
 				font-size: 14px;
 				font-weight: normal;
 				line-height: 1.42857143;
@@ -357,7 +360,7 @@ div
 
 			} // button, input[submit]
 
-		} // .field-wrap		
+		} // .field-wrap
 
 		.hint {
 			font-style: italic;
@@ -379,7 +382,7 @@ div
 			&.featured {
 				label.title {
 					font-weight: bold;
-				}			
+				}
 			}
 
 			&.required {
@@ -390,14 +393,14 @@ div
 					position: absolute;
 					padding-left: 0.2em;
 					font-size: 1em;
-				}	
+				}
 			}
 
 			&.disabled {
 				label.title {
 					color: #666;
 					font-style: italic;
-				}			
+				}
 			}
 
 			&.error {
@@ -420,7 +423,7 @@ div
 							font-weight: 600;
 					}
 
-				} // .errors	
+				} // .errors
 
 			} // .error
 

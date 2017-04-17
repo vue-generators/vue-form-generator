@@ -30,30 +30,28 @@
 
 		methods: {
 			onSelection(item) {
-				if (isObject(item) && this.schema.radiosOptions.value && item[this.schema.radiosOptions.value]){
-					this.value = item[this.schema.radiosOptions.value];
-				} else{
+				if (isObject(item) && item.hasOwnProperty('id')){
+					this.value = item['id'];
+				} else {
 					this.value = item;
 				}
 			},
 			getItemValue(item) {
-				if (isObject(item) && this.schema.radiosOptions.value && item[this.schema.radiosOptions.value]){
-					return item[this.schema.radiosOptions.value];
+				if (isObject(item) && item.hasOwnProperty('id')){
+					return item['id'];
 				}
-
 				return item;
 			},
 			getItemName(item) {
-				if (isObject(item) && this.schema.radiosOptions.name && item[this.schema.radiosOptions.name]){
-					return item[this.schema.radiosOptions.name];
+				if (isObject(item) && item.hasOwnProperty('name')){
+					return item['name'];
 				}
-
 				return item;
 			},
 			isItemChecked(item) {
 				let currentValue;
-				if (isObject(item) && this.schema.radiosOptions.value && item[this.schema.radiosOptions.value]){
-					currentValue = item[this.schema.radiosOptions.value];
+				if (isObject(item) && item.hasOwnProperty('id')){
+					currentValue = item['id'];
 				} else{
 					currentValue = item;
 				}
