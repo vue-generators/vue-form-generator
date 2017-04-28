@@ -337,7 +337,6 @@ return /******/ (function(modules) { // webpackBootstrap
 				});
 			},
 			modelUpdated: function modelUpdated(newVal, schema) {
-				console.log("a child model has updated", newVal, schema);
 				this.model[schema] = newVal;
 				this.$emit("model-updated", this.model[schema], schema);
 			},
@@ -4723,7 +4722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    attrs: {
 	      "disabled": _vm.disabled
 	    }
-	  }, [_vm._l((_vm.items), function(item) {
+	  }, [(!_vm.items) ? _h('p', [_vm._s(_vm.schema.placeholder)]) : _vm._l((_vm.items), function(item) {
 	    return _h('label', [_h('input', {
 	      attrs: {
 	        "type": "checkbox",
@@ -9708,7 +9707,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-	  return (_vm.schema.value) ? _h('label', [_vm._s(_vm.schema.value)]) : _vm._e()
+	  return (_vm.schema.value || _vm.value) ? _h('label', [_vm._s(_vm.schema.value || _vm.value)]) : _vm._e()
 	},staticRenderFns: []}
 	if (false) {
 	  module.hot.accept()

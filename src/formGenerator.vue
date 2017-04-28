@@ -95,8 +95,6 @@ div
 
 				if (newModel != null) {
 					this.$nextTick(() => {
-
-						// console.log("Model changed!", oldModel, newModel);
 						// Model changed!
 						if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 							this.validate();
@@ -191,7 +189,6 @@ div
 				each(this.$children, (child) => {
 					if (isFunction(child.validate))
 					{
-						// console.log("Validate ", child.model)
 						let err = child.validate();
 						if (err.length > 0) {
 							hasError = true;
@@ -210,7 +207,6 @@ div
 				});				
 			},
 			modelUpdated(newVal, schema){
-				console.log("a child model has updated", newVal, schema);
 				this.model[schema] = newVal;
 				this.$emit("model-updated", this.model[schema], schema);
 			},
