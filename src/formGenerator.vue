@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-	fieldset.vue-form-generator(v-if='schema != null')
+	fieldset.vue-form-generator(v-if='schema != null', :is='tag')
 		template(v-for='field in fields')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label
@@ -70,6 +70,14 @@ div
 			isNewModel: {
 				type: Boolean,
 				default: false
+			},
+
+			tag: {
+				type: String,
+				default: "fieldset",
+				validator: function (value) {
+					return value.length > 0;
+				}
 			}
 		},
 		

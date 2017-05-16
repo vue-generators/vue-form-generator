@@ -46,6 +46,31 @@ describe("VueFormGenerator.vue", () => {
 			expect(el.getElementsByTagName("fieldset")).to.be.length(1);
 		});
 
+	});	
+
+	describe("with empty schema and custom tag", () => {
+		let schema = {};
+
+		beforeEach( () => {
+			let elm = document.createElement("div");
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<vue-form-generator :schema="schema" ref="form" tag="div"></vue-form-generator>`,
+				data: {
+					schema
+				}
+			}).$mount(elm);
+
+			el = vm.$el;
+
+			return [el, vm];
+		});
+
+		it("should be create fieldset", () => {
+			expect(vm.$el).to.be.exist;
+			expect(el.getElementsByTagName("div")).to.be.length(1);
+		});
+
 	});
 
 	describe("check form-group classes", () => {
