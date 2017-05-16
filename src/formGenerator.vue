@@ -73,9 +73,12 @@ div
 			},
 
 			tag: {
-	            type: String,
-	            default: 'fieldset'
-	        }
+				type: String,
+				default: "fieldset",
+				validator: function (value) {
+					return value.length > 0;
+				}
+			}
 		},
 		
 		data () {
