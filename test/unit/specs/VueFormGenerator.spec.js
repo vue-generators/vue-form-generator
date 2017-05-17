@@ -1,3 +1,4 @@
+/* global sinon */
 import { expect } from "chai";
 
 import Vue from "vue";
@@ -45,6 +46,31 @@ describe("VueFormGenerator.vue", () => {
 			expect(el.getElementsByTagName("fieldset")).to.be.length(1);
 		});
 
+	});	
+
+	describe("with empty schema and custom tag", () => {
+		let schema = {};
+
+		beforeEach( () => {
+			let elm = document.createElement("div");
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<vue-form-generator :schema="schema" ref="form" tag="div"></vue-form-generator>`,
+				data: {
+					schema
+				}
+			}).$mount(elm);
+
+			el = vm.$el;
+
+			return [el, vm];
+		});
+
+		it("should be create fieldset", () => {
+			expect(vm.$el).to.be.exist;
+			expect(el.getElementsByTagName("div")).to.be.length(1);
+		});
+
 	});
 
 	describe("check form-group classes", () => {
@@ -52,7 +78,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{
-					type: "text",
+					type: "input",
+					inputType: "text",
 					label: "Name",
 					model: "name",
 					readonly: false,
@@ -71,7 +98,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be minimal classes", () => {
 			expect(group.classList.length).to.be.equal(2);
 			expect(group.classList.contains("form-group")).to.be.true;
-			expect(group.classList.contains("field-text")).to.be.true;
+			expect(group.classList.contains("field-input")).to.be.true;
 		});
 
 		it("should be featured class", (done) => {
@@ -107,12 +134,39 @@ describe("VueFormGenerator.vue", () => {
 		});		
 
 		it("should be error class", (done) => {
-			Vue.set(vm.schema.fields[0], "errors", [ "!!!" ]);
+			vm.$refs.form.errors.push({ field: vm.schema.fields[0], error: "Validation error!" });
 			vm.$nextTick(() => {
 				expect(group.classList.contains("error")).to.be.true;
 				done();
 			});
 		});		
+
+		describe("custom validation classes", () => {
+			before(() => {
+				let options = {
+					validationErrorClass: "has-error",
+					validationSuccessClass: "has-success",
+				};
+				createFormGenerator(schema, null, options);
+				group = el.querySelector(".form-group");
+			});
+
+			it("error class", (done) => {
+				vm.$refs.form.errors.push({field: vm.schema.fields[0], error: "Validation error!"});
+				vm.$nextTick(() => {
+					expect(group.classList.contains("has-error")).to.be.true;
+					done();
+				});
+			});
+
+			it("success class", (done) => {
+				vm.$refs.form.errors = [];
+				vm.$nextTick(() => {
+					expect(group.classList.contains("has-success")).to.be.true;
+					done();
+				});
+			});
+		});
 
 		it("should be add a custom classes", (done) => {
 			Vue.set(vm.schema.fields[0], "styleClasses", "classA");
@@ -138,7 +192,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{
-					type: "text",
+					type: "input", 
+					inputType: "text",
 					label: "Name",
 					model: "name",
 					help: null
@@ -176,7 +231,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{
-					type: "text",
+					type: "input", 
+					inputType: "text",
 					label: "Name",
 					model: "name",
 					hint: "Hint text",
@@ -203,7 +259,8 @@ describe("VueFormGenerator.vue", () => {
 		});
 
 		it("should be .errors div if there are errors in fields", (done) => {
-			vm.schema.fields[0].errors.push("Some error!", "Another error!");
+			vm.$refs.form.errors.push({ field: vm.schema.fields[0], error: "Some error!" });
+			vm.$refs.form.errors.push({ field: vm.schema.fields[0], error: "Another error!" });
 			vm.$nextTick(() => {
 				let div = group.querySelector(".errors");
 				expect(div).to.be.exist;
@@ -220,9 +277,9 @@ describe("VueFormGenerator.vue", () => {
 	describe("check computed fields if multiple is true", () => {
 		let schema = {
 			fields: [
-				{	type: "text",	label: "name", model: "name", multi: false	},
-				{	type: "text",	label: "phone", model: "phone", multi: true	}, 
-				{	type: "text",	label: "email", model: "email"	} // multi is undefined
+				{	type: "input", inputType: "text", label: "name", model: "name", multi: false	},
+				{	type: "input", inputType: "text", label: "phone", model: "phone", multi: true	}, 
+				{	type: "input", inputType: "text", label: "email", model: "email"	} // multi is undefined
 			]
 		};
 		let form;
@@ -242,7 +299,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					disabled(model) { return !model.status; }	
@@ -276,11 +334,42 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check fieldDisabled function parameters", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",		
+					inputType: "text",
+					label: "Name", 
+					model: "name", 
+					disabled: sinon.spy()
+				}
+			]
+		};
+
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be called with correct params", () => {
+			let spy = schema.fields[0].disabled;
+			expect(spy.called).to.be.true;
+			expect(spy.calledWith(model, schema.fields[0], vm.$children[0])).to.be.true;
+		});	
+
+	});
+
 	describe("check fieldDisabled with const", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					disabled: false
@@ -311,11 +400,120 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check fieldReadonly with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",		
+					inputType: "text",
+					label: "Name", 
+					model: "name", 
+					readonly(model) { return model.status; }	
+				}
+			]
+		};
+		
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be readonly", () => {
+			expect(el.querySelector(".form-group").classList.contains("readonly")).to.be.true;
+		});	
+
+		it("should be writable", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector(".form-group").classList.contains("readonly")).to.be.false;
+				done();
+			});
+		});	
+
+	});
+
+	describe("check fieldFeatured with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",		
+					inputType: "text",
+					label: "Name", 
+					model: "name", 
+					featured(model) { return model.status; }	
+				}
+			]
+		};
+		
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be featured", () => {
+			expect(el.querySelector(".form-group").classList.contains("featured")).to.be.true;
+		});	
+
+		it("should not be featured", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector(".form-group").classList.contains("featured")).to.be.false;
+				done();
+			});
+		});	
+
+	});
+
+	describe("check fieldRequired with function", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",		
+					inputType: "text",
+					label: "Name", 
+					model: "name", 
+					required(model) { return model.status; }	
+				}
+			]
+		};
+		
+		let model = {
+			name: "John Doe",
+			status: true
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be required", () => {
+			expect(el.querySelector(".form-group").classList.contains("required")).to.be.true;
+		});	
+
+		it("should be optional", (done) => {
+			model.status = false;
+			vm.$nextTick(() => {
+				expect(el.querySelector(".form-group").classList.contains("required")).to.be.false;
+				done();
+			});
+		});	
+
+	});
+
 	describe("check fieldVisible with function", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					visible(model) { return model.status; }	
@@ -350,7 +548,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name", 
 					visible: true
@@ -376,17 +575,60 @@ describe("VueFormGenerator.vue", () => {
 			});
 		});	
 
-	});	
+	});
 
 	describe("check validate", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "text",		
-					label: "Name", 
-					model: "name", 
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
 					min: 3,
 					validator: VueFormGenerator.validators.string
+				}
+			]
+		};
+
+		let model = { name: "John Doe" };
+		let form;
+
+		before( () => {
+			createFormGenerator(schema, model);
+			form = vm.$refs.form;
+		});
+
+		it("should empty the errors", () => {
+			expect(form.errors).to.be.length(0);
+			expect(form.validate()).to.be.true;
+			expect(form.errors).to.be.length(0);
+		});
+
+		it("should give an validation error", () => {
+			model.name = "Ab";
+			expect(form.validate()).to.be.false;
+			expect(form.errors).to.be.length(1);
+		});
+
+		it("should no validation error", () => {
+			model.name = "Abc";
+			expect(form.validate()).to.be.true;
+			expect(form.errors).to.be.length(0);
+		});
+
+	});
+
+	describe("check validate with validator as string instead of object", () => {
+		let schema = {
+			fields: [
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
+					min: 3,
+					validator: "string"
 				}
 			]
 		};
@@ -423,7 +665,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",		
+					inputType: "text",
 					label: "Name", 
 					model: "name"
 				}
@@ -456,7 +699,8 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	
-					type: "text",		
+					type: "input",	
+					inputType: "text", 	
 					label: "Name", 
 					model: "name", 
 					min: 3,
@@ -508,6 +752,269 @@ describe("VueFormGenerator.vue", () => {
 			}, 150);
 		});		
 
+	});
+
+	describe("check onValidated event", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "Name", 
+					model: "name", 
+					min: 3,
+					validator: VueFormGenerator.validators.string
+				}
+			]
+		};
+
+		let model = { name: "Bob" };
+		let form;
+		let onValidated = sinon.spy();
+
+		before( (done) => {
+			let elm = document.createElement("div");
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`,
+				data: {
+					schema,
+					model,
+					options: {}
+				},
+				methods: {
+					onValidated
+				}
+			}).$mount(elm);
+
+			el = vm.$el;
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				done();
+			});
+		});
+
+		it("should no errors after mounted()", (done) => {
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(0);
+				done();
+			});
+		});
+
+		it("should be validation error if model value is not valid", () => {
+			vm.model.name = "A";
+			onValidated.reset();
+			form.validate();
+
+			expect(form.errors).to.be.length(1);
+			expect(onValidated.callCount).to.be.equal(1);
+			// console.log(onValidated.getCall(0).args[1][0].field);
+			// console.log(schema.fields[0]);
+			expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "The length of text is too small! Current: 1, Minimum: 3"}] )).to.be.true;
+		});		
+
+		it("should no validation error if model valie is valid", () => {
+			vm.model.name = "Alan";
+			onValidated.reset();
+			form.validate();
+
+			expect(form.errors).to.be.length(0);
+			expect(onValidated.callCount).to.be.equal(1);
+			expect(onValidated.calledWith(true, [] )).to.be.true;
+		});	
+	});
+
+	describe("check schema.onChanged when the model changed", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "Name", 
+					model: "name", 
+					onChanged: sinon.spy()
+				}
+			]
+		};
+
+		let model = { name: "Me" };
+		let form;
+
+		before( (done) => {
+			createFormGenerator(schema, model, {});
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				done();
+			});
+		});
+
+		it("should NOT called the schema.onChanged", (done) => {
+			schema.fields[0].onChanged.reset();
+			form.model = { name: "Bob" };
+			vm.$nextTick(() => {
+				expect(schema.fields[0].onChanged.called).to.be.false;
+				done();
+			});
+		});	
+
+	});
+
+	describe("check onFieldValidated method if child validate", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "Name", 
+					model: "name", 
+					min: 3,
+					validator: VueFormGenerator.validators.string
+				}, 
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "City", 
+					model: "city", 
+					validator() { return "Validation error!"; }
+				}
+			]
+		};
+
+		let model = { name: "Bob" };
+		let form;
+		let field;
+		let onValidated = sinon.spy();
+
+		before( (done) => {
+			let elm = document.createElement("div");
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`,
+				data: {
+					schema,
+					model,
+					options: {}
+				},
+				methods: {
+					onValidated
+				}
+			}).$mount(elm);
+
+			el = vm.$el;
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				field = form.$children[0];
+				done();
+			});
+		});
+
+		it("should no errors after mounted()", (done) => {
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(0);
+				done();
+			});
+		});
+
+		it("should be validation error if model value is not valid", () => {
+			onValidated.reset();
+			vm.model.name = "A";
+			field.validate();
+
+			expect(form.errors).to.be.length(1);
+			expect(onValidated.callCount).to.be.equal(1);
+			// console.log(onValidated.getCall(0).args[1][0].field);
+			// console.log(schema.fields[0]);
+			expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "The length of text is too small! Current: 1, Minimum: 3"}] )).to.be.true;
+		});		
+
+		it("should be 2 validation error", () => {
+			form.$children[1].validate();
+			expect(form.errors).to.be.length(2);
+			expect(form.errors[0].error).to.be.equal("The length of text is too small! Current: 1, Minimum: 3");
+			expect(form.errors[1].error).to.be.equal("Validation error!");
+		});
+
+		it("should only other field validation error", () => {
+			vm.model.name = "Alan";
+			onValidated.reset();
+			field.validate();
+
+			expect(form.errors).to.be.length(1);
+			expect(onValidated.callCount).to.be.equal(1);
+			expect(onValidated.calledWith(false, [{ field: schema.fields[1], error: "Validation error!"}] )).to.be.true;
+		});	
+	});
+
+
+	describe("check async validator", () => {
+		let schema = {
+			fields: [
+				{	
+					type: "input",	
+					inputType: "text", 	
+					label: "Name", 
+					model: "name",
+					validator(value) {
+						return new Promise(resolve => {
+							setTimeout(() => {
+								if (value.length >= 3)
+									resolve();
+								else
+									resolve([ "Invalid name" ]);
+							}, 50);
+						});
+					}
+				}
+			]
+		};
+
+		let model = { name: "Bob" };
+		let form;
+		let field;
+		let onValidated = sinon.spy();
+
+		before( (done) => {
+			let elm = document.createElement("div");
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`,
+				data: {
+					schema,
+					model,
+					options: {}
+				},
+				methods: {
+					onValidated
+				}
+			}).$mount(elm);
+
+			el = vm.$el;
+			vm.$nextTick( () => {
+				form = vm.$refs.form;
+				field = form.$children[0];
+				done();
+			});
+		});
+
+		it("should no errors after mounted()", (done) => {
+			vm.$nextTick( () => {
+				expect(form.errors).to.be.length(0);
+				done();
+			});
+		});
+
+		it("should be validation error if model value is not valid", cb => {
+			onValidated.reset();
+			vm.model.name = "A";
+			field.validate();
+
+			setTimeout(() => {
+				expect(form.errors).to.be.length(1);
+				expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "Invalid name"}] )).to.be.true;
+
+				cb();
+			}, 100);
+		});		
 	});
 
 });

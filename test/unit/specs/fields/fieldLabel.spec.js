@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField } from "../util";
 
 import Vue from "vue";
-import FieldLabel from "src/fields/fieldLabel.vue";
+import FieldLabel from "src/fields/core/fieldLabel.vue";
 
 Vue.component("FieldLabel", FieldLabel);
 

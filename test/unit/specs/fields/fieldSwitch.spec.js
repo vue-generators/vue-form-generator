@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldSwitch from "src/fields/fieldSwitch.vue";
+import FieldSwitch from "src/fields/optional/fieldSwitch.vue";
 
 Vue.component("FieldSwitch", FieldSwitch);
 
@@ -64,6 +64,7 @@ describe("FieldSwitch.vue", function() {
 			field.disabled = true;
 			vm.$nextTick( () => {
 				expect(input.disabled).to.be.true;
+				field.disabled = false;
 				done();
 			});
 		});
@@ -79,7 +80,7 @@ describe("FieldSwitch.vue", function() {
 
 		it("model value should be the input value if changed", (done) => {
 			input.checked = true;
-			trigger(input, "change");
+			trigger(input, "click");
 
 			vm.$nextTick( () => {
 				expect(model.status).to.be.true;
@@ -147,7 +148,7 @@ describe("FieldSwitch.vue", function() {
 
 		it("model value should be the input value if changed", (done) => {
 			input.checked = true;
-			trigger(input, "change");
+			trigger(input, "click");
 
 			vm.$nextTick( () => {
 				expect(model.sex).to.be.equal("female");

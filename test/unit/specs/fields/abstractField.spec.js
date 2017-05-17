@@ -2,6 +2,7 @@
 import { expect } from "chai";
 
 import Vue from "vue";
+import VueFormGenerator from "src/index";
 import AbstractField from "src/fields/abstractField";
 AbstractField.template = "<div></div>";
 Vue.component("AbstractField", AbstractField);
@@ -55,6 +56,61 @@ describe("abstractField.vue", function() {
 
 	});
 	
+	describe("check nested value", () => {
+		let schema = {
+			type: "text",
+			label: "Name",
+			model: "user.name"
+		};
+		let model = { 
+			user: {
+				name: "John Doe" 
+			}
+		};
+
+		beforeEach( () => {
+			createField(this, schema, model);
+		});
+
+		it("should give the model static value", () => {
+			expect(field).to.be.exist;
+			expect(field.value).to.be.equal("John Doe");
+		});
+
+		it("should set new value to model if value changed", () => {
+			field.value = "Foo Bar";
+			expect(model.user.name).to.be.equal("Foo Bar");
+		});
+
+	});
+
+	describe("check nested value if not exists", () => {
+		let schema = {
+			type: "text",
+			label: "Name",
+			model: "user.name.first"
+		};
+		let model = { 
+			user: {
+			}
+		};
+
+		beforeEach( () => {
+			createField(this, schema, model);
+		});
+
+		it("should give the model static value", () => {
+			expect(field).to.be.exist;
+			expect(field.value).to.be.undefined;
+		});
+
+		it("should set new value to model if value changed", () => {
+			field.value = "Foo Bar";
+			expect(model.user.name.first).to.be.equal("Foo Bar");
+		});
+
+	});
+
 	describe("check value as get/set function", () => {
 		let schema = {
 			type: "text",
@@ -130,10 +186,10 @@ describe("abstractField.vue", function() {
 
 		it("should called once the schema.onChanged", (done) => {
 			schema.onChanged.reset();
-			model.name = "Jane Doe";
+			field.value = "Jane Doe";
 			vm.$nextTick(() => {
 				expect(schema.onChanged.calledOnce).to.be.true;
-				expect(schema.onChanged.calledWith(model, "Jane Doe", "John Doe", schema)).to.be.true;
+				//expect(schema.onChanged.calledWith(model, "Jane Doe", "John Doe", schema)).to.be.true;
 				done();
 			});
 		});
@@ -165,9 +221,9 @@ describe("abstractField.vue", function() {
 			});
 		});
 
-		it("should not call validate function after value changed", (done) => {
+		it("should call validate function after value changed", (done) => {
 			options.validateAfterChanged = true;
-			model.name = "Jane Roe";
+			field.value = "Jane Roe";
 			vm.$nextTick( () => {
 				expect(field.validate.callCount).to.be.equal(1);
 				done();
@@ -296,10 +352,72 @@ describe("abstractField.vue", function() {
 			expect(res[0]).to.be.equal("Validation error!");
 
 			expect(schema.onValidated.calledOnce).to.be.true;
-			expect(schema.onValidated.calledWith(model, field.schema.errors, schema)).to.be.true;
+			expect(schema.onValidated.calledWith(model, field.errors, schema)).to.be.true;
 		});
 
 	});		
+
+	describe("check schema onValidated event", () => {
+		let schema = {
+			type: "text",
+			label: "Name",
+			model: "name",
+			min: 3,
+			validator: VueFormGenerator.validators.string
+		};
+		let model = { name: "John Doe" };
+		let onValidated = sinon.spy();
+
+		beforeEach( () => {
+			let elm = document.createElement("div");		
+
+			vm = new Vue({
+				// eslint-disable-next-line quotes
+				template: `<abstract-field :schema="schema" :model="model" ref="field" @validated="onValidated"></abstract-field>`,
+				data: {
+					schema,
+					model
+				},
+				methods: {
+					onValidated
+				}
+			}).$mount(elm);
+			el = vm.$el;
+
+			field = vm.$refs.field;		
+		});
+
+		it("should return empty array", () => {
+			onValidated.reset();
+			let res = field.validate();
+			expect(res).to.be.an.array;
+			expect(res.length).to.be.equal(0);
+
+			expect(onValidated.callCount).to.be.equal(1);
+			expect(onValidated.calledWith(true, [])).to.be.true;
+		});
+
+		it("should not call 'onValidated'", () => {
+			onValidated.reset();
+			let res = field.validate(true);
+			expect(res).to.be.an.array;
+			expect(res.length).to.be.equal(0);
+
+			expect(onValidated.callCount).to.be.equal(0);
+		});
+
+		it("should return empty array", () => {
+			model.name = "Al";
+			onValidated.reset();
+			let res = field.validate();
+			expect(res).to.be.an.array;
+			expect(res.length).to.be.equal(1);
+			expect(res[0]).to.be.equal("The length of text is too small! Current: 2, Minimum: 3");
+
+			expect(onValidated.callCount).to.be.equal(1);
+			expect(onValidated.calledWith(false, field.errors, field)).to.be.true;
+		});
+	});
 
 	describe("check clearValidationErrors", () => {
 		let schema = {
@@ -315,19 +433,19 @@ describe("abstractField.vue", function() {
 		});
 
 		it("should be undefined", () => {
-			expect(schema.errors).to.be.undefined;
+			expect(field.errors).to.be.an.array;
 		});
 
 		it("should be an empty array", () => {
 			field.clearValidationErrors();
-			expect(schema.errors).to.be.defined;
-			expect(schema.errors).to.be.length(0);
+			expect(field.errors).to.be.defined;
+			expect(field.errors).to.be.length(0);
 		});
 
 		it("should contain one error string", () => {
 			field.validate();
-			expect(schema.errors).to.be.length(1);
-			expect(schema.errors[0]).to.be.equal("Validation error!");
+			expect(field.errors).to.be.length(1);
+			expect(field.errors[0]).to.be.equal("Validation error!");
 		});
 
 	});	

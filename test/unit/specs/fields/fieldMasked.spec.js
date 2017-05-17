@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldMasked from "src/fields/fieldMasked.vue";
+import FieldMasked from "src/fields/optional/fieldMasked.vue";
 
 Vue.component("FieldMasked", FieldMasked);
 

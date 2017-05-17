@@ -1,6 +1,6 @@
-<template lang="jade">
+<template lang="pug">
 div
-	fieldset.vue-form-generator(v-if='schema != null')
+	fieldset.vue-form-generator(v-if='schema != null', :is='tag')
 		template(v-for='field in fields')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
@@ -9,12 +9,12 @@ div
 						i.icon
 						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated')
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
-				.errors(v-if='errorsVisibility(field)')
-					span(v-for='(error, index) in field.errors', track-by='index') {{ error }}
+				.errors.help-block(v-if='fieldErrors(field).length > 0')
+					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
 </template>
 
 <script>
@@ -23,12 +23,24 @@ div
 	import getFieldID from "./fields/abstractField";
 
 	// Load all fields from '../fields' folder
-	let Fields = require.context("./fields/", false, /^\.\/field([\w-_]+)\.vue$/);
 	let fieldComponents = {};
-	each(Fields.keys(), (key) => {
+
+	let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
+
+	each(coreFields.keys(), (key) => {
 		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-		fieldComponents[compName] = Fields(key);
+		fieldComponents[compName] = coreFields(key);
 	});
+
+	if (process.env.FULL_BUNDLE) {  // eslint-disable-line
+		let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
+
+		each(Fields.keys(), (key) => {
+			let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
+			fieldComponents[compName] = Fields(key);
+		});
+	}
+
 
 
 	export default {
@@ -46,7 +58,9 @@ div
 				default()  {
 					return {
 						validateAfterLoad: false,
-						validateAfterChanged: false
+						validateAfterChanged: false,
+						validationErrorClass: "error",
+						validationSuccessClass: "",
 					};
 				}
 			},
@@ -59,6 +73,14 @@ div
 			isNewModel: {
 				type: Boolean,
 				default: false
+			},
+
+			tag: {
+				type: String,
+				default: "fieldset",
+				validator: function (value) {
+					return value.length > 0;
+				}
 			}
 		},
 
@@ -85,13 +107,11 @@ div
 		watch: {
 			// new model loaded
 			model: function(newModel, oldModel) {
-				if (oldModel == newModel) // model got a new property, skip
+				if (oldModel == newModel) // model property changed, skip
 					return;
 
 				if (newModel != null) {
 					this.$nextTick(() => {
-
-						// console.log("Model changed!", oldModel, newModel);
 						// Model changed!
 						if (this.options.validateAfterLoad === true && this.isNewModel !== true)
 							this.validate();
@@ -118,13 +138,25 @@ div
 		methods: {
 			// Get style classes of field
 			getFieldRowClasses(field) {
+				const hasErrors = this.fieldErrors(field).length > 0;
 				let baseClasses = {
-					error: field.errors && field.errors.length > 0,
+					error: hasErrors,
 					disabled: this.fieldDisabled(field),
-					readonly: field.readonly,
-					featured: field.featured,
-					required: field.required
+					readonly: this.fieldReadonly(field),
+					featured: this.fieldFeatured(field),
+					required: this.fieldRequired(field)
 				};
+
+				let {validationErrorClass, validationSuccessClass} = this.options;
+				if (validationErrorClass && validationSuccessClass) {
+					if (hasErrors) {
+						baseClasses[validationErrorClass] = true;
+						baseClasses.error = false;
+					}
+					else {
+						baseClasses[validationSuccessClass] = true;
+					}
+				}
 
 				if (isArray(field.styleClasses)) {
 					each(field.styleClasses, (c) => baseClasses[c] = true);
@@ -166,7 +198,7 @@ div
 			// Get disabled attr of field
 			fieldDisabled(field) {
 				if (isFunction(field.disabled))
-					return field.disabled(this.model);
+					return field.disabled.call(this, this.model, field, this);
 
 				if (isNil(field.disabled))
 					return false;
@@ -174,10 +206,21 @@ div
 				return field.disabled;
 			},
 
+			// Get required prop of field
+			fieldRequired(field) {
+				if (isFunction(field.required))
+					return field.required.call(this, this.model, field, this);
+
+				if (isNil(field.required))
+					return false;
+
+				return field.required;
+			},
+
 			// Get visible prop of field
 			fieldVisible(field) {
 				if (isFunction(field.visible))
-					return field.visible(this.model);
+					return field.visible.call(this, this.model, field, this);
 
 				if (isNil(field.visible))
 					return true;
@@ -185,17 +228,56 @@ div
 				return field.visible;
 			},
 
+			// Get readonly prop of field
+			fieldReadonly(field) {
+				if (isFunction(field.readonly))
+					return field.readonly.call(this, this.model, field, this);
+
+				if (isNil(field.readonly))
+					return false;
+
+				return field.readonly;
+			},
+
+			// Get featured prop of field
+			fieldFeatured(field) {
+				if (isFunction(field.featured))
+					return field.featured.call(this, this.model, field, this);
+
+				if (isNil(field.featured))
+					return false;
+
+				return field.featured;
+			},
+
+			// Child field executed validation
+			onFieldValidated(res, errors, field) {
+				// Remove old errors for this field
+				this.errors = this.errors.filter(e => e.field != field.schema);
+
+				if (!res && errors && errors.length > 0) {
+					// Add errors with this field
+					errors.forEach((err) => {
+						this.errors.push({
+							field: field.schema,
+							error: err
+						});
+					});
+				}
+
+				let isValid = this.errors.length == 0;
+				this.$emit("validated", isValid, this.errors);
+			},
+
 			// Validating the model properties
 			validate() {
-				// console.log("Validate!", this.model);
 				this.clearValidationErrors();
 
-				each(this.$children, (child) => {
+				this.$children.forEach((child) => {
 					if (isFunction(child.validate))
 					{
-						// console.log("Validate ", child.model)
-						let err = child.validate();
-						each(err, (err) => {
+						let errors = child.validate(true);
+						errors.forEach((err) => {
 							this.errors.push({
 								field: child.schema,
 								error: err
@@ -204,7 +286,9 @@ div
 					}
 				});
 
-				return this.errors.length == 0;
+				let isValid = this.errors.length == 0;
+				this.$emit("validated", isValid, this.errors);
+				return isValid;
 			},
 
 			// Clear validation errors
@@ -215,16 +299,18 @@ div
 					child.clearValidationErrors();
 				});
 			},
+
 			modelUpdated(newVal, schema){
-				// console.log("a child model has updated", newVal, schema);
-				this.model[schema] = newVal;
-				this.$emit("model-updated", this.model[schema], schema);
+				this.$emit("model-updated", newVal, schema);
 			},
+
 			buttonVisibility(field) {
 				return field.buttons && field.buttons.length > 0;
 			},
-			errorsVisibility(field) {
-				return field.errors && field.errors.length > 0;
+
+			fieldErrors(field) {
+				let res = this.errors.filter(e => e.field == field);
+				return res.map(item => item.error);
 			}
 		}
 	};
@@ -244,7 +330,9 @@ div
 		.form-control {
 			// Default Bootstrap .form-control style
 			display: block;
+            &:not([class*=" col-"]){
 			width: 100%;
+            }
 			padding: 6px 12px;
 			font-size: 14px;
 			line-height: 1.42857143;
@@ -361,6 +449,11 @@ div
 					box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
 				}
 
+				&:disabled {
+					opacity: 0.6;
+					cursor: not-allowed;
+				}
+
 			} // button, input[submit]
 
 		} // .field-wrap
@@ -383,13 +476,13 @@ div
 			}
 
 			&.featured {
-				label {
+				> label {
 					font-weight: bold;
 				}
 			}
 
 			&.required {
-				label:after {
+				> label:after {
 					content: "*";
 					font-weight: normal;
 					color: Red;
@@ -400,7 +493,7 @@ div
 			}
 
 			&.disabled {
-				label {
+				> label {
 					color: #666;
 					font-style: italic;
 				}

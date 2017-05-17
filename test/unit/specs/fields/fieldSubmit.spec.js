@@ -3,7 +3,7 @@ import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
-import FieldSubmit from "src/fields/fieldSubmit.vue";
+import FieldSubmit from "src/fields/core/fieldSubmit.vue";
 
 Vue.component("FieldSubmit", FieldSubmit);
 

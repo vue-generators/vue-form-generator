@@ -15,13 +15,19 @@ var loaders = [
 		"loader": "vue"
 	}
 ];
+var cssFileName;
+if (process.env.FULL_BUNDLE) {
+	cssFileName = "vfg.css";
+} else {
+	cssFileName = "vfg-core.css";
+}
 
 module.exports = [
 	{
 		entry: "./src/index.js",
 		output: {
 			path: "./dist",
-			filename: "vue-form-generator.js",
+			filename: "vfg.js",
 			library: "VueFormGenerator",
 			libraryTarget: "umd"
 		},
@@ -41,7 +47,7 @@ module.exports = [
 			new webpack.BannerPlugin(banner, {
 				raw: true
 			}),
-			new ExtractTextPlugin("vue-form-generator.css", { allChunks: true }),
+			new ExtractTextPlugin(cssFileName, { allChunks: true }),
 			new StatsPlugin("../stats.json", {
 				chunkModules: true
 				//exclude: [/node_modules[\\\/]react/]

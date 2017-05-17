@@ -45,7 +45,8 @@ var vm = new Vue({
 		schema: {
 			fields: [
 				{
-					type: "text",
+					type: "input",
+					inputType: "text",
 					label: "ID",
 					model: "id",
 					readonly: true,
@@ -53,7 +54,8 @@ var vm = new Vue({
 					disabled: true
 				},
 				{
-					type: "text",
+					type: "input",
+					inputType: "text",
 					label: "Name",
 					model: "name",
 					readonly: false,
@@ -64,7 +66,8 @@ var vm = new Vue({
 					validator: VueFormGenerator.validators.string
 				},
 				{
-					type: "password",
+					type: "input",
+					inputType: "password",
 					label: "Password",
 					model: "password",
 					min: 6,
@@ -73,7 +76,8 @@ var vm = new Vue({
 					validator: VueFormGenerator.validators.string
 				},	
 				{
-					type: "email",
+					type: "input",
+					inputType: "email",
 					label: "E-mail",
 					model: "email",
 					placeholder: "User's e-mail address",

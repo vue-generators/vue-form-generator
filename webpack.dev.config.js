@@ -29,10 +29,11 @@ var loaders = [
 ];
 
 module.exports = {
-	devtool: "eval-source-map",
+	devtool: "source-map",
 	
 	entry: {
-		app: path.resolve("dev", "main.js")
+		full: path.resolve("dev", "full", "main.js"),
+		mselect: path.resolve("dev", "multiselect", "main.js")
 	},
 
 	output: {
@@ -41,8 +42,14 @@ module.exports = {
 		publicPath: "/"
 	},
 
-	plugins: [
-	],
+    plugins: [
+        new webpack.DefinePlugin({
+            "process.env": {
+                NODE_ENV: JSON.stringify("development"),
+                FULL_BUNDLE: true
+            }
+        }),
+    ],
 
 	module: {
 		loaders

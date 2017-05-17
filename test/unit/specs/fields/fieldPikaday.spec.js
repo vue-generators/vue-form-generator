@@ -1,9 +1,9 @@
 import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
-import moment from "moment";
+import fecha from "fecha";
 
 import Vue from "vue";
-import FieldPikaday from "src/fields/fieldPikaday.vue";
+import FieldPikaday from "src/fields/optional/fieldPikaday.vue";
 
 Vue.component("FieldPikaday", FieldPikaday);
 
@@ -43,7 +43,7 @@ describe("fieldPikaday.vue", function() {
 
 		it("should contain the value", (done) => {
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1462799081231).format("YYYY-MM-DD") );
+				expect(input.value).to.be.equal( fecha.format(new Date(1462799081231), "YYYY-MM-DD") );
 				done();
 			});
 		});
@@ -61,19 +61,19 @@ describe("fieldPikaday.vue", function() {
 		it("input value should be the model value after changed", (done) => {
 			model.event = 1234567890123;
 			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( moment(1234567890123).format("YYYY-MM-DD") );
+				expect(input.value).to.be.equal( fecha.format(new Date(1234567890123), "YYYY-MM-DD") );
 				done();
 			});
 
 		});
 
-		it.skip("model value should be the input value if changed", (done) => {
-			let day = moment(1420070400000).format("YYYY-MM-DD");
+		it("model value should be the input value if changed", (done) => {
+			let day = fecha.format(new Date(1420070400000), "YYYY-MM-DD");
 			field.picker.setDate(day);
 
 			vm.$nextTick( () => {
 				expect(input.value).to.be.equal(day);
-				expect(moment(model.event).format("YYYY-MM-DD")).to.be.equal(day);
+				expect(fecha.format(new Date(model.event), "YYYY-MM-DD")).to.be.equal(day);
 				done();
 			});
 
