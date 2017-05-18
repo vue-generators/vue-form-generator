@@ -334,9 +334,9 @@ div
 		.form-control {
 			// Default Bootstrap .form-control style
 			display: block;
-            &:not([class*=" col-"]){
-			width: 100%;
-            }
+				&:not([class*=" col-"]){
+					width: 100%;
+				}
 			padding: 6px 12px;
 			font-size: 14px;
 			line-height: 1.42857143;
