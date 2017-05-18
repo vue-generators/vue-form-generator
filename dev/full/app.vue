@@ -195,6 +195,22 @@
 
 			modelUpdated(newVal, schema) {
 				console.log("main model has updated", newVal, schema);
+			},
+
+
+			getLocation(model) {
+				if (navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition((pos) => {
+						if (!model.address)
+							model.address = {};
+						if (!model.address.geo)
+							model.address.geo = {};
+						model.address.geo.latitude = pos.coords.latitude.toFixed(5);
+						model.address.geo.longitude = pos.coords.longitude.toFixed(5);
+					});
+				} else {
+					alert("Geolocation is not supported by this browser.");
+				}				
 			}
 
 			 

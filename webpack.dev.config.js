@@ -33,7 +33,8 @@ module.exports = {
 	
 	entry: {
 		full: path.resolve("dev", "full", "main.js"),
-		mselect: path.resolve("dev", "multiselect", "main.js")
+		mselect: path.resolve("dev", "multiselect", "main.js"),
+		checklist: path.resolve("dev", "checklist", "main.js")
 	},
 
 	output: {

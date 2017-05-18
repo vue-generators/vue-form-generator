@@ -19,7 +19,7 @@
 </template>
 
 <script>
-	import {isObject, isNil} from "lodash";
+	import {isObject, isNil, clone} from "lodash";
 	import abstractField from "../abstractField";
 	
 	export default {
@@ -90,9 +90,15 @@
 				}
 
 				if (event.target.checked) {
-					this.value.push(this.getItemValue(item));
+					// Note: If you modify this.value array, it won't trigger the `set` in computed field
+					const arr = clone(this.value);
+					arr.push(this.getItemValue(item));
+					this.value = arr;
 				} else {
-					this.value.splice(this.value.indexOf(this.getItemValue(item)), 1);
+					// Note: If you modify this.value array, it won't trigger the `set` in computed field
+					const arr = clone(this.value);
+					arr.splice(this.value.indexOf(this.getItemValue(item)), 1);
+					this.value = arr;
 				}
 			},
 

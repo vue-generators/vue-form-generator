@@ -351,18 +351,7 @@ module.exports = {
 				classes: "btn-location",
 				label: "Current location",
 				onclick: function(model) {
-					if (navigator.geolocation) {
-						navigator.geolocation.getCurrentPosition((pos) => {
-							if (!model.address)
-								model.address = {};
-							if (!model.address.geo)
-								model.address.geo = {};
-							model.address.geo.latitude = pos.coords.latitude.toFixed(5);
-							model.address.geo.longitude = pos.coords.longitude.toFixed(5);
-						});
-					} else {
-						alert("Geolocation is not supported by this browser.");
-					}
+					return this.$parent.getLocation(model);
 				}
 			}, {
 				classes: "btn-clear",
