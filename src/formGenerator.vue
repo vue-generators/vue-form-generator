@@ -11,7 +11,7 @@ div
 				.field-wrap
 					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
-						button(v-for='btn in field.buttons', @click='btn.onclick(model, field)', :class='btn.classes') {{ btn.label }}
+						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
 					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
@@ -225,6 +225,10 @@ div
 					return false;
 
 				return field.featured;
+			},
+
+			buttonClickHandler(btn, field) {
+				return btn.onclick.call(this, this.model, field, this);
 			},
 
 			// Child field executed validation
