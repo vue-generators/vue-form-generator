@@ -169,18 +169,21 @@ export default {
 				// If an ID's been explicitly set, use it unchanged
 				return schema.id;
 			} else {
+				// Return the slugified version of either:
 				return (schema.inputName || schema.label || schema.model)
+				// NB: This is a very simple, conservative, slugify function,
+				// avoiding extra dependencies.
 				.toString()
 				.trim()
 				.toLowerCase()
-				// Spaces to dashes
-				.replace(/ /g, "-")
+				// Spaces & underscores to dashes
+				.replace(/ |_/g, "-")
 				// Multiple dashes to one
 				.replace(/-{2,}/g, "-")
 				// Remove leading & trailing dashes
 				.replace(/^-+|-+$/g, "")
-				// Remove anything that isn't a (English/ASCII) letter or number.
-				.replace(/([^a-zA-Z0-9\._-]+)/g, "")
+				// Remove anything that isn't a (English/ASCII) letter, number or dash.
+				.replace(/([^a-zA-Z0-9-]+)/g, "")
 				;
 			}
 		}

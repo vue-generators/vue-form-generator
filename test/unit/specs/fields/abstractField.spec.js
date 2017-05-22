@@ -10,7 +10,7 @@ Vue.component("AbstractField", AbstractField);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	let elm = document.createElement("div");		
+	let elm = document.createElement("div");
 
 	vm = new Vue({
 		// eslint-disable-next-line quotes
@@ -55,16 +55,16 @@ describe("abstractField.vue", function() {
 		});
 
 	});
-	
+
 	describe("check nested value", () => {
 		let schema = {
 			type: "text",
 			label: "Name",
 			model: "user.name"
 		};
-		let model = { 
+		let model = {
 			user: {
-				name: "John Doe" 
+				name: "John Doe"
 			}
 		};
 
@@ -90,7 +90,7 @@ describe("abstractField.vue", function() {
 			label: "Name",
 			model: "user.name.first"
 		};
-		let model = { 
+		let model = {
 			user: {
 			}
 		};
@@ -169,7 +169,7 @@ describe("abstractField.vue", function() {
 			expect(model.name).to.be.equal("!!Foo Bar!!");
 		});
 
-	});	
+	});
 
 	describe("check schema onChanged event", () => {
 		let schema = {
@@ -194,12 +194,12 @@ describe("abstractField.vue", function() {
 			});
 		});
 
-	});	
+	});
 
 	describe("check validateAfterChanged option", () => {
 		let schema = {
-			type: "text",		
-			label: "Name", 
+			type: "text",
+			label: "Name",
 			model: "name"
 		};
 
@@ -230,13 +230,13 @@ describe("abstractField.vue", function() {
 			});
 		});
 
-	});	
+	});
 
 	describe("check validate function with one validator", () => {
 		let schema = {
-			type: "text",		
-			label: "Name", 
-			model: "name", 
+			type: "text",
+			label: "Name",
+			model: "name",
 			validator: sinon.spy()
 		};
 
@@ -253,13 +253,13 @@ describe("abstractField.vue", function() {
 			expect(schema.validator.calledWith(field.value, schema, model)).to.be.true;
 		});
 
-	});	
+	});
 
 	describe("check validate function if field is disabled", () => {
 		let schema = {
-			type: "text",		
-			label: "Name", 
-			model: "name", 
+			type: "text",
+			label: "Name",
+			model: "name",
 			validator: sinon.spy()
 		};
 
@@ -275,13 +275,13 @@ describe("abstractField.vue", function() {
 			expect(schema.validator.callCount).to.be.equal(0);
 		});
 
-	});	
+	});
 
 	describe("check validate function if field is readonly", () => {
 		let schema = {
-			type: "text",		
-			label: "Name", 
-			model: "name", 
+			type: "text",
+			label: "Name",
+			model: "name",
 			readonly: true,
 			validator: sinon.spy()
 		};
@@ -298,15 +298,15 @@ describe("abstractField.vue", function() {
 			expect(schema.validator.callCount).to.be.equal(0);
 		});
 
-	});		
+	});
 
 	describe("check validate function with validator array", () => {
 		let spy1 = sinon.spy();
 		let spy2 = sinon.spy();
 		let schema = {
-			type: "text",		
-			label: "Name", 
-			model: "name", 
+			type: "text",
+			label: "Name",
+			model: "name",
 			validator: [spy1, spy2]
 		};
 
@@ -355,7 +355,7 @@ describe("abstractField.vue", function() {
 			expect(schema.onValidated.calledWith(model, field.errors, schema)).to.be.true;
 		});
 
-	});		
+	});
 
 	describe("check schema onValidated event", () => {
 		let schema = {
@@ -369,7 +369,7 @@ describe("abstractField.vue", function() {
 		let onValidated = sinon.spy();
 
 		beforeEach( () => {
-			let elm = document.createElement("div");		
+			let elm = document.createElement("div");
 
 			vm = new Vue({
 				// eslint-disable-next-line quotes
@@ -384,7 +384,7 @@ describe("abstractField.vue", function() {
 			}).$mount(elm);
 			el = vm.$el;
 
-			field = vm.$refs.field;		
+			field = vm.$refs.field;
 		});
 
 		it("should return empty array", () => {
@@ -448,6 +448,36 @@ describe("abstractField.vue", function() {
 			expect(field.errors[0]).to.be.equal("Validation error!");
 		});
 
-	});	
+	});
+
+	describe("check getFieldID function", () => {
+
+		let schema = {
+			type: "text",
+			label: "First Name",
+			model: "user__model",
+			inputName: "input_name"
+		};
+		let model = {};
+
+		before( () => {
+			createField(this, schema, model);
+		});
+
+		it("should return slugified inputName, if available", () => {
+			expect(field.getFieldID(schema)).to.be.equal("input-name");
+		});
+
+		it("should return slugified label, if no inputName", () => {
+			delete(schema.inputName);
+			expect(field.getFieldID(schema)).to.be.equal("first-name");
+		});
+
+		it("should return slugified model name, if no inputName or label", () => {
+			delete(schema.label);
+			expect(field.getFieldID(schema)).to.be.equal("user-model");
+		});
+
+	});
 
 });
