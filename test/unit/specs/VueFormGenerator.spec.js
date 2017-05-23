@@ -46,7 +46,7 @@ describe("VueFormGenerator.vue", () => {
 			expect(el.getElementsByTagName("fieldset")).to.be.length(1);
 		});
 
-	});	
+	});
 
 	describe("with empty schema and custom tag", () => {
 		let schema = {};
@@ -115,7 +115,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(group.classList.contains("readonly")).to.be.true;
 				done();
 			});
-		});		
+		});
 
 		it("should be disabled class", (done) => {
 			vm.schema.fields[0].disabled = true;
@@ -123,7 +123,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(group.classList.contains("disabled")).to.be.true;
 				done();
 			});
-		});		
+		});
 
 		it("should be required class", (done) => {
 			vm.schema.fields[0].required = true;
@@ -131,7 +131,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(group.classList.contains("required")).to.be.true;
 				done();
 			});
-		});		
+		});
 
 		it("should be error class", (done) => {
 			vm.$refs.form.errors.push({ field: vm.schema.fields[0], error: "Validation error!" });
@@ -139,7 +139,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(group.classList.contains("error")).to.be.true;
 				done();
 			});
-		});		
+		});
 
 		describe("custom validation classes", () => {
 			before(() => {
@@ -174,7 +174,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(group.classList.contains("classA")).to.be.true;
 				done();
 			});
-		});		
+		});
 
 		it("should be add more custom classes", (done) => {
 			Vue.set(vm.schema.fields[0], "styleClasses", [ "classB", "classC" ]);
@@ -183,16 +183,16 @@ describe("VueFormGenerator.vue", () => {
 				expect(group.classList.contains("classC")).to.be.true;
 				done();
 			});
-		});		
+		});
 
-	});	
+	});
 
 	describe("check form row caption cell", () => {
 		let group, label;
 		let schema = {
 			fields: [
 				{
-					type: "input", 
+					type: "input",
 					inputType: "text",
 					label: "Name",
 					model: "name",
@@ -231,7 +231,7 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{
-					type: "input", 
+					type: "input",
 					inputType: "text",
 					label: "Name",
 					model: "name",
@@ -278,7 +278,7 @@ describe("VueFormGenerator.vue", () => {
 		let schema = {
 			fields: [
 				{	type: "input", inputType: "text", label: "name", model: "name", multi: false	},
-				{	type: "input", inputType: "text", label: "phone", model: "phone", multi: true	}, 
+				{	type: "input", inputType: "text", label: "phone", model: "phone", multi: true	},
 				{	type: "input", inputType: "text", label: "email", model: "email"	} // multi is undefined
 			]
 		};
@@ -298,12 +298,12 @@ describe("VueFormGenerator.vue", () => {
 	describe("check fieldDisabled with function", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
-					disabled(model) { return !model.status; }	
+					label: "Name",
+					model: "name",
+					disabled(model) { return !model.status; }
 				}
 			]
 		};
@@ -320,7 +320,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be enabled the name field", () => {
 			let input = el.getElementsByTagName("input")[0];
 			expect(input.disabled).to.be.false;
-		});	
+		});
 
 		it("should be disabled the name field", (done) => {
 			model.status = false;
@@ -330,18 +330,18 @@ describe("VueFormGenerator.vue", () => {
 
 				done();
 			});
-		});	
+		});
 
 	});
 
 	describe("check fieldDisabled function parameters", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
+					label: "Name",
+					model: "name",
 					disabled: sinon.spy()
 				}
 			]
@@ -360,18 +360,18 @@ describe("VueFormGenerator.vue", () => {
 			let spy = schema.fields[0].disabled;
 			expect(spy.called).to.be.true;
 			expect(spy.calledWith(model, schema.fields[0], vm.$children[0])).to.be.true;
-		});	
+		});
 
 	});
 
 	describe("check fieldDisabled with const", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
+					label: "Name",
+					model: "name",
 					disabled: false
 				}
 			]
@@ -386,7 +386,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be enabled the name field", () => {
 			let input = el.getElementsByTagName("input")[0];
 			expect(input.disabled).to.be.false;
-		});	
+		});
 
 		it("should be disabled the name field", (done) => {
 			schema.fields[0].disabled = true;
@@ -396,23 +396,23 @@ describe("VueFormGenerator.vue", () => {
 
 				done();
 			});
-		});	
+		});
 
 	});
 
 	describe("check fieldReadonly with function", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
-					readonly(model) { return model.status; }	
+					label: "Name",
+					model: "name",
+					readonly(model) { return model.status; }
 				}
 			]
 		};
-		
+
 		let model = {
 			name: "John Doe",
 			status: true
@@ -424,7 +424,7 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should be readonly", () => {
 			expect(el.querySelector(".form-group").classList.contains("readonly")).to.be.true;
-		});	
+		});
 
 		it("should be writable", (done) => {
 			model.status = false;
@@ -432,23 +432,23 @@ describe("VueFormGenerator.vue", () => {
 				expect(el.querySelector(".form-group").classList.contains("readonly")).to.be.false;
 				done();
 			});
-		});	
+		});
 
 	});
 
 	describe("check fieldFeatured with function", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
-					featured(model) { return model.status; }	
+					label: "Name",
+					model: "name",
+					featured(model) { return model.status; }
 				}
 			]
 		};
-		
+
 		let model = {
 			name: "John Doe",
 			status: true
@@ -460,7 +460,7 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should be featured", () => {
 			expect(el.querySelector(".form-group").classList.contains("featured")).to.be.true;
-		});	
+		});
 
 		it("should not be featured", (done) => {
 			model.status = false;
@@ -468,23 +468,23 @@ describe("VueFormGenerator.vue", () => {
 				expect(el.querySelector(".form-group").classList.contains("featured")).to.be.false;
 				done();
 			});
-		});	
+		});
 
 	});
 
 	describe("check fieldRequired with function", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
-					required(model) { return model.status; }	
+					label: "Name",
+					model: "name",
+					required(model) { return model.status; }
 				}
 			]
 		};
-		
+
 		let model = {
 			name: "John Doe",
 			status: true
@@ -496,7 +496,7 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should be required", () => {
 			expect(el.querySelector(".form-group").classList.contains("required")).to.be.true;
-		});	
+		});
 
 		it("should be optional", (done) => {
 			model.status = false;
@@ -504,23 +504,23 @@ describe("VueFormGenerator.vue", () => {
 				expect(el.querySelector(".form-group").classList.contains("required")).to.be.false;
 				done();
 			});
-		});	
+		});
 
 	});
 
 	describe("check fieldVisible with function", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
-					visible(model) { return model.status; }	
+					label: "Name",
+					model: "name",
+					visible(model) { return model.status; }
 				}
 			]
 		};
-		
+
 		let model = {
 			name: "John Doe",
 			status: true
@@ -532,7 +532,7 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should be visible the name field", () => {
 			expect(el.querySelector("input[type=text]")).to.be.defined;
-		});	
+		});
 
 		it("should be hidden the name field", (done) => {
 			model.status = false;
@@ -540,18 +540,18 @@ describe("VueFormGenerator.vue", () => {
 				expect(el.querySelector("input[type=text]")).to.be.null;
 				done();
 			});
-		});	
+		});
 
 	});
 
 	describe("check fieldVisible with const", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
-					model: "name", 
+					label: "Name",
+					model: "name",
 					visible: true
 				}
 			]
@@ -565,7 +565,7 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should be enabled the name field", () => {
 			expect(el.querySelector("input[type=text]")).to.be.defined;
-		});	
+		});
 
 		it("should be disabled the name field", (done) => {
 			schema.fields[0].visible = false;
@@ -573,7 +573,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(el.querySelector("input[type=text]")).to.be.null;
 				done();
 			});
-		});	
+		});
 
 	});
 
@@ -664,10 +664,10 @@ describe("VueFormGenerator.vue", () => {
 	describe("check if option null", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",		
+				{
+					type: "input",
 					inputType: "text",
-					label: "Name", 
+					label: "Name",
 					model: "name"
 				}
 			]
@@ -698,11 +698,11 @@ describe("VueFormGenerator.vue", () => {
 	describe("check validateAfterLoad option", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",	
-					inputType: "text", 	
-					label: "Name", 
-					model: "name", 
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
 					min: 3,
 					validator: VueFormGenerator.validators.string
 				}
@@ -733,7 +733,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(form.errors).to.be.length(1);
 				done();
 			}, 150);
-		});		
+		});
 
 		it("should be no errors if model is correct", (done) => {
 			form.model = { name: "Bob" };
@@ -741,7 +741,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(form.errors).to.be.length(0);
 				done();
 			}, 150);
-		});		
+		});
 
 		it("should be no errors if validateAfterLoad is false", (done) => {
 			form.options.validateAfterLoad = false;
@@ -750,18 +750,18 @@ describe("VueFormGenerator.vue", () => {
 				expect(form.errors).to.be.length(0);
 				done();
 			}, 150);
-		});		
+		});
 
 	});
 
 	describe("check onValidated event", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",	
-					inputType: "text", 	
-					label: "Name", 
-					model: "name", 
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
 					min: 3,
 					validator: VueFormGenerator.validators.string
 				}
@@ -811,7 +811,7 @@ describe("VueFormGenerator.vue", () => {
 			// console.log(onValidated.getCall(0).args[1][0].field);
 			// console.log(schema.fields[0]);
 			expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "The length of text is too small! Current: 1, Minimum: 3"}] )).to.be.true;
-		});		
+		});
 
 		it("should no validation error if model valie is valid", () => {
 			vm.model.name = "Alan";
@@ -821,17 +821,17 @@ describe("VueFormGenerator.vue", () => {
 			expect(form.errors).to.be.length(0);
 			expect(onValidated.callCount).to.be.equal(1);
 			expect(onValidated.calledWith(true, [] )).to.be.true;
-		});	
+		});
 	});
 
 	describe("check schema.onChanged when the model changed", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",	
-					inputType: "text", 	
-					label: "Name", 
-					model: "name", 
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
 					onChanged: sinon.spy()
 				}
 			]
@@ -855,26 +855,26 @@ describe("VueFormGenerator.vue", () => {
 				expect(schema.fields[0].onChanged.called).to.be.false;
 				done();
 			});
-		});	
+		});
 
 	});
 
 	describe("check onFieldValidated method if child validate", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",	
-					inputType: "text", 	
-					label: "Name", 
-					model: "name", 
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
 					min: 3,
 					validator: VueFormGenerator.validators.string
-				}, 
-				{	
-					type: "input",	
-					inputType: "text", 	
-					label: "City", 
-					model: "city", 
+				},
+				{
+					type: "input",
+					inputType: "text",
+					label: "City",
+					model: "city",
 					validator() { return "Validation error!"; }
 				}
 			]
@@ -925,7 +925,7 @@ describe("VueFormGenerator.vue", () => {
 			// console.log(onValidated.getCall(0).args[1][0].field);
 			// console.log(schema.fields[0]);
 			expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "The length of text is too small! Current: 1, Minimum: 3"}] )).to.be.true;
-		});		
+		});
 
 		it("should be 2 validation error", () => {
 			form.$children[1].validate();
@@ -942,17 +942,17 @@ describe("VueFormGenerator.vue", () => {
 			expect(form.errors).to.be.length(1);
 			expect(onValidated.callCount).to.be.equal(1);
 			expect(onValidated.calledWith(false, [{ field: schema.fields[1], error: "Validation error!"}] )).to.be.true;
-		});	
+		});
 	});
 
 
 	describe("check async validator", () => {
 		let schema = {
 			fields: [
-				{	
-					type: "input",	
-					inputType: "text", 	
-					label: "Name", 
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
 					model: "name",
 					validator(value) {
 						return new Promise(resolve => {
@@ -1014,7 +1014,28 @@ describe("VueFormGenerator.vue", () => {
 
 				cb();
 			}, 100);
-		});		
+		});
+	});
+
+	describe("check fieldTypeHasLabel function", () => {
+		before( () => {
+			createFormGenerator({ fields: [] }, {});
+		});
+
+
+		it("should return true", () => {
+			console.log(vm);
+			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "checkbox"})).to.be.true;
+			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "text"})).to.be.true;
+			expect(vm.fieldTypeHasLabel({ type: "checklist" })).to.be.true;
+		});
+
+		it("should return false", () => {
+			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "button"})).to.be.false;
+			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "image"})).to.be.false;
+			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "submit"})).to.be.false;
+			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "reset"})).to.be.false;
+		});
 	});
 
 });
