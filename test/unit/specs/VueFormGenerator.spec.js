@@ -1018,23 +1018,27 @@ describe("VueFormGenerator.vue", () => {
 	});
 
 	describe("check fieldTypeHasLabel function", () => {
+		let form;
 		before( () => {
 			createFormGenerator({ fields: [] }, {});
+			form = vm.$refs.form;
 		});
 
-
 		it("should return true", () => {
-			console.log(vm);
-			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "checkbox"})).to.be.true;
-			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "text"})).to.be.true;
-			expect(vm.fieldTypeHasLabel({ type: "checklist" })).to.be.true;
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "checkbox"})).to.be.true;
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "text"})).to.be.true;
+			expect(form.fieldTypeHasLabel({ type: "checklist" })).to.be.true;
 		});
 
 		it("should return false", () => {
-			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "button"})).to.be.false;
-			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "image"})).to.be.false;
-			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "submit"})).to.be.false;
-			expect(vm.fieldTypeHasLabel({ type: "input", inputType: "reset"})).to.be.false;
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "button"})).to.be.false;
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "image"})).to.be.false;
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "submit"})).to.be.false;
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "reset"})).to.be.false;
+		});
+
+		it("should default to true for unknown types", () => {
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "unsupported-or-unknown"})).to.be.true;
 		});
 	});
 
