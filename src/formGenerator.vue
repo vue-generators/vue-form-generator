@@ -3,7 +3,7 @@ div
 	fieldset.vue-form-generator(v-if='schema != null', :is='tag')
 		template(v-for='field in fields')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
-				label
+				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
 					| {{ field.label }}
 					span.help(v-if='field.help')
 						i.icon
@@ -20,12 +20,13 @@ div
 <script>
 	// import Vue from "vue";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
+	import getFieldID from "./fields/abstractField";
 
 	// Load all fields from '../fields' folder
 	let fieldComponents = {};
 
 	let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
-				
+
 	each(coreFields.keys(), (key) => {
 		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
 		fieldComponents[compName] = coreFields(key);
@@ -33,7 +34,7 @@ div
 
 	if (process.env.FULL_BUNDLE) {  // eslint-disable-line
 		let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
-				
+
 		each(Fields.keys(), (key) => {
 			let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
 			fieldComponents[compName] = Fields(key);
@@ -44,7 +45,9 @@ div
 
 	export default {
 		components: fieldComponents,
-		
+
+		mixins: [ getFieldID ],
+
 		props: {
 			schema: Object,
 
@@ -80,7 +83,7 @@ div
 				}
 			}
 		},
-		
+
 		data () {
 			return {
 				errors: [] // Validation errors
@@ -131,16 +134,16 @@ div
 				}
 			});
 		},
-	
+
 		methods: {
 			// Get style classes of field
 			getFieldRowClasses(field) {
 				const hasErrors = this.fieldErrors(field).length > 0;
 				let baseClasses = {
 					error: hasErrors,
-					disabled: this.fieldDisabled(field), 
-					readonly: this.fieldReadonly(field), 
-					featured: this.fieldFeatured(field), 
+					disabled: this.fieldDisabled(field),
+					readonly: this.fieldReadonly(field),
+					featured: this.fieldFeatured(field),
 					required: this.fieldRequired(field)
 				};
 
@@ -170,6 +173,26 @@ div
 			// Get type of field 'field-xxx'. It'll be the name of HTML element
 			getFieldType(fieldSchema) {
 				return "field-" + fieldSchema.type;
+			},
+
+			// Should field type have a label?
+			fieldTypeHasLabel(field) {
+				let relevantType = "";
+				if (field.type === "input") {
+					relevantType = field.inputType;
+				} else {
+					relevantType = field.type;
+				}
+
+				switch (relevantType) {
+				case "button":
+				case "image":
+				case "submit":
+				case "reset":
+					return false;
+				default:
+					return true;
+				}
 			},
 
 			// Get disabled attr of field
@@ -203,7 +226,7 @@ div
 					return true;
 
 				return field.visible;
-			},		
+			},
 
 			// Get readonly prop of field
 			fieldReadonly(field) {
@@ -214,7 +237,7 @@ div
 					return false;
 
 				return field.readonly;
-			},		
+			},
 
 			// Get featured prop of field
 			fieldFeatured(field) {
@@ -295,25 +318,25 @@ div
 			}
 		}
 	};
-	
+
 </script>
 
 <style lang="sass">
-	
+
 	$errorColor: #F00;
 
 	fieldset.vue-form-generator {
 
 		* {
 			box-sizing: border-box;
-		}		
-		
+		}
+
 		.form-control {
 			// Default Bootstrap .form-control style
 			display: block;
-            &:not([class*=" col-"]){
-                width: 100%;
-            }
+				&:not([class*=" col-"]){
+					width: 100%;
+				}
 			padding: 6px 12px;
 			font-size: 14px;
 			line-height: 1.42857143;
@@ -323,10 +346,10 @@ div
 			border: 1px solid #ccc;
 			border-radius: 4px;
 			box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;	
+			transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 
 		} // .form-control
-		
+
 		span.help {
 			margin-left: 0.3em;
 			position: relative;
@@ -381,7 +404,7 @@ div
 				opacity: 1;
 				pointer-events: auto;
 				transform: translateY(0px);
-			}		
+			}
 
 		} // span.help
 
@@ -393,11 +416,11 @@ div
 				margin-left: 4px;
 			}
 
-			button, input[type=submit] {					
+			button, input[type=submit] {
 				// Default Bootstrap button style
 				display: inline-block;
 				padding: 6px 12px;
-				margin: 0px;					
+				margin: 0px;
 				font-size: 14px;
 				font-weight: normal;
 				line-height: 1.42857143;
@@ -433,11 +456,11 @@ div
 				&:disabled {
 					opacity: 0.6;
 					cursor: not-allowed;
-				}				
+				}
 
 			} // button, input[submit]
 
-		} // .field-wrap		
+		} // .field-wrap
 
 		.hint {
 			font-style: italic;
@@ -459,7 +482,7 @@ div
 			&.featured {
 				> label {
 					font-weight: bold;
-				}			
+				}
 			}
 
 			&.required {
@@ -470,14 +493,14 @@ div
 					position: absolute;
 					padding-left: 0.2em;
 					font-size: 1em;
-				}	
+				}
 			}
 
 			&.disabled {
 				> label {
 					color: #666;
 					font-style: italic;
-				}			
+				}
 			}
 
 			&.error {
@@ -500,7 +523,7 @@ div
 							font-weight: 600;
 					}
 
-				} // .errors	
+				} // .errors
 
 			} // .error
 

@@ -1,7 +1,7 @@
 <template lang="pug">
 	label
-		input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName")
-		span.label(:data-on="schema.textOn || 'On'", :data-off="schema.textOff || 'Off'")
+		input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName", :id="getFieldID(schema)")
+		span.label(:data-on="schema.textOn || 'On'", :data-off="schema.textOff || 'Off'", :for="getFieldID(schema)")
 		span.handle
 </template>
 

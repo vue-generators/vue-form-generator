@@ -1,6 +1,6 @@
 <template lang="pug">
 	.input-group.date
-		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
 		span.input-group-addon
 			span.glyphicon.glyphicon-calendar
 </template>
@@ -19,7 +19,7 @@
 		methods: {
 
 			getDateFormat() {
-				if (this.schema.dateTimePickerOptions && this.schema.dateTimePickerOptions.format) 
+				if (this.schema.dateTimePickerOptions && this.schema.dateTimePickerOptions.format)
 					return this.schema.dateTimePickerOptions.format;
 				else
 					return inputFormat;
@@ -47,7 +47,7 @@
 			if (window.$ && window.$.fn.datetimepicker){
 				$(this.$el).data("DateTimePicker").destroy();
 			}
-		}		
+		}
 	};
 </script>
 

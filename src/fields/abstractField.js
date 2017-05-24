@@ -53,7 +53,7 @@ export default {
 				if (isFunction(this.schema.set)) {
 					this.schema.set(this.model, newValue);
 					changed = true;
-					
+
 				} else if (this.schema.model) {
 					this.setModelValueByPath(this.schema.model, newValue);
 					changed = true;
@@ -68,7 +68,7 @@ export default {
 
 					if (this.$parent.options && this.$parent.options.validateAfterChanged === true){
 						this.validate();
-					}					
+					}
 				}
 			}
 		}
@@ -133,7 +133,7 @@ export default {
 		setModelValueByPath(path, value) {
 			// convert array indexes to properties
 			let s = path.replace(/\[(\w+)\]/g, ".$1");
-			
+
 			// strip a leading dot
 			s = s.replace(/^\./, "");
 
@@ -157,9 +157,36 @@ export default {
 					this.$root.$set(o, k, value);
 					return;
 				}
-				
+
 				++i;
 			}
+		},
+
+		getFieldID(schema) {
+			// Try to get a reasonable default id from the schema,
+			// then slugify it.
+			if (typeof schema.id !== "undefined") {
+				// If an ID's been explicitly set, use it unchanged
+				return schema.id;
+			} else {
+				// Return the slugified version of either:
+				return (schema.inputName || schema.label || schema.model)
+				// NB: This is a very simple, conservative, slugify function,
+				// avoiding extra dependencies.
+				.toString()
+				.trim()
+				.toLowerCase()
+				// Spaces & underscores to dashes
+				.replace(/ |_/g, "-")
+				// Multiple dashes to one
+				.replace(/-{2,}/g, "-")
+				// Remove leading & trailing dashes
+				.replace(/^-+|-+$/g, "")
+				// Remove anything that isn't a (English/ASCII) letter, number or dash.
+				.replace(/([^a-zA-Z0-9-]+)/g, "")
+				;
+			}
 		}
+
 	}
 };

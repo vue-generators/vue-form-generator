@@ -1,5 +1,5 @@
 <template lang="pug">
-	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName",  debounce="500", @focus="geolocate()")
+	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName",  debounce="500", @focus="geolocate()", :id="getFieldID(schema)")
 </template>
 
 <script>
@@ -59,7 +59,7 @@
 				if (place) {
 
 					this.value = place.formatted_address;
-					
+
 					let data  = {};
 					if (place.address_components !== undefined) {
 						for (let i = 0; i < place.address_components.length; i++) {
@@ -70,12 +70,12 @@
 						}
 
 					}
-					
+
 					// Call event in schema
 					if (isFunction(this.schema.onPlaceChanged))
 						this.schema.onPlaceChanged(this.value, data, place, this.model, this.schema);
 				}
-			},	
+			},
 
 			/**
 			 * Get the user location.

@@ -1,7 +1,8 @@
 <template lang="pug">
 .wrapper
 	input.form-control(
-		:type="schema.inputType", 
+		:id="getFieldID(schema)",
+		:type="schema.inputType",
 		:value="value",
 		@input="value = $event.target.value",
 		@change="onChange",
@@ -74,12 +75,12 @@
 						return Number(value);
 					}
 				}
-				
+
 				return value;
 			}
 		}
 	};
-	
+
 </script>
 
 <style lang="sass">
