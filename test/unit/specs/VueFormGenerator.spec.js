@@ -35,7 +35,9 @@ function createFormGenerator(schema = {}, model = null, options, multiple) {
 describe("VueFormGenerator.vue", () => {
 
 	describe("with empty schema", () => {
-		let schema = {};
+		let schema = {
+			fields: []
+		};
 
 		beforeEach( () => {
 			createFormGenerator(schema);
@@ -49,13 +51,15 @@ describe("VueFormGenerator.vue", () => {
 	});
 
 	describe("with empty schema and custom tag", () => {
-		let schema = {};
+		let schema = {
+			fields: []
+		};
 
 		beforeEach( () => {
 			let elm = document.createElement("div");
 			vm = new Vue({
 				// eslint-disable-next-line quotes
-				template: `<vue-form-generator :schema="schema" ref="form" tag="div"></vue-form-generator>`,
+				template: `<vue-form-generator :schema="schema" ref="form" tag="section"></vue-form-generator>`,
 				data: {
 					schema
 				}
@@ -66,9 +70,9 @@ describe("VueFormGenerator.vue", () => {
 			return [el, vm];
 		});
 
-		it("should be create fieldset", () => {
+		it("should be create custom tag", () => {
 			expect(vm.$el).to.be.exist;
-			expect(el.getElementsByTagName("div")).to.be.length(1);
+			expect(el.getElementsByTagName("section")).to.be.length(1);
 		});
 
 	});

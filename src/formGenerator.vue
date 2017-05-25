@@ -1,7 +1,7 @@
 <template lang="pug">
 div.vue-form-generator(v-if='schema != null')
-	template(v-for='field in fields')
-		fieldset(:is='tag')
+	fieldset(v-if="schema.fields", :is='tag')
+		template(v-for='field in fields')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
 					| {{ field.label }}
