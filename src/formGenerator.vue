@@ -1,6 +1,7 @@
 <template lang="pug">
 div
 	fieldset.vue-form-generator(v-if='schema != null', :is='tag')
+		legend(v-if='schema.legend') {{ schema.legend }}
 		template(v-for='field in fields')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
@@ -119,6 +120,13 @@ div
 							this.clearValidationErrors();
 					});
 				}
+			}
+		},
+
+		beforeMount() {
+			// Add idPrefix to fields if fieldIdPrefix is set
+			for (let field of this.schema.fields) {
+				field.idPrefix = this.options.fieldIdPrefix || "";
 			}
 		},
 
