@@ -9,7 +9,7 @@ div.vue-form-generator(v-if='schema != null')
 						i.icon
 						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :options='options', @model-updated='modelUpdated', @validated="onFieldValidated")
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :formOptions='options', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
@@ -27,7 +27,7 @@ div.vue-form-generator(v-if='schema != null')
 							i.icon
 							.helpText(v-html='field.help')
 					.field-wrap
-						component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :options='options',@model-updated='modelUpdated', @validated="onFieldValidated")
+						component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :formOptions='options',@model-updated='modelUpdated', @validated="onFieldValidated")
 						.buttons(v-if='buttonVisibility(field)')
 							button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
 					.hint(v-if='field.hint') {{ field.hint }}
@@ -38,7 +38,7 @@ div.vue-form-generator(v-if='schema != null')
 <script>
 	// import Vue from "vue";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
-	import getFieldID from "./fields/abstractField";
+	import { slugifyFormID } from "./utils/schema";
 
 	// Load all fields from '../fields' folder
 	let fieldComponents = {};
@@ -63,8 +63,6 @@ div.vue-form-generator(v-if='schema != null')
 
 	export default {
 		components: fieldComponents,
-
-		mixins: [ getFieldID ],
 
 		props: {
 			schema: Object,
@@ -343,7 +341,12 @@ div.vue-form-generator(v-if='schema != null')
 			fieldErrors(field) {
 				let res = this.errors.filter(e => e.field == field);
 				return res.map(item => item.error);
-			}
+			},
+
+			getFieldID(schema) {
+				const idPrefix = this.options && this.options.fieldIdPrefix ? this.options.fieldIdPrefix : "";
+				return slugifyFormID(schema, idPrefix);
+			}			
 		}
 	};
 
