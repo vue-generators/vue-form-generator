@@ -1,7 +1,7 @@
 <template lang="pug">
-div
-	template(v-for='field in fields' v-if='fields')
-		fieldset.vue-form-generator(v-if='schema != null', :is='tag')
+div.vue-form-generator(v-if='schema != null')
+	template(v-for='field in fields')
+		fieldset(v-if='schema != null', :is='tag')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
 					| {{ field.label }}
@@ -15,8 +15,8 @@ div
 				.hint(v-if='field.hint') {{ field.hint }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
 					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
-	template(v-for='group in groups' v-if='groups')
-		fieldset.vue-form-generator(v-if='schema != null', :is='tag')
+	template(v-for='group in groups')
+		fieldset(v-if='schema != null', :is='tag')
 			legend(v-if='group.legend') {{ group.legend }}
 			template(v-for='field in group.fields')
 				.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
