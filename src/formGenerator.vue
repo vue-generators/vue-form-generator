@@ -151,8 +151,10 @@ div.vue-form-generator(v-if='schema != null')
 
 		beforeMount() {
 			// Add idPrefix to fields if fieldIdPrefix is set
-			for (let field of this.schema.fields) {
-				field.idPrefix = this.options.fieldIdPrefix || "";
+			if (this.schema.fields) {
+				for (let field of this.schema.fields) {
+					field.idPrefix = this.options.fieldIdPrefix || "";
+				}
 			}
 		},
 

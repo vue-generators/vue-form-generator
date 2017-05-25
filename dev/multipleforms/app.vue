@@ -2,6 +2,7 @@
 	<form>
 		<vue-form-generator :schema="section1" :model="model" :options="formOptions"></vue-form-generator>
 		<vue-form-generator :schema="section2" :model="model" :options="formOptions"></vue-form-generator>
+		<pre>{{ model }}</pre>
 	</form>
 </template>
 
@@ -14,6 +15,8 @@ export default {
 			model: {
 				name: 'Brian Blessed',
 				email: "brian@hawkman.mongo",
+				more: "More",
+				things: "Things",
 				pref_1: 'blah'
 			},
 
@@ -50,8 +53,15 @@ export default {
                             model: "things"
                         }
                     ]
-                }]
-
+                }],
+				fields: [
+					{
+						type: "input",
+						inputType: "text",
+						label: "Pref 1 (without group)",
+						model: "pref_1"
+					}
+				]
 			},
 
 			section2: {
