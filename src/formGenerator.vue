@@ -21,6 +21,7 @@ div
 	// import Vue from "vue";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
 	import getFieldID from "./fields/abstractField";
+	import slugify from "./utils/slugify";
 
 	// Load all fields from '../fields' folder
 	let fieldComponents = {};
@@ -119,6 +120,25 @@ div
 							this.clearValidationErrors();
 					});
 				}
+			}
+		},
+
+		beforeMount() {
+			// Apply default schema properties
+			for (let field of this.schema.fields) {
+				if (!("type" in field)) {
+					// No type defined, default to input
+					field.type = "input";
+					if (!("inputType" in field)) {
+						// No inputType defined, default to text
+						field.inputType = "text";
+					}
+				}
+				if (!("model" in field)) {
+					// No model defined, default to slugified label
+					field.model = slugify(field.label, "_");
+				}
+				console.log(field);
 			}
 		},
 
