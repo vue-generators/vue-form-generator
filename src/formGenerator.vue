@@ -1,7 +1,7 @@
 <template lang="pug">
-div
-	fieldset.vue-form-generator(v-if='schema != null', :is='tag')
-		template(v-for='field in fields')
+div.vue-form-generator(v-if='schema != null')
+	template(v-for='field in fields')
+		fieldset(v-if='schema != null', :is='tag')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
 					| {{ field.label }}
@@ -15,6 +15,23 @@ div
 				.hint(v-if='field.hint') {{ field.hint }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
 					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
+	template(v-for='group in groups')
+		fieldset(v-if='schema != null', :is='tag')
+			legend(v-if='group.legend') {{ group.legend }}
+			template(v-for='field in group.fields')
+				.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+					label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
+						| {{ field.label }}
+						span.help(v-if='field.help')
+							i.icon
+							.helpText(v-html='field.help')
+					.field-wrap
+						component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
+						.buttons(v-if='buttonVisibility(field)')
+							button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
+					.hint(v-if='field.hint') {{ field.hint }}
+					.errors.help-block(v-if='fieldErrors(field).length > 0')
+						span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
 </template>
 
 <script>
@@ -91,17 +108,27 @@ div
 		},
 
 		computed: {
-			fields() {
-				let res = [];
-				if (this.schema) {
-					each(this.schema.fields, (field) => {
-						if (!this.multiple || field.multi === true)
-							res.push(field);
-					});
-				}
+            fields() {
+                let res = [];
+                if (this.schema && this.schema.fields) {
+                    each(this.schema.fields, (field) => {
+                        if (!this.multiple || field.multi === true)
+                            res.push(field);
+                    });
+                }
 
-				return res;
-			}
+                return res;
+            },
+            groups() {
+                let res = [];
+                if (this.schema && this.schema.groups) {
+                    each(this.schema.groups, (group) => {
+                            res.push(group);
+                    });
+                }
+
+                return res;
+            }
 		},
 
 		watch: {
@@ -119,6 +146,13 @@ div
 							this.clearValidationErrors();
 					});
 				}
+			}
+		},
+
+		beforeMount() {
+			// Add idPrefix to fields if fieldIdPrefix is set
+			for (let field of this.schema.fields) {
+				field.idPrefix = this.options.fieldIdPrefix || "";
 			}
 		},
 
