@@ -167,10 +167,10 @@ export default {
 			// then slugify it.
 			if (typeof schema.id !== "undefined") {
 				// If an ID's been explicitly set, use it unchanged
-				return schema.id;
+				return schema.idPrefix + schema.id;
 			} else {
 				// Return the slugified version of either:
-				return (schema.inputName || schema.label || schema.model)
+				return schema.idPrefix + (schema.inputName || schema.label || schema.model)
 				// NB: This is a very simple, conservative, slugify function,
 				// avoiding extra dependencies.
 				.toString()
