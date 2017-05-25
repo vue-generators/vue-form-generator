@@ -109,27 +109,27 @@ div.vue-form-generator(v-if='schema != null')
 		},
 
 		computed: {
-            fields() {
-                let res = [];
-                if (this.schema && this.schema.fields) {
-                    each(this.schema.fields, (field) => {
-                        if (!this.multiple || field.multi === true)
-                            res.push(field);
-                    });
-                }
+			fields() {
+				let res = [];
+				if (this.schema && this.schema.fields) {
+					each(this.schema.fields, (field) => {
+						if (!this.multiple || field.multi === true)
+							res.push(field);
+					});
+				}
 
-                return res;
-            },
-            groups() {
-                let res = [];
-                if (this.schema && this.schema.groups) {
-                    each(this.schema.groups, (group) => {
-                            res.push(group);
-                    });
-                }
+				return res;
+			},
+			groups() {
+				let res = [];
+				if (this.schema && this.schema.groups) {
+					each(this.schema.groups, (group) => {
+						res.push(group);
+					});
+				}
 
-                return res;
-            }
+				return res;
+			}
 		},
 
 		watch: {
