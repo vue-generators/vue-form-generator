@@ -9,7 +9,7 @@ div.vue-form-generator(v-if='schema != null')
 						i.icon
 						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :options='options', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
@@ -27,7 +27,7 @@ div.vue-form-generator(v-if='schema != null')
 							i.icon
 							.helpText(v-html='field.help')
 					.field-wrap
-						component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
+						component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :options='options',@model-updated='modelUpdated', @validated="onFieldValidated")
 						.buttons(v-if='buttonVisibility(field)')
 							button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
 					.hint(v-if='field.hint') {{ field.hint }}
@@ -146,22 +146,6 @@ div.vue-form-generator(v-if='schema != null')
 						else
 							this.clearValidationErrors();
 					});
-				}
-			}
-		},
-
-		beforeMount() {
-			// Add idPrefix to fields if fieldIdPrefix is set
-			if ("groups" in this.schema) {
-				for (let group of this.schema.groups) {
-					for (let field of group.fields) {
-						field.idPrefix = this.options.fieldIdPrefix || "";
-					}
-				}
-			}
-			if ("fields" in this.schema) {
-				for (let field of this.schema.fields) {
-					field.idPrefix = this.options.fieldIdPrefix || "";
 				}
 			}
 		},

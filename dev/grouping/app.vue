@@ -1,6 +1,6 @@
 <template lang="html">
 	<form>
-		<vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+		<vue-form-generator :schema="schema" :model="model" :options="formOptions" tag="section"></vue-form-generator>
 		<pre>{{ model }}</pre>
 	</form>
 </template>

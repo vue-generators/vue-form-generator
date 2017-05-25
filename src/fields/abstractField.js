@@ -17,6 +17,7 @@ export default {
 	props: [
 		"model",
 		"schema",
+		"options",
 		"disabled"
 	],
 
@@ -163,14 +164,15 @@ export default {
 		},
 
 		getFieldID(schema) {
+			const idPrefix = this.options && this.options.fieldIdPrefix ? this.options.fieldIdPrefix : "";
 			// Try to get a reasonable default id from the schema,
 			// then slugify it.
 			if (typeof schema.id !== "undefined") {
 				// If an ID's been explicitly set, use it unchanged
-				return schema.idPrefix + schema.id;
+				return idPrefix + schema.id;
 			} else {
 				// Return the slugified version of either:
-				return schema.idPrefix + (schema.inputName || schema.label || schema.model)
+				return idPrefix + (schema.inputName || schema.label || schema.model)
 				// NB: This is a very simple, conservative, slugify function,
 				// avoiding extra dependencies.
 				.toString()
