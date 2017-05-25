@@ -18,21 +18,40 @@ export default {
 			},
 
 			section1: {
-				legend: "Contact Details",
-				fields: [
-					{
-						type: "input",
-						inputType: "text",
-						label: "Name",
-						model: "name"
-					},
-					{
-						type: "input",
-						inputType: "email",
-						label: "Email",
-						model: "email"
-					}
-				]
+			    groups:[{
+                    legend: "Contact Details",
+                    fields: [
+                        {
+                            type: "input",
+                            inputType: "text",
+                            label: "Name",
+                            model: "name"
+                        },
+                        {
+                            type: "input",
+                            inputType: "email",
+                            label: "Email",
+                            model: "email"
+                        }
+                    ]
+				},{
+                    legend: "Other Details",
+                    fields: [
+                        {
+                            type: "input",
+                            inputType: "text",
+                            label: "More",
+                            model: "more"
+                        },
+                        {
+                            type: "input",
+                            inputType: "text",
+                            label: "Things",
+                            model: "things"
+                        }
+                    ]
+                }]
+
 			},
 
 			section2: {
