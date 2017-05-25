@@ -34,7 +34,7 @@ module.exports = {
 	entry: {
 		full: path.resolve("dev", "full", "main.js"),
 		mselect: path.resolve("dev", "multiselect", "main.js"),
-		mforms: path.resolve("dev", "multipleforms", "main.js"),
+		grouping: path.resolve("dev", "grouping", "main.js"),
 		checklist: path.resolve("dev", "checklist", "main.js")
 	},
 
@@ -44,14 +44,14 @@ module.exports = {
 		publicPath: "/"
 	},
 
-    plugins: [
-        new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("development"),
-                FULL_BUNDLE: true
-            }
-        }),
-    ],
+	plugins: [
+		new webpack.DefinePlugin({
+			"process.env": {
+				NODE_ENV: JSON.stringify("development"),
+				FULL_BUNDLE: true
+			}
+		}),
+	],
 
 	module: {
 		loaders

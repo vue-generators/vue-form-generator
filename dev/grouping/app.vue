@@ -1,7 +1,6 @@
 <template lang="html">
 	<form>
-		<vue-form-generator :schema="section1" :model="model" :options="formOptions"></vue-form-generator>
-		<vue-form-generator :schema="section2" :model="model" :options="formOptions"></vue-form-generator>
+		<vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
 		<pre>{{ model }}</pre>
 	</form>
 </template>
@@ -15,12 +14,14 @@ export default {
 			model: {
 				name: 'Brian Blessed',
 				email: "brian@hawkman.mongo",
-				more: "More",
-				things: "Things",
-				pref_1: 'blah'
+				others: {
+					more: "More",
+					things: "Things"
+				},
+				single: 'blah'
 			},
 
-			section1: {
+			schema: {
 			    groups:[{
                     legend: "Contact Details",
                     fields: [
@@ -44,13 +45,13 @@ export default {
                             type: "input",
                             inputType: "text",
                             label: "More",
-                            model: "more"
+                            model: "others.more"
                         },
                         {
                             type: "input",
                             inputType: "text",
                             label: "Things",
-                            model: "things"
+                            model: "others.things"
                         }
                     ]
                 }],
@@ -58,25 +59,14 @@ export default {
 					{
 						type: "input",
 						inputType: "text",
-						label: "Pref 1 (without group)",
-						model: "pref_1"
-					}
-				]
-			},
-
-			section2: {
-				fields: [
-					{
-						type: "input",
-						inputType: "text",
-						label: "Pref 1",
-						model: "pref_1"
+						label: "Single field (without group)",
+						model: "single"
 					}
 				]
 			},
 
 			formOptions: {
-				fieldIdPrefix: 'frm1_'
+				fieldIdPrefix: 'frm1-'
 			}
 		}
 	},

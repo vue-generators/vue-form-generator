@@ -1,7 +1,7 @@
 <template lang="pug">
 div.vue-form-generator(v-if='schema != null')
 	template(v-for='field in fields')
-		fieldset(v-if='schema != null', :is='tag')
+		fieldset(:is='tag')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
 					| {{ field.label }}
@@ -15,8 +15,9 @@ div.vue-form-generator(v-if='schema != null')
 				.hint(v-if='field.hint') {{ field.hint }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
 					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
+
 	template(v-for='group in groups')
-		fieldset(v-if='schema != null', :is='tag')
+		fieldset(:is='tag')
 			legend(v-if='group.legend') {{ group.legend }}
 			template(v-for='field in group.fields')
 				.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
@@ -151,7 +152,14 @@ div.vue-form-generator(v-if='schema != null')
 
 		beforeMount() {
 			// Add idPrefix to fields if fieldIdPrefix is set
-			if (this.schema.fields) {
+			if ("groups" in this.schema) {
+				for (let group of this.schema.groups) {
+					for (let field of group.fields) {
+						field.idPrefix = this.options.fieldIdPrefix || "";
+					}
+				}
+			}
+			if ("fields" in this.schema) {
 				for (let field of this.schema.fields) {
 					field.idPrefix = this.options.fieldIdPrefix || "";
 				}
