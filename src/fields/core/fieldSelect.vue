@@ -36,7 +36,7 @@
 			getItemName(item) {
 				if (isObject(item)){
 					if (typeof this.schema["selectOptions"] !== "undefined" && typeof this.schema["selectOptions"]["name"] !== "undefined") {
-						return item[this.schema.checklistOptions.name];
+						return item[this.schema.selectOptions.name];
 					} else {
 						if (typeof item["name"] !== "undefined") {
 							return item.name;
