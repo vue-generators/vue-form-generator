@@ -34,10 +34,19 @@
 			},
 
 			getItemName(item) {
-				if (isObject(item) && item.name)
-					return item.name;
-
-				return item;
+				if (isObject(item)){
+					if (typeof this.schema["selectOptions"] !== "undefined" && typeof this.schema["selectOptions"]["name"] !== "undefined") {
+						return item[this.schema.checklistOptions.name];
+					} else {
+						if (typeof item["name"] !== "undefined") {
+							return item.name;
+						} else {
+							throw "name is not defined. If you want to use another key name, add a `name` property under `selectOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html";
+						}
+					}
+				} else {
+					return item;
+				}
 			}
 		}
 	};
