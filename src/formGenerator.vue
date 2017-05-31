@@ -1,6 +1,6 @@
 <template lang="pug">
-div
-	fieldset.vue-form-generator(v-if='schema != null', :is='tag')
+div.vue-form-generator(v-if='schema != null')
+	fieldset(v-if="schema.fields", :is='tag')
 		template(v-for='field in fields')
 			.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
 				label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
@@ -9,18 +9,36 @@ div
 						i.icon
 						.helpText(v-html='field.help')
 				.field-wrap
-					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema.sync='field', @model-updated='modelUpdated', @validated="onFieldValidated")
+					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :formOptions='options', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ field.hint }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
 					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
+
+	template(v-for='group in groups')
+		fieldset
+			legend(v-if='group.legend') {{ group.legend }}
+			template(v-for='field in group.fields')
+				.form-group(v-if='fieldVisible(field)', :class='getFieldRowClasses(field)')
+					label(v-if="fieldTypeHasLabel(field)", :for="getFieldID(field)")
+						| {{ field.label }}
+						span.help(v-if='field.help')
+							i.icon
+							.helpText(v-html='field.help')
+					.field-wrap
+						component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :formOptions='options',@model-updated='modelUpdated', @validated="onFieldValidated")
+						.buttons(v-if='buttonVisibility(field)')
+							button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field)', :class='btn.classes') {{ btn.label }}
+					.hint(v-if='field.hint') {{ field.hint }}
+					.errors.help-block(v-if='fieldErrors(field).length > 0')
+						span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
 </template>
 
 <script>
 	// import Vue from "vue";
 	import {each, isFunction, isNil, isArray, isString} from "lodash";
-	import getFieldID from "./fields/abstractField";
+	import { slugifyFormID } from "./utils/schema";
 
 	// Load all fields from '../fields' folder
 	let fieldComponents = {};
@@ -45,8 +63,6 @@ div
 
 	export default {
 		components: fieldComponents,
-
-		mixins: [ getFieldID ],
 
 		props: {
 			schema: Object,
@@ -93,10 +109,20 @@ div
 		computed: {
 			fields() {
 				let res = [];
-				if (this.schema) {
+				if (this.schema && this.schema.fields) {
 					each(this.schema.fields, (field) => {
 						if (!this.multiple || field.multi === true)
 							res.push(field);
+					});
+				}
+
+				return res;
+			},
+			groups() {
+				let res = [];
+				if (this.schema && this.schema.groups) {
+					each(this.schema.groups, (group) => {
+						res.push(group);
 					});
 				}
 
@@ -315,7 +341,12 @@ div
 			fieldErrors(field) {
 				let res = this.errors.filter(e => e.field == field);
 				return res.map(item => item.error);
-			}
+			},
+
+			getFieldID(schema) {
+				const idPrefix = this.options && this.options.fieldIdPrefix ? this.options.fieldIdPrefix : "";
+				return slugifyFormID(schema, idPrefix);
+			}			
 		}
 	};
 

@@ -17,23 +17,24 @@ var loaders = [
 		test: /\.json$/,
 		loader: 'json'
 	},
-	{ 
-		test: /\.(woff2?|svg)$/, 
-		loader: "url" 
-		//loader: "url?limit=10000" 
+	{
+		test: /\.(woff2?|svg)$/,
+		loader: "url"
+		//loader: "url?limit=10000"
 	},
-	{ 
-		test: /\.(ttf|eot)$/, 
-		loader: "url" 
+	{
+		test: /\.(ttf|eot)$/,
+		loader: "url"
 	}
 ];
 
 module.exports = {
 	devtool: "source-map",
-	
+
 	entry: {
 		full: path.resolve("dev", "full", "main.js"),
 		mselect: path.resolve("dev", "multiselect", "main.js"),
+		grouping: path.resolve("dev", "grouping", "main.js"),
 		checklist: path.resolve("dev", "checklist", "main.js")
 	},
 
@@ -43,14 +44,14 @@ module.exports = {
 		publicPath: "/"
 	},
 
-    plugins: [
-        new webpack.DefinePlugin({
-            "process.env": {
-                NODE_ENV: JSON.stringify("development"),
-                FULL_BUNDLE: true
-            }
-        }),
-    ],
+	plugins: [
+		new webpack.DefinePlugin({
+			"process.env": {
+				NODE_ENV: JSON.stringify("development"),
+				FULL_BUNDLE: true
+			}
+		}),
+	],
 
 	module: {
 		loaders
