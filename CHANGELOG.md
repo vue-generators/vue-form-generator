@@ -1,3 +1,32 @@
+<a name="2.0.0-beta7"></a>
+# 2.0.0-beta7 (2017-05-31)
+
+* :package: build ([71e9eb4](https://github.com/icebob/vue-form-generator/commit/71e9eb4))
+* :package: build ([908100e](https://github.com/icebob/vue-form-generator/commit/908100e))
+* :package: build ([5105f39](https://github.com/icebob/vue-form-generator/commit/5105f39))
+* [BUGFIX] Fieldset in proper place un puq template ([79c0852](https://github.com/icebob/vue-form-generator/commit/79c0852))
+* [BUGFIX] vue-form-gerenator class in wrapper div ([b5d58ac](https://github.com/icebob/vue-form-generator/commit/b5d58ac))
+* [FEATURE] Groups ([613e831](https://github.com/icebob/vue-form-generator/commit/613e831))
+* Add a props to change the main tag ([90b0767](https://github.com/icebob/vue-form-generator/commit/90b0767))
+* Add support for schema.legend & field id prefixes ([a6165c8](https://github.com/icebob/vue-form-generator/commit/a6165c8))
+* Add unit test for vueFormGenerator.fieldTypeHasLabel ([c61b941](https://github.com/icebob/vue-form-generator/commit/c61b941))
+* Added props validation for "tag" and unit test for it. ([c728597](https://github.com/icebob/vue-form-generator/commit/c728597))
+* Added tests for abstractField.getFieldID() ([492514d](https://github.com/icebob/vue-form-generator/commit/492514d))
+* bump version ([5a30f87](https://github.com/icebob/vue-form-generator/commit/5a30f87))
+* fix checklist validation bug #194 ([bea085f](https://github.com/icebob/vue-form-generator/commit/bea085f)), closes [#194](https://github.com/icebob/vue-form-generator/issues/194)
+* fix lints ([890ed44](https://github.com/icebob/vue-form-generator/commit/890ed44))
+* fix schema.fields error ([d2b67e0](https://github.com/icebob/vue-form-generator/commit/d2b67e0))
+* fix tests & layout for fields ([ee5ed30](https://github.com/icebob/vue-form-generator/commit/ee5ed30))
+* fixed indentation ([425faa2](https://github.com/icebob/vue-form-generator/commit/425faa2))
+* Implement #199 ([547ea2e](https://github.com/icebob/vue-form-generator/commit/547ea2e))
+* Make fieldTypeHasLabel test actually work & test default path ([d618958](https://github.com/icebob/vue-form-generator/commit/d618958))
+* remove .sync ([d008869](https://github.com/icebob/vue-form-generator/commit/d008869))
+* remove tag from groups ([b4dc972](https://github.com/icebob/vue-form-generator/commit/b4dc972))
+* rename `options` to `formOptions` because conflicted with vueMultiSelect property ([2f29943](https://github.com/icebob/vue-form-generator/commit/2f29943))
+* rename example & improve code ([caa4124](https://github.com/icebob/vue-form-generator/commit/caa4124))
+* Support bootstrap columns on fields ([fc2d47a](https://github.com/icebob/vue-form-generator/commit/fc2d47a))
+* Support custom validation classes ([378a2a7](https://github.com/icebob/vue-form-generator/commit/378a2a7))
+
 <a name="2.0.0-beta6"></a>
 # 2.0.0-beta6 (2017-04-04)
 
