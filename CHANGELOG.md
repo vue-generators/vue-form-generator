@@ -1,3 +1,14 @@
+<a name="2.0.0-beta8"></a>
+# 2.0.0-beta8 (2017-06-01)
+
+* :package: build ([076b7f0](https://github.com/icebob/vue-form-generator/commit/076b7f0))
+* Add access to click event on buttons ([d949421](https://github.com/icebob/vue-form-generator/commit/d949421))
+* fix #218 ([b632f1b](https://github.com/icebob/vue-form-generator/commit/b632f1b)), closes [#218](https://github.com/icebob/vue-form-generator/issues/218)
+* fix webpack core css filename ([ba48329](https://github.com/icebob/vue-form-generator/commit/ba48329))
+* update changelog ([cabc1e4](https://github.com/icebob/vue-form-generator/commit/cabc1e4))
+
+
+
 <a name="2.0.0-beta7"></a>
 # 2.0.0-beta7 (2017-05-31)
 
