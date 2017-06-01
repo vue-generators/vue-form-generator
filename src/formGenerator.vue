@@ -356,7 +356,7 @@ div.vue-form-generator(v-if='schema != null')
 
 	$errorColor: #F00;
 
-	fieldset.vue-form-generator {
+	.vue-form-generator {
 
 		* {
 			box-sizing: border-box;
@@ -521,7 +521,7 @@ div.vue-form-generator(v-if='schema != null')
 					content: "*";
 					font-weight: normal;
 					color: Red;
-					position: absolute;
+					// position: absolute;
 					padding-left: 0.2em;
 					font-size: 1em;
 				}

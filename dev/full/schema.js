@@ -40,6 +40,7 @@ module.exports = {
 			model: "firstName",
 			featured: true,
 			required: true,
+			help: "First name of user",
 			placeholder: "User's first name",
 			styleClasses: "half-width",
 			validator: validators.string,
