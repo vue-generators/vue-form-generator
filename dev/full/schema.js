@@ -96,6 +96,7 @@ module.exports = {
 			label: "Date",
 			model: "dob",
 			styleClasses: "half-width"
+			//format: "YYYY.MM.DD HH:mm:ss"
 		}, {
 			type: "input",
 			inputType: "datetime",
