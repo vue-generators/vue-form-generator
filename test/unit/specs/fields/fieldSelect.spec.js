@@ -121,6 +121,22 @@ describe("fieldSelect.vue", function() {
 			});
 		});
 
+		it("should hide the customized <non selected> text", (done) => {
+			Vue.set(vm.schema, "selectOptions", {
+				noneSelectedText: "Empty list",
+				hideNoneSelectedText: true
+			});
+			vm.$nextTick( () => {
+				let options = input.querySelectorAll("option");
+				expect(options[0].disabled).to.be.false;
+				expect(options[0].textContent).to.not.be.equal("Empty list");
+
+				schema.selectOptions = null;
+
+				done();
+			});
+		});
+
 	});
 
 	describe("check static values with { id, name } objects", () => {
