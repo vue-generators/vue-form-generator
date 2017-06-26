@@ -1,17 +1,16 @@
 <template lang="pug">
 	multiselect(		
+		//- multiselectMixin.js
 		:id="selectOptions.id",
 		:options="options",
-		:multiple="schema.multiSelect",
 		:value="value",
+		:multiple="schema.multiple",
 		:track-by="selectOptions.trackBy || null",
 		:label="selectOptions.label || null",
 		:searchable="selectOptions.searchable",
-		:local-search="selectOptions.localSearch",
 		:clear-on-select="selectOptions.clearOnSelect",
 		:hide-selected="selectOptions.hideSelected",
 		:placeholder="schema.placeholder",
-		:max-height="selectOptions.maxHeight",
 		:allow-empty="selectOptions.allowEmpty",
 		:reset-after="selectOptions.resetAfter",
 		:close-on-select="selectOptions.closeOnSelect",
@@ -19,13 +18,11 @@
 		:taggable="selectOptions.taggable",
 		:tag-placeholder="selectOptions.tagPlaceholder",
 		:max="schema.max || null",
-		@input="updateSelected",
-		@tag="addTag",
-		@select="onSelect",
-		@remove="onRemove",
-		@search-change="onSearchChange",
-		@open="onOpen",
-		@close="onClose",		
+		:options-limit="selectOptions.optionsLimit",
+		:group-label="selectOptions.groupLabel",
+		:block-keys="selectOptions.blockKeys",
+		:internal-search="selectOptions.internalSearch",
+		//- Multiselect.vue
 		:select-label="selectOptions.selectLabel",
 		:selected-label="selectOptions.selectedLabel",
 		:deselect-label="selectOptions.deselectLabel",
@@ -34,9 +31,19 @@
 		:limit-text="selectOptions.limitText",
 		:loading="selectOptions.loading",
 		:disabled="disabled",
-		:option-partial="selectOptions.optionPartial",
+		:max-height="selectOptions.maxHeight",
+		//- pointerMixin.js
 		:show-pointer="selectOptions.showPointer",
-		:option-height="selectOptions.optionHeight"
+		//- Events
+		@input="updateSelected",
+		@select="onSelect",
+		@remove="onRemove",
+		@search-change="onSearchChange",
+		@tag="addTag",
+		@open="onOpen",
+		@close="onClose",	
+		//- Slots
+		:option-height="selectOptions.optionHeight",
 	)
 </template>
 <script>
