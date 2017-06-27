@@ -1,10 +1,9 @@
 <template lang="pug">
-	multiselect(		
-		//- multiselectMixin.js
+	multiselect(
 		:id="selectOptions.id",
 		:options="options",
 		:value="value",
-		:multiple="schema.multiple",
+		:multiple="selectOptions.multiple",
 		:track-by="selectOptions.trackBy || null",
 		:label="selectOptions.label || null",
 		:searchable="selectOptions.searchable",
@@ -22,7 +21,6 @@
 		:group-label="selectOptions.groupLabel",
 		:block-keys="selectOptions.blockKeys",
 		:internal-search="selectOptions.internalSearch",
-		//- Multiselect.vue
 		:select-label="selectOptions.selectLabel",
 		:selected-label="selectOptions.selectedLabel",
 		:deselect-label="selectOptions.deselectLabel",
@@ -32,17 +30,14 @@
 		:loading="selectOptions.loading",
 		:disabled="disabled",
 		:max-height="selectOptions.maxHeight",
-		//- pointerMixin.js
 		:show-pointer="selectOptions.showPointer",
-		//- Events
 		@input="updateSelected",
 		@select="onSelect",
 		@remove="onRemove",
 		@search-change="onSearchChange",
 		@tag="addTag",
 		@open="onOpen",
-		@close="onClose",	
-		//- Slots
+		@close="onClose",
 		:option-height="selectOptions.optionHeight",
 	)
 </template>
