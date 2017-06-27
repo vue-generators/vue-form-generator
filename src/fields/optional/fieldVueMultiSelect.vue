@@ -18,6 +18,7 @@
 		:tag-placeholder="selectOptions.tagPlaceholder",
 		:max="schema.max || null",
 		:options-limit="selectOptions.optionsLimit",
+		:group-values="selectOptions.groupValues",
 		:group-label="selectOptions.groupLabel",
 		:block-keys="selectOptions.blockKeys",
 		:internal-search="selectOptions.internalSearch",
