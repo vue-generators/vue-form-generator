@@ -212,7 +212,6 @@ div.vue-form-generator(v-if='schema != null')
 
 				switch (relevantType) {
 				case "button":
-				case "image":
 				case "submit":
 				case "reset":
 					return false;
