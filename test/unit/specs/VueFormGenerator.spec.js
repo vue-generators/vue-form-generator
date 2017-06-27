@@ -1032,11 +1032,11 @@ describe("VueFormGenerator.vue", () => {
 			expect(form.fieldTypeHasLabel({ type: "input", inputType: "checkbox"})).to.be.true;
 			expect(form.fieldTypeHasLabel({ type: "input", inputType: "text"})).to.be.true;
 			expect(form.fieldTypeHasLabel({ type: "checklist" })).to.be.true;
+			expect(form.fieldTypeHasLabel({ type: "input", inputType: "image"})).to.be.true;
 		});
 
 		it("should return false", () => {
 			expect(form.fieldTypeHasLabel({ type: "input", inputType: "button"})).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "image"})).to.be.false;
 			expect(form.fieldTypeHasLabel({ type: "input", inputType: "submit"})).to.be.false;
 			expect(form.fieldTypeHasLabel({ type: "input", inputType: "reset"})).to.be.false;
 		});
