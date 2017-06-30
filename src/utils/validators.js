@@ -165,7 +165,7 @@ module.exports = {
 	email(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
-		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; // eslint-disable-line no-useless-escape
 		if (!re.test(value))
 			return [msg(messages.invalidEmail)];
 	},	
@@ -173,7 +173,7 @@ module.exports = {
 	url(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages); if (res != null) return res;
 
-		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g; // eslint-disable-line no-useless-escape
 		if (!re.test(value))
 			return [msg(messages.invalidURL)];
 	},	
