@@ -35,7 +35,8 @@ module.exports = {
 		full: path.resolve("dev", "full", "main.js"),
 		mselect: path.resolve("dev", "multiselect", "main.js"),
 		grouping: path.resolve("dev", "grouping", "main.js"),
-		checklist: path.resolve("dev", "checklist", "main.js")
+		checklist: path.resolve("dev", "checklist", "main.js"),
+		picker: path.resolve("dev", "picker", "main.js")
 	},
 
 	output: {
