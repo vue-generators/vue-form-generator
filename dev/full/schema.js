@@ -798,10 +798,10 @@ module.exports = {
 			label: "Skills (vue-multiSelect field)",
 			model: "skills",
 			required: true,
-			multiSelect: true,
 			selectOptions: {
+				multiple: true,
 				// id:25,
-				// key:"name",
+				// trackBy:"name",
 				// label: "name",
 				searchable: true,
 				clearOnSelect: true,
