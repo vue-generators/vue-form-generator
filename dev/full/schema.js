@@ -458,6 +458,9 @@ module.exports = {
 				id: "admin",
 				name: "Administrator"
 			}, {
+				id: 0,
+				name: "Zero"
+			}, {
 				id: "moderator",
 				name: "Moderator"
 			}, {
