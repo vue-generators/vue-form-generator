@@ -35,7 +35,7 @@
 						if (typeof item["id"] !== "undefined") {
 							return item.id;
 						} else {
-							throw "id is not defined. If you want to use another key name, add a `value` property under `selectOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
+							throw "`id` is not defined. If you want to use another key name, add a `value` property under `selectOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
 						}
 					}
 				} else {
@@ -51,7 +51,7 @@
 						if (typeof item["name"] !== "undefined") {
 							return item.name;
 						} else {
-							throw "name is not defined. If you want to use another key name, add a `name` property under `selectOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
+							throw "`name` is not defined. If you want to use another key name, add a `name` property under `selectOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
 						}
 					}
 				} else {
