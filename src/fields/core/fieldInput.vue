@@ -100,6 +100,8 @@
 						}
 						break;
 					case "number":
+						return Number(value);					
+					case "range":
 						return Number(value);
 					}
 				}
