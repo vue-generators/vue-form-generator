@@ -358,8 +358,7 @@ div.vue-form-generator(v-if='schema != null')
 			},
 
 			fieldTouched(field) {
-				let res = this.touched.filter(e => e.field == field);
-				return res.map(item => item.touched)[0];
+				return this.touched.find(e=>e.field == field);
 			},
 
 			getFieldID(schema) {
