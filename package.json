@@ -1,6 +1,6 @@
 {
   "name": "vue-form-generator",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A schema-based form generator component for Vue.js",
   "homepage": "https://github.com/icebob/vue-form-generator",
   "main": "dist/vfg.js",
@@ -102,6 +102,33 @@
     "webpack-dev-server": "1.16.2",
     "webpack-merge": "0.14.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {},
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module"
+    },
+    "extends": "airbnb-base",
+    "rules": {
+      "comma-dangle": 0,
+      "consistent-return": 0,
+      "no-param-reassign": 0,
+      "no-underscore-dangle": 0,
+      "no-shadow": 0,
+      "no-console": 0,
+      "no-plusplus": 0,
+      "no-unused-expressions": 0,
+      "chai-friendly/no-unused-expressions": 2,
+      "indent": 0
+    },
+    "env": {
+      "jasmine": true,
+      "mocha": true,
+      "node": true,
+      "browser": true
+    }
+  },
+  "plugins": [
+    "chai-friendly"
+  ]
 }
