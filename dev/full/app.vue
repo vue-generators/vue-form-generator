@@ -36,13 +36,13 @@
 	import { filters } from "./utils";
 
 	import Multiselect from "vue-multiselect"
-	Vue.component("multiselect", Multiselect);	
+	Vue.component("multiselect", Multiselect);
 
 	// Test custom field
 	import FieldAwesome from "./fieldAwesome.vue";
 	Vue.component("fieldAwesome", FieldAwesome);
 
-	import {each, isFunction, cloneDeep, merge} from 'lodash';	
+	import {each, isFunction, cloneDeep, merge} from 'lodash';
 
 	Vue.use(VueFormGenerator);
 
@@ -57,7 +57,7 @@
 
 		data() {
 			return {
-				isNewModel: false, 
+				isNewModel: false,
 
 				selected: [],
 
@@ -77,7 +77,7 @@
 
 		computed: {
 			validationErrors() {
-				if (this.$refs.form && this.$refs.form.errors) 
+				if (this.$refs.form && this.$refs.form.errors)
 					return this.$refs.form.errors;
 
 				return [];
@@ -88,9 +88,9 @@
 		},
 
 		methods: {
-			showWarning() { 
+			showWarning() {
 				if (this.$refs.form && this.$refs.form.errors) {
-					return this.$refs.form.errors.length > 0 
+					return this.$refs.form.errors.length > 0
 				}
 			},
 
@@ -113,7 +113,7 @@
 			clearSelection() {
 				this.selected.splice(0);
 				this.generateModel();
-			},	
+			},
 
 			onValidated(res, errors) {
 				console.log("VFG validated:", res, errors);
@@ -125,7 +125,7 @@
 				} else if (this.selected.length > 1) {
 					this.model = VueFormGenerator.schema.mergeMultiObjectFields(Schema, this.selected);
 				} else {
-					this.model = null;				
+					this.model = null;
 				}
 			},
 
@@ -140,7 +140,7 @@
 				if (el)
 					el.focus()
 
-			},			
+			},
 
 			saveModel() {
 				console.log("Save model...");
@@ -210,12 +210,12 @@
 					});
 				} else {
 					alert("Geolocation is not supported by this browser.");
-				}				
+				}
 			}
 
-			 
+
 		},
-		
+
 		mounted() {
 			this.$nextTick(function () {
 				window.app = this;
@@ -250,13 +250,13 @@
 
 	pre {
 		overflow: auto;
-		
+
 		.string { color: #885800; }
 		.number { color: blue; }
 		.boolean { color: magenta; }
 		.null { color: red; }
-		.key { color: green; }    	
-	} 
+		.key { color: green; }
+	}
 
 	.control-buttons {
 		button {
@@ -273,7 +273,7 @@
 			position: absolute;
 			top: 0px;
 			right: 0px;
-			color: Orange;			
+			color: Orange;
 		}
 	}
 

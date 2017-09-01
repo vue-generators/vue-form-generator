@@ -1,3 +1,24 @@
+<a name="2.0.1"></a>
+## 2.0.1 (2017-09-01)
+
+* :package: Build ([e43baec](https://github.com/icebob/vue-form-generator/commit/e43baec))
+* Fixed #234 ([42b4fcb](https://github.com/icebob/vue-form-generator/commit/42b4fcb)), closes [#234](https://github.com/icebob/vue-form-generator/issues/234)
+* Input type range now return a `Number` ([8d891d2](https://github.com/icebob/vue-form-generator/commit/8d891d2))
+* Update new version to 2.0.1 ([8e4c629](https://github.com/icebob/vue-form-generator/commit/8e4c629))
+* Use selectOptions in selectEx ([fa2acf1](https://github.com/icebob/vue-form-generator/commit/fa2acf1))
+
+
+
+<a name="2.0.1"></a>
+## 2.0.1 (2017-08-31)
+
+* :package: Build ([e43baec](https://github.com/icebob/vue-form-generator/commit/e43baec))
+* Fixed #234 ([42b4fcb](https://github.com/icebob/vue-form-generator/commit/42b4fcb)), closes [#234](https://github.com/icebob/vue-form-generator/issues/234)
+* Input type range now return a `Number` ([8d891d2](https://github.com/icebob/vue-form-generator/commit/8d891d2))
+* Use selectOptions in selectEx ([fa2acf1](https://github.com/icebob/vue-form-generator/commit/fa2acf1))
+
+
+
 <a name="2.0.0-beta8"></a>
 # 2.0.0-beta8 (2017-06-01)
 
