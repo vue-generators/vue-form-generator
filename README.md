@@ -1,21 +1,21 @@
 # vue-form-generator [![NPM version](https://img.shields.io/npm/v/vue-form-generator.svg)](https://www.npmjs.com/package/vue-form-generator) ![VueJS v2.x compatible](https://img.shields.io/badge/vue%202.x-compatible-green.svg)
 A schema-based form generator component for Vue.js.
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/912039aa815e40de8315032519aa7e6c)](https://www.codacy.com/app/mereg-norbert/vue-form-generator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=icebob/vue-form-generator&amp;utm_campaign=Badge_Grade)
-[![Build Status](https://travis-ci.org/icebob/vue-form-generator.svg?branch=master)](https://travis-ci.org/icebob/vue-form-generator)
-[![Coverage Status](https://coveralls.io/repos/github/icebob/vue-form-generator/badge.svg?branch=master)](https://coveralls.io/github/icebob/vue-form-generator?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/912039aa815e40de8315032519aa7e6c)](https://www.codacy.com/app/mereg-norbert/vue-form-generator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sleroy/vue-form-generator&amp;utm_campaign=Badge_Grade)
+[![Build Status](https://travis-ci.org/sleroy/vue-form-generator.svg?branch=master)](https://travis-ci.org/sleroy/vue-form-generator)
+[![Coverage Status](https://coveralls.io/repos/github/sleroy/vue-form-generator/badge.svg?branch=master)](https://coveralls.io/github/sleroy/vue-form-generator?branch=master)
 [![NPMS.io score](https://badges.npms.io/vue-form-generator.svg)]()
 [![Package Quality](http://npm.packagequality.com/shield/vue-form-generator.svg)](http://packagequality.com/#?package=vue-form-generator)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Ficebob%2Fvue-form-generator.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Ficebob%2Fvue-form-generator?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsleroy%2Fvue-form-generator.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fsleroy%2Fvue-form-generator?ref=badge_shield)
 
-[![Dependency Status](https://david-dm.org/icebob/vue-form-generator.svg)](https://david-dm.org/icebob/vue-form-generator)
-[![devDependency Status](https://david-dm.org/icebob/vue-form-generator/dev-status.svg)](https://david-dm.org/icebob/vue-form-generator#info=devDependencies)
+[![Dependency Status](https://david-dm.org/sleroy/vue-form-generator.svg)](https://david-dm.org/sleroy/vue-form-generator)
+[![devDependency Status](https://david-dm.org/sleroy/vue-form-generator/dev-status.svg)](https://david-dm.org/sleroy/vue-form-generator#info=devDependencies)
 [![Downloads](https://img.shields.io/npm/dt/vue-form-generator.svg)](https://www.npmjs.com/package/vue-form-generator)
 
 ## Demo
-[JSFiddle simple example](https://jsfiddle.net/icebob/0mg1v81e/)
+[JSFiddle simple example](https://jsfiddle.net/sleroy/0mg1v81e/)
 
-[![Screenshot](https://icebob.gitbooks.io/vueformgenerator/content/assets/vfg-example1.png)](https://jsfiddle.net/icebob/0mg1v81e/)
+[![Screenshot](https://sleroy.gitbooks.io/vueformgenerator/content/assets/vfg-example1.png)](https://jsfiddle.net/sleroy/0mg1v81e/)
 
 ## Features
 - reactive forms based on schemas
@@ -29,7 +29,7 @@ A schema-based form generator component for Vue.js.
 - ...etc
 
 ## Documentation
-[Online documentation on Gitbook](https://icebob.gitbooks.io/vueformgenerator/content/)
+[Online documentation on Gitbook](https://sleroy.gitbooks.io/vueformgenerator/content/)
 
 ## Dependencies
 vue-form-generator uses [fecha](https://github.com/taylorhakes/fecha) and [lodash](https://lodash.com/) internally.
@@ -38,7 +38,7 @@ While built-in fields don't need external dependencies, optional fields may need
 These dependencies fall into two camps: jQuery or Vanilla. You can find almost the same functionality in both flavors.
 In the end, it's your choice to depend on jQuery or not.
 
-You can find details about dependencies in the official [documentation](https://icebob.gitbooks.io/vueformgenerator/content/) under each specific component.
+You can find details about dependencies in the official [documentation](https://sleroy.gitbooks.io/vueformgenerator/content/) under each specific component.
 
 ## Installation
 ### NPM
@@ -57,7 +57,7 @@ $ npm install vue-form-generator@0.6.1
 ### Manual
 Download zip package and unpack and add the vfg.css and vfg.js file to your project from dist folder.
 ```
-https://github.com/icebob/vue-form-generator/archive/master.zip
+https://github.com/sleroy/vue-form-generator/archive/master.zip
 ```
 
 ### Core vs Full version
@@ -207,6 +207,6 @@ vue-form-generator is available under the [MIT license](https://tldrlegal.com/li
 
 ## Contact
 
-Copyright (C) 2017 Icebob
+Copyright (C) 2017 sleroy
 
-[![@icebob](https://img.shields.io/badge/github-icebob-green.svg)](https://github.com/icebob) [![@icebob](https://img.shields.io/badge/twitter-Icebobcsi-blue.svg)](https://twitter.com/Icebobcsi)
+[![@sleroy](https://img.shields.io/badge/github-sleroy-green.svg)](https://github.com/sleroy) [![@sleroy](https://img.shields.io/badge/twitter-sleroycsi-blue.svg)](https://twitter.com/sleroycsi)
