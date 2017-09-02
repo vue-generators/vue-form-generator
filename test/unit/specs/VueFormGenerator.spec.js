@@ -34,7 +34,7 @@ function createFormGenerator(schema = {}, model = null, options, multiple) {
   return [el, vm];
 }
 
-describe("VueFormGenerator.vue", () => {
+describe("Bootstrap3FormGenerator.vue", () => {
 
   describe("with empty schema", () => {
     let schema = {
@@ -98,7 +98,7 @@ describe("VueFormGenerator.vue", () => {
       createFormGenerator(schema);
       group = el.querySelector(".form-group");
     });
-    
+
     it("should be minimal classes", () => {
       expect(group.classList.length).to.be.equal(2);
       expect(group.classList.contains("form-group")).to.be.true;

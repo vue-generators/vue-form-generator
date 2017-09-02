@@ -4,9 +4,10 @@
 // import Vue from "vue";
 import {  each,  isFunction,  isNil,  isArray,  isString} from "lodash";
 import {  slugifyFormID} from "../utils/schema";
+import {fieldComponents} from '../fields';
 
 export default {
-
+  components: fieldComponents,
   props: {
     schema: Object,
     model: Object,

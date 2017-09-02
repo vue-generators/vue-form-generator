@@ -15,7 +15,7 @@
       <div class="errors text-center">
         <div v-for="(item, index) in validationErrors" track-by="index" class="alert alert-danger">{{ item.field.label}}: <strong>{{ item.error }}</strong></div>
       </div>
-      <vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
+      <form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated" :theme="bootstrap3"></vue-form-generator>
     </div>
     <div class="col-md-6">
       <pre v-if="model" v-html="prettyModel"></pre>
