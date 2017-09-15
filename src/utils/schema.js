@@ -62,7 +62,7 @@ module.exports.slugifyFormID = function(schema, prefix = "") {
 		return prefix + schema.id;
 	} else {
 		// Return the slugified version of either:
-		return prefix + (schema.inputName || schema.label || schema.model)
+		return prefix + (schema.inputName || schema.label || schema.model || "")
 			// NB: This is a very simple, conservative, slugify function,
 			// avoiding extra dependencies.
 			.toString()
