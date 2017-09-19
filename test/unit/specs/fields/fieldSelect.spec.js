@@ -26,7 +26,8 @@ describe("fieldSelect.vue", function() {
 				"Paris",
 				"Rome",
 				"Berlin"
-			]
+			],
+			classes: ["applied-class", "another-class"]
 		};
 		let model = { city: "Paris" };
 		let input;
@@ -210,7 +211,8 @@ describe("fieldSelect.vue", function() {
 					{ id: 3, name: "Rome" },
 					{ id: 4, name: "Berlin" }
 				];
-			}
+			},
+			classes: ["applied-class", "another-class"]
 		};
 		let model = { city: 2 };
 		let input;
@@ -245,6 +247,11 @@ describe("fieldSelect.vue", function() {
 				done();
 			});
 
+		});
+
+		it("should have 2 classes", () => {
+			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
+			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
 		});
 
 	});

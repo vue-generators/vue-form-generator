@@ -21,7 +21,8 @@ describe("fieldSubmit.vue", function() {
 			type: "submit",
 			buttonText: "Submit form",
 			validateBeforeSubmit: false,
-			onSubmit() {}
+			onSubmit() {},
+			classes: ["applied-class", "another-class"]
 		};
 		let model = { name: "John Doe" };
 		let input;
@@ -72,6 +73,12 @@ describe("fieldSubmit.vue", function() {
 				});
 			});
 		});
+
+		it("should have 2 classes", () => {
+			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
+			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
+		});
+
 	});
 
 });
