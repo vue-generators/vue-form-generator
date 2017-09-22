@@ -1,4 +1,4 @@
-import { get as objGet, each, isFunction, isString, isArray } from "lodash";
+import { get as objGet, each, identity, isFunction, isString, isArray } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
@@ -39,17 +39,13 @@ export default {
 				else if (this.model && this.schema.model)
 					val = objGet(this.model, this.schema.model);
 
-				if (isFunction(this.formatValueToField))
-					val = this.formatValueToField(val);
-
-				return val;
+				return this.formatValueToField(val);
 			},
 
 			set(newValue) {
 				let oldValue = this.value;
 
-				if (isFunction(this.formatValueToModel))
-					newValue = this.formatValueToModel(newValue);
+				newValue = this.formatValueToModel(newValue);
 
 				let changed = false;
 				if (isFunction(this.schema.set)) {
@@ -77,6 +73,8 @@ export default {
 	},
 
 	methods: {
+		formatValueToField: identity,
+		formatValueToModel: identity,
 		validate(calledParent) {
 			this.clearValidationErrors();
 
