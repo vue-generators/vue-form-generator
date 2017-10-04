@@ -440,6 +440,46 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check fieldHint with function", () => {
+		let schema = {
+			fields: [
+				{
+					type: "textArea",
+					label: "Note",
+					model: "note",
+					max: 500,
+					rows: 4,
+					hint(model) {
+						if (model && model.note) {
+							return model.note.length + " of max 500 characters used!";
+						}
+					}
+				}
+			]
+		};
+
+		let model = {
+			note: "John Doe"
+		};
+
+		before( () => {
+			createFormGenerator(schema, model);
+		});
+
+		it("should be applay", () => {
+			expect(el.querySelector(".form-group .hint").textContent).to.be.equal("8 of max 500 characters used!");
+		});
+
+		it("should be changed", (done) => {
+			model.note= "Dr. John Doe";
+			vm.$nextTick(() => {
+				expect(el.querySelector(".form-group .hint").textContent).to.be.equal("12 of max 500 characters used!");
+				done();
+			});
+		});
+
+	});
+
 	describe("check fieldFeatured with function", () => {
 		let schema = {
 			fields: [

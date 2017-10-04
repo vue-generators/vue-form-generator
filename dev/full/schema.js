@@ -319,7 +319,7 @@ module.exports = {
 			type: "textArea",
 			label: "Biography (textArea field)",
 			model: "bio",
-			hint: function (model) {
+			hint(model) {
 				if (model && model.bio) {
 					return model.bio.length + " of max 500 characters used!";
 				}
