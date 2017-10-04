@@ -280,7 +280,7 @@ div.vue-form-generator(v-if='schema != null')
 				if (isFunction(field.hint))
 					return field.hint.call(this, this.model, field, this);
 
-				return field.hint
+				return field.hint;
 			},
 
 			buttonClickHandler(btn, field, event) {
