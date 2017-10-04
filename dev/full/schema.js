@@ -86,7 +86,7 @@ module.exports = {
 			required: true,
 			hint: "Minimum 6 characters",
 			styleClasses: "half-width",
-			validator: validators.string.locale({ 
+			validator: validators.string.locale({
 				fieldIsRequired: "The password is required!",
 				textTooSmall: "Password must be at least {1} characters!"
 			})
@@ -210,60 +210,60 @@ module.exports = {
 			model: "",
 			styleClasses: "alert alert-info"
 		}, {
-            type: "checklist",
-            label: "CHECKLIST combobox",
-            model: "checklistcombobox",
-            listBox: false,
-            values: [{
-                name: "HTML5",
-                value: "HTML5-123"
-            }, {
-                name: "Javascript",
-                value: "Javascript-123"
-            }, {
-                name: "CSS3",
-                value: "CSS3-123"
-            }, {
-                name: "CoffeeScript",
-                value: "CoffeeScript-123"
-            }, {
-                name: "AngularJS",
-                value: "AngularJS-123"
-            }, {
-                name: "ReactJS",
-                value: "ReactJS-123"
-            }, {
-                name: "VueJS",
-                value: "VueJS-123"
-            }],
-        }, {
-            type: "checklist",
-            label: "CHECKLIST listBox",
-            model: "checklistlistbox",
-            listBox: true,
-            values: [{
-                name: "HTML5",
-                value: "HTML5-123"
-            }, {
-                name: "Javascript",
-                value: "Javascript-123"
-            }, {
-                name: "CSS3",
-                value: "CSS3-123"
-            }, {
-                name: "CoffeeScript",
-                value: "CoffeeScript-123"
-            }, {
-                name: "AngularJS",
-                value: "AngularJS-123"
-            }, {
-                name: "ReactJS",
-                value: "ReactJS-123"
-            }, {
-                name: "VueJS",
-                value: "VueJS-123"
-            }],
-        }, {
+			type: "checklist",
+			label: "CHECKLIST combobox",
+			model: "checklistcombobox",
+			listBox: false,
+			values: [{
+				name: "HTML5",
+				value: "HTML5-123"
+			}, {
+				name: "Javascript",
+				value: "Javascript-123"
+			}, {
+				name: "CSS3",
+				value: "CSS3-123"
+			}, {
+				name: "CoffeeScript",
+				value: "CoffeeScript-123"
+			}, {
+				name: "AngularJS",
+				value: "AngularJS-123"
+			}, {
+				name: "ReactJS",
+				value: "ReactJS-123"
+			}, {
+				name: "VueJS",
+				value: "VueJS-123"
+			}],
+		}, {
+			type: "checklist",
+			label: "CHECKLIST listBox",
+			model: "checklistlistbox",
+			listBox: true,
+			values: [{
+				name: "HTML5",
+				value: "HTML5-123"
+			}, {
+				name: "Javascript",
+				value: "Javascript-123"
+			}, {
+				name: "CSS3",
+				value: "CSS3-123"
+			}, {
+				name: "CoffeeScript",
+				value: "CoffeeScript-123"
+			}, {
+				name: "AngularJS",
+				value: "AngularJS-123"
+			}, {
+				name: "ReactJS",
+				value: "ReactJS-123"
+			}, {
+				name: "VueJS",
+				value: "VueJS-123"
+			}],
+		}, {
 			type: "radios",
 			label: "RADIOS",
 			model: "radios",
@@ -319,7 +319,11 @@ module.exports = {
 			type: "textArea",
 			label: "Biography (textArea field)",
 			model: "bio",
-			hint: "Max 500 characters",
+			hint: function (model) {
+				if (model && model.bio) {
+					return model.bio.length + " of max 500 characters used!";
+				}
+			},
 			max: 500,
 			placeholder: "User's biography",
 			rows: 4,
