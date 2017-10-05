@@ -102,6 +102,5 @@
     "webpack-dev-server": "1.16.2",
     "webpack-merge": "0.14.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

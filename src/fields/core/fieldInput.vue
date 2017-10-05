@@ -6,6 +6,7 @@
 		:value="value",
 		@input="value = $event.target.value",
 		@change="onChange",
+		:class="schema.classes",
 		:disabled="disabled",
 		:accept="schema.accept",
 		:alt="schema.alt",
