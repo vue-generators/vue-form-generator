@@ -39,17 +39,13 @@ export default {
 				else if (this.model && this.schema.model)
 					val = objGet(this.model, this.schema.model);
 
-				if (isFunction(this.formatValueToField))
-					val = this.formatValueToField(val);
-
-				return val;
+				return this.formatValueToField(val);
 			},
 
 			set(newValue) {
 				let oldValue = this.value;
 
-				if (isFunction(this.formatValueToModel))
-					newValue = this.formatValueToModel(newValue);
+				newValue = this.formatValueToModel(newValue);
 
 				let changed = false;
 				if (isFunction(this.schema.set)) {
@@ -167,7 +163,14 @@ export default {
 		getFieldID(schema) {
 			const idPrefix = this.formOptions && this.formOptions.fieldIdPrefix ? this.formOptions.fieldIdPrefix : "";
 			return slugifyFormID(schema, idPrefix);
-		}
+		},
 
+		formatValueToField(value) {
+			return value;
+		},
+
+		formatValueToModel(value) {
+			return value;
+		}
 	}
 };
