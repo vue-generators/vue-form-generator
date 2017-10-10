@@ -53,7 +53,7 @@
 
 			getInputName(item){
 				if(this.schema && this.schema.inputName && this.schema.inputName.length > 0){
-					return this.schema.inputName + "_" + this.getItemValue(item);
+					return slugify(this.schema.inputName + "_" + this.getItemValue(item));
 				}
 				return slugify(this.getItemValue(item));
 			},

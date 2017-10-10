@@ -88,11 +88,11 @@ module.exports.slugify = function (name = "") {
 		.trim()
 		//.toLowerCase()
 		// Spaces & underscores to dashes
-		.replace(/ |_/g, "-")
+		.replace(/ /g, "-")
 		// Multiple dashes to one
 		.replace(/-{2,}/g, "-")
 		// Remove leading & trailing dashes
 		.replace(/^-+|-+$/g, "")
 		// Remove anything that isn't a (English/ASCII) letter, number or dash.
-		.replace(/([^a-zA-Z0-9-]+)/g, "");
+		.replace(/([^a-zA-Z0-9-_/./:]+)/g, "");
 };
