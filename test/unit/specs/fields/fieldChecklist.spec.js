@@ -398,6 +398,7 @@ describe("fieldChecklist.vue", function() {
 				type: "checklist",
 				label: "Skills",
 				model: "skills",
+				inputName:"",
 				listBox: true,
 				values() {
 					return [
@@ -439,6 +440,40 @@ describe("fieldChecklist.vue", function() {
 				expect(isChecked(4)).to.be.false;
 				expect(isChecked(5)).to.be.false;
 				expect(isChecked(6)).to.be.true;
+			});
+
+						
+			it("should contain input name field withouth inputName", (done) => {
+				
+				checkboxes = listbox.querySelectorAll("input[type=checkbox]");
+				expect(checkboxes[0].name).to.be.equal("1");
+				expect(checkboxes[1].name).to.be.equal("2");
+				expect(checkboxes[2].name).to.be.equal("3");
+				expect(checkboxes[3].name).to.be.equal("4");
+				expect(checkboxes[4].name).to.be.equal("5");
+				expect(checkboxes[5].name).to.be.equal("6");
+				expect(checkboxes[6].name).to.be.equal("7");
+				
+				done();
+				
+			});
+
+			it("should contain input name field with inputName", (done) => {
+				
+				schema.inputName="skill";
+
+				vm.$nextTick( () => {
+					checkboxes = listbox.querySelectorAll("input[type=checkbox]");
+					expect(checkboxes[0].name).to.be.equal("skill_1");
+					expect(checkboxes[1].name).to.be.equal("skill_2");
+					expect(checkboxes[2].name).to.be.equal("skill_3");
+					expect(checkboxes[3].name).to.be.equal("skill_4");
+					expect(checkboxes[4].name).to.be.equal("skill_5");
+					expect(checkboxes[5].name).to.be.equal("skill_6");
+					expect(checkboxes[6].name).to.be.equal("skill_7");
+					
+					done();
+				});
 			});
 
 			describe("test values reactivity to changes", () => {

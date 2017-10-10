@@ -21,6 +21,7 @@
 <script>
 	import {isObject, isNil, clone} from "lodash";
 	import abstractField from "../abstractField";
+	import { slugify } from "../../utils/schema";
 	
 	export default {
 		mixins: [ abstractField ],
@@ -54,7 +55,7 @@
 				if(this.schema && this.schema.inputName && this.schema.inputName.length > 0){
 					return this.schema.inputName + "_" + this.getItemValue(item);
 				}
-				return this.getItemValue(item);
+				return slugify(this.getItemValue(item));
 			},
 
 			getItemValue(item) {
