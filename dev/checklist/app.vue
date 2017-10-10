@@ -23,6 +23,7 @@ export default {
 						label: "Skills",
 						model: "skills",
 						required: true,
+						inputName:"skill",
 						min: 2,
 						listBox: true,
 						values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],

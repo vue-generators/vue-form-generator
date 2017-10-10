@@ -3,7 +3,7 @@
 		.listbox.form-control(v-if="schema.listBox", :disabled="disabled")
 			.list-row(v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
 				label
-					input(type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)")
+					input(type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)" :name="getInputName(item)")
 					| {{ getItemName(item) }}
 
 		.combobox.form-control(v-if="!schema.listBox", :disabled="disabled")
@@ -14,7 +14,7 @@
 			.dropList
 				.list-row(v-if="comboExpanded", v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
 					label
-						input(type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)")
+						input(type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)" :name="getInputName(item)")
 						| {{ getItemName(item) }}
 </template>
 
@@ -45,10 +45,18 @@
 					return this.value.length;
 
 				return 0;
-			}   
+			}
 		},
 
 		methods: {
+
+			getInputName(item){
+				if(this.schema && this.schema.inputName && this.schema.inputName.length > 0){
+					return this.schema.inputName + "_" + this.getItemValue(item);
+				}
+				return this.getItemValue(item);
+			},
+
 			getItemValue(item) {
 				if (isObject(item)){
 					if (typeof this.schema["checklistOptions"] !== "undefined" && typeof this.schema["checklistOptions"]["value"] !== "undefined") {

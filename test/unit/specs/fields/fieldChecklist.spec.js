@@ -524,6 +524,7 @@ describe("fieldChecklist.vue", function() {
 				type: "checklist",
 				label: "Skills",
 				model: "skills",
+				inputName:"",
 				values: [
 					"HTML5",
 					"Javascript",
@@ -578,6 +579,39 @@ describe("fieldChecklist.vue", function() {
 				vm.$nextTick( () => {
 					checkboxes = dropList.querySelectorAll("input[type=checkbox]");
 					expect(checkboxes.length).to.be.equal(7);
+					done();
+				});
+			});
+			
+			it("should contain input name field withouth inputName", (done) => {
+				
+				checkboxes = dropList.querySelectorAll("input[type=checkbox]");
+				expect(checkboxes[0].name).to.be.equal("HTML5");
+				expect(checkboxes[1].name).to.be.equal("Javascript");
+				expect(checkboxes[2].name).to.be.equal("CSS3");
+				expect(checkboxes[3].name).to.be.equal("CoffeeScript");
+				expect(checkboxes[4].name).to.be.equal("AngularJS");
+				expect(checkboxes[5].name).to.be.equal("ReactJS");
+				expect(checkboxes[6].name).to.be.equal("VueJS");
+				
+				done();
+				
+			});
+
+			it("should contain input name field with inputName", (done) => {
+				
+				schema.inputName="skill";
+
+				vm.$nextTick( () => {
+					checkboxes = dropList.querySelectorAll("input[type=checkbox]");
+					expect(checkboxes[0].name).to.be.equal("skill_HTML5");
+					expect(checkboxes[1].name).to.be.equal("skill_Javascript");
+					expect(checkboxes[2].name).to.be.equal("skill_CSS3");
+					expect(checkboxes[3].name).to.be.equal("skill_CoffeeScript");
+					expect(checkboxes[4].name).to.be.equal("skill_AngularJS");
+					expect(checkboxes[5].name).to.be.equal("skill_ReactJS");
+					expect(checkboxes[6].name).to.be.equal("skill_VueJS");
+					
 					done();
 				});
 			});
