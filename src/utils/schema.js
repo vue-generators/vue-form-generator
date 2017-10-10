@@ -1,7 +1,7 @@
-import {get, set, each, isObject, isArray, isFunction, cloneDeep} from "lodash";
+import { get, set, each, isObject, isArray, isFunction, cloneDeep } from "lodash";
 
 // Create a new model by schema default values
-module.exports.createDefaultObject = function (schema, obj = {}){
+module.exports.createDefaultObject = function (schema, obj = {}) {
 	each(schema.fields, (field) => {
 		if (get(obj, field.model) === undefined && field.default !== undefined) {
 			if (isFunction(field.default)) {
@@ -16,10 +16,10 @@ module.exports.createDefaultObject = function (schema, obj = {}){
 };
 
 // Get a new model which contains only properties of multi-edit fields
-module.exports.getMultipleFields = function(schema) {
+module.exports.getMultipleFields = function (schema) {
 	let res = [];
 	each(schema.fields, (field) => {
-		if (field.multi === true) 
+		if (field.multi === true)
 			res.push(field);
 	});
 
@@ -27,7 +27,7 @@ module.exports.getMultipleFields = function(schema) {
 };
 
 // Merge many models to one 'work model' by schema
-module.exports.mergeMultiObjectFields = function(schema, objs) {
+module.exports.mergeMultiObjectFields = function (schema, objs) {
 	let model = {};
 
 	let fields = module.exports.getMultipleFields(schema);
@@ -54,7 +54,7 @@ module.exports.mergeMultiObjectFields = function(schema, objs) {
 	return model;
 };
 
-module.exports.slugifyFormID = function(schema, prefix = "") {
+module.exports.slugifyFormID = function (schema, prefix = "") {
 	// Try to get a reasonable default id from the schema,
 	// then slugify it.
 	if (typeof schema.id !== "undefined") {
@@ -77,4 +77,22 @@ module.exports.slugifyFormID = function(schema, prefix = "") {
 			// Remove anything that isn't a (English/ASCII) letter, number or dash.
 			.replace(/([^a-zA-Z0-9-]+)/g, "");
 	}
+};
+
+module.exports.slugify = function (name = "") {
+	// Return the slugified version of either:
+	return name
+		// NB: This is a very simple, conservative, slugify function,
+		// avoiding extra dependencies.
+		.toString()
+		.trim()
+		//.toLowerCase()
+		// Spaces & underscores to dashes
+		.replace(/ /g, "-")
+		// Multiple dashes to one
+		.replace(/-{2,}/g, "-")
+		// Remove leading & trailing dashes
+		.replace(/^-+|-+$/g, "")
+		// Remove anything that isn't a (English/ASCII) letter, number or dash.
+		.replace(/([^a-zA-Z0-9-_/./:]+)/g, "");
 };
