@@ -1,4 +1,4 @@
-import { get as objGet, each, isFunction, isString, isArray } from "lodash";
+import { get as objGet, each, identity, isFunction, isString, isArray } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
@@ -73,6 +73,8 @@ export default {
 	},
 
 	methods: {
+		formatValueToField: identity,
+		formatValueToModel: identity,
 		validate(calledParent) {
 			this.clearValidationErrors();
 
