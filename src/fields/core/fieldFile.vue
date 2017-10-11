@@ -1,10 +1,10 @@
 <template lang="pug">
 .wrapper
 	input.form-control(
-		id="ts01",
+		id="getFieldID(schema)",
 		type="file",
 		:name="schema.inputName",
-		@change="schema.onChange || null",	
+		@change="schema.onChange || null",
 		:accept="schema.accept",
 		:multiple="schema.multiple",
 		:placeholder="schema.placeholder",
