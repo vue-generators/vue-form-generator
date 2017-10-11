@@ -43,12 +43,12 @@ export default {
 					maxLength: 0
 				}));
 
-				if (this.cleave.properties && this.cleave.properties.hasOwnProperty('result')) {
-					this.$watch('cleave.properties.result', () => {
+				if (this.cleave.properties && this.cleave.properties.hasOwnProperty("result")) {
+					this.$watch("cleave.properties.result", () => {
 						this.value = this.cleave.properties.result;
 					});
 				} else {
-					this.$el.addEventListener('input', this.inputChange)
+					this.$el.addEventListener("input", this.inputChange);
 				}
 
 			} else {
@@ -67,7 +67,7 @@ export default {
 	beforeDestroy() {
 		if (this.cleave) {
 			this.cleave.destroy();
-			this.$el.removeEventListener('input', this.inputChange);
+			this.$el.removeEventListener("input", this.inputChange);
 		}
 
 	}
