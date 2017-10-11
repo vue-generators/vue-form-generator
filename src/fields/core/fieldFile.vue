@@ -15,7 +15,6 @@
 
 <script>
 import abstractField from "../abstractField";
-import fecha from "fecha";
 
 export default {
 	mixins: [abstractField]

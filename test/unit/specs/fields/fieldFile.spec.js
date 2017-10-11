@@ -56,10 +56,6 @@ describe("fieldFile.vue", function () {
 				expect(input.name).to.be.equal("testupload");
 			});
 
-			it("should change name", () => {
-				expect(input.name).to.be.equal("testupload");
-			});
-
 			it("should set required", () => {
 				expect(input.required).to.be.false;
 			});
