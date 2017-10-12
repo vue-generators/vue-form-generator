@@ -1,4 +1,4 @@
-import { get as objGet, each, isFunction, isString, isArray } from "lodash";
+import { get as objGet, each, isFunction, isString, isArray, debounce } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
@@ -64,8 +64,15 @@ export default {
 						this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 					}
 
-					if (this.$parent.options && this.$parent.options.validateAfterChanged === true){
-						this.validate();
+					if (this.$parent.options && this.$parent.options.validateAfterChanged === true) {
+						if (this.$parent.options.validateDebounceTime > 0) {
+							if (!this.debouncedValidate)
+								this.debouncedValidate = debounce(this.validate.bind(this), this.$parent.options.validateDebounceTime);
+
+							this.debouncedValidate();
+						} else {
+							this.validate();
+						}
 					}
 				}
 			}
