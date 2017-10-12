@@ -4,7 +4,7 @@
 		id="getFieldID(schema)",
 		type="file",
 		:name="schema.inputName",
-		@change="schema.onChange || null",
+		@change="onChange",
 		:accept="schema.accept",
 		:multiple="schema.multiple",
 		:placeholder="schema.placeholder",
@@ -15,9 +15,18 @@
 
 <script>
 import abstractField from "../abstractField";
+import { isFunction } from "lodash";
 
 export default {
-	mixins: [abstractField]
+	mixins: [abstractField],
+	methods: {
+		onChange(){
+			if(isFunction(this.schema.onChanged)){
+				// Schema has defined onChange method.
+				this.schema.onChanged.call(this, this.model, this.schema, event, this);
+			}
+		}
+	}
 };
 
 </script>
