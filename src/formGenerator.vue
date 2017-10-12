@@ -211,12 +211,12 @@ div.vue-form-generator(v-if='schema != null')
 				}
 
 				switch (relevantType) {
-				case "button":
-				case "submit":
-				case "reset":
-					return false;
-				default:
-					return true;
+					case "button":
+					case "submit":
+					case "reset":
+						return false;
+					default:
+						return true;
 				}
 			},
 
