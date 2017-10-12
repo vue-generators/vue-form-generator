@@ -2,21 +2,21 @@ import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
-import fieldFile from "src/fields/core/fieldFile.vue";
+import fieldUpload from "src/fields/core/fieldUpload.vue";
 
-Vue.component("fieldFile", fieldFile);
+Vue.component("fieldUpload", fieldUpload);
 
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[el, vm, field] = createVueField(test, "fieldFile", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldUpload", schema, model, disabled, options);
 }
 
-describe("fieldFile.vue", function () {
+describe("fieldUpload.vue", function () {
 
 	describe("check template", () => {
 		let schema = {
-			type: "file",
+			type: "upload",
 			label: "Upload",
 			inputName: "testupload",
 			placeholder: "Field placeholder",

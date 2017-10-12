@@ -7,7 +7,7 @@ var vm = new Vue({
 	},
 
 	methods: {
-		prettyJSON: function(json) {
+		prettyJSON: function (json) {
 			if (json) {
 				json = JSON.stringify(json, undefined, 4);
 				json = json.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -74,7 +74,7 @@ var vm = new Vue({
 					required: true,
 					hint: "Minimum 6 characters",
 					validator: VueFormGenerator.validators.string
-				},	
+				},
 				{
 					type: "input",
 					inputType: "email",
@@ -83,7 +83,7 @@ var vm = new Vue({
 					inputName: "email",
 					placeholder: "User's e-mail address",
 					validator: VueFormGenerator.validators.email
-				},					
+				},
 				{
 					type: "select",
 					label: "Skills",
@@ -100,6 +100,14 @@ var vm = new Vue({
 						"VueJS"
 					],
 					validator: VueFormGenerator.validators.string
+				}, {
+					type: "upload",
+					label: "Photo",
+					model: "photo",
+					inputName: "photo",
+					onChanged(model, schema, event) {
+						console.log(model, schema, event);
+					}
 				},
 				{
 					type: "checkbox",
