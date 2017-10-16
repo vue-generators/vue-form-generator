@@ -3,8 +3,8 @@
 		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required", :value="null", :selected="value == undefined") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
 
 		template(v-for="item in items")
-			optgroup(v-if="schema.group && item.group", :label="getGroupName(item)")
-				option(v-if="schema.group && item.ops", v-for="i in item.ops", :value="getItemValue(i)") {{ getItemName(i) }}
+			optgroup(v-if="item.group", :label="getGroupName(item)")
+				option(v-if="item.ops", v-for="i in item.ops", :value="getItemValue(i)") {{ getItemName(i) }}
 
 			option(v-if="!item.group", :value="getItemValue(item)") {{ getItemName(item) }}
 </template>
@@ -24,67 +24,65 @@
 			items() {
 				let values = this.schema.values;
 				if (typeof(values) == "function") {
-					return values.apply(this, [this.model, this.schema]);
+					return this.dataSorting(values.apply(this, [this.model, this.schema]));
 				} else
-
-					if(this.schema.group){
-						let array = [];
-						let arrayElement = {};
-
-						values.forEach((item) => {
-
-							arrayElement = null;
-
-							if(item.group){
-							// There is in a group.
-								
-								// Find element with this group.
-								arrayElement = find(array, i => {return i.group == item.group});
-
-								if(arrayElement){
-									// There is such a group.
-
-									arrayElement.ops.push({
-										id: item.id,
-										name: item.name
-									});
-								}else{
-									// There is not such a group.
-									
-									// Initialising.
-									arrayElement = {
-										group:"",
-										ops:[]
-									};
-
-									// Set group.
-									arrayElement.group = item.group;
-
-									// Set Group element.
-									arrayElement.ops.push({
-										id: item.id,
-										name: item.name
-									});
-
-									// Add array.
-									array.push(arrayElement);
-								}
-							}else{
-								// There is not in a group.
-								array.push(item);
-							}
-						});
-
-						// With Groups.
-						return array;
-					}
-
-					// Without Group.
-					return values;
+					return this.dataSorting(values);
 			}
 		},
 
 		methods: {
+
+			dataSorting(values){
+				let array = [];
+				let arrayElement = {};
+
+				values.forEach((item) => {
+
+					arrayElement = null;
+
+					if(item.group){
+					// There is in a group.
+						
+						// Find element with this group.
+						arrayElement = find(array, i => {return i.group == item.group});
+
+						if(arrayElement){
+							// There is such a group.
+
+							arrayElement.ops.push({
+								id: item.id,
+								name: item.name
+							});
+						}else{
+							// There is not such a group.
+							
+							// Initialising.
+							arrayElement = {
+								group:"",
+								ops:[]
+							};
+
+							// Set group.
+							arrayElement.group = item.group;
+
+							// Set Group element.
+							arrayElement.ops.push({
+								id: item.id,
+								name: item.name
+							});
+
+							// Add array.
+							array.push(arrayElement);
+						}
+					}else{
+						// There is not in a group.
+						array.push(item);
+					}
+				});
+
+				// With Groups.
+				return array;
+			},
 
 			getGroupName(item){
 				if(item && item.group){
