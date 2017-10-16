@@ -27,7 +27,7 @@ describe("fieldSelect.vue", function() {
 				"Rome",
 				"Berlin"
 			],
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { city: "Paris" };
 		let input;
@@ -212,7 +212,7 @@ describe("fieldSelect.vue", function() {
 					{ id: 4, name: "Berlin" }
 				];
 			},
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { city: 2 };
 		let input;

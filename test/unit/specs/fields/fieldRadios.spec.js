@@ -28,7 +28,7 @@ describe("FieldRadios.vue", function() {
 				"ReactJS",
 				"VueJS"
 			],
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { skills: "Javascript" };
 		let radioList;

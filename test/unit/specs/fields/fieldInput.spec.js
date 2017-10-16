@@ -23,7 +23,7 @@ describe("fieldInput.vue", function() {
 			autocomplete: "off",
 			placeholder: "Field placeholder",
 			readonly: false,
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { name: "John Doe" };
 		let input;

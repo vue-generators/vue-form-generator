@@ -19,7 +19,7 @@ describe("fieldLabel.vue", function() {
 			type: "label",
 			label: "Timestamp",
 			model: "timestamp",
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { timestamp: "2 days ago" };
 		let span;

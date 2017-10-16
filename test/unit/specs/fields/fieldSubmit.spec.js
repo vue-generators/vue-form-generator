@@ -22,7 +22,7 @@ describe("fieldSubmit.vue", function() {
 			buttonText: "Submit form",
 			validateBeforeSubmit: false,
 			onSubmit() {},
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { name: "John Doe" };
 		let input;

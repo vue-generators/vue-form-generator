@@ -23,7 +23,7 @@ describe("fieldTextArea.vue", function() {
 			max: 500,
 			placeholder: "Field placeholder",
 			readonly: false,
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." };
 		let input;

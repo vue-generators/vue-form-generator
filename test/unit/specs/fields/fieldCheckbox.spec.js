@@ -19,7 +19,7 @@ describe("FieldCheckbox.vue", function() {
 			type: "checkbox",
 			label: "Status",
 			model: "status",
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { status: true };
 		let input;

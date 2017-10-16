@@ -487,7 +487,7 @@ describe("abstractField.vue", function() {
 			label: "First Name",
 			model: "user__model",
 			inputName: "input_name",
-			classes: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = {};
 

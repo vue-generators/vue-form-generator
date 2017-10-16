@@ -170,7 +170,7 @@ export default {
 		},
 
 		getFieldClasses() {
-			return this.schema.classes || [];
+			return this.schema.fieldClasses || [];
 		}
 
 	}
