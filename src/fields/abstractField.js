@@ -184,4 +184,4 @@ export default {
 			return value;
 		}
 	}
-}
+};
