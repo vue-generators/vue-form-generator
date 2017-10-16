@@ -24,15 +24,15 @@
 			items() {
 				let values = this.schema.values;
 				if (typeof(values) == "function") {
-					return this.dataSorting(values.apply(this, [this.model, this.schema]));
+					return this.groupValues(values.apply(this, [this.model, this.schema]));
 				} else
-					return this.dataSorting(values);
+					return this.groupValues(values);
 			}
 		},
 
 		methods: {
 
-			dataSorting(values){
+			groupValues(values){
 				let array = [];
 				let arrayElement = {};
 
@@ -40,11 +40,11 @@
 
 					arrayElement = null;
 
-					if(item.group){
+					if(item.group && isObject(item)){
 					// There is in a group.
 						
 						// Find element with this group.
-						arrayElement = find(array, i => {return i.group == item.group});
+						arrayElement = find(array, i => i.group == item.group);
 
 						if(arrayElement){
 							// There is such a group.
