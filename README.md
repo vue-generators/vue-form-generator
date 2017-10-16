@@ -73,10 +73,16 @@ If you don't know what to choose, don't worry, the full is the default version.
 If you want the slim down version, here is the changes:
 
 ```js
+// the "full" way
+<script>
+  import VueFormGenerator from "vue-form-generator";
+  import "vue-form-generator/dist/vfg.css";  // optional full css additions
+</script>
+
 // the "core" way
 <script>
   import VueFormGenerator from "vue-form-generator/dist/vfg-core.js";
-  import "vue-form-generator/dist/vfg-core.css";
+  import "vue-form-generator/dist/vfg-core.css";  // optional core css additions
 </script>
 ```
 

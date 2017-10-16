@@ -12,7 +12,7 @@ div.vue-form-generator(v-if='schema != null')
 					component(:is='getFieldType(field)', :disabled='fieldDisabled(field)', :model='model', :schema='field', :formOptions='options', @model-updated='modelUpdated', @validated="onFieldValidated")
 					.buttons(v-if='buttonVisibility(field)')
 						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field, $event)', :class='btn.classes') {{ btn.label }}
-				.hint(v-if='field.hint') {{ field.hint }}
+				.hint(v-if='field.hint') {{ fieldHint(field) }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
 					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
 
@@ -211,12 +211,12 @@ div.vue-form-generator(v-if='schema != null')
 				}
 
 				switch (relevantType) {
-				case "button":
-				case "submit":
-				case "reset":
-					return false;
-				default:
-					return true;
+					case "button":
+					case "submit":
+					case "reset":
+						return false;
+					default:
+						return true;
 				}
 			},
 
@@ -273,6 +273,14 @@ div.vue-form-generator(v-if='schema != null')
 					return false;
 
 				return field.featured;
+			},
+			
+			// Get current hint.
+			fieldHint(field){
+				if (isFunction(field.hint))
+					return field.hint.call(this, this.model, field, this);
+
+				return field.hint;
 			},
 
 			buttonClickHandler(btn, field, event) {

@@ -1,5 +1,5 @@
 <template lang="pug">
-	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+	input.form-control(type="text", :value="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
 	},
 
 	mounted() {
-		this.$nextTick(function () {
+		this.$nextTick(function() {
 			if (window.Cleave) {
 				this.cleave = new window.Cleave(this.$el, defaults(this.schema.cleaveOptions || {}, {
 					// Credit Card
@@ -39,17 +39,37 @@ export default {
 					prefix: null,
 					numericOnly: false,
 					uppercase: false,
-					lowercase: false
+					lowercase: false,
+					maxLength: 0
 				}));
+
+				if (this.cleave.properties && this.cleave.properties.hasOwnProperty("result")) {
+					this.$watch("cleave.properties.result", () => {
+						this.value = this.cleave.properties.result;
+					});
+				} else {
+					this.$el.addEventListener("input", this.inputChange);
+				}
+
 			} else {
 				console.warn("Cleave is missing. Please download from https://github.com/nosir/cleave.js/ and load the script in the HTML head section!");
 			}
 		});
 	},
 
+	methods: {
+
+		inputChange() {
+			this.value = this.$el.value;
+		}
+	},
+
 	beforeDestroy() {
-		if (this.cleave)
+		if (this.cleave) {
 			this.cleave.destroy();
+			this.$el.removeEventListener("input", this.inputChange);
+		}
+
 	}
 };
 </script>
