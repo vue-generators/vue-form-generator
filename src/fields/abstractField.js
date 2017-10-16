@@ -174,4 +174,4 @@ export default {
 		}
 
 	}
-};
+}
