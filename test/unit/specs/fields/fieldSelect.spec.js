@@ -178,7 +178,7 @@ describe("fieldSelect.vue", function () {
 		});
 
 		it("should contain option elements in optgroup", () => {
-			let og = input.getElementsByTagName("optgroup")[0]
+			let og = input.getElementsByTagName("optgroup")[0];
 			let options = og.querySelectorAll("option");
 
 			expect(options.length).to.be.equal(2);
