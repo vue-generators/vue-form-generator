@@ -1,11 +1,16 @@
 <template lang="pug">
 	select.form-control(v-model="value", :disabled="disabled", :name="schema.inputName", :id="getFieldID(schema)")
 		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required", :value="null", :selected="value == undefined") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
-		option(v-for="item in items", :value="getItemValue(item)") {{ getItemName(item) }}
+
+		template(v-for="item in items")
+			optgroup(v-if="schema.group && item.group", :label="getGroupName(item)")
+				option(v-if="schema.group && item.ops", v-for="i in item.ops", :value="getItemValue(i)") {{ getItemName(i) }}
+
+			option(v-if="!item.group", :value="getItemValue(item)") {{ getItemName(item) }}
 </template>
 
 <script>
-	import {isObject} from "lodash";
+	import {isObject, find} from "lodash";
 	import abstractField from "../abstractField";
 	
 	export default {
@@ -21,11 +26,74 @@
 				if (typeof(values) == "function") {
 					return values.apply(this, [this.model, this.schema]);
 				} else
+
+					if(this.schema.group){
+						let array = [];
+						let arrayElement = {};
+
+						values.forEach((item) => {
+
+							arrayElement = null;
+
+							if(item.group){
+							// There is in a group.
+								
+								// Find element with this group.
+								arrayElement = find(array, i => {return i.group == item.group});
+
+								if(arrayElement){
+									// There is such a group.
+
+									arrayElement.ops.push({
+										id: item.id,
+										name: item.name
+									});
+								}else{
+									// There is not such a group.
+									
+									// Initialising.
+									arrayElement = {
+										group:"",
+										ops:[]
+									};
+
+									// Set group.
+									arrayElement.group = item.group;
+
+									// Set Group element.
+									arrayElement.ops.push({
+										id: item.id,
+										name: item.name
+									});
+
+									// Add array.
+									array.push(arrayElement);
+								}
+							}else{
+								// There is not in a group.
+								array.push(item);
+							}
+						});
+
+						// With Groups.
+						return array;
+					}
+
+					// Without Group.
 					return values;
-			}      
+			}
 		},
 
 		methods: {
+
+			getGroupName(item){
+				if(item && item.group){
+					return item.group;
+				}
+
+				throw "Group name is missing! https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
+			},
+
 			getItemValue(item) {
 				if (isObject(item)){
 					if (typeof this.schema["selectOptions"] !== "undefined" && typeof this.schema["selectOptions"]["value"] !== "undefined") {
