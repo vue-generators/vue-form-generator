@@ -1,11 +1,9 @@
-<template>
-	<div class="wrapper">
-		<button @click="add" class="add">Add</button>
-		<div v-for="(row, index) in value">
-			<vue-form-generator :schema="schema.schema" :model="value[index]" :options="formOptions"></vue-form-generator>
-			<button @click="remove(index)">Delete</button>
-		</div>
-	</div>
+<template lang="pug">
+	.wrapper
+		button.add(@click='add') Add
+		div(v-for='(row, index) in value')
+			vue-form-generator(:schema='schema.schema', :model='value[index]', :options='formOptions')
+			button(@click='remove(index)') Delete
 </template>
 
 <script>
