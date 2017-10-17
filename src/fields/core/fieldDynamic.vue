@@ -4,7 +4,7 @@
 			button(@click='add') Add
 		div(v-for='(row, index) in value')
 			vue-form-generator(:schema='schema.schema', :model='value[index]', :options='formOptions')
-			button.delete(@click='delete(index)') Delete
+			button.remove(@click='remove(index)') Delete
 </template>
 
 <script>
@@ -16,7 +16,7 @@ export default {
 		add() {
 			this.value.push({});
 		},
-		delete(i) {
+		remove(i) {
 			this.value.splice(i, 1);
 		}
 	}
