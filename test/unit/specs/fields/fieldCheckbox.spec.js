@@ -18,7 +18,8 @@ describe("FieldCheckbox.vue", function() {
 		let schema = {
 			type: "checkbox",
 			label: "Status",
-			model: "status"
+			model: "status",
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { status: true };
 		let input;
@@ -71,6 +72,11 @@ describe("FieldCheckbox.vue", function() {
 				done();
 			});
 
+		});
+
+		it("should have 2 classes", () => {
+			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
+			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
 		});
 
 	});

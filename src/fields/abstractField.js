@@ -19,7 +19,7 @@ export default {
 		"model",
 		"schema",
 		"formOptions",
-		"disabled"
+		"disabled",
 	],
 
 	data() {
@@ -170,6 +170,10 @@ export default {
 		getFieldID(schema) {
 			const idPrefix = this.formOptions && this.formOptions.fieldIdPrefix ? this.formOptions.fieldIdPrefix : "";
 			return slugifyFormID(schema, idPrefix);
+		},
+
+		getFieldClasses() {
+			return this.schema.fieldClasses || [];
 		},
 
 		formatValueToField(value) {

@@ -22,7 +22,8 @@ describe("fieldInput.vue", function() {
 			model: "name",
 			autocomplete: "off",
 			placeholder: "Field placeholder",
-			readonly: false
+			readonly: false,
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { name: "John Doe" };
 		let input;
@@ -118,6 +119,11 @@ describe("fieldInput.vue", function() {
 				done();
 			});
 
+		});
+
+		it("should have 2 classes", () => {
+			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
+			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
 		});
 
 	});
