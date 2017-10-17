@@ -27,7 +27,8 @@ describe("FieldRadios.vue", function() {
 				"AngularJS",
 				"ReactJS",
 				"VueJS"
-			]
+			],
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { skills: "Javascript" };
 		let radioList;
@@ -74,6 +75,11 @@ describe("FieldRadios.vue", function() {
 			expect(labelList[4].classList.contains("is-checked")).to.be.false;
 			expect(labelList[5].classList.contains("is-checked")).to.be.false;
 			expect(labelList[6].classList.contains("is-checked")).to.be.false;
+		});
+
+		it("should have 2 classes", () => {
+			expect(radios[0].className.indexOf("applied-class")).not.to.be.equal(-1);
+			expect(radios[0].className.indexOf("another-class")).not.to.be.equal(-1);
 		});
 
 

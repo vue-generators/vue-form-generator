@@ -1,5 +1,5 @@
 <template lang="pug">
-	span(:id="getFieldID(schema)") {{ value }}
+	span(:id="getFieldID(schema)", :class="schema.fieldClasses") {{ value }}
 </template>
 
 <script>

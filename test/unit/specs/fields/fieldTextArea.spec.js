@@ -22,7 +22,8 @@ describe("fieldTextArea.vue", function() {
 			model: "desc",
 			max: 500,
 			placeholder: "Field placeholder",
-			readonly: false
+			readonly: false,
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." };
 		let input;
@@ -85,6 +86,11 @@ describe("fieldTextArea.vue", function() {
 				done();
 			});
 
+		});
+
+		it("should have 2 classes", () => {
+			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
+			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
 		});
 
 	});

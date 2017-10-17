@@ -1,4 +1,4 @@
-import { get as objGet, each, isFunction, isString, isArray } from "lodash";
+import { get as objGet, each, isFunction, isString, isArray, debounce } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
@@ -19,7 +19,7 @@ export default {
 		"model",
 		"schema",
 		"formOptions",
-		"disabled"
+		"disabled",
 	],
 
 	data() {
@@ -39,17 +39,13 @@ export default {
 				else if (this.model && this.schema.model)
 					val = objGet(this.model, this.schema.model);
 
-				if (isFunction(this.formatValueToField))
-					val = this.formatValueToField(val);
-
-				return val;
+				return this.formatValueToField(val);
 			},
 
 			set(newValue) {
 				let oldValue = this.value;
 
-				if (isFunction(this.formatValueToModel))
-					newValue = this.formatValueToModel(newValue);
+				newValue = this.formatValueToModel(newValue);
 
 				let changed = false;
 				if (isFunction(this.schema.set)) {
@@ -68,8 +64,15 @@ export default {
 						this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 					}
 
-					if (this.$parent.options && this.$parent.options.validateAfterChanged === true){
-						this.validate();
+					if (this.$parent.options && this.$parent.options.validateAfterChanged === true) {
+						if (this.$parent.options.validateDebounceTime > 0) {
+							if (!this.debouncedValidate)
+								this.debouncedValidate = debounce(this.validate.bind(this), this.$parent.options.validateDebounceTime);
+
+							this.debouncedValidate();
+						} else {
+							this.validate();
+						}
 					}
 				}
 			}
@@ -167,7 +170,18 @@ export default {
 		getFieldID(schema) {
 			const idPrefix = this.formOptions && this.formOptions.fieldIdPrefix ? this.formOptions.fieldIdPrefix : "";
 			return slugifyFormID(schema, idPrefix);
-		}
+		},
 
+		getFieldClasses() {
+			return this.schema.fieldClasses || [];
+		},
+
+		formatValueToField(value) {
+			return value;
+		},
+
+		formatValueToModel(value) {
+			return value;
+		}
 	}
 };

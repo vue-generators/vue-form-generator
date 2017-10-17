@@ -18,7 +18,8 @@ describe("fieldLabel.vue", function() {
 		let schema = {
 			type: "label",
 			label: "Timestamp",
-			model: "timestamp"
+			model: "timestamp",
+			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { timestamp: "2 days ago" };
 		let span;
@@ -49,6 +50,11 @@ describe("fieldLabel.vue", function() {
 				done();
 			});
 
+		});
+
+		it("should have 2 classes", () => {
+			expect(span.className.indexOf("applied-class")).not.to.be.equal(-1);
+			expect(span.className.indexOf("another-class")).not.to.be.equal(-1);
 		});
 
 	});

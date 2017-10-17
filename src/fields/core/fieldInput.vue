@@ -5,7 +5,8 @@
 		:type="schema.inputType",
 		:value="value",
 		@input="value = $event.target.value",
-		@change="onChange",
+		:class="schema.fieldClasses",
+		@change="schema.onChange || null",
 		:disabled="disabled",
 		:accept="schema.accept",
 		:alt="schema.alt",
@@ -22,6 +23,7 @@
 		:max="schema.max",
 		:maxlength="schema.maxlength",
 		:min="schema.min",
+		:minlength="schema.minlength",
 		:multiple="schema.multiple",
 		:name="schema.inputName",
 		:pattern="schema.pattern",
@@ -37,22 +39,17 @@
 </template>
 
 <script>
-	import abstractField from "../abstractField";
-	import fecha from "fecha";
+import abstractField from "../abstractField";
+import fecha from "fecha";
 
-	export default {
-		mixins: [ abstractField ],
-		methods: {
-			onChange(event){
-				if (this.schema.inputType === "file") {
-					this.value = event.target.files;
-				}
-			},
-			
-			formatValueToField(value) {
-				if (value != null) {
-					let dt;
-					switch(this.schema.inputType){
+export default {
+	mixins: [abstractField],
+	methods: {
+
+		formatValueToField(value) {
+			if (value != null) {
+				let dt;
+				switch (this.schema.inputType) {
 					case "date":
 						dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
 						return fecha.format(dt, "YYYY-MM-DD");
@@ -62,16 +59,16 @@
 					case "datetime-local":
 						dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
 						return fecha.format(dt, "YYYY-MM-DDTHH:mm:ss");
-					}
 				}
-				
-				return value;
-			},
+			}
 
-			formatValueToModel(value) {
-				if (value != null) {
-					let m;
-					switch (this.schema.inputType){
+			return value;
+		},
+
+		formatValueToModel(value) {
+			if (value != null) {
+				let m;
+				switch (this.schema.inputType) {
 					case "date":
 						m = fecha.parse(value, "YYYY-MM-DD");
 						if (m !== false) {
@@ -100,16 +97,20 @@
 						}
 						break;
 					case "number":
-						return Number(value);					
+						return Number(value);
 					case "range":
 						return Number(value);
-					}
 				}
-
-				return value;
 			}
+
+			return value;
 		}
-	};
+	},
+
+	created () {
+		console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
+	}
+};
 
 </script>
 
