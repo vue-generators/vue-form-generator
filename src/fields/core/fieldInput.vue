@@ -22,6 +22,7 @@
 		:max="schema.max",
 		:maxlength="schema.maxlength",
 		:min="schema.min",
+		:minlength="schema.minlength",
 		:multiple="schema.multiple",
 		:name="schema.inputName",
 		:pattern="schema.pattern",
