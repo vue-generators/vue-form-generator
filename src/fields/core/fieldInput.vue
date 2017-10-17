@@ -108,7 +108,8 @@ export default {
 	},
 
 	created () {
-		console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
+		if(this.schema.inputType == "file")
+			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
 	}
 };
 
