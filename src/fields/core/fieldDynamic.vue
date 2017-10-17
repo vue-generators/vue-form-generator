@@ -1,9 +1,10 @@
 <template lang="pug">
 	.wrapper
-		button.add(@click='add') Add
+		.add
+			button(@click='add') Add
 		div(v-for='(row, index) in value')
 			vue-form-generator(:schema='schema.schema', :model='value[index]', :options='formOptions')
-			button(@click='remove(index)') Delete
+			button.delete(@click='delete(index)') Delete
 </template>
 
 <script>
@@ -15,7 +16,7 @@ export default {
 		add() {
 			this.value.push({});
 		},
-		remove(i) {
+		delete(i) {
 			this.value.splice(i, 1);
 		}
 	}
@@ -23,8 +24,14 @@ export default {
 
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
+.wrapper {
+	width: 100%;
+}
+
 .add {
-	float: right;
+	width: 100%;
+	text-align: right;
+	margin-bottom: 20px;
 }
 </style>
