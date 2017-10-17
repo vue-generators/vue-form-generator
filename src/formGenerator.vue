@@ -77,6 +77,7 @@ div.vue-form-generator(v-if='schema != null')
 						validateAfterChanged: false,
 						validationErrorClass: "error",
 						validationSuccessClass: "",
+						validationTouchedClass: "",
 					};
 				}
 			},
@@ -173,7 +174,7 @@ div.vue-form-generator(v-if='schema != null')
 					required: this.fieldRequired(field)
 				};
 
-				let {validationErrorClass, validationSuccessClass} = this.options;
+				let {validationErrorClass, validationSuccessClass, validationTouchedClass} = this.options;
 				if (validationErrorClass && validationSuccessClass) {
 					if (hasErrors) {
 						baseClasses[validationErrorClass] = true;
@@ -181,6 +182,12 @@ div.vue-form-generator(v-if='schema != null')
 					}
 					else {
 						baseClasses[validationSuccessClass] = true;
+						if(!isNil(this.model)) {
+							if (this.model[field.model] === null) {
+								baseClasses[validationTouchedClass] = true;
+								baseClasses[validationSuccessClass] = false;
+							}
+						}
 					}
 				}
 
@@ -353,7 +360,7 @@ div.vue-form-generator(v-if='schema != null')
 			getFieldID(schema) {
 				const idPrefix = this.options && this.options.fieldIdPrefix ? this.options.fieldIdPrefix : "";
 				return slugifyFormID(schema, idPrefix);
-			}			
+			}
 		}
 	};
 
