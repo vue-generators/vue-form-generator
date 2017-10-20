@@ -1,6 +1,6 @@
 {
   "name": "vue-form-generator",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A schema-based form generator component for Vue.js",
   "homepage": "https://github.com/icebob/vue-form-generator",
   "main": "dist/vfg.js",
@@ -14,6 +14,7 @@
     "coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "npm run test && npm run coverall",
     "changelog": "conventional-changelog -i CHANGELOG.md -s",
+    "changelog:full": "conventional-changelog -i CHANGELOG.md -s -r 0",
     "docs": "cd docs && gitbook serve",
     "unit": "karma start test/unit/karma.conf.js",
     "e2e": "node test/e2e/runner.js",

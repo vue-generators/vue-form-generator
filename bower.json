@@ -1,6 +1,6 @@
 {
   "name": "vue-form-generator",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "homepage": "https://github.com/icebob/vue-form-generator",
   "authors": [
     "Icebob"
@@ -8,7 +8,9 @@
   "description": "A schema-based form generator component for Vue.js",
   "main": [
     "dist/vfg.js",
-    "dist/vfg.css"
+    "dist/vfg.css",
+    "dist/vfg-core.js",
+    "dist/vfg-core.css",
   ],
   "moduleType": [
     "amd"
