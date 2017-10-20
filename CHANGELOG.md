@@ -1,3 +1,10 @@
+<a name="2.1.1"></a>
+## 2.1.1 (2017-10-20)
+
+* :package: build ([42341a2](https://github.com/icebob/vue-form-generator/commit/42341a2))
+
+
+
 <a name="2.1.0"></a>
 # 2.1.0 (2017-10-20)
 
@@ -37,6 +44,7 @@
 * Syntax error fix. ([6a171e3](https://github.com/icebob/vue-form-generator/commit/6a171e3))
 * Test 1. version. ([cacf34f](https://github.com/icebob/vue-form-generator/commit/cacf34f))
 * Test fixed. ([98bc6b6](https://github.com/icebob/vue-form-generator/commit/98bc6b6))
+* update changelog ([426cee9](https://github.com/icebob/vue-form-generator/commit/426cee9))
 * Update selection field with group options. ([07bbb07](https://github.com/icebob/vue-form-generator/commit/07bbb07))
 * Use `name` in checklist input fields with slugify. Fix #243 ([a60c0db](https://github.com/icebob/vue-form-generator/commit/a60c0db)), closes [#243](https://github.com/icebob/vue-form-generator/issues/243)
 * Use selectOptions in selectEx ([fa2acf1](https://github.com/icebob/vue-form-generator/commit/fa2acf1))
