@@ -191,7 +191,9 @@ div.vue-form-generator(v-if='schema != null')
 					baseClasses[field.styleClasses] = true;
 				}
 
-				baseClasses["field-" + field.type] = true;
+				if (field.type !== undefined) {
+					baseClasses["field-" + field.type] = true;
+				}
 
 				return baseClasses;
 			},
