@@ -1,12 +1,5 @@
 <template lang="pug">
-	input(
-		:id="getFieldID(schema)", 
-		type="submit", 
-		:value="schema.buttonText", 
-		@click="click", 
-		:name="schema.inputName", 
-		:disabled="disabled", 
-		:class="schema.fieldClasses")
+	input(:id="getFieldID(schema)", type="submit", :value="schema.buttonText", @click="click", :name="schema.inputName", :disabled="disabled", :class="schema.fieldClasses")
 </template>
 
 <script>
