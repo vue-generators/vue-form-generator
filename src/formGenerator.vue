@@ -191,7 +191,7 @@ div.vue-form-generator(v-if='schema != null')
 					baseClasses[field.styleClasses] = true;
 				}
 
-				if (field.type !== undefined) {
+				if (!isNil(field.type)) {
 					baseClasses["field-" + field.type] = true;
 				}
 
