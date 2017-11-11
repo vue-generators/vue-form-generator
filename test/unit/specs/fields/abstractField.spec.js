@@ -503,28 +503,4 @@ describe("abstractField.vue", function() {
 
 	});
 
-
-	describe("check classes application to labels", () => {
-		
-		let schema = {
-			type: "text",
-			label: "First Name",
-			model: "user__model",
-			inputName: "input_name",
-			labelClasses: ["applied-class", "another-class"]
-		};
-		let model = {};
-
-		before( () => {
-			createField(this, schema, model);
-		});
-
-		it("should have 2 classes ('applied-class' and 'another-class')", () => {
-			expect(field.getLabelClasses().length).to.be.equal(2);
-			expect(field.getLabelClasses()[0]).to.be.equal("applied-class");
-			expect(field.getLabelClasses()[1]).to.be.equal("another-class");
-		});
-
-	});
-
 });

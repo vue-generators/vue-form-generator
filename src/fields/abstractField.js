@@ -176,10 +176,6 @@ export default {
 			return this.schema.fieldClasses || [];
 		},
 
-		getLabelClasses() {
-			return this.schema.labelClasses || [];
-		},
-
 		formatValueToField(value) {
 			return value;
 		},

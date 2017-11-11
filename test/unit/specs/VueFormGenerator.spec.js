@@ -191,6 +191,32 @@ describe("VueFormGenerator.vue", () => {
 
 	});
 
+	describe("check label classes", () => {
+		let schema = {
+			fields: [
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
+					labelClasses: ["applied-class", "another-class"]
+				}
+			]
+		};
+		let label;
+
+		before( () => {
+			createFormGenerator(schema);
+			label = el.querySelector("label");
+		});
+
+		it("should be 2 classes", () => {
+			expect(label.classList.contains("applied-class")).to.be.true;
+			expect(label.classList.contains("another-class")).to.be.true;
+		});
+		
+	});
+
 	describe("check form row caption cell", () => {
 		let group, label;
 		let schema = {
