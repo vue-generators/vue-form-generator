@@ -569,11 +569,3 @@ div.vue-form-generator(v-if='schema != null')
 
 	} // fieldset
 </style>
- // .errors
-
-			} // .error
-
-		} // .form-group
-
-	} // fieldset
-</style>
