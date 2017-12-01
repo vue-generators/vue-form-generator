@@ -10,7 +10,7 @@
     "dist/vfg.js",
     "dist/vfg.css",
     "dist/vfg-core.js",
-    "dist/vfg-core.css",
+    "dist/vfg-core.css"
   ],
   "moduleType": [
     "amd"
