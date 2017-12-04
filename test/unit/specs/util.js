@@ -82,7 +82,7 @@ export function checkAttribute(name, vm, input, field, schema, done) {
 	}
 
 	Vue.set(vm.schema, name, attr.before);
-	vm.$nextTick(() => {
+	nextTick(() => {
 		if (attr.name) {
 			expect(input[attr.name]).to.be.equal(schematic[name]);
 		} else {
@@ -90,5 +90,5 @@ export function checkAttribute(name, vm, input, field, schema, done) {
 		}
 		Vue.set(vm.schema, name, attr.after);
 		return done();
-	});
+	}, vm, done);
 }

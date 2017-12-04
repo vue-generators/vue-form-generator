@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, nextTick, trigger, checkAttribute } from "../util";
+import { createVueField, nextTick, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldCheckbox from "src/fields/core/fieldCheckbox.vue";

@@ -56,6 +56,24 @@
                             "type": "checkbox",
                             "label": "Active",
                             "model": "status",
+                        },
+                        {
+                            "type": "input",
+                            "inputType": "color",
+                            "label": "Color",
+                            "model": "color"
+                        },
+                        {
+                            "type": "submit",
+                            "buttonText": "Change Previous Type",
+                            "onSubmit": () => {
+                                // this.schema.fields[2].type = "input";
+                                if(this.schema.fields[2].inputType == "color") {
+                                    this.schema.fields[2].inputType = "text";
+                                } else {
+                                    this.schema.fields[2].inputType = "color";
+                                }
+                            }
                         }
                     ]
                 },
