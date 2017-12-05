@@ -79,7 +79,6 @@ export default {
 
 	methods: {
 		validate(calledParent) {
-			console.log('validating', performance.now());
 			this.clearValidationErrors();
 
 			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
@@ -131,10 +130,8 @@ export default {
 		},
 		debouncedValidate() {
 			if(!isFunction(this.debouncedValidateFunc)) {
-				console.log('debouncedValidate', 'config', objGet(this, '$parent.optionsvalidateDebounceTime', 500));
-				this.debouncedValidateFunc = debounce(this.validate.bind(this), objGet(this, '$parent.options.validateDebounceTime', 500));
+				this.debouncedValidateFunc = debounce(this.validate.bind(this), objGet(this, "$parent.options.validateDebounceTime", 500));
 			}
-			console.log('debouncedValidate', performance.now());
 			this.debouncedValidateFunc();
 		},
 		clearValidationErrors() {
