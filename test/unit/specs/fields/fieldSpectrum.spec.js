@@ -13,7 +13,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldSpectrum", schema, model, disabled, options);
 }
 
-describe("fieldSpectrum.vue", function() {
+describe.skip("fieldSpectrum.vue", function() {
 
 	describe("check template", () => {
 		let schema = {

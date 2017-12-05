@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger, checkAttribute } from "../util";
+import { createVueField, nextTick, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldSelect from "src/fields/core/fieldSelect.vue";
@@ -61,10 +61,9 @@ describe("fieldSelect.vue", function () {
 		});
 
 		it("should contain the value", (done) => {
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(input.value).to.be.equal("Paris");
-				done();
-			});
+			}, vm, done);
 		});
 
 		describe("check optional attribute", () => {
@@ -79,10 +78,9 @@ describe("fieldSelect.vue", function () {
 
 		it("input value should be the model value after changed", (done) => {
 			model.city = "Rome";
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(input.value).to.be.equal("Rome");
-				done();
-			});
+			}, vm, done);
 
 		});
 
@@ -90,36 +88,32 @@ describe("fieldSelect.vue", function () {
 			input.value = "London";
 			trigger(input, "change");
 
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(model.city).to.be.equal("London");
-				done();
-			});
+			}, vm, done);
 
 		});
 
 		it("should contain a disabled <non selected> element if required", (done) => {
 			schema.required = true;
-			vm.$nextTick(() => {
+			nextTick(() => {
 				let options = input.querySelectorAll("option");
 				expect(options[0].disabled).to.be.true;
 				expect(options[0].textContent).to.be.equal("<Nothing selected>");
-				done();
-			});
+			}, vm, done);
 		});
 
 		it("should show the customized <non selected> text", (done) => {
 			Vue.set(vm.schema, "selectOptions", {
 				noneSelectedText: "Empty list"
 			});
-			vm.$nextTick(() => {
+			nextTick(() => {
 				let options = input.querySelectorAll("option");
 				expect(options[0].disabled).to.be.true;
 				expect(options[0].textContent).to.be.equal("Empty list");
 
 				schema.selectOptions = null;
-
-				done();
-			});
+			}, vm, done);
 		});
 
 		it("should hide the customized <non selected> text", (done) => {
@@ -127,15 +121,13 @@ describe("fieldSelect.vue", function () {
 				noneSelectedText: "Empty list",
 				hideNoneSelectedText: true
 			});
-			vm.$nextTick(() => {
+			nextTick(() => {
 				let options = input.querySelectorAll("option");
 				expect(options[0].disabled).to.be.false;
 				expect(options[0].textContent).to.not.be.equal("Empty list");
 
 				schema.selectOptions = null;
-
-				done();
-			});
+			}, vm, done);
 		});
 
 	});
@@ -191,18 +183,16 @@ describe("fieldSelect.vue", function () {
 		});
 
 		it("should contain the value", (done) => {
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(input.value).to.be.equal("2");
-				done();
-			});
+			}, vm, done);
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.city = 3;
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(input.value).to.be.equal("3");
-				done();
-			});
+			}, vm, done);
 
 		});
 
@@ -210,10 +200,9 @@ describe("fieldSelect.vue", function () {
 			input.value = "4";
 			trigger(input, "change");
 
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(model.city).to.be.equal(4);
-				done();
-			});
+			}, vm, done);
 
 		});
 
@@ -243,18 +232,16 @@ describe("fieldSelect.vue", function () {
 		});
 
 		it("should contain the value", (done) => {
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(input.value).to.be.equal("2");
-				done();
-			});
+			}, vm, done);
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.city = 3;
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(input.value).to.be.equal("3");
-				done();
-			});
+			}, vm, done);
 
 		});
 
@@ -262,10 +249,9 @@ describe("fieldSelect.vue", function () {
 			input.value = "4";
 			trigger(input, "change");
 
-			vm.$nextTick(() => {
+			nextTick(() => {
 				expect(model.city).to.be.equal(4);
-				done();
-			});
+			}, vm, done);
 
 		});
 

@@ -12,7 +12,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldGoogleAddress", schema, model, disabled, options);
 }
 
-describe("fieldGoogleAddress.vue", function() {
+describe.skip("fieldGoogleAddress.vue", function() {
 
 	describe("check template", () => {
 		let schema = {

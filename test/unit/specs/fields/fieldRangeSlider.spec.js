@@ -12,7 +12,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldRangeSlider", schema, model, disabled, options);
 }
 
-describe("fieldRangeSlider.vue", function() {
+describe.skip("fieldRangeSlider.vue", function() {
 
 	describe("check template", () => {
 		let schema = {

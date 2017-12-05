@@ -14,7 +14,7 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[ el, vm, field ] = createVueField(test, "fieldImage", schema, model, disabled, options);
 }
 
-describe("fieldImage.vue", function() {
+describe.skip("fieldImage.vue", function() {
 
 	describe("check template without preview", () => {
 		let schema = {

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField, trigger, checkAttribute } from "../util";
+import { createVueField, nextTick, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
 import FieldTextArea from "src/fields/core/fieldTextArea.vue";
@@ -45,17 +45,15 @@ describe("fieldTextArea.vue", function() {
 
 		it("should change rows to 4", (done) => {
 			Vue.set(field.schema, "rows", 4);
-			vm.$nextTick( () => {
+			nextTick( () => {
 				expect(input.rows).to.be.equal(4);
-				done();
-			});
+			}, vm, done);
 		});
 
 		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+			nextTick( () => {
 				expect(input.value).to.be.equal(model.desc);
-				done();
-			});
+			}, vm, done);
 		});
 
 		describe("check optional attribute", () => {
@@ -70,10 +68,9 @@ describe("fieldTextArea.vue", function() {
 
 		it("input value should be the model value after changed", (done) => {
 			model.desc = "Jane Doe";
-			vm.$nextTick( () => {
+			nextTick( () => {
 				expect(input.value).to.be.equal("Jane Doe");
-				done();
-			});
+			}, vm, done);
 
 		});
 
@@ -81,10 +78,9 @@ describe("fieldTextArea.vue", function() {
 			input.value = "John Smith";
 			trigger(input, "input");
 
-			vm.$nextTick( () => {
+			nextTick( () => {
 				expect(model.desc).to.be.equal("John Smith");
-				done();
-			});
+			}, vm, done);
 
 		});
 

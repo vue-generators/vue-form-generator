@@ -1,5 +1,5 @@
 /**
- * vue-form-generator v2.1.1
+ * vue-form-generator v3.0.0-dev
  * https://github.com/icebob/vue-form-generator
  * Released under the MIT License.
  */

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { createVueField } from "../util";
+import { createVueField, nextTick } from "../util";
 
 import Vue from "vue";
 import FieldLabel from "src/fields/core/fieldLabel.vue";
@@ -37,18 +37,16 @@ describe("fieldLabel.vue", function() {
 		});
 
 		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+			nextTick( () => {
 				expect(span.textContent).to.be.equal("2 days ago");
-				done();
-			});
+			}, vm, done);
 		});
 
 		it("input value should be the model value after changed", (done) => {
 			model.timestamp = "Foo bar";
-			vm.$nextTick( () => {
+			nextTick( () => {
 				expect(span.textContent).to.be.equal("Foo bar");
-				done();
-			});
+			}, vm, done);
 
 		});
 
