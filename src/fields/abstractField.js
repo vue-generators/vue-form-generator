@@ -24,7 +24,8 @@ export default {
 
 	data() {
 		return {
-			errors: []
+			errors: [],
+			debouncedValidateFunc: null
 		};
 	},
 
@@ -66,9 +67,6 @@ export default {
 
 					if (this.$parent.options && this.$parent.options.validateAfterChanged === true) {
 						if (this.$parent.options.validateDebounceTime > 0) {
-							if (!this.debouncedValidate)
-								this.debouncedValidate = debounce(this.validate.bind(this), this.$parent.options.validateDebounceTime);
-
 							this.debouncedValidate();
 						} else {
 							this.validate();
@@ -81,6 +79,7 @@ export default {
 
 	methods: {
 		validate(calledParent) {
+			console.log('validating', performance.now());
 			this.clearValidationErrors();
 
 			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
@@ -130,7 +129,14 @@ export default {
 
 			return this.errors;
 		},
-
+		debouncedValidate() {
+			if(!isFunction(this.debouncedValidateFunc)) {
+				console.log('debouncedValidate', 'config', objGet(this, '$parent.optionsvalidateDebounceTime', 500));
+				this.debouncedValidateFunc = debounce(this.validate.bind(this), objGet(this, '$parent.options.validateDebounceTime', 500));
+			}
+			console.log('debouncedValidate', performance.now());
+			this.debouncedValidateFunc();
+		},
 		clearValidationErrors() {
 			this.errors.splice(0);
 		},
