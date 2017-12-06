@@ -20,24 +20,23 @@ import { isFunction } from "lodash";
 export default {
 	mixins: [abstractField],
 	methods: {
-		onChange(){
-			if(isFunction(this.schema.onChanged)){
+		onChange() {
+			if (isFunction(this.schema.onChanged)) {
 				// Schema has defined onChange method.
 				this.schema.onChanged.call(this, this.model, this.schema, event, this);
 			}
 		}
 	}
 };
-
 </script>
 
-<style lang="sass">
-	.vue-form-generator .field-input {
-		.wrapper {
-			width: 100%;
-		}
-		.helper {
-			margin: auto 0.5em;
-		}
+<style lang="scss">
+.vue-form-generator .field-input {
+	.wrapper {
+		width: 100%;
 	}
+	.helper {
+		margin: auto 0.5em;
+	}
+}
 </style>

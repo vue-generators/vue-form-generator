@@ -1,5 +1,32 @@
 {
-  "presets": ["es2015", "stage-2"],
-  "plugins": ["transform-runtime", "lodash"],
-  "comments": false
+	"presets": [
+		[
+			"env",
+			{
+				"modules": false,
+				"targets": {
+					"browsers": ["last 2 versions"]
+				}
+			}
+		],
+		"stage-2"
+	],
+	"plugins": ["transform-runtime", "lodash"],
+	"env": {
+		"test": {
+			"presets": [
+				[
+					"env",
+					{
+						"modules": false,
+						"targets": {
+							"browsers": ["last 2 versions"]
+						}
+					}
+				],
+				"stage-2"
+			],
+			"plugins": ["transform-runtime", "lodash"]
+		}
+	}
 }

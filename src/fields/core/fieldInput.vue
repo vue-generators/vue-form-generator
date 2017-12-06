@@ -45,7 +45,6 @@ import fecha from "fecha";
 export default {
 	mixins: [abstractField],
 	methods: {
-
 		formatValueToField(value) {
 			if (value != null) {
 				let dt;
@@ -72,28 +71,22 @@ export default {
 					case "date":
 						m = fecha.parse(value, "YYYY-MM-DD");
 						if (m !== false) {
-							if (this.schema.format)
-								value = fecha.format(m, this.schema.format);
-							else
-								value = m.valueOf();
+							if (this.schema.format) value = fecha.format(m, this.schema.format);
+							else value = m.valueOf();
 						}
 						break;
 					case "datetime":
 						m = fecha.parse(value, "YYYY-MM-DD HH:mm:ss");
 						if (m !== false) {
-							if (this.schema.format)
-								value = fecha.format(m, this.schema.format);
-							else
-								value = m.valueOf();
+							if (this.schema.format) value = fecha.format(m, this.schema.format);
+							else value = m.valueOf();
 						}
 						break;
 					case "datetime-local":
 						m = fecha.parse(value, "YYYY-MM-DDTHH:mm:ss");
 						if (m !== false) {
-							if (this.schema.format)
-								value = fecha.format(m, this.schema.format);
-							else
-								value = m.valueOf();
+							if (this.schema.format) value = fecha.format(m, this.schema.format);
+							else value = m.valueOf();
 						}
 						break;
 					case "number":
@@ -107,31 +100,29 @@ export default {
 		}
 	},
 
-	created () {
-		if(this.schema.inputType == "file")
-			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
+	created() {
+		if (this.schema.inputType == "file") console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");
 	}
 };
-
 </script>
 
-<style lang="sass">
-	.vue-form-generator .field-input {
-		.wrapper {
-			width: 100%;
-		}
-		input[type="radio"] {
-			width: 100%;
-		}
-		input[type="color"] {
-			width: 60px;
-		}
-		input[type="range"] {
-			padding: 0;
-		}
-
-		.helper {
-			margin: auto 0.5em;
-		}
+<style lang="scss">
+.vue-form-generator .field-input {
+	.wrapper {
+		width: 100%;
 	}
+	input[type="radio"] {
+		width: 100%;
+	}
+	input[type="color"] {
+		width: 60px;
+	}
+	input[type="range"] {
+		padding: 0;
+	}
+
+	.helper {
+		margin: auto 0.5em;
+	}
+}
 </style>
