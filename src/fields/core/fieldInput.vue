@@ -5,7 +5,7 @@
 		:type="schema.inputType",
 		:value="value",
 		@input="value = $event.target.value",
-		@blur="onBlur"
+		@blur="onBlur",
 		:class="schema.fieldClasses",
 		@change="schema.onChange || null",
 		:disabled="disabled",
@@ -133,7 +133,7 @@ export default {
 				break;
 		}
 	},
-	
+
 	created () {
 		if(this.schema.inputType == "file")
 			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
