@@ -5,6 +5,7 @@
 		:type="schema.inputType",
 		:value="value",
 		@input="value = $event.target.value",
+		@blur="onBlur"
 		:class="schema.fieldClasses",
 		@change="schema.onChange || null",
 		:disabled="disabled",
@@ -40,62 +41,55 @@
 
 <script>
 import abstractField from "../abstractField";
+import { debounce, isFunction } from "lodash";
 import fecha from "fecha";
+
+const DATETIME_FORMATS = {
+	"date": "YYYY-MM-DD",
+	"datetime": "YYYY-MM-DD HH:mm:ss",
+	"datetime-local": "YYYY-MM-DDTHH:mm:ss",
+};
+
+let debouncedFormatDateTime = null;
 
 export default {
 	mixins: [abstractField],
 	methods: {
-
 		formatValueToField(value) {
-			if (value != null) {
-				let dt;
-				switch (this.schema.inputType) {
-					case "date":
-						dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
-						return fecha.format(dt, "YYYY-MM-DD");
-					case "datetime":
-						dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
-						return fecha.format(dt, "YYYY-MM-DD HH:mm:ss");
-					case "datetime-local":
-						dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
-						return fecha.format(dt, "YYYY-MM-DDTHH:mm:ss");
-				}
-			}
+			// TODO: remove this, we shouldn't be formatting the value for date fields as it breaks keyboard input
+			// if (value != null) {
+			// 	let dt;
+			// 	switch (this.schema.inputType) {
+			// 		case "date":
+			// 			dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
+			// 			if(isNaN(dt.getTime())) break;
+			// 			return fecha.format(dt, "YYYY-MM-DD");
+			// 		case "datetime":
+			// 			dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
+			// 			if(isNaN(dt.getTime())) break;
+			// 			return fecha.format(dt, "YYYY-MM-DD HH:mm:ss");
+			// 		case "datetime-local":
+			// 			dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
+			// 			if(isNaN(dt.getTime())) break;
+			// 			return fecha.format(dt, "YYYY-MM-DDTHH:mm:ss");
+			// 	}
+			// }
 
 			return value;
 		},
 
 		formatValueToModel(value) {
 			if (value != null) {
-				let m;
+				// let m;
 				switch (this.schema.inputType) {
 					case "date":
-						m = fecha.parse(value, "YYYY-MM-DD");
-						if (m !== false) {
-							if (this.schema.format)
-								value = fecha.format(m, this.schema.format);
-							else
-								value = m.valueOf();
-						}
-						break;
 					case "datetime":
-						m = fecha.parse(value, "YYYY-MM-DD HH:mm:ss");
-						if (m !== false) {
-							if (this.schema.format)
-								value = fecha.format(m, this.schema.format);
-							else
-								value = m.valueOf();
-						}
-						break;
 					case "datetime-local":
-						m = fecha.parse(value, "YYYY-MM-DDTHH:mm:ss");
-						if (m !== false) {
-							if (this.schema.format)
-								value = fecha.format(m, this.schema.format);
-							else
-								value = m.valueOf();
-						}
-						break;
+						// debounce
+						
+						return (newValue, oldValue) => {
+							debouncedFormatDateTime(value, oldValue);
+						};
 					case "number":
 						return Number(value);
 					case "range":
@@ -104,9 +98,41 @@ export default {
 			}
 
 			return value;
+		},
+		formatDatetimeToModel(newValue, oldValue) {
+			let defaultFormat = DATETIME_FORMATS[this.schema.inputType];
+			let m = fecha.parse(newValue, defaultFormat);
+			if (m !== false) {
+				if (this.schema.format)
+					newValue = fecha.format(m, this.schema.format);
+				else
+					newValue = m.valueOf();
+			}
+			this.updateModelValue(newValue, oldValue);
+		},
+		onBlur() {
+			if(isFunction(debouncedFormatDateTime)) {
+				// TODO: flush pending calls immediately on blur
+				debouncedFormatDateTime.flush();
+			}
 		}
 	},
 
+	mounted () {
+		switch(this.schema.inputType) {
+			case "date":
+			case "datetime":
+			case "datetime-local":
+				// wait 1s before calling 'formatDatetimeToModel' to allow user to input data
+				debouncedFormatDateTime = debounce((newValue, oldValue) => {
+					this.formatDatetimeToModel(newValue, oldValue);
+				}, 1000, {
+					trailing: true,
+					leading: false
+				});
+				break;
+		}
+	},
 	created () {
 		if(this.schema.inputType == "file")
 			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
