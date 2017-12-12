@@ -278,7 +278,7 @@ div.vue-form-generator(v-if='schema != null')
 
 				return field.featured;
 			},
-			
+
 			// Get current hint.
 			fieldHint(field){
 				if (isFunction(field.hint))
@@ -307,7 +307,7 @@ div.vue-form-generator(v-if='schema != null')
 				}
 
 				let isValid = this.errors.length == 0;
-				this.$emit("validated", isValid, this.errors);
+				this.$emit("validated", isValid, this.errors, this._uid);
 			},
 
 			// Validating the model properties
@@ -328,7 +328,7 @@ div.vue-form-generator(v-if='schema != null')
 				});
 
 				let isValid = this.errors.length == 0;
-				this.$emit("validated", isValid, this.errors);
+				this.$emit("validated", isValid, this.errors, this._uid);
 				return isValid;
 			},
 
@@ -357,7 +357,7 @@ div.vue-form-generator(v-if='schema != null')
 			getFieldID(schema) {
 				const idPrefix = this.options && this.options.fieldIdPrefix ? this.options.fieldIdPrefix : "";
 				return slugifyFormID(schema, idPrefix);
-			}			
+			}
 		}
 	};
 
