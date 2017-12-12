@@ -63,7 +63,7 @@
     "eslint-plugin-vue": "1.0.0",
     "extract-text-webpack-plugin": "1.0.1",
     "fakerator": "0.3.0",
-    "fecha": "2.3.0",
+    "fecha": "2.3.2",
     "inject-loader": "2.0.1",
     "isparta-loader": "2.0.0",
     "karma": "1.4.1",
