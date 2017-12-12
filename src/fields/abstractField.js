@@ -62,7 +62,6 @@ export default {
 			this.clearValidationErrors();
 
 			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
-
 				let validators = [];
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
