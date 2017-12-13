@@ -2,9 +2,9 @@
 .wrapper
 	input.form-control(
 		:id="getFieldID(schema)",
-		:type="schema.inputType",
+		:type="schema.inputType.toLowerCase()",
 		:value="value",
-		@input="value = $event.target.value",
+		@input="onInput",
 		@blur="onBlur",
 		:class="schema.fieldClasses",
 		@change="schema.onChange || null",
@@ -36,12 +36,12 @@
 		:step="schema.step",
 		:width="schema.width",
 		:files="schema.files")
-	span.helper(v-if="schema.inputType === 'color' || schema.inputType === 'range'") {{ value }}
+	span.helper(v-if="schema.inputType.toLowerCase() === 'color' || schema.inputType.toLowerCase() === 'range'") {{ value }}
 </template>
 
 <script>
 import abstractField from "../abstractField";
-import { debounce, isFunction } from "lodash";
+import { debounce, isFunction, isNumber } from "lodash";
 import fecha from "fecha";
 
 const DATETIME_FORMATS = {
@@ -50,83 +50,85 @@ const DATETIME_FORMATS = {
 	"datetime-local": "YYYY-MM-DDTHH:mm:ss",
 };
 
-let debouncedFormatDateTime = null;
+const DEBOUNCE_FORMAT_MS = 1000;
 
 export default {
 	mixins: [abstractField],
 	methods: {
-		formatValueToField(value) {
-			// TODO: remove this, we shouldn't be formatting the value for date fields as it breaks keyboard input
-			// if (value != null) {
-			// 	let dt;
-			// 	switch (this.schema.inputType) {
-			// 		case "date":
-			// 			dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
-			// 			if(isNaN(dt.getTime())) break;
-			// 			return fecha.format(dt, "YYYY-MM-DD");
-			// 		case "datetime":
-			// 			dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
-			// 			if(isNaN(dt.getTime())) break;
-			// 			return fecha.format(dt, "YYYY-MM-DD HH:mm:ss");
-			// 		case "datetime-local":
-			// 			dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
-			// 			if(isNaN(dt.getTime())) break;
-			// 			return fecha.format(dt, "YYYY-MM-DDTHH:mm:ss");
-			// 	}
-			// }
-
-			return value;
-		},
-
 		formatValueToModel(value) {
 			if (value != null) {
-				// let m;
-				switch (this.schema.inputType) {
+				switch (this.schema.inputType.toLowerCase()) {
 					case "date":
 					case "datetime":
 					case "datetime-local":
-						// debounce
-						
-						return (newValue, oldValue) => {
-							debouncedFormatDateTime(value, oldValue);
-						};
 					case "number":
-						return Number(value);
 					case "range":
-						return Number(value);
+						// debounce
+						return (newValue, oldValue) => {
+							this.debouncedFormatFunc(value, oldValue);
+						};
 				}
 			}
 
 			return value;
 		},
 		formatDatetimeToModel(newValue, oldValue) {
-			let defaultFormat = DATETIME_FORMATS[this.schema.inputType];
+			let defaultFormat = DATETIME_FORMATS[this.schema.inputType.toLowerCase()];
 			let m = fecha.parse(newValue, defaultFormat);
 			if (m !== false) {
-				if (this.schema.format)
+				if (this.schema.format) {
 					newValue = fecha.format(m, this.schema.format);
-				else
+				} else {
 					newValue = m.valueOf();
+				}
 			}
 			this.updateModelValue(newValue, oldValue);
 		},
+		formatNumberToModel(newValue, oldValue) {
+			if(!isNumber(newValue)) {
+				newValue = NaN;
+			}
+			this.updateModelValue(newValue, oldValue);
+		},
+		onInput($event) {
+			let value = $event.target.value;
+			switch(this.schema.inputType.toLowerCase()) {
+				case "number": 
+				case "range":
+					if($event.target.valueAsNumber) {
+						value = $event.target.valueAsNumber;
+					}
+					break;
+			}
+			this.value = value;
+		},
 		onBlur() {
-			if(isFunction(debouncedFormatDateTime)) {
-				// TODO: flush pending calls immediately on blur
-				debouncedFormatDateTime.flush();
+			if(isFunction(this.debouncedFormatFunc)) {
+				this.debouncedFormatFunc.flush();
 			}
 		}
 	},
 
 	mounted () {
-		switch(this.schema.inputType) {
+		switch(this.schema.inputType.toLowerCase()) {
+			case "number":
+			case "range":
+				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
+					this.formatNumberToModel(newValue, oldValue);
+				}
+				, DEBOUNCE_FORMAT_MS, {
+					trailing: true,
+					leading: false
+				});
+				break;
 			case "date":
 			case "datetime":
 			case "datetime-local":
 				// wait 1s before calling 'formatDatetimeToModel' to allow user to input data
-				debouncedFormatDateTime = debounce((newValue, oldValue) => {
+				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
 					this.formatDatetimeToModel(newValue, oldValue);
-				}, 1000, {
+				}
+				, DEBOUNCE_FORMAT_MS, {
 					trailing: true,
 					leading: false
 				});
@@ -135,8 +137,9 @@ export default {
 	},
 
 	created () {
-		if(this.schema.inputType == "file")
+		if(this.schema.inputType.toLowerCase() == "file") {
 			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
+		}
 	}
 };
 
