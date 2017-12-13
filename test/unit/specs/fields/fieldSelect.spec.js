@@ -56,8 +56,7 @@ describe("fieldSelect.vue", function () {
 
 		it("should contain a <non selected> element", () => {
 			let options = input.querySelectorAll("option");
-			// "none selected" options are always disabled
-			expect(options[0].disabled).to.be.true;
+			expect(options[0].disabled).to.be.false;
 			expect(options[0].textContent).to.be.equal("<Nothing selected>");
 		});
 
