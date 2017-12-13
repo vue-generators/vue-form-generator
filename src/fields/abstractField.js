@@ -25,7 +25,8 @@ export default {
 	data() {
 		return {
 			errors: [],
-			debouncedValidateFunc: null
+			debouncedValidateFunc: null,
+			debouncedFormatFunction: null,
 		};
 	},
 
@@ -45,7 +46,6 @@ export default {
 
 			set(newValue) {
 				let oldValue = this.value;
-
 				newValue = this.formatValueToModel(newValue);
 				
 				if(isFunction(newValue)) {
