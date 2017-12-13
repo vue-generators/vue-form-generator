@@ -1,6 +1,6 @@
 <template lang="pug">
 	select.form-control(v-model="value", :disabled="disabled", :name="schema.inputName", :id="getFieldID(schema)", :class="schema.fieldClasses")
-		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="true", :value="null") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
+		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required", :value="null") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
 
 		template(v-for="item in items")
 			optgroup(v-if="item.group", :label="getGroupName(item)")
