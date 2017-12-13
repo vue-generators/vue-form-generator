@@ -73,8 +73,10 @@ describe("Validators", () => {
 		let field = {};
 
 		it("should give error if value is not integer", () => {
+			// invalid integer
 			check(v.integer, 3.14, field, 1);
-			check(v.integer, "3.14", field, 1);
+			// invalid number, invalid integer
+			check(v.integer, "3.14", field, 2);
 		});
 
 		it("should not give error if value is integer", () => {
