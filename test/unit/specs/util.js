@@ -21,7 +21,7 @@ export function trigger (el, event, args) {
 }
 
 export function createVueField(test, type, schema = {}, model = null, disabled = false, options) {
-	let elName = Vue.util.hyphenate(type);
+	let elName = type.replace(/([a-zA-Z])([A-Z])/g, "$1-$2").toLowerCase();
 
 	let container = document.createElement("div");		
 	container.className = "test-unit";
