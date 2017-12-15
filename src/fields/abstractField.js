@@ -59,7 +59,6 @@ export default {
 
 	methods: {
 		validate(calledParent) {
-			// console.log('abstractField', 'validate', calledParent);
 			this.clearValidationErrors();
 			let validateAsync = objGet(this.formOptions, "validateAsync", false);
 
@@ -96,17 +95,14 @@ export default {
 			}
 
 			let handleErrors = (errors) => {
-				// console.log('abstractField', 'all', errors);
 				let fieldErrors = [];
 				forEach(errors, (err) => {
-					// console.log('abstractField', 'err', err);
 					if(isArray(err) && err.length > 0) {
 						fieldErrors = fieldErrors.concat(err);
 					} else if(isString(err)) {
 						fieldErrors.push(err);
 					}
 				});
-				// console.log('abstractField',  'fieldErrors', 'final', fieldErrors);
 				if (isFunction(this.schema.onValidated)) {
 					this.schema.onValidated.call(this, this.model, fieldErrors, this.schema);
 				}
@@ -116,7 +112,6 @@ export default {
 					this.$emit("validated", isValid, fieldErrors, this);
 				}
 				this.errors = fieldErrors;
-				// console.log('abstractField', 'this.errors', this.errors);
 				return fieldErrors;
 			};
 
