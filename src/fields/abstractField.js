@@ -1,4 +1,4 @@
-import { get as objGet, each, isFunction, isString, isArray, debounce } from "lodash";
+import { get as objGet, forEach, isFunction, isString, isArray, debounce } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
@@ -60,52 +60,66 @@ export default {
 	methods: {
 		validate(calledParent) {
 			this.clearValidationErrors();
+			let validateAsync = objGet(this.formOptions, "validateAsync", false);
+
+			let results = [];
 
 			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
 				let validators = [];
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
 				} else {
-					each(this.schema.validator, (validator) => {
+					forEach(this.schema.validator, (validator) => {
 						validators.push(convertValidator(validator).bind(this));
 					});
 				}
 
-				each(validators, (validator) => {
-					let addErrors = err => {
-						if (isArray(err))
-							Array.prototype.push.apply(this.errors, err);
-						else if (isString(err))
-							this.errors.push(err);
-					};
-
-					let res = validator(this.value, this.schema, this.model);
-					if (res && isFunction(res.then)) {
-						// It is a Promise, async validator
-						res.then(err => {
-							if (err) {
-								addErrors(err);
+				forEach(validators, (validator) => {
+					if(validateAsync) {
+						results.push(validator(this.value, this.schema, this.model));
+					} else {
+						let result = validator(this.value, this.schema, this.model);
+						if(result && isFunction(result.then)) {
+							result.then((err) => {
+								if(err) {
+									this.errors = this.errors.concat(err);
+								}
 								let isValid = this.errors.length == 0;
 								this.$emit("validated", isValid, this.errors, this);
-							}
-						});
-					} else {
-						if (res)
-							addErrors(res);
+							});
+						} else if(result) {
+							results = results.concat(result);
+						}
 					}
 				});
-
 			}
 
-			if (isFunction(this.schema.onValidated)) {
-				this.schema.onValidated.call(this, this.model, this.errors, this.schema);
+			let handleErrors = (errors) => {
+				let fieldErrors = [];
+				forEach(errors, (err) => {
+					if(isArray(err) && err.length > 0) {
+						fieldErrors = fieldErrors.concat(err);
+					} else if(isString(err)) {
+						fieldErrors.push(err);
+					}
+				});
+				if (isFunction(this.schema.onValidated)) {
+					this.schema.onValidated.call(this, this.model, fieldErrors, this.schema);
+				}
+
+				let isValid = fieldErrors.length == 0;
+				if (!calledParent) {
+					this.$emit("validated", isValid, fieldErrors, this);
+				}
+				this.errors = fieldErrors;
+				return fieldErrors;
+			};
+
+			if(!validateAsync) {
+				return handleErrors(results);
 			}
 
-			let isValid = this.errors.length == 0;
-			if (!calledParent)
-				this.$emit("validated", isValid, this.errors, this);
-
-			return this.errors;
+			return Promise.all(results).then(handleErrors);
 		},
 
 		debouncedValidate() {

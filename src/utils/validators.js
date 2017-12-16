@@ -117,8 +117,9 @@ const validators = {
 			if (!isNil(field.max) && value.length > field.max) {
 				err.push(msg(messages.textTooBig, value.length, field.max));
 			}
-		} else 
+		} else {
 			err.push(msg(messages.thisNotText));
+		}
 
 		return err;
 	},

@@ -41,27 +41,44 @@ describe("fieldSubmit.vue", function() {
 			expect(input.value).to.be.equal("Submit form");
 		});
 
-		it("should not call validate if validateBeforeSubmit is false", () => {
-			schema.onSubmit = sinon.spy();
-			let cb = sinon.spy();
-			field.$parent.validate = cb;
+		describe("valid form", function() {
+			it("should not call validate if validateBeforeSubmit is false", () => {
+				schema.onSubmit = sinon.spy();
+				let cb = sinon.spy();
+				field.$parent.validate = cb;
 
-			input.click();
-			expect(cb.called).to.be.false;
-			expect(schema.onSubmit.calledOnce).to.be.true;
-			expect(schema.onSubmit.calledWith(model, schema)).to.be.true;
+				input.click();
+				expect(cb.called).to.be.false;
+				expect(schema.onSubmit.calledOnce).to.be.true;
+				expect(schema.onSubmit.calledWith(model, schema)).to.be.true;
+			});
+
+
+			it("should call validate if validateBeforeSubmit is true", () => {
+				schema.validateBeforeSubmit = true;
+				schema.onSubmit = sinon.spy();
+				let cb = sinon.spy();
+				field.$parent.validate = cb;
+
+				input.click();
+				expect(cb.called).to.be.true;
+				expect(schema.onSubmit.called).to.be.true;
+			});
 		});
 
+		describe("invalid form", function() {
+			it("should not call onSubmit if validateBeforeSubmit is true", () => {
+				schema.validateBeforeSubmit = true;
+				schema.onSubmit = sinon.spy();
+				let cb = sinon.spy(() => {
+					return ["an error occurred"];
+				});
+				field.$parent.validate = cb;
 
-		it("should call validate if validateBeforeSubmit is true", () => {
-			schema.validateBeforeSubmit = true;
-			schema.onSubmit = sinon.spy();
-			let cb = sinon.spy();
-			field.$parent.validate = cb;
-
-			input.click();
-			expect(cb.called).to.be.true;
-			expect(schema.onSubmit.called).to.be.false;
+				input.click();
+				expect(cb.called).to.be.true;
+				expect(schema.onSubmit.called).to.be.true;
+			});
 		});
 
 		describe("check optional attribute", () => {
