@@ -307,7 +307,7 @@ div.vue-form-generator(v-if='schema != null')
 				}
 
 				let isValid = this.errors.length == 0;
-				this.$emit("validated", isValid, this.errors, this._uid);
+				this.$emit("validated", isValid, this.errors, this);
 			},
 
 			// Validating the model properties
@@ -328,7 +328,7 @@ div.vue-form-generator(v-if='schema != null')
 				});
 
 				let isValid = this.errors.length == 0;
-				this.$emit("validated", isValid, this.errors, this._uid);
+				this.$emit("validated", isValid, this.errors, this);
 				return isValid;
 			},
 
