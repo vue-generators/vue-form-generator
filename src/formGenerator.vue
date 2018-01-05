@@ -14,7 +14,8 @@ div.vue-form-generator(v-if='schema != null')
 						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field, $event)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ fieldHint(field) }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
-					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
+					span(v-for='(error, index) in fieldErrors(field)', v-if='!field.unscapeErrors', v-html="error", track-by='index')
+					span(v-for='(error, index) in fieldErrors(field)', v-if='field.unscapeErrors', track-by='index') {{ error }}
 
 	template(v-for='group in groups')
 		fieldset(:is='tag', :class='getFieldRowClasses(group)')
