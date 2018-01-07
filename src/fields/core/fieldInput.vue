@@ -110,7 +110,6 @@ export default {
 	},
 
 	mounted () {
-		console.log('this.schema.inputType',this.schema.inputType)
 		switch(this.schema.inputType.toLowerCase()) {
 			case "number":
 			case "range":
