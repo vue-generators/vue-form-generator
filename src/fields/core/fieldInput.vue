@@ -93,7 +93,7 @@ export default {
 		onInput($event) {
 			let value = $event.target.value;
 			switch(this.schema.inputType.toLowerCase()) {
-				case "number": 
+				case "number":
 				case "range":
 					if($event.target.valueAsNumber) {
 						value = $event.target.valueAsNumber;
@@ -110,6 +110,7 @@ export default {
 	},
 
 	mounted () {
+		console.log('this.schema.inputType',this.schema.inputType)
 		switch(this.schema.inputType.toLowerCase()) {
 			case "number":
 			case "range":
@@ -138,7 +139,7 @@ export default {
 
 	created () {
 		if(this.schema.inputType.toLowerCase() == "file") {
-			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");	
+			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");
 		}
 	}
 };
