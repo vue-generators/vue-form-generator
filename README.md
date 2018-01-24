@@ -207,7 +207,7 @@ This way, it will be easier for everyone to find it. Thank you !
 
 ### Public Custom Fields
 
-- [vue-tel-input](https://github.com/EducationLink/vue-tel-input) - International Telephone Input Boilerplate with Vue ((integrated with VueFormGenerator).
+- [vue-tel-input](https://github.com/EducationLink/vue-tel-input) - International Telephone Input Boilerplate with Vue (integrated with VueFormGenerator).
 
 ## Contribution
 Please send pull requests improving the usage and fixing bugs, improving documentation and providing better examples, or providing some testing, because these things are important.
