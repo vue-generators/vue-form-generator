@@ -9,7 +9,8 @@ let rules = [
 		test: /\.(js|vue)$/,
 		loader: "eslint-loader",
 		enforce: "pre",
-		include: [path.resolve("src")],
+		include: [path.resolve("src"), path.resolve("dev")],
+		exclude: /node_modules/,
 		options: {
 			formatter: require("eslint-friendly-formatter")
 		}
@@ -17,21 +18,25 @@ let rules = [
 	{
 		test: /\.vue$/,
 		loader: "vue-loader",
+		include: [path.resolve("src"), path.resolve("dev")],
+		exclude: /node_modules/,
 		options: vueLoaderConfig
 	},
 	{
 		test: /\.js$/,
 		loader: "babel-loader",
-		include: projectRoot,
+		include: [path.resolve("src"), path.resolve("dev")],
 		exclude: /node_modules/
 	},
 	{
 		test: /\.(woff2?|svg)$/,
-		loader: "url-loader"
+		loader: "url-loader",
+		include: [path.resolve("src"), path.resolve("dev")]
 	},
 	{
 		test: /\.(ttf|eot)$/,
-		loader: "url-loader"
+		loader: "url-loader",
+		include: [path.resolve("src"), path.resolve("dev")]
 	}
 ];
 

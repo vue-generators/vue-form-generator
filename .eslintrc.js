@@ -1,8 +1,9 @@
 module.exports = {
 	root: true,
-	parser: "babel-eslint",
+	parser: "vue-eslint-parser",
 	parserOptions: {
-		sourceType: "module"
+		sourceType: "module",
+		parser: "babel-eslint"
 	},
 	env: {
 		browser: true,
@@ -11,8 +12,8 @@ module.exports = {
 	globals: {
 		process: true
 	},
-	extends: ["eslint:recommended", "prettier"],
-	plugins: ["html", "prettier"],
+	extends: ["eslint:recommended", "plugin:vue/base"],
+	plugins: ["prettier"],
 	rules: {
 		indent: ["warn", "tab", { SwitchCase: 1 }],
 		quotes: ["warn", "double"],
@@ -20,10 +21,10 @@ module.exports = {
 		"no-var": ["error"],
 		"no-console": ["off"],
 		"no-unused-vars": ["warn"],
-		// TODO reactivate after stabilisation
 		"no-throw-literal": 0,
-		eqeqeq: [0, "smart"],
-		"spaced-comment": 0,
-		"prettier/prettier": 0
+		// TODO reactivate after stabilisation
+		eqeqeq: [1, "smart"],
+		"spaced-comment": 1,
+		"prettier/prettier": 1
 	}
 };
