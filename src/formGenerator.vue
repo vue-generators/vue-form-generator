@@ -14,7 +14,7 @@ div.vue-form-generator(v-if='schema != null')
 						button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field, $event)', :class='btn.classes') {{ btn.label }}
 				.hint(v-if='field.hint') {{ fieldHint(field) }}
 				.errors.help-block(v-if='fieldErrors(field).length > 0')
-					span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
+					span(v-for='(error, index) in fieldErrors(field)', v-html='error', track-by='index')
 
 	template(v-for='group in groups')
 		fieldset(:is='tag', :class='getFieldRowClasses(group)')
@@ -32,12 +32,12 @@ div.vue-form-generator(v-if='schema != null')
 							button(v-for='btn in field.buttons', @click='buttonClickHandler(btn, field, $event)', :class='btn.classes') {{ btn.label }}
 					.hint(v-if='field.hint') {{ field.hint }}
 					.errors.help-block(v-if='fieldErrors(field).length > 0')
-						span(v-for='(error, index) in fieldErrors(field)', track-by='index') {{ error }}
+						span(v-for='(error, index) in fieldErrors(field)', v-html='error', track-by='index')
 </template>
 
 <script>
 // import Vue from "vue";
-import { each, isFunction, isNil, isArray, isString } from "lodash";
+import { get as objGet, forEach, isFunction, isNil, isArray, isString } from "lodash";
 import { slugifyFormID } from "./utils/schema";
 
 // Load all fields from '../fields' folder
@@ -45,7 +45,7 @@ let fieldComponents = {};
 
 let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
 
-each(coreFields.keys(), key => {
+forEach(coreFields.keys(), key => {
 	let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
 	fieldComponents[compName] = coreFields(key).default;
 });
@@ -54,7 +54,7 @@ if (process.env.FULL_BUNDLE) {
 	// eslint-disable-line
 	let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
 
-	each(Fields.keys(), key => {
+	forEach(Fields.keys(), key => {
 		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
 		fieldComponents[compName] = Fields(key).default;
 	});
@@ -73,6 +73,7 @@ export default {
 			default() {
 				return {
 					validateAfterLoad: false,
+					validateAsync: false,
 					validateAfterChanged: false,
 					validationErrorClass: "error",
 					validationSuccessClass: ""
@@ -109,7 +110,7 @@ export default {
 		fields() {
 			let res = [];
 			if (this.schema && this.schema.fields) {
-				each(this.schema.fields, field => {
+				forEach(this.schema.fields, field => {
 					if (!this.multiple || field.multi === true) res.push(field);
 				});
 			}
@@ -119,7 +120,7 @@ export default {
 		groups() {
 			let res = [];
 			if (this.schema && this.schema.groups) {
-				each(this.schema.groups, group => {
+				forEach(this.schema.groups, group => {
 					res.push(group);
 				});
 			}
@@ -138,8 +139,11 @@ export default {
 			if (newModel != null) {
 				this.$nextTick(() => {
 					// Model changed!
-					if (this.options.validateAfterLoad === true && this.isNewModel !== true) this.validate();
-					else this.clearValidationErrors();
+					if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
+						this.validate();
+					} else {
+						this.clearValidationErrors();
+					}
 				});
 			}
 		}
@@ -181,7 +185,7 @@ export default {
 			}
 
 			if (isArray(field.styleClasses)) {
-				each(field.styleClasses, c => (baseClasses[c] = true));
+				forEach(field.styleClasses, c => (baseClasses[c] = true));
 			} else if (isString(field.styleClasses)) {
 				baseClasses[field.styleClasses] = true;
 			}
@@ -282,7 +286,7 @@ export default {
 
 			if (!res && errors && errors.length > 0) {
 				// Add errors with this field
-				errors.forEach(err => {
+				forEach(errors, err => {
 					this.errors.push({
 						field: field.schema,
 						error: err
@@ -295,32 +299,52 @@ export default {
 		},
 
 		// Validating the model properties
-		validate() {
+		validate(isAsync = null) {
+			if (isAsync === null) {
+				isAsync = objGet(this.options, "validateAsync", false);
+			}
 			this.clearValidationErrors();
 
-			this.$children.forEach(child => {
+			let fields = [];
+			let results = [];
+
+			forEach(this.$children, child => {
 				if (isFunction(child.validate)) {
-					let errors = child.validate(true);
-					errors.forEach(err => {
-						this.errors.push({
-							field: child.schema,
-							error: err
-						});
-					});
+					fields.push(child); // keep track of validated children
+					results.push(child.validate(true));
 				}
 			});
 
-			let isValid = this.errors.length === 0;
-			this.$emit("validated", isValid, this.errors);
-			return isValid;
+			let handleErrors = errors => {
+				let formErrors = [];
+				forEach(errors, (err, i) => {
+					if (isArray(err) && err.length > 0) {
+						forEach(err, error => {
+							formErrors.push({
+								field: fields[i].schema,
+								error: error
+							});
+						});
+					}
+				});
+				this.errors = formErrors;
+				let isValid = formErrors.length === 0;
+				this.$emit("validated", isValid, formErrors);
+				return isAsync ? formErrors : isValid;
+			};
+
+			if (!isAsync) {
+				return handleErrors(results);
+			}
+
+			return Promise.all(results).then(handleErrors);
 		},
 
 		// Clear validation errors
 		clearValidationErrors() {
 			this.errors.splice(0);
-			console.log(this.$children);
 
-			each(this.$children, child => {
+			forEach(this.$children, child => {
 				child.clearValidationErrors();
 			});
 		},

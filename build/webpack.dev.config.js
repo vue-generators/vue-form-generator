@@ -10,7 +10,6 @@ let rules = [
 		loader: "eslint-loader",
 		enforce: "pre",
 		include: [path.resolve("src"), path.resolve("dev")],
-		exclude: /node_modules/,
 		options: {
 			formatter: require("eslint-friendly-formatter")
 		}

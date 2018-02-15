@@ -1,6 +1,6 @@
 <template lang="pug">
 	select.form-control(v-model="value", :disabled="disabled", :name="schema.inputName", :id="getFieldID(schema)", :class="schema.fieldClasses")
-		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required", :value="null", :selected="value == undefined") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
+		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required", :value="null") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
 
 		template(v-for="item in items")
 			optgroup(v-if="item.group", :label="getGroupName(item)")
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { isObject, find } from "lodash";
+import { isObject, isNil, find } from "lodash";
 import abstractField from "../abstractField";
 
 export default {
@@ -30,6 +30,13 @@ export default {
 	},
 
 	methods: {
+		formatValueToField(value) {
+			if (isNil(value)) {
+				return null;
+			}
+			return value;
+		},
+
 		groupValues(values) {
 			let array = [];
 			let arrayElement = {};
@@ -126,6 +133,5 @@ export default {
 </script>
 
 
-<style lang="scss">
-
+<style lang="sass">
 </style>

@@ -20,20 +20,7 @@ export function trigger (el, event, args) {
 	}
 }
 
-// convenience wrapper for $vm.nextTick
-export function nextTick(cb, vm, done) {
-	vm.$nextTick(() => {
-		try {
-			cb();
-			done();
-		} catch(e) {
-			done(e);
-		}
-	});
-}
-
 export function createVueField(test, type, schema = {}, model = null, disabled = false, options) {
-	// let elName = Vue.util.hyphenate(type); // hyphenate was removed from Vue.util in Vue 2.2.0, Vue.util is for internal Vue use only
 	let elName = type.replace(/([a-zA-Z])([A-Z])/g, "$1-$2").toLowerCase();
 
 	let container = document.createElement("div");		
@@ -82,7 +69,7 @@ export function checkAttribute(name, vm, input, field, schema, done) {
 	}
 
 	Vue.set(vm.schema, name, attr.before);
-	nextTick(() => {
+	vm.$nextTick(() => {
 		if (attr.name) {
 			expect(input[attr.name]).to.be.equal(schematic[name]);
 		} else {
@@ -90,5 +77,5 @@ export function checkAttribute(name, vm, input, field, schema, done) {
 		}
 		Vue.set(vm.schema, name, attr.after);
 		return done();
-	}, vm, done);
+	});
 }

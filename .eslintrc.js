@@ -15,16 +15,13 @@ module.exports = {
 	extends: ["eslint:recommended", "plugin:vue/base"],
 	plugins: ["prettier"],
 	rules: {
-		indent: ["warn", "tab", { SwitchCase: 1 }],
-		quotes: ["warn", "double"],
-		semi: ["error", "always"],
-		"no-var": ["error"],
-		"no-console": ["off"],
-		"no-unused-vars": ["warn"],
+		indent: [1, "tab", { SwitchCase: 1 }],
+		quotes: [1, "double"],
+		semi: [2, "always"],
+		"no-var": [2],
+		"no-console": [0],
+		"no-unused-vars": [1],
 		"no-throw-literal": 0,
-		// TODO reactivate after stabilisation
-		eqeqeq: [1, "smart"],
-		"spaced-comment": 1,
-		"prettier/prettier": 1
+		eqeqeq: [2, "smart"]
 	}
 };
