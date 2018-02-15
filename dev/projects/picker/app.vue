@@ -1,17 +1,17 @@
 <template>
 	<div class="container">
-        <h1>Picker</h1>
-        <div class="row">
-            <div class="col-sm-12">
-                <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <pre v-if="model" v-html="prettyModel"></pre>
-            </div>
-        </div>
-    </div>
+		<h1>Picker</h1>
+		<div class="row">
+			<div class="col-sm-12">
+				<vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<pre v-if="model" v-html="prettyModel"></pre>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -28,7 +28,7 @@ export default {
 				fields: [
 					{
 						type: "dateTimePicker",
-						/*type: "input",
+						/* type: "input",
 						inputType: "date",*/
 						label: "DT",
 						model: "dt",

@@ -12,14 +12,14 @@
 		tbody
 			tr(v-for="row in rows", @click="select($event, row)", :class="{ active: isSelected(row) }")
 				td {{ row.id }}
-				td 
-					img(:src="row.avatar") 
+				td
+					img(:src="row.avatar")
 					| {{ row.firstName + " " + row.lastName }} ({{row.userName}})
 					.label.label-warning(v-if="!row.status") Inactive
 				td {{ row.email }}
-				td {{ row.address.country }}
+				td(v-if="row.address") {{ row.address.country }}
 				td {{ getRoleName(row) }}
-				td 
+				td
 					i.fa(:class=" row.status? 'fa-check' : 'fa-ban' ")
 </template>
 
@@ -32,11 +32,11 @@ export default {
 
 	methods: {
 		isSelected(row) {
-			return this.selected.indexOf(row) != -1;
+			return this.selected.indexOf(row) !== -1;
 		},
 
 		getRoleName(row) {
-			let role = find(roles, role => role.id == row.role);
+			let role = find(roles, role => role.id === row.role);
 			return role ? role.name : "";
 		}
 	}

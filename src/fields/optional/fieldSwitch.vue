@@ -13,7 +13,7 @@ export default {
 
 	methods: {
 		formatValueToField(value) {
-			if (value != null && this.schema.valueOn) return value == this.schema.valueOn;
+			if (value != null && this.schema.valueOn) return value === this.schema.valueOn;
 
 			return value;
 		},
@@ -38,7 +38,6 @@ $field-switch-height: 30px;
 	.field-wrap label {
 		position: relative;
 		display: block;
-		vertical-align: top;
 		width: $field-switch-width;
 		height: $field-switch-height;
 		padding: 0;

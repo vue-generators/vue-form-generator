@@ -94,7 +94,7 @@ export default {
 						res.then(err => {
 							if (err) {
 								addErrors(err);
-								let isValid = this.errors.length == 0;
+								let isValid = this.errors.length === 0;
 								this.$emit("validated", isValid, this.errors, this);
 							}
 						});
@@ -108,7 +108,7 @@ export default {
 				this.schema.onValidated.call(this, this.model, this.errors, this.schema);
 			}
 
-			let isValid = this.errors.length == 0;
+			let isValid = this.errors.length === 0;
 			if (!calledParent) this.$emit("validated", isValid, this.errors, this);
 
 			return this.errors;

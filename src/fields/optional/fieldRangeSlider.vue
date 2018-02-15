@@ -51,7 +51,7 @@ export default {
 						from: valueFrom,
 						to: valueTo,
 						onChange(slider) {
-							if (self.slider.options.type == "double") {
+							if (self.slider.options.type === "double") {
 								self.value = [slider.from, slider.to];
 							} else {
 								self.value = slider.from;

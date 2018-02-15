@@ -28,11 +28,11 @@ export default {
 
 		wrappedValue: {
 			get() {
-				if (this.value && this.value.indexOf("data") == 0) return "<inline base64 image>";
+				if (this.value && this.value.indexOf("data") === 0) return "<inline base64 image>";
 				else return this.value;
 			},
 			set(newValue) {
-				if (newValue && newValue.indexOf("http") == 0) {
+				if (newValue && newValue.indexOf("http") === 0) {
 					this.value = newValue;
 				}
 			}

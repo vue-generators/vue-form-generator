@@ -47,7 +47,7 @@ let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.v
 
 each(coreFields.keys(), key => {
 	let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-	fieldComponents[compName] = coreFields(key);
+	fieldComponents[compName] = coreFields(key).default;
 });
 
 if (process.env.FULL_BUNDLE) {
@@ -56,7 +56,7 @@ if (process.env.FULL_BUNDLE) {
 
 	each(Fields.keys(), key => {
 		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-		fieldComponents[compName] = Fields(key);
+		fieldComponents[compName] = Fields(key).default;
 	});
 }
 
@@ -131,7 +131,7 @@ export default {
 	watch: {
 		// new model loaded
 		model: function(newModel, oldModel) {
-			if (oldModel == newModel)
+			if (oldModel === newModel)
 				// model property changed, skip
 				return;
 
@@ -318,6 +318,7 @@ export default {
 		// Clear validation errors
 		clearValidationErrors() {
 			this.errors.splice(0);
+			console.log(this.$children);
 
 			each(this.$children, child => {
 				child.clearValidationErrors();

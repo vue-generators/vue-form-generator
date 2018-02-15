@@ -99,7 +99,7 @@ let exported = {
 		if (field.required) {
 			if (!isArray(value)) return [msg(messages.thisNotArray)];
 
-			if (value.length == 0) return [msg(messages.fieldIsRequired)];
+			if (value.length === 0) return [msg(messages.fieldIsRequired)];
 		}
 
 		if (!isNil(value)) {
@@ -161,7 +161,7 @@ let exported = {
 		let res = checkEmpty(value, field.required, messages);
 		if (res != null) return res;
 
-		/*  From validator.js code 
+		/*  From validator.js code
 			https://github.com/chriso/validator.js/blob/master/src/lib/isCreditCard.js
 		*/
 		const creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;

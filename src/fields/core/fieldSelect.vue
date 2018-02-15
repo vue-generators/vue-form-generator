@@ -41,7 +41,7 @@ export default {
 					// There is in a group.
 
 					// Find element with this group.
-					arrayElement = find(array, i => i.group == item.group);
+					arrayElement = find(array, i => i.group === item.group);
 
 					if (arrayElement) {
 						// There is such a group.

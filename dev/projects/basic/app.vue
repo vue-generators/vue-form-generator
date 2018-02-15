@@ -1,17 +1,17 @@
 <template>
-    <div class="container">
-        <h1>Basic</h1>
-        <div class="row">
-            <div class="col-sm-12">
-                <vue-form-generator :schema="schema" :model="model" :options="formOptions" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <pre v-if="model" v-html="prettyModel"></pre>
-            </div>
-        </div>
-    </div>
+	<div class="container">
+		<h1>Basic</h1>
+		<div class="row">
+			<div class="col-sm-12">
+				<vue-form-generator :schema="schema" :model="model" :options="formOptions" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<pre v-if="model" v-html="prettyModel"></pre>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -56,7 +56,7 @@ export default {
 						buttonText: "Change Previous Type",
 						onSubmit: () => {
 							// this.schema.fields[2].type = "input";
-							if (this.schema.fields[2].inputType == "color") {
+							if (this.schema.fields[2].inputType === "color") {
 								this.schema.fields[2].inputType = "text";
 							} else {
 								this.schema.fields[2].inputType = "color";

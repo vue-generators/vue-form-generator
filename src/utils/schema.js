@@ -1,7 +1,7 @@
 import { get, set, each, isObject, isArray, isFunction, cloneDeep } from "lodash";
 
 // Create a new model by schema default values
-export const createDefaultObject = (schema, obj = {}) => {
+const createDefaultObject = (schema, obj = {}) => {
 	each(schema.fields, field => {
 		if (get(obj, field.model) === undefined && field.default !== undefined) {
 			if (isFunction(field.default)) {
@@ -15,7 +15,7 @@ export const createDefaultObject = (schema, obj = {}) => {
 };
 
 // Get a new model which contains only properties of multi-edit fields
-export const getMultipleFields = schema => {
+const getMultipleFields = schema => {
 	let res = [];
 	each(schema.fields, field => {
 		if (field.multi === true) res.push(field);
@@ -25,7 +25,7 @@ export const getMultipleFields = schema => {
 };
 
 // Merge many models to one 'work model' by schema
-export const mergeMultiObjectFields = (schema, objs) => {
+const mergeMultiObjectFields = (schema, objs) => {
 	let model = {};
 
 	let fields = getMultipleFields(schema);
@@ -51,7 +51,7 @@ export const mergeMultiObjectFields = (schema, objs) => {
 	return model;
 };
 
-export const slugifyFormID = (schema, prefix = "") => {
+const slugifyFormID = (schema, prefix = "") => {
 	// Try to get a reasonable default id from the schema,
 	// then slugify it.
 	if (typeof schema.id !== "undefined") {
@@ -79,7 +79,7 @@ export const slugifyFormID = (schema, prefix = "") => {
 	}
 };
 
-export const slugify = (name = "") => {
+const slugify = (name = "") => {
 	// Return the slugified version of either:
 	return (
 		name
@@ -87,7 +87,7 @@ export const slugify = (name = "") => {
 			// avoiding extra dependencies.
 			.toString()
 			.trim()
-			//.toLowerCase()
+			// .toLowerCase()
 			// Spaces & underscores to dashes
 			.replace(/ /g, "-")
 			// Multiple dashes to one
@@ -98,3 +98,5 @@ export const slugify = (name = "") => {
 			.replace(/([^a-zA-Z0-9-_/./:]+)/g, "")
 	);
 };
+
+export { createDefaultObject, getMultipleFields, mergeMultiObjectFields, slugifyFormID, slugify };

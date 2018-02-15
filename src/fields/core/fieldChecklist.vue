@@ -87,7 +87,7 @@ export default {
 		},
 
 		isItemChecked(item) {
-			return this.value && this.value.indexOf(this.getItemValue(item)) != -1;
+			return this.value && this.value.indexOf(this.getItemValue(item)) !== -1;
 		},
 
 		onChanged(event, item) {

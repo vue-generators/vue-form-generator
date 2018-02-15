@@ -13,9 +13,9 @@ let customAsyncValidator = function(value) {
 
 export default {
 	fields: [
-		/***********/
-		/*  INPUT  */
-		/***********/
+		/** *********/
+		/*  INPUT   */
+		/** *********/
 		{
 			type: "input",
 			inputType: "hidden",
@@ -41,10 +41,10 @@ export default {
 			placeholder: "User's first name",
 			styleClasses: "half-width",
 			validator: validators.string,
-			onChanged(model, newVal, oldVal, field) {
+			onChanged(model, newVal, oldVal) {
 				console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
 			},
-			onValidated(model, errors, field) {
+			onValidated(model, errors) {
 				if (errors.length > 0) console.warn("Validation error in Name field! Errors:", errors);
 			}
 		},
@@ -216,9 +216,9 @@ export default {
 			styleClasses: "half-width"
 		},
 
-		/**************/
-		/*  BUILD IN  */
-		/**************/
+		/** ************/
+		/*  BUILD IN   */
+		/** ************/
 
 		{
 			type: "input",
@@ -381,9 +381,9 @@ export default {
 				let values = val.split(",");
 				if (!model.address) model.address = {};
 				if (!model.address.geo) model.address.geo = {};
-				if (values.length > 0 && values[0].trim() != "") model.address.geo.latitude = parseFloat(values[0].trim());
+				if (values.length > 0 && values[0].trim() !== "") model.address.geo.latitude = parseFloat(values[0].trim());
 				else model.address.geo.latitude = 0;
-				if (values.length > 1 && values[1].trim() != "") model.address.geo.longitude = parseFloat(values[1].trim());
+				if (values.length > 1 && values[1].trim() !== "") model.address.geo.longitude = parseFloat(values[1].trim());
 				else model.address.geo.longitude = 0;
 			},
 			buttons: [
@@ -456,9 +456,9 @@ export default {
 			type: "label",
 			label: "Created (label field)",
 			model: "created",
-			get(model) {
-				// return model && model.created ? fecha.format(model.created,"MMMM  D YYYY H") : "-";
-			},
+			// get(model) {
+			// 	// return model && model.created ? fecha.format(model.created,"MMMM  D YYYY H") : "-";
+			// },
 			styleClasses: "half-width"
 		},
 		{
@@ -466,7 +466,7 @@ export default {
 			label: "",
 			buttonText: "Submit form",
 			validateBeforeSubmit: true,
-			onSubmit(model, schema) {
+			onSubmit(model) {
 				console.log("Form submitted!", model);
 				alert("Form submitted!");
 			},
@@ -559,9 +559,9 @@ export default {
 			validator: validators.required
 		},
 
-		/************/
-		/*  JQUERY  */
-		/************/
+		/** **********/
+		/*  JQUERY   */
+		/** **********/
 
 		{
 			type: "input",
@@ -672,10 +672,10 @@ export default {
 			validator: [validators.date],
 			dateTimePickerOptions: {
 				format: "YYYY-MM-DD"
-			},
-			onChanged(model, newVal, oldVal, field) {
-				// model.age = moment().year() - moment(newVal).year();
 			}
+			// onChanged(model, newVal, oldVal, field) {
+			// 	// model.age = moment().year() - moment(newVal).year();
+			// }
 		},
 		{
 			type: "dateTimePicker",
@@ -701,9 +701,9 @@ export default {
 			}
 		},
 
-		/*************/
-		/*  VANILLA  */
-		/*************/
+		/** ***********/
+		/*  VANILLA   */
+		/** ***********/
 
 		{
 			type: "input",
@@ -717,10 +717,10 @@ export default {
 			label: "Location (googleAddress)",
 			model: "location",
 			placeholder: "Location",
-			onPlaceChanged(value, place, rawPlace, model, schema) {
+			onPlaceChanged(value, place, rawPlace) {
 				console.log("Location changed! " + value);
-				// console.log(place);
-				// console.log(rawPlace);
+				console.log(place);
+				console.log(rawPlace);
 			}
 		},
 		{
@@ -858,10 +858,10 @@ export default {
 				// onOpen: ,
 				// onClose: ,
 				// onDraw: ,
-			},
-			onChanged(model, newVal, oldVal, field) {
-				// model.age = moment().year() - moment(newVal).year();
 			}
+			// onChanged(model, newVal, oldVal, field) {
+			// 	// model.age = moment().year() - moment(newVal).year();
+			// }
 		},
 		{
 			type: "vueMultiSelect",
@@ -900,7 +900,7 @@ export default {
 				// loading: false
 			},
 			values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
-			onChanged(model, newVal, oldVal, field) {
+			onChanged(model, newVal, oldVal) {
 				console.log(`Model's skills changed from ${oldVal} to ${newVal}. Model:`, model);
 			},
 			max: 4,
@@ -908,9 +908,9 @@ export default {
 			validator: validators.array
 		},
 
-		/*******************/
-		/*  CUSTOM FIELDS  */
-		/*******************/
+		/** *****************/
+		/*  CUSTOM FIELDS   */
+		/** *****************/
 
 		{
 			type: "input",
@@ -925,9 +925,9 @@ export default {
 			model: "userName"
 		}
 
-		/****************/
-		/*  DEPRECATED  */
-		/****************/
+		/** **************/
+		/*  DEPRECATED   */
+		/** **************/
 
 		// {
 		// 	type: "text",

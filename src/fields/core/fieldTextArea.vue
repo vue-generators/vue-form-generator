@@ -2,7 +2,7 @@
 	textarea.form-control(
 		v-model="value",
 		:id="getFieldID(schema)",
-	  :class="schema.fieldClasses",
+		:class="schema.fieldClasses",
 		:disabled="disabled",
 		:maxlength="schema.max",
 		:minlength="schema.min",

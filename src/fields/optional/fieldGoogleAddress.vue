@@ -4,9 +4,9 @@
 
 <script>
 /**
-	 * Based on gocanto"s Google Autocomplete library
-	 * https://github.com/gocanto/google-autocomplete
-	 */
+ * Based on gocanto"s Google Autocomplete library
+ * https://github.com/gocanto/google-autocomplete
+ */
 
 import abstractField from "../abstractField";
 import { isFunction } from "lodash";
@@ -49,9 +49,9 @@ export default {
 
 	methods: {
 		/**
-			 * Look up places and dispatch an event.
-			 * @return void
-			 */
+		 * Look up places and dispatch an event.
+		 * @return void
+		 */
 		pipeAddress: function() {
 			let place = this.autocomplete.getPlace();
 			if (place) {
@@ -73,9 +73,9 @@ export default {
 		},
 
 		/**
-			 * Get the user location.
-			 * @return void
-			 */
+		 * Get the user location.
+		 * @return void
+		 */
 		geolocate: function() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(position => {
