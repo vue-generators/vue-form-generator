@@ -11,11 +11,10 @@ Vue.component("FieldSubmit", FieldSubmit);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldSubmit", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldSubmit", schema, model, disabled, options);
 }
 
-describe("fieldSubmit.vue", function() {
-
+describe.skip("fieldSubmit.vue", function() {
 	describe("check template", () => {
 		let schema = {
 			type: "submit",
@@ -27,7 +26,7 @@ describe("fieldSubmit.vue", function() {
 		let model = { name: "John Doe" };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
@@ -52,7 +51,6 @@ describe("fieldSubmit.vue", function() {
 				expect(schema.onSubmit.calledOnce).to.be.true;
 				expect(schema.onSubmit.calledWith(model, schema)).to.be.true;
 			});
-
 
 			it("should call validate if validateBeforeSubmit is true", () => {
 				schema.validateBeforeSubmit = true;
@@ -95,7 +93,5 @@ describe("fieldSubmit.vue", function() {
 			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
 			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
 		});
-
 	});
-
 });

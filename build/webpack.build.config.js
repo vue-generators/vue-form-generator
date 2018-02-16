@@ -1,18 +1,43 @@
-let webpack = require("webpack");
-let version = require("./package.json").version;
-let banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
-let ExtractTextPlugin = require("extract-text-webpack-plugin");
-let StatsPlugin = require("stats-webpack-plugin");
+const path = require("path");
+const webpack = require("webpack");
+const version = require("./package.json").version;
+const banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const StatsPlugin = require("stats-webpack-plugin");
+const vueLoaderConfig = require("./vue-loader.conf");
 
 let rules = [
 	{
-		test: /\.js?$/,
-		exclude: /node_modules/,
-		use: "babel-loader"
+		test: /\.(js|vue)$/,
+		loader: "eslint-loader",
+		enforce: "pre",
+		include: [path.resolve("src")],
+		options: {
+			formatter: require("eslint-friendly-formatter")
+		}
 	},
 	{
-		test: /\.vue?$/,
-		loader: "vue-loader"
+		test: /\.vue$/,
+		loader: "vue-loader",
+		include: [path.resolve("src")],
+		exclude: /node_modules/,
+		options: vueLoaderConfig
+	},
+	{
+		test: /\.js$/,
+		loader: "babel-loader",
+		include: [path.resolve("src")],
+		exclude: /node_modules/
+	},
+	{
+		test: /\.(woff2?|svg)$/,
+		loader: "url-loader",
+		include: [path.resolve("src")]
+	},
+	{
+		test: /\.(ttf|eot)$/,
+		loader: "url-loader",
+		include: [path.resolve("src")]
 	}
 ];
 let cssFileName;
@@ -26,7 +51,7 @@ module.exports = [
 	{
 		entry: "./src/index.js",
 		output: {
-			path: "./dist",
+			path: path.resolve("dist"),
 			filename: "vfg.js",
 			library: "VueFormGenerator",
 			libraryTarget: "umd"
@@ -58,16 +83,13 @@ module.exports = [
 			rules
 		},
 
-		vue: {
-			loaders: {
-				css: ExtractTextPlugin.extract("css"),
-				postcss: ExtractTextPlugin.extract("css"),
-				sass: ExtractTextPlugin.extract("css!sass")
-			}
-		},
-
 		resolve: {
-			packageAlias: "browser"
+			aliasFields: ["browser"],
+			extensions: [".js", ".vue", ".json"],
+			alias: {
+				vue$: "vue/dist/vue.esm.js",
+				"@": path.resolve("src")
+			}
 		}
 	}
 ];

@@ -16,7 +16,7 @@ module.exports = {
 	plugins: ["prettier"],
 	rules: {
 		indent: [1, "tab", { SwitchCase: 1 }],
-		quotes: [1, "double"],
+		quotes: [1, "double", { allowTemplateLiterals: true }],
 		semi: [2, "always"],
 		"no-var": [2],
 		"no-console": [0],
