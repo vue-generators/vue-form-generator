@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
@@ -9,11 +8,10 @@ Vue.component("FieldCleave", FieldCleave);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldCleave", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldCleave", schema, model, disabled, options);
 }
 
 describe.skip("fieldCleave.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "masked",
@@ -24,13 +22,13 @@ describe.skip("fieldCleave.vue", function() {
 			readonly: false,
 			cleaveOptions: {
 				phone: true,
-				phoneRegionCode: "HU",
+				phoneRegionCode: "HU"
 			}
 		};
 		let model = { phone: "30 123 4567" };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
@@ -44,8 +42,8 @@ describe.skip("fieldCleave.vue", function() {
 			expect(input.classList.contains("form-control")).to.be.true;
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+		it("should contain the value", done => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal("30 123 4567");
 				done();
 			});
@@ -61,38 +59,33 @@ describe.skip("fieldCleave.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			model.phone = "70 555 4433";
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal("70 555 4433");
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			input.value = "21 888 6655";
 			trigger(input, "input");
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(model.phone).to.be.equal("21 888 6655");
 				done();
 			});
-
 		});
 
-		it("should be formatted data in model", (done) => {
+		it("should be formatted data in model", done => {
 			field.cleave.setRawValue("301234567");
 			expect(input.value).to.be.equal("30 123 4567");
 			trigger(input, "input");
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(model.phone).to.be.equal("30 123 4567");
 				done();
 			});
-
 		});
-
 	});
-
 });

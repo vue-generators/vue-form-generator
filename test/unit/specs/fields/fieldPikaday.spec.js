@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
 import fecha from "fecha";
 
@@ -10,24 +9,23 @@ Vue.component("FieldPikaday", FieldPikaday);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldPikaday", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldPikaday", schema, model, disabled, options);
 }
 
 describe.skip("fieldPikaday.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "dateTime",
 			label: "Event",
 			model: "event",
-			autocomplete:"off",
+			autocomplete: "off",
 			placeholder: "Field placeholder",
 			readonly: false
 		};
 		let model = { event: 1462799081231 };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
@@ -41,9 +39,9 @@ describe.skip("fieldPikaday.vue", function() {
 			expect(input.classList.contains("form-control")).to.be.true;
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( fecha.format(new Date(1462799081231), "YYYY-MM-DD") );
+		it("should contain the value", done => {
+			vm.$nextTick(() => {
+				expect(input.value).to.be.equal(fecha.format(new Date(1462799081231), "YYYY-MM-DD"));
 				done();
 			});
 		});
@@ -58,27 +56,23 @@ describe.skip("fieldPikaday.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			model.event = 1234567890123;
-			vm.$nextTick( () => {
-				expect(input.value).to.be.equal( fecha.format(new Date(1234567890123), "YYYY-MM-DD") );
+			vm.$nextTick(() => {
+				expect(input.value).to.be.equal(fecha.format(new Date(1234567890123), "YYYY-MM-DD"));
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			let day = fecha.format(new Date(1420070400000), "YYYY-MM-DD");
 			field.picker.setDate(day);
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal(day);
 				expect(fecha.format(new Date(model.event), "YYYY-MM-DD")).to.be.equal(day);
 				done();
 			});
-
 		});
-
 	});
-
 });

@@ -1,5 +1,4 @@
 /* global sinon */
-import { expect } from "chai";
 import { clone } from "lodash";
 
 import { createDefaultObject, getMultipleFields, mergeMultiObjectFields } from "src/utils/schema";
@@ -72,7 +71,12 @@ describe("SchemaUtils", () => {
 
 	describe("test mergeMultiObjectFields function", () => {
 		let schema = {
-			fields: [{ model: "id" }, { model: "name", multi: true }, { model: "age", multi: true }, { model: "status", multi: true }]
+			fields: [
+				{ model: "id" },
+				{ model: "name", multi: true },
+				{ model: "age", multi: true },
+				{ model: "status", multi: true }
+			]
 		};
 
 		let models = [{ id: 1, name: "John", age: 25, status: true }, { id: 2, name: "James", age: 30, status: true }];

@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField } from "../util";
 
 import Vue from "vue";
@@ -10,11 +9,10 @@ Vue.component("fieldNoUiSlider", fieldNoUiSlider);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldNoUiSlider", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldNoUiSlider", schema, model, disabled, options);
 }
 
 describe.skip("fieldNoUiSlider.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "noUiSlider",
@@ -26,7 +24,7 @@ describe.skip("fieldNoUiSlider.vue", function() {
 		let model = { rating: 8 };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByClassName("slider")[0];
 		});
@@ -40,9 +38,9 @@ describe.skip("fieldNoUiSlider.vue", function() {
 			expect(input.disabled).to.be.undefined;
 		});
 
-		it("should contain an handle element", (done) => {
+		it("should contain an handle element", done => {
 			if (window.noUiSlider) {
-				vm.$nextTick( () => {
+				vm.$nextTick(() => {
 					let handle = input.querySelector(".noUi-handle");
 					expect(handle).to.be.defined;
 					expect(input.classList.contains("noUi-target")).to.be.true;
@@ -54,34 +52,34 @@ describe.skip("fieldNoUiSlider.vue", function() {
 			}
 		});
 
-		it.skip("should contain the value", (done) => {
-			setTimeout( () => {
+		it.skip("should contain the value", done => {
+			setTimeout(() => {
 				let origin = input.querySelector(".noUi-origin");
 				expect(origin.style.left).to.be.within("70%", "90%");
 				done();
 			}, 100);
 		});
 
-		it("handle value should be the model value after changed", (done) => {
+		it("handle value should be the model value after changed", done => {
 			field.model = { rating: 10 };
-			setTimeout( () => {
+			setTimeout(() => {
 				let origin = input.querySelector(".noUi-origin");
 				expect(origin.style.left).to.be.equal("100%");
 				done();
 			}, 100);
 		});
 
-		it("model value should be the handle value after changed", (done) => {
+		it("model value should be the handle value after changed", done => {
 			field.onChange(3);
-			setTimeout( () => {
+			setTimeout(() => {
 				expect(field.model.rating).to.be.equal(3);
 				done();
 			}, 100);
 		});
 
-		it("should set disabled", (done) => {
+		it("should set disabled", done => {
 			field.disabled = true;
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				// This is not real input, it is a div. So we can check the disabled attribute
 				expect(input.hasAttribute("disabled")).to.be.true;
 				done();

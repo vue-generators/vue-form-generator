@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 import fecha from "fecha";
 
@@ -96,7 +95,9 @@ describe.skip("fieldDateTimePicker.vue", function() {
 
 		it("should contain the value", done => {
 			vm.$nextTick(() => {
-				expect(input.value).to.be.equal(fecha.format(new Date("20160509"), schema.format).format(schema.dateTimePickerOptions.format));
+				expect(input.value).to.be.equal(
+					fecha.format(new Date("20160509"), schema.format).format(schema.dateTimePickerOptions.format)
+				);
 				done();
 			});
 		});

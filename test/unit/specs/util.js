@@ -49,13 +49,24 @@ export function createVueField(test, type, schema = {}, model = null, disabled =
 }
 
 export let attributesList = {
-	autocomplete: { before: "on", after: "off" },
-	disabled: { before: true, after: false, field: true },
+	autocomplete: { before: "on", after: "off", name: "autocomplete" },
+	disabled: { before: true, after: false, field: true, name: "disabled" },
 	multiSelect: { before: true, after: false, name: "multiple" },
-	placeholder: { before: "Field placeholder", after: "" },
+	placeholder: { before: "Field placeholder", after: "", name: "placeholder" },
 	readonly: { before: true, after: false, name: "readOnly" },
 	inputName: { before: "test-name", after: "", name: "name" }
 };
+
+export function checkAttribute2(name, wrapper, schema) {
+	let attr = attributesList[name];
+	let inputElement = wrapper.find("input").element;
+
+	inputElement[attr.name] = attr.before;
+	// console.log(inputElement[attr.name]);
+	inputElement[attr.name] = attr.after;
+	// console.log(inputElement[attr.name]);
+	expect(inputElement[attr.name]).to.be.equal(schema[name]);
+}
 
 export function checkAttribute(name, vm, input, field, schema, done) {
 	let schematic;

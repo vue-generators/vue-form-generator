@@ -1,5 +1,3 @@
-import { expect } from "chai";
-
 import v from "src/utils/validators";
 
 function check(validator, value, field, errorCount) {

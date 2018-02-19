@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, nextTick, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
@@ -237,7 +236,12 @@ describe.skip("fieldSelect.vue", function() {
 			label: "Cities",
 			model: "city",
 			values() {
-				return [{ id: 1, name: "London" }, { id: 2, name: "Paris" }, { id: 3, name: "Rome" }, { id: 4, name: "Berlin" }];
+				return [
+					{ id: 1, name: "London" },
+					{ id: 2, name: "Paris" },
+					{ id: 3, name: "Rome" },
+					{ id: 4, name: "Berlin" }
+				];
 			},
 			fieldClasses: ["applied-class", "another-class"]
 		};

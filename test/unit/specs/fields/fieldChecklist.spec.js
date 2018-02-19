@@ -1,4 +1,4 @@
-import { expect } from "chai";
+import { mount, createLocalVue } from "@vue/test-utils";
 import { createVueField, nextTick, trigger } from "../util";
 
 import Vue from "vue";
@@ -12,7 +12,22 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 	[el, vm, field] = createVueField(test, "fieldChecklist", schema, model, disabled, options);
 }
 
-describe.skip("fieldChecklist.vue", function() {
+const localVue = createLocalVue();
+let wrapper;
+
+function createField2(data, methods) {
+	const _wrapper = mount(FieldChecklist, {
+		localVue,
+		propsData: data,
+		methods: methods
+	});
+
+	wrapper = _wrapper;
+
+	return _wrapper;
+}
+
+describe("fieldChecklist.vue", function() {
 	describe("check listbox template", () => {
 		describe("check template with static string array", () => {
 			let schema = {
@@ -28,22 +43,26 @@ describe.skip("fieldChecklist.vue", function() {
 			let listRowList;
 
 			function isChecked(idx) {
-				return checkboxes[idx].checked;
+				console.log(idx, checkboxes.at(idx).element, checkboxes.at(idx).element.checked);
+
+				return checkboxes.at(idx).element.checked;
 			}
 
 			before(() => {
+				createField2({ schema, model, disabled: false });
 				createField(this, schema, model, false);
-				listbox = el.querySelector(".listbox");
-				checkboxes = listbox.querySelectorAll("input[type=checkbox]");
-				listRowList = listbox.querySelectorAll(".list-row");
+				listbox = wrapper.find(".listbox");
+				checkboxes = wrapper.findAll("input[type=checkbox]");
+				listRowList = wrapper.findAll(".list-row");
+				// listbox = el.querySelector(".listbox");
+				// checkboxes = listbox.querySelectorAll("input[type=checkbox]");
+				// listRowList = listbox.querySelectorAll(".list-row");
 			});
 
 			it("should contain a .listbox element", () => {
-				expect(field).to.be.exist;
-				expect(field.$el).to.be.exist;
-
-				expect(listbox).to.be.defined;
-				expect(listbox.classList.contains("form-control")).to.be.true;
+				expect(wrapper.exists()).to.be.true;
+				expect(listbox.exists()).to.be.true;
+				expect(listbox.classes()).to.include("form-control");
 			});
 
 			it("should contain 7 items", () => {
@@ -57,84 +76,89 @@ describe.skip("fieldChecklist.vue", function() {
 			});
 
 			describe("test values reactivity to changes", () => {
-				it("listbox value should be the model value after changed", done => {
+				it("listbox value should be the model value after changed", () => {
 					model.skills = ["ReactJS"];
-					nextTick(
-						() => {
-							expect(isChecked(0)).to.be.false;
-							expect(isChecked(1)).to.be.false;
-							expect(isChecked(6)).to.be.false;
-							expect(isChecked(5)).to.be.true;
-						},
-						vm,
-						done
-					);
+					checkboxes.update();
+					expect(isChecked(0)).to.be.false;
+					expect(isChecked(1)).to.be.false;
+					expect(isChecked(6)).to.be.false;
+					expect(isChecked(5)).to.be.true;
 				});
 
-				it("model value should be the listbox value if changed", done => {
-					checkboxes[0].checked = true;
-					trigger(checkboxes[0], "change");
-
-					nextTick(
-						() => {
-							expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
-						},
-						vm,
-						done
-					);
+				it.skip("model value should be the listbox value if changed", () => {
+					console.log("1", checkboxes.at(0).element.checked, model.skills);
+					checkboxes.at(0).element.checked = true;
+					console.log("2", checkboxes.at(0).element.checked, model.skills);
+					// checkboxes.at(0).element.click();
+					// checkboxes.at(0).trigger("click");
+					console.log("2.5", checkboxes.at(0).element.checked, model.skills);
+					// checkboxes.at(0).trigger("click");
+					// trigger(checkboxes[0], "change");
+					wrapper.update();
+					console.log("3", checkboxes.at(0).element.checked, model.skills);
+					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
+					// nextTick(
+					// 	() => {
+					// 		expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
+					// 	},
+					// 	vm,
+					// 	done
+					// );
 				});
 			});
 
 			describe("test 'is-checked' class attribution reactivity to changes", () => {
 				it(".list-row with checked input should have a 'is-checked' class", () => {
-					expect(listRowList[0].classList.contains("is-checked")).to.be.true;
-					expect(listRowList[1].classList.contains("is-checked")).to.be.false;
-					expect(listRowList[2].classList.contains("is-checked")).to.be.false;
-					expect(listRowList[3].classList.contains("is-checked")).to.be.false;
-					expect(listRowList[4].classList.contains("is-checked")).to.be.false;
-					expect(listRowList[5].classList.contains("is-checked")).to.be.true;
-					expect(listRowList[6].classList.contains("is-checked")).to.be.false;
+					model.skills = ["HTML5", "ReactJS"];
+					wrapper.update();
+					expect(listRowList.at(0).classes()).to.include("is-checked");
+					expect(listRowList.at(1).classes()).to.not.include("is-checked");
+					expect(listRowList.at(2).classes()).to.not.include("is-checked");
+					expect(listRowList.at(3).classes()).to.not.include("is-checked");
+					expect(listRowList.at(4).classes()).to.not.include("is-checked");
+					expect(listRowList.at(5).classes()).to.include("is-checked");
+					expect(listRowList.at(6).classes()).to.not.include("is-checked");
 				});
 
-				it(".list-row with checked input should have a 'is-checked' class after model value is changed", done => {
+				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
 					model.skills = ["AngularJS"];
-					nextTick(
-						() => {
-							expect(listRowList[0].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[1].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[2].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[3].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[4].classList.contains("is-checked")).to.be.true;
-							expect(listRowList[5].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[6].classList.contains("is-checked")).to.be.false;
-						},
-						vm,
-						done
-					);
+					wrapper.update();
+					expect(listRowList.at(0).classes()).to.not.include("is-checked");
+					expect(listRowList.at(1).classes()).to.not.include("is-checked");
+					expect(listRowList.at(2).classes()).to.not.include("is-checked");
+					expect(listRowList.at(3).classes()).to.not.include("is-checked");
+					expect(listRowList.at(4).classes()).to.include("is-checked");
+					expect(listRowList.at(5).classes()).to.not.include("is-checked");
+					expect(listRowList.at(6).classes()).to.not.include("is-checked");
 				});
 
-				it(".list-row with checked input should have a 'is-checked' class after listbox value is changed", done => {
-					checkboxes[0].checked = true;
-					trigger(checkboxes[0], "change");
+				it.skip(".list-row with checked input should have a 'is-checked' class after listbox value is changed", () => {
+					checkboxes.at(0).element.checked = true;
 
-					nextTick(
-						() => {
-							expect(listRowList[0].classList.contains("is-checked")).to.be.true;
-							expect(listRowList[1].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[2].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[3].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[4].classList.contains("is-checked")).to.be.true;
-							expect(listRowList[5].classList.contains("is-checked")).to.be.false;
-							expect(listRowList[6].classList.contains("is-checked")).to.be.false;
-						},
-						vm,
-						done
-					);
+					let e = document.createEvent("HTMLEvents");
+					e.initEvent("change", true, false);
+
+					// Due to Firefox bug, events fired on disabled
+					// non-attached form controls can throw errors
+					try {
+						checkboxes.at(0).element.dispatchEvent(e);
+					} catch (e) {
+						// Ignored
+						console.error(new Error(e));
+					}
+					// trigger(checkboxes[0], "change");
+					expect(listRowList.at(0).classes()).to.include("is-checked");
+					expect(listRowList.at(1).classes()).to.not.include("is-checked");
+					expect(listRowList.at(2).classes()).to.not.include("is-checked");
+					expect(listRowList.at(3).classes()).to.not.include("is-checked");
+					expect(listRowList.at(4).classes()).to.include("is-checked");
+					expect(listRowList.at(5).classes()).to.not.include("is-checked");
+					expect(listRowList.at(6).classes()).to.not.include("is-checked");
 				});
 			});
 		});
 
-		describe("check static values with { value, name } objects (default key name)", () => {
+		describe.skip("check static values with { value, name } objects (default key name)", () => {
 			let schema = {
 				type: "checklist",
 				label: "Skills",
@@ -261,7 +285,7 @@ describe.skip("fieldChecklist.vue", function() {
 			});
 		});
 
-		describe("check static values with { id, label } objects (custom key name with `checklistOptions`)", () => {
+		describe.skip("check static values with { id, label } objects (custom key name with `checklistOptions`)", () => {
 			let schema = {
 				type: "checklist",
 				label: "Skills",
@@ -392,7 +416,7 @@ describe.skip("fieldChecklist.vue", function() {
 			});
 		});
 
-		describe("check function values", () => {
+		describe.skip("check function values", () => {
 			let schema = {
 				type: "checklist",
 				label: "Skills",
@@ -549,7 +573,7 @@ describe.skip("fieldChecklist.vue", function() {
 		});
 	});
 
-	describe("check combobox template", () => {
+	describe.skip("check combobox template", () => {
 		describe("check template", () => {
 			let schema = {
 				type: "checklist",

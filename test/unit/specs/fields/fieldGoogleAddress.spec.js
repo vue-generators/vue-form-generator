@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
@@ -9,11 +8,10 @@ Vue.component("FieldGoogleAddress", FieldGoogleAddress);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldGoogleAddress", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldGoogleAddress", schema, model, disabled, options);
 }
 
 describe.skip("fieldGoogleAddress.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "text",
@@ -26,7 +24,7 @@ describe.skip("fieldGoogleAddress.vue", function() {
 		let model = { address: "Paris, France" };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
@@ -40,8 +38,8 @@ describe.skip("fieldGoogleAddress.vue", function() {
 			expect(input.classList.contains("form-control")).to.be.true;
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+		it("should contain the value", done => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal("Paris, France");
 				done();
 			});
@@ -57,24 +55,22 @@ describe.skip("fieldGoogleAddress.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			model.address = "Rome, Italy";
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal("Rome, Italy");
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			input.value = "Budapest, Hungary";
 			trigger(input, "input");
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(model.address).to.be.equal("Budapest, Hungary");
 				done();
 			});
-
 		});
 
 		/*
@@ -83,7 +79,5 @@ describe.skip("fieldGoogleAddress.vue", function() {
 				2. check geolocate called if input got focus
 				3. check onPlaceChanged called
 		 */
-
 	});
-
 });

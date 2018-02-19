@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";
@@ -9,11 +8,10 @@ Vue.component("FieldRangeSlider", FieldRangeSlider);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldRangeSlider", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldRangeSlider", schema, model, disabled, options);
 }
 
 describe.skip("fieldRangeSlider.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "rangeSlider",
@@ -21,14 +19,14 @@ describe.skip("fieldRangeSlider.vue", function() {
 			model: "rating",
 			min: 1,
 			max: 10,
-			autocomplete:"off",
+			autocomplete: "off",
 			placeholder: "Field placeholder",
 			readonly: false
 		};
 		let model = { rating: 8 };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
@@ -44,8 +42,8 @@ describe.skip("fieldRangeSlider.vue", function() {
 			expect(input.getAttribute("data-disable")).to.be.null;
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+		it("should contain the value", done => {
+			vm.$nextTick(() => {
 				let origin = el.querySelector(".irs-slider.single");
 				expect(origin.style.left).to.be.within("70%", "90%");
 				done();
@@ -62,26 +60,22 @@ describe.skip("fieldRangeSlider.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			field.model = { rating: 3 };
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				let origin = el.querySelector(".irs-slider.single");
 				expect(origin.style.left).to.be.within("20%", "40%");
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			field.slider.update({ from: 6 });
 			field.slider.callOnChange(field.slider); // trigger changes
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(field.model.rating).to.be.equal(6);
 				done();
 			});
-
 		});
-
 	});
-
 });

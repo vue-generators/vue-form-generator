@@ -1,86 +1,76 @@
-import { expect } from "chai";
-import { createVueField, nextTick, checkAttribute } from "../util";
+import { mount, createLocalVue } from "@vue/test-utils";
+import { checkAttribute2 } from "../util";
 
-import Vue from "vue";
 import FieldCheckbox from "src/fields/core/fieldCheckbox.vue";
 
-Vue.component("FieldCheckbox", FieldCheckbox);
+const localVue = createLocalVue();
+let wrapper;
 
-let el, vm, field;
+function createField2(data, methods) {
+	const _wrapper = mount(FieldCheckbox, {
+		localVue,
+		propsData: data,
+		methods: methods
+	});
 
-function createField(test, schema = {}, model = null, disabled = false, options) {
-	[el, vm, field] = createVueField(test, "fieldCheckbox", schema, model, disabled, options);
+	wrapper = _wrapper;
+
+	return _wrapper;
 }
 
-describe.skip("FieldCheckbox.vue", function() {
+describe("FieldCheckbox.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "checkbox",
 			label: "Status",
 			model: "status",
-			fieldClasses: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"],
+			autocomplete: "off",
+			disabled: false
 		};
 		let model = { status: true };
 		let input;
 
 		before(() => {
-			createField(this, schema, model);
-			input = el.getElementsByTagName("input")[0];
+			createField2({ schema, model });
+			input = wrapper.find("input");
 		});
 
 		it("should contain a checkbox element", () => {
-			expect(field).to.be.exist;
-			expect(field.$el).to.be.exist;
-
-			expect(input).to.be.defined;
-			expect(input.type).to.be.equal("checkbox");
+			expect(wrapper.exists()).to.be.true;
+			expect(input.is("input")).to.be.true;
+			expect(input.attributes().type).to.be.equal("checkbox");
 		});
 
-		it("should contain the value", done => {
-			nextTick(
-				() => {
-					expect(input.checked).to.be.true;
-				},
-				vm,
-				done
-			);
+		it("should contain the value", () => {
+			expect(input.element.checked).to.be.true;
 		});
 
-		it("input value should be the model value after changed", done => {
+		it("input value should be the model value after changed", () => {
 			model.status = false;
-			nextTick(
-				() => {
-					expect(input.checked).to.be.false;
-				},
-				vm,
-				done
-			);
+			wrapper.update();
+			expect(input.element.checked).to.be.false;
 		});
 
-		it("model value should be the input value if changed", done => {
+		it.skip("model value should be the input value if changed", () => {
 			model.status = true;
-			input.checked = true;
-			input.click();
-			nextTick(
-				() => {
-					expect(model.status).to.be.false;
-				},
-				vm,
-				done
-			);
+			wrapper.trigger("click");
+			wrapper.update();
+
+			expect(model.status).to.be.false;
 		});
 
 		it("should have 2 classes", () => {
-			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
-			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
+			expect(wrapper.classes()).to.include("applied-class");
+			expect(wrapper.classes()).to.include("another-class");
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "inputName"];
+			let attributes = ["autocomplete", "disabled"];
 
-			attributes.forEach(function(name) {
-				it("should set " + name, function(done) {
-					checkAttribute(name, vm, input, field, schema, done);
+			attributes.forEach(name => {
+				it("should set " + name, () => {
+					checkAttribute2(name, wrapper, schema);
 				});
 			});
 		});

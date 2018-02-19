@@ -1,5 +1,3 @@
-/* global sinon */
-import { expect } from "chai";
 import { createVueField, checkAttribute } from "../util";
 
 import Vue from "vue";

@@ -1,6 +1,3 @@
-/* global sinon */
-
-import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
@@ -11,11 +8,10 @@ Vue.component("FieldImage", FieldImage);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldImage", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldImage", schema, model, disabled, options);
 }
 
 describe.skip("fieldImage.vue", function() {
-
 	describe("check template without preview", () => {
 		let schema = {
 			type: "image",
@@ -28,7 +24,7 @@ describe.skip("fieldImage.vue", function() {
 		let model = { avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg" };
 		let input, fileInput;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.querySelector("input[type=text]");
 		});
@@ -59,9 +55,8 @@ describe.skip("fieldImage.vue", function() {
 			expect(preview.style.display).to.be.equal("block");
 		});
 
-
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+		it("should contain the value", done => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal(model.avatar);
 				done();
 			});
@@ -88,50 +83,48 @@ describe.skip("fieldImage.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			model.avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg";
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg");
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			input.value = "https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg";
 			trigger(input, "input");
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(model.avatar).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg");
 				done();
 			});
-
 		});
 
-		it("should not contain a file input element if browse is false", (done) => {
+		it("should not contain a file input element if browse is false", done => {
 			vm.$set(vm.schema, "browse", false);
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				let fileInput = el.querySelector("input[type=file]");
 				expect(fileInput).to.be.null;
 				done();
 			});
 		});
 
-		it("should not visible the preview div", (done) => {
+		it("should not visible the preview div", done => {
 			vm.$set(vm.schema, "preview", false);
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				let preview = el.querySelector(".preview");
 				expect(preview.style.display).to.be.equal("none");
 				done();
 			});
 		});
 
-		it("should not show the link input element if hideInput is true", (done) => {
+		it("should not show the link input element if hideInput is true", done => {
 			vm.$set(vm.schema, "hideInput", true);
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				let fileInput = el.querySelector("input[type=text]");
 				expect(fileInput.style.display).to.be.equal("none");
 
@@ -139,32 +132,32 @@ describe.skip("fieldImage.vue", function() {
 				vm.$set(vm.schema, "hideInput", false);
 				done();
 			});
-		});		
+		});
 
-		it("should not show base64 data in input field", (done) => {
+		it("should not show base64 data in input field", done => {
 			model.avatar = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ";
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal("<inline base64 image>");
 				done();
 			});
 		});
 
-		it("should clear input if press remove icon", (done) => {
+		it("should clear input if press remove icon", done => {
 			vm.$set(vm.schema, "preview", true);
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				let remove = el.querySelector(".remove");
 				expect(input.value).to.be.not.equal("");
 				remove.click();
 
-				vm.$nextTick( () => {
+				vm.$nextTick(() => {
 					expect(input.value).to.be.equal("");
 					done();
 				});
 			});
 		});
 
-		it("should convert image to base64 if file input changed", (done) => {
+		it("should convert image to base64 if file input changed", done => {
 			// Stub the browser FileReader
 			let FR = window.FileReader;
 			window.FileReader = sinon.stub().returns({
@@ -187,7 +180,7 @@ describe.skip("fieldImage.vue", function() {
 				}
 			});
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.value).to.be.equal("base64 image data");
 				expect(model.avatar).to.be.equal("base64 image data");
 
@@ -195,7 +188,5 @@ describe.skip("fieldImage.vue", function() {
 				done();
 			});
 		});
-
 	});
-
 });

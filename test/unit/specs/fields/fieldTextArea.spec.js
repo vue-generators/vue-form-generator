@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, nextTick, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";

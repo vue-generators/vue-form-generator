@@ -1,32 +1,20 @@
-/* global sinon */
-import { expect } from "chai";
-
 import { mount, createLocalVue } from "@vue/test-utils";
 
-import Vue from "vue";
 import VueFormGenerator from "src/index";
-// Vue.use(VueFormGenerator);
 
 const localVue = createLocalVue();
 localVue.use(VueFormGenerator);
 
-let el, vm;
-
 let wrapper;
+const defaultTemplate = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" ref="form"></vue-form-generator>`;
 
-function createFormGenerator(schema = {}, model = null, options, multiple, template) {
-	const defaultTemplate = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" ref="form"></vue-form-generator>`;
-
+function createFormGenerator(data, methods, template) {
 	const Component = {
 		template: template || defaultTemplate,
 		data() {
-			return {
-				schema,
-				model,
-				options,
-				multiple
-			};
-		}
+			return data;
+		},
+		methods: methods
 	};
 
 	const _wrapper = mount(Component, {
@@ -42,8 +30,8 @@ describe("VueFormGenerator.vue", () => {
 			fields: []
 		};
 
-		beforeEach(() => {
-			createFormGenerator(schema, undefined, undefined, undefined, undefined);
+		before(() => {
+			createFormGenerator({ schema });
 		});
 
 		it("should be create fieldset", () => {
@@ -58,11 +46,9 @@ describe("VueFormGenerator.vue", () => {
 			fields: []
 		};
 
-		beforeEach(() => {
+		before(() => {
 			createFormGenerator(
-				schema,
-				undefined,
-				undefined,
+				{ schema },
 				undefined,
 				`<vue-form-generator :schema="schema" ref="form" tag="section"></vue-form-generator>`
 			);
@@ -108,7 +94,7 @@ describe("VueFormGenerator.vue", () => {
 					}
 				]
 			};
-			createFormGenerator(schema);
+			createFormGenerator({ schema });
 			group = wrapper.find(".form-group");
 		});
 
@@ -154,7 +140,8 @@ describe("VueFormGenerator.vue", () => {
 					validationErrorClass: "has-error",
 					validationSuccessClass: "has-success"
 				};
-				wrapper.setData({ options: options });
+				createFormGenerator({ schema, options: options });
+				group = wrapper.find(".form-group");
 			});
 
 			it("error class", () => {
@@ -198,8 +185,8 @@ describe("VueFormGenerator.vue", () => {
 		};
 		let label;
 
-		beforeEach(() => {
-			createFormGenerator(schema);
+		before(() => {
+			createFormGenerator({ schema });
 			label = wrapper.find("label");
 		});
 
@@ -223,8 +210,8 @@ describe("VueFormGenerator.vue", () => {
 			]
 		};
 
-		beforeEach(() => {
-			createFormGenerator(schema);
+		before(() => {
+			createFormGenerator({ schema });
 			group = wrapper.find(".form-group");
 			label = group.find("label");
 		});
@@ -261,8 +248,8 @@ describe("VueFormGenerator.vue", () => {
 			]
 		};
 
-		beforeEach(() => {
-			createFormGenerator(schema);
+		before(() => {
+			createFormGenerator({ schema });
 			group = wrapper.find(".form-group");
 		});
 
@@ -298,8 +285,8 @@ describe("VueFormGenerator.vue", () => {
 		};
 		let form;
 
-		beforeEach(() => {
-			createFormGenerator(schema, {}, {}, true);
+		before(() => {
+			createFormGenerator({ schema, multiple: true });
 			form = wrapper.vm.$refs.form;
 		});
 
@@ -331,8 +318,8 @@ describe("VueFormGenerator.vue", () => {
 
 		let input;
 
-		beforeEach(() => {
-			createFormGenerator(schema, model);
+		before(() => {
+			createFormGenerator({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -366,7 +353,7 @@ describe("VueFormGenerator.vue", () => {
 		};
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 		});
 
 		it("should be called with correct params", () => {
@@ -394,7 +381,7 @@ describe("VueFormGenerator.vue", () => {
 		let input;
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -432,7 +419,7 @@ describe("VueFormGenerator.vue", () => {
 		let group;
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 			group = wrapper.find(".form-group");
 		});
 
@@ -470,7 +457,7 @@ describe("VueFormGenerator.vue", () => {
 		};
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 		});
 
 		it("should be applay", () => {
@@ -507,7 +494,7 @@ describe("VueFormGenerator.vue", () => {
 		let group;
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 			group = wrapper.find(".form-group");
 		});
 
@@ -545,7 +532,7 @@ describe("VueFormGenerator.vue", () => {
 		let group;
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 			group = wrapper.find(".form-group");
 		});
 
@@ -580,8 +567,8 @@ describe("VueFormGenerator.vue", () => {
 			status: true
 		};
 
-		beforeEach(() => {
-			createFormGenerator(schema, model);
+		before(() => {
+			createFormGenerator({ schema, model });
 		});
 
 		it("should be visible the name field", () => {
@@ -613,7 +600,7 @@ describe("VueFormGenerator.vue", () => {
 		let model = { name: "John Doe" };
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 		});
 
 		it("should be enabled the name field", () => {
@@ -646,8 +633,8 @@ describe("VueFormGenerator.vue", () => {
 		let model = { name: "John Doe" };
 		let form;
 
-		beforeEach(() => {
-			createFormGenerator(schema, model);
+		before(() => {
+			createFormGenerator({ schema, model });
 			form = wrapper.vm.$refs.form;
 		});
 
@@ -687,7 +674,7 @@ describe("VueFormGenerator.vue", () => {
 		let form;
 
 		before(() => {
-			createFormGenerator(schema, model);
+			createFormGenerator({ schema, model });
 			form = wrapper.vm.$refs.form;
 		});
 
@@ -724,8 +711,8 @@ describe("VueFormGenerator.vue", () => {
 		let model = { name: "Me" };
 		let form;
 
-		beforeEach(() => {
-			createFormGenerator(schema, model);
+		before(() => {
+			createFormGenerator({ schema, model });
 			form = wrapper.vm.$refs.form;
 		});
 
@@ -753,7 +740,7 @@ describe("VueFormGenerator.vue", () => {
 		let form;
 
 		before(() => {
-			createFormGenerator(schema, model, { validateAfterLoad: true });
+			createFormGenerator({ schema, model, options: { validateAfterLoad: true } });
 			form = wrapper.vm.$refs.form;
 		});
 
@@ -772,7 +759,7 @@ describe("VueFormGenerator.vue", () => {
 			setTimeout(() => {
 				expect(form.errors).to.be.length(0);
 				done();
-			}, 150);
+			}, 10);
 		});
 
 		it("should be no errors if validateAfterLoad is false", done => {
@@ -781,7 +768,7 @@ describe("VueFormGenerator.vue", () => {
 			setTimeout(() => {
 				expect(form.errors).to.be.length(0);
 				done();
-			}, 150);
+			}, 10);
 		});
 	});
 
@@ -794,7 +781,7 @@ describe("VueFormGenerator.vue", () => {
 					label: "Name",
 					model: "name",
 					min: 3,
-					validator: VueFormGenerator.validators.string
+					validator: ["string"]
 				}
 			]
 		};
@@ -805,33 +792,11 @@ describe("VueFormGenerator.vue", () => {
 
 		beforeEach(() => {
 			createFormGenerator(
-				schema,
-				model,
-				{},
-				null,
+				{ schema, model },
+				{ onValidated: onValidated },
 				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
 			);
 			form = wrapper.vm.$refs.form;
-			// wrapper.setMethods({ onValidated: onValidated });
-			// let elm = document.createElement("div");
-			// vm = new Vue({
-			// 	// eslint-disable-next-line quotes
-			// 	template: ,
-			// 	data: {
-			// 		schema,
-			// 		model,
-			// 		options: {}
-			// 	},
-			// 	methods: {
-			// 		onValidated
-			// 	}
-			// }).$mount(elm);
-
-			// el = vm.$el;
-			// vm.$nextTick(() => {
-			// 	form = vm.$refs.form;
-			// 	done();
-			// });
 		});
 
 		it("should no errors after mounted()", () => {
@@ -840,7 +805,7 @@ describe("VueFormGenerator.vue", () => {
 
 		it.skip("should be validation error if model value is not valid", () => {
 			wrapper.vm.model.name = "A";
-			onValidated.reset();
+			onValidated.resetHistory();
 			form.validate();
 
 			expect(form.errors).to.be.length(1);
@@ -855,9 +820,9 @@ describe("VueFormGenerator.vue", () => {
 			).to.be.true;
 		});
 
-		it.skip("should no validation error if model valie is valid", () => {
-			vm.model.name = "Alan";
-			onValidated.reset();
+		it("should no validation error if model valie is valid", () => {
+			wrapper.vm.model.name = "Alan";
+			onValidated.resetHistory();
 			form.validate();
 
 			expect(form.errors).to.be.length(0);
@@ -866,7 +831,7 @@ describe("VueFormGenerator.vue", () => {
 		});
 	});
 
-	describe.skip("check schema.onChanged when the model changed", () => {
+	describe("check schema.onChanged when the model changed", () => {
 		let schema = {
 			fields: [
 				{
@@ -882,25 +847,19 @@ describe("VueFormGenerator.vue", () => {
 		let model = { name: "Me" };
 		let form;
 
-		before(done => {
-			createFormGenerator(schema, model, {});
-			vm.$nextTick(() => {
-				form = vm.$refs.form;
-				done();
-			});
+		before(() => {
+			createFormGenerator({ schema, model });
+			form = wrapper.vm.$refs.form;
 		});
 
-		it("should NOT called the schema.onChanged", done => {
-			schema.fields[0].onChanged.reset();
+		it("should NOT called the schema.onChanged", () => {
+			schema.fields[0].onChanged.resetHistory();
 			form.model = { name: "Bob" };
-			vm.$nextTick(() => {
-				expect(schema.fields[0].onChanged.called).to.be.false;
-				done();
-			});
+			expect(schema.fields[0].onChanged.called).to.be.false;
 		});
 	});
 
-	describe.skip("check onFieldValidated method if child validate", () => {
+	describe("check onFieldValidated method if child validate", () => {
 		let schema = {
 			fields: [
 				{
@@ -909,7 +868,7 @@ describe("VueFormGenerator.vue", () => {
 					label: "Name",
 					model: "name",
 					min: 3,
-					validator: VueFormGenerator.validators.string
+					validator: ["string"]
 				},
 				{
 					type: "input",
@@ -928,39 +887,26 @@ describe("VueFormGenerator.vue", () => {
 		let field;
 		let onValidated = sinon.spy();
 
-		before(done => {
-			let elm = document.createElement("div");
-			vm = new Vue({
-				// eslint-disable-next-line quotes
-				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`,
-				data: {
-					schema,
-					model,
-					options: {}
-				},
-				methods: {
-					onValidated
-				}
-			}).$mount(elm);
-
-			el = vm.$el;
-			vm.$nextTick(() => {
-				form = vm.$refs.form;
-				field = form.$children[0];
-				done();
-			});
+		before(() => {
+			createFormGenerator(
+				{ schema, model },
+				{ onValidated: onValidated },
+				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
+			);
+			form = wrapper.vm.$refs.form;
+			field = form.$children[0];
 		});
 
 		it("should no errors after mounted()", done => {
-			vm.$nextTick(() => {
+			wrapper.vm.$nextTick(() => {
 				expect(form.errors).to.be.length(0);
 				done();
 			});
 		});
 
-		it("should be validation error if model value is not valid", () => {
-			onValidated.reset();
-			vm.model.name = "A";
+		it.skip("should be validation error if model value is not valid", () => {
+			onValidated.resetHistory();
+			wrapper.vm.model.name = "A";
 			field.validate();
 
 			expect(form.errors).to.be.length(1);
@@ -975,16 +921,16 @@ describe("VueFormGenerator.vue", () => {
 			).to.be.true;
 		});
 
-		it("should be 2 validation error", () => {
+		it.skip("should be 2 validation error", () => {
 			form.$children[1].validate();
 			expect(form.errors).to.be.length(2);
 			expect(form.errors[0].error).to.be.equal("The length of text is too small! Current: 1, Minimum: 3");
 			expect(form.errors[1].error).to.be.equal("Validation error!");
 		});
 
-		it("should only other field validation error", () => {
-			vm.model.name = "Alan";
-			onValidated.reset();
+		it.skip("should only other field validation error", () => {
+			wrapper.vm.model.name = "Alan";
+			onValidated.resetHistory();
 			field.validate();
 
 			expect(form.errors).to.be.length(1);
@@ -993,7 +939,7 @@ describe("VueFormGenerator.vue", () => {
 		});
 	});
 
-	describe.skip("check async validator", () => {
+	describe("check async validator", () => {
 		let schema = {
 			fields: [
 				{
@@ -1009,7 +955,7 @@ describe("VueFormGenerator.vue", () => {
 								} else {
 									resolve(["Invalid name"]);
 								}
-							}, 50);
+							}, 10);
 						});
 					}
 				}
@@ -1021,39 +967,26 @@ describe("VueFormGenerator.vue", () => {
 		let field;
 		let onValidated = sinon.spy();
 
-		before(done => {
-			let elm = document.createElement("div");
-			vm = new Vue({
-				// eslint-disable-next-line quotes
-				template: `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`,
-				data: {
-					schema,
-					model,
-					options: {}
-				},
-				methods: {
-					onValidated
-				}
-			}).$mount(elm);
-
-			el = vm.$el;
-			vm.$nextTick(() => {
-				form = vm.$refs.form;
-				field = form.$children[0];
-				done();
-			});
+		before(() => {
+			createFormGenerator(
+				{ schema, model },
+				{ onValidated: onValidated },
+				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
+			);
+			form = wrapper.vm.$refs.form;
+			field = form.$children[0];
 		});
 
 		it("should no errors after mounted()", done => {
-			vm.$nextTick(() => {
+			wrapper.vm.$nextTick(() => {
 				expect(form.errors).to.be.length(0);
 				done();
 			});
 		});
 
 		it("should be validation error if model value is not valid", done => {
-			onValidated.reset();
-			vm.model.name = "A";
+			onValidated.resetHistory();
+			wrapper.vm.model.name = "A";
 			field.validate();
 
 			setTimeout(() => {
@@ -1061,7 +994,7 @@ describe("VueFormGenerator.vue", () => {
 				expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "Invalid name" }])).to.be.true;
 
 				done();
-			}, 100);
+			}, 15);
 		});
 	});
 

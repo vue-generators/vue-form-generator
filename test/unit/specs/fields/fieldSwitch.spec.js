@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
@@ -9,11 +8,10 @@ Vue.component("FieldSwitch", FieldSwitch);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldSwitch", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldSwitch", schema, model, disabled, options);
 }
 
 describe.skip("FieldSwitch.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "switch",
@@ -23,7 +21,7 @@ describe.skip("FieldSwitch.vue", function() {
 		let model = { status: true };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.querySelector("input");
 		});
@@ -37,8 +35,8 @@ describe.skip("FieldSwitch.vue", function() {
 			expect(input.disabled).to.be.false;
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+		it("should contain the value", done => {
+			vm.$nextTick(() => {
 				expect(input.checked).to.be.true;
 				done();
 			});
@@ -60,35 +58,32 @@ describe.skip("FieldSwitch.vue", function() {
 			expect(span.getAttribute("data-off")).to.be.equal("Off");
 		});
 
-		it("should set disabled", (done) => {
+		it("should set disabled", done => {
 			field.disabled = true;
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.disabled).to.be.true;
 				field.disabled = false;
 				done();
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			model.status = false;
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.checked).to.be.false;
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			input.checked = true;
 			trigger(input, "click");
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(model.status).to.be.true;
 				done();
 			});
-
 		});
-
 	});
 
 	describe("check template with custom On/Off texts", () => {
@@ -101,7 +96,7 @@ describe.skip("FieldSwitch.vue", function() {
 		};
 		let model = { status: true };
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 		});
 
@@ -110,7 +105,6 @@ describe.skip("FieldSwitch.vue", function() {
 			expect(span.getAttribute("data-on")).to.be.equal("Yes");
 			expect(span.getAttribute("data-off")).to.be.equal("No");
 		});
-
 	});
 
 	describe("check template with custom On/Off values", () => {
@@ -125,38 +119,34 @@ describe.skip("FieldSwitch.vue", function() {
 		let model = { sex: "female" };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.querySelector("input");
 		});
 
-		it("check input value", (done) => {
-			vm.$nextTick( () => {
+		it("check input value", done => {
+			vm.$nextTick(() => {
 				expect(input.checked).to.be.true;
 				done();
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			model.sex = "male";
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(input.checked).to.be.false;
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			input.checked = true;
 			trigger(input, "click");
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(model.sex).to.be.equal("female");
 				done();
 			});
-
 		});
-
 	});
-
 });
