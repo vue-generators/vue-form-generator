@@ -27,7 +27,7 @@ function createField(data, methods, template) {
 	return _wrapper;
 }
 
-describe("abstractField.vue", function() {
+describe("abstractField.vue", () => {
 	describe("check static value", () => {
 		let schema = {
 			type: "text",

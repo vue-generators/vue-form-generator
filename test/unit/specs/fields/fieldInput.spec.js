@@ -1,17 +1,24 @@
-import { createVueField, nextTick, trigger, checkAttribute } from "../util";
+import { mount, createLocalVue } from "@vue/test-utils";
+import { checkAttribute2 } from "../util";
 
-import Vue from "vue";
 import fieldInput from "src/fields/core/fieldInput.vue";
 
-Vue.component("fieldInput", fieldInput);
+const localVue = createLocalVue();
+let wrapper;
 
-let el, vm, field;
+function createField2(data, methods) {
+	const _wrapper = mount(fieldInput, {
+		localVue,
+		propsData: data,
+		methods: methods
+	});
 
-function createField(test, schema = {}, model = null, disabled = false, options) {
-	[el, vm, field] = createVueField(test, "fieldInput", schema, model, disabled, options);
+	wrapper = _wrapper;
+
+	return _wrapper;
 }
 
-describe.skip("fieldInput.vue", function() {
+describe("fieldInput.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "input",
@@ -19,35 +26,29 @@ describe.skip("fieldInput.vue", function() {
 			label: "Name",
 			model: "name",
 			autocomplete: "off",
-			placeholder: "Field placeholder",
+			disabled: false,
+			placeholder: "",
 			readonly: false,
+			inputName: "",
 			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { name: "John Doe" };
 		let input;
 
 		before(() => {
-			createField(this, schema, model, false);
-			input = el.getElementsByTagName("input")[0];
+			createField2({ schema, model, disabled: false });
+			input = wrapper.find("input");
 		});
 
 		it("should contain an input text element", () => {
-			expect(field).to.be.exist;
-			expect(field.$el).to.be.exist;
-
-			expect(input).to.be.defined;
-			expect(input.type).to.be.equal("text");
-			expect(input.classList.contains("form-control")).to.be.true;
+			expect(wrapper.exists()).to.be.true;
+			expect(input.is("input")).to.be.true;
+			expect(input.attributes().type).to.be.equal("text");
+			expect(input.classes()).to.include("form-control");
 		});
 
-		it("should contain the value", done => {
-			nextTick(
-				() => {
-					expect(input.value).to.be.equal("John Doe");
-				},
-				vm,
-				done
-			);
+		it("should contain the value", () => {
+			expect(input.element.value).to.be.equal("John Doe");
 		});
 
 		let inputTypes = new Map([
@@ -79,54 +80,38 @@ describe.skip("fieldInput.vue", function() {
 		]);
 		for (let [inputType, attributes] of inputTypes) {
 			describe("change type of input", () => {
-				it("should become a " + inputType, function(done) {
-					field.schema.inputType = inputType;
-					nextTick(
-						() => {
-							expect(input.type).to.be.equal(inputType);
-						},
-						vm,
-						done
-					);
+				it("should become a " + inputType, () => {
+					schema.inputType = inputType;
+					wrapper.update();
+					expect(input.attributes().type).to.be.equal(inputType);
 				});
 
 				describe("check optional attribute", () => {
-					attributes.forEach(function(name) {
-						it("should set " + name, function(done) {
-							checkAttribute(name, vm, input, field, schema, done);
+					attributes.forEach(name => {
+						it("should set " + name, () => {
+							checkAttribute2(name, wrapper, schema);
 						});
 					});
 				});
 			});
 		}
 
-		it("input value should be the model value after changed", done => {
+		it("input value should be the model value after changed", () => {
 			model.name = "Jane Doe";
-			nextTick(
-				() => {
-					expect(input.value).to.be.equal("Jane Doe");
-				},
-				vm,
-				done
-			);
+			wrapper.update();
+			expect(input.element.value).to.be.equal("Jane Doe");
 		});
 
-		it("model value should be the input value if changed", done => {
-			input.value = "John Smith";
-			trigger(input, "input");
-
-			nextTick(
-				() => {
-					expect(model.name).to.be.equal("John Smith");
-				},
-				vm,
-				done
-			);
+		it("model value should be the input value if changed", () => {
+			input.element.value = "John Smith";
+			input.trigger("input");
+			wrapper.update();
+			expect(model.name).to.be.equal("John Smith");
 		});
 
 		it("should have 2 classes", () => {
-			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
-			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
+			expect(input.classes()).to.include("applied-class");
+			expect(input.classes()).to.include("another-class");
 		});
 	});
 });

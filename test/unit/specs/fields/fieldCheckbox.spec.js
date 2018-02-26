@@ -6,7 +6,7 @@ import FieldCheckbox from "src/fields/core/fieldCheckbox.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldCheckbox, {
 		localVue,
 		propsData: data,
@@ -26,13 +26,14 @@ describe("FieldCheckbox.vue", () => {
 			model: "status",
 			fieldClasses: ["applied-class", "another-class"],
 			autocomplete: "off",
-			disabled: false
+			disabled: false,
+			inputName: ""
 		};
 		let model = { status: true };
 		let input;
 
 		before(() => {
-			createField2({ schema, model });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -66,7 +67,7 @@ describe("FieldCheckbox.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled"];
+			let attributes = ["autocomplete", "disabled", "inputName"];
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {

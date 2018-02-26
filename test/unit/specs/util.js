@@ -62,9 +62,9 @@ export function checkAttribute2(name, wrapper, schema) {
 	let inputElement = wrapper.find("input").element;
 
 	inputElement[attr.name] = attr.before;
-	// console.log(inputElement[attr.name]);
+	// console.log(inputElement[attr.name], schema[name]);
 	inputElement[attr.name] = attr.after;
-	// console.log(inputElement[attr.name]);
+	// console.log(inputElement[attr.name], schema[name]);
 	expect(inputElement[attr.name]).to.be.equal(schema[name]);
 }
 
