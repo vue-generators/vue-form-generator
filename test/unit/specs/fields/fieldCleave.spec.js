@@ -69,6 +69,7 @@ describe("fieldCleave.vue", () => {
 		it("input value should be the model value after changed", () => {
 			model.phone = "70 555 4433";
 			wrapper.update();
+
 			expect(input.element.value).to.be.equal("70 555 4433");
 		});
 
@@ -76,12 +77,15 @@ describe("fieldCleave.vue", () => {
 			input.element.value = "21 888 6655";
 			input.trigger("input");
 			wrapper.update();
+
 			expect(model.phone).to.be.equal("21 888 6655");
 		});
 
 		it("should be formatted data in model", () => {
 			wrapper.vm.cleave.setRawValue("301234567");
+
 			expect(input.element.value).to.be.equal("30 123 4567");
+
 			input.trigger("input");
 			wrapper.update();
 

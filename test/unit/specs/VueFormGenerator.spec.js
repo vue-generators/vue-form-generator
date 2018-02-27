@@ -741,10 +741,10 @@ describe("VueFormGenerator.vue", () => {
 
 		before(() => {
 			createFormGenerator({ schema, model, options: { validateAfterLoad: true } });
-			form = wrapper.vm.$refs.form;
 		});
 
 		it("should be validation error at mounted()", () => {
+			form = wrapper.vm.$refs.form;
 			expect(form.errors).to.be.length(1);
 		});
 

@@ -1,5 +1,5 @@
 <template>
-	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': containPips, 'contain-tooltip': containTooltip }"></div>  
+	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': containPips, 'contain-tooltip': containTooltip }"></div>
 </template>
 
 <script>
@@ -70,7 +70,7 @@ export default {
 	},
 
 	mounted() {
-		this.$nextTick(function() {
+		this.$nextTick(() => {
 			if (window.noUiSlider) {
 				this.slider = this.$el;
 				window.noUiSlider.create(
@@ -85,7 +85,9 @@ export default {
 				);
 				this.slider.noUiSlider.on("change", this.onChange.bind(this));
 			} else {
-				console.warn("noUiSlider is missing. Please download from https://github.com/leongersen/noUiSlider and load the script and CSS in the HTML head section!");
+				console.warn(
+					"noUiSlider is missing. Please download from https://github.com/leongersen/noUiSlider and load the script and CSS in the HTML head section!"
+				);
 			}
 		});
 	},

@@ -2,6 +2,12 @@ import { mount, createLocalVue } from "@vue/test-utils";
 import { checkAttribute2 } from "../util";
 import fecha from "fecha";
 
+let jQuery = require("jquery");
+let $ = jQuery(window);
+global.$ = $; // make availble to other files if necessary
+global.datetimepicker = window.datetimepicker;
+require("eonasdan-bootstrap-datetimepicker");
+
 import FieldDateTimePicker from "src/fields/optional/fieldDateTimePicker.vue";
 
 const localVue = createLocalVue();
@@ -63,12 +69,14 @@ describe("fieldDateTimePicker.vue", () => {
 		it("input value should be the model value after changed", () => {
 			model.event = 1234567890123;
 			wrapper.update();
+
 			expect(input.element.value).to.be.equal(fecha.format(new Date(1234567890123), "YYYY-MM-DD HH:mm:ss"));
 		});
 
 		it("model value should be the input value if changed", () => {
 			input.element.value = fecha.format(new Date(1420194153000), "YYYY-MM-DD HH:mm:ss");
 			input.trigger("input");
+
 			expect(model.event).to.be.equal(1420194153000);
 		});
 	});
@@ -98,9 +106,7 @@ describe("fieldDateTimePicker.vue", () => {
 			console.log(fecha.format(new Date(20160509), schema.format));
 			console.log(schema.dateTimePickerOptions.format);
 
-			expect(input.element.value).to.be.equal(
-				fecha.format(new Date(20160509), schema.format).format(schema.dateTimePickerOptions.format)
-			);
+			expect(input.element.value).to.be.equal(fecha.format(new Date(20160509), schema.format));
 		});
 
 		it("model value should be the formatted input value if changed", () => {

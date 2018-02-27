@@ -57,9 +57,9 @@ export let attributesList = {
 	inputName: { before: "test-name", after: "", name: "name" }
 };
 
-export function checkAttribute2(name, wrapper, schema) {
+export function checkAttribute2(name, wrapper, schema, type = "input") {
 	let attr = attributesList[name];
-	let inputElement = wrapper.find("input").element;
+	let inputElement = wrapper.find(type).element;
 
 	inputElement[attr.name] = attr.before;
 	// console.log(inputElement[attr.name], schema[name]);

@@ -65,6 +65,7 @@ describe("fieldChecklist.vue", () => {
 				it("listbox value should be the model value after changed", () => {
 					model.skills = ["ReactJS"];
 					checkboxes.update();
+
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
 					expect(isChecked(6)).to.be.false;
@@ -75,6 +76,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 				});
 			});
@@ -83,6 +85,7 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class", () => {
 					model.skills = ["HTML5", "ReactJS"];
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -95,6 +98,7 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
 					model.skills = ["AngularJS"];
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -107,6 +111,7 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after listbox value is changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
+
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -158,6 +163,7 @@ describe("fieldChecklist.vue", () => {
 				it("listbox value should be the model value after changed", () => {
 					model.skills = [3];
 					wrapper.update();
+
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
 					expect(isChecked(2)).to.be.true;
@@ -171,6 +177,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(model.skills).to.be.deep.equal([3, 1]);
 				});
 			});
@@ -189,6 +196,7 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
 					model.skills = [4];
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -202,6 +210,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -257,6 +266,7 @@ describe("fieldChecklist.vue", () => {
 				it("listbox value should be the model value after changed", () => {
 					model.skills = [3];
 					wrapper.update();
+
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
 					expect(isChecked(2)).to.be.true;
@@ -270,6 +280,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(model.skills).to.be.deep.equal([3, 1]);
 				});
 			});
@@ -288,6 +299,7 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
 					model.skills = [4];
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -301,6 +313,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -364,6 +377,7 @@ describe("fieldChecklist.vue", () => {
 			it("should contain input name field with inputName", () => {
 				schema.inputName = "skill";
 				wrapper.update();
+
 				expect(checkboxes.at(0).attributes().name).to.be.equal("skill_1");
 				expect(checkboxes.at(1).attributes().name).to.be.equal("skill_2");
 				expect(checkboxes.at(2).attributes().name).to.be.equal("skill_3");
@@ -377,6 +391,7 @@ describe("fieldChecklist.vue", () => {
 				it("listbox value should be the model value after changed", () => {
 					model.skills = [3];
 					wrapper.update();
+
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
 					expect(isChecked(2)).to.be.true;
@@ -386,6 +401,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(model.skills).to.be.deep.equal([3, 1]);
 				});
 			});
@@ -404,6 +420,7 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
 					model.skills = [4];
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -417,6 +434,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -458,7 +476,9 @@ describe("fieldChecklist.vue", () => {
 
 			it("should contain a .dropList element", () => {
 				expect(dropList.exists()).to.be.true;
+
 				checkboxes = dropList.findAll("input[type=checkbox]");
+
 				expect(checkboxes).to.be.length(0); // collapsed
 			});
 
@@ -472,11 +492,13 @@ describe("fieldChecklist.vue", () => {
 			it("should contain 7 checkbox it expanded ", () => {
 				mainRow.trigger("click");
 				checkboxes = dropList.findAll("input[type=checkbox]");
+
 				expect(checkboxes.length).to.be.equal(7);
 			});
 
 			it("should contain input name field withouth inputName", () => {
 				checkboxes = dropList.findAll("input[type=checkbox]");
+
 				expect(checkboxes.at(0).attributes().name).to.be.equal("HTML5");
 				expect(checkboxes.at(1).attributes().name).to.be.equal("Javascript");
 				expect(checkboxes.at(2).attributes().name).to.be.equal("CSS3");
@@ -490,6 +512,7 @@ describe("fieldChecklist.vue", () => {
 				schema.inputName = "skill";
 				wrapper.update();
 				checkboxes = dropList.findAll("input[type=checkbox]");
+
 				expect(checkboxes.at(0).attributes().name).to.be.equal("skill_HTML5");
 				expect(checkboxes.at(1).attributes().name).to.be.equal("skill_Javascript");
 				expect(checkboxes.at(2).attributes().name).to.be.equal("skill_CSS3");
@@ -509,6 +532,7 @@ describe("fieldChecklist.vue", () => {
 				it("dropList value should be the model value after changed", () => {
 					model.skills = ["ReactJS"];
 					wrapper.update();
+
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
 					expect(isChecked(6)).to.be.false;
@@ -519,6 +543,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 				});
 
@@ -526,6 +551,7 @@ describe("fieldChecklist.vue", () => {
 					checkboxes.at(0).element.checked = false;
 					checkboxes.at(0).trigger("change");
 					wrapper.update();
+
 					expect(model.skills).to.be.deep.equal(["ReactJS"]);
 				});
 
@@ -548,6 +574,7 @@ describe("fieldChecklist.vue", () => {
 					model.skills = ["HTML5"]; // TODO remove when previous step is fixed
 					wrapper.update();
 					listRowList = wrapper.findAll(".list-row");
+
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -561,6 +588,7 @@ describe("fieldChecklist.vue", () => {
 					model.skills = ["ReactJS"];
 					wrapper.update();
 					listRowList = wrapper.findAll(".list-row");
+
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");
@@ -576,6 +604,7 @@ describe("fieldChecklist.vue", () => {
 					wrapper.update();
 					dropList.update();
 					listRowList = dropList.findAll(".list-row");
+
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
 					expect(listRowList.at(2).classes()).to.not.include("is-checked");

@@ -15,7 +15,7 @@ import { isFunction } from "lodash";
 export default {
 	mixins: [abstractField],
 
-	data: function() {
+	data() {
 		return {
 			// google autocomplete object
 			autocomplete: "",
@@ -34,15 +34,22 @@ export default {
 	},
 
 	mounted() {
-		this.$nextTick(function() {
-			if (window.google && window.google.maps && window.google.maps.places && window.google.maps.places.Autocomplete) {
+		this.$nextTick(() => {
+			if (
+				window.google &&
+				window.google.maps &&
+				window.google.maps.places &&
+				window.google.maps.places.Autocomplete
+			) {
 				this.autocomplete = new google.maps.places.Autocomplete(this.$el, {
 					types: ["geocode"]
 				});
 
 				this.autocomplete.addListener("place_changed", this.pipeAddress);
 			} else {
-				console.warn("Google Maps API is missing. Please add https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&libraries=places script in the HTML head section!");
+				console.warn(
+					"Google Maps API is missing. Please add https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&libraries=places script in the HTML head section!"
+				);
 			}
 		});
 	},
@@ -52,7 +59,7 @@ export default {
 		 * Look up places and dispatch an event.
 		 * @return void
 		 */
-		pipeAddress: function() {
+		pipeAddress() {
 			let place = this.autocomplete.getPlace();
 			if (place) {
 				this.value = place.formatted_address;
@@ -68,7 +75,8 @@ export default {
 				}
 
 				// Call event in schema
-				if (isFunction(this.schema.onPlaceChanged)) this.schema.onPlaceChanged(this.value, data, place, this.model, this.schema);
+				if (isFunction(this.schema.onPlaceChanged))
+					this.schema.onPlaceChanged(this.value, data, place, this.model, this.schema);
 			}
 		},
 
@@ -76,7 +84,7 @@ export default {
 		 * Get the user location.
 		 * @return void
 		 */
-		geolocate: function() {
+		geolocate() {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition(position => {
 					let geolocation = {
@@ -96,7 +104,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss">
-
-</style>

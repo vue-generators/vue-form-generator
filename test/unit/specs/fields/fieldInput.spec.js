@@ -83,6 +83,7 @@ describe("fieldInput.vue", () => {
 				it("should become a " + inputType, () => {
 					schema.inputType = inputType;
 					wrapper.update();
+
 					expect(input.attributes().type).to.be.equal(inputType);
 				});
 
@@ -99,6 +100,7 @@ describe("fieldInput.vue", () => {
 		it("input value should be the model value after changed", () => {
 			model.name = "Jane Doe";
 			wrapper.update();
+
 			expect(input.element.value).to.be.equal("Jane Doe");
 		});
 
@@ -106,6 +108,7 @@ describe("fieldInput.vue", () => {
 			input.element.value = "John Smith";
 			input.trigger("input");
 			wrapper.update();
+
 			expect(model.name).to.be.equal("John Smith");
 		});
 

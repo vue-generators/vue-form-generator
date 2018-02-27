@@ -74,6 +74,7 @@ describe("abstractField.vue", () => {
 
 		it("should set new value to model if value changed", () => {
 			field.value = "Foo Bar";
+
 			expect(model.user.name).to.be.equal("Foo Bar");
 		});
 	});
@@ -99,6 +100,7 @@ describe("abstractField.vue", () => {
 
 		it("should set new value to model if value changed", () => {
 			field.value = "Foo Bar";
+
 			expect(model.user.name.first).to.be.equal("Foo Bar");
 		});
 	});
@@ -119,7 +121,9 @@ describe("abstractField.vue", () => {
 
 		it.skip("should be called the schema.get function", () => {
 			expect(field).to.be.exist;
+
 			field.schema.get.reset();
+
 			expect(field.value).to.be.equal("John Smith");
 			expect(field.schema.get.calledOnce).to.be.true;
 		});
@@ -127,6 +131,7 @@ describe("abstractField.vue", () => {
 		it("should set new value to model if value changed", () => {
 			field.schema.set.reset();
 			field.value = "John Roe";
+
 			expect(field.schema.set.calledOnce).to.be.true;
 			expect(field.schema.set.calledWith(model, "John Roe")).to.be.true;
 		});
@@ -157,6 +162,7 @@ describe("abstractField.vue", () => {
 
 		it("should set the formatted value to model", () => {
 			field.value = "Foo Bar";
+
 			expect(model.name).to.be.equal("!!Foo Bar!!");
 		});
 	});
@@ -177,6 +183,7 @@ describe("abstractField.vue", () => {
 		it("should called once the schema.onChanged", () => {
 			schema.onChanged.resetHistory();
 			field.value = "Jane Doe";
+
 			expect(schema.onChanged.calledOnce).to.be.true;
 		});
 	});
@@ -200,12 +207,14 @@ describe("abstractField.vue", () => {
 
 		it("should not call validate function after value changed", () => {
 			model.name = "Jane Doe";
+
 			expect(field.validate.callCount).to.be.equal(0);
 		});
 
 		it("should call validate function after value changed", () => {
 			options.validateAfterChanged = true;
 			field.value = "Jane Roe";
+
 			expect(field.validate.callCount).to.be.equal(1);
 		});
 	});
@@ -227,6 +236,7 @@ describe("abstractField.vue", () => {
 		it("should call schema validator", () => {
 			schema.validator.resetHistory();
 			field.validate();
+
 			expect(schema.validator.calledOnce).to.be.true;
 			expect(schema.validator.calledWith(field.value, schema, model)).to.be.true;
 		});
@@ -249,6 +259,7 @@ describe("abstractField.vue", () => {
 		it("should not call schema validator", () => {
 			schema.validator.resetHistory();
 			field.validate();
+
 			expect(schema.validator.callCount).to.be.equal(0);
 		});
 	});
@@ -271,6 +282,7 @@ describe("abstractField.vue", () => {
 		it("should not call schema validator", () => {
 			schema.validator.resetHistory();
 			field.validate();
+
 			expect(schema.validator.callCount).to.be.equal(0);
 		});
 	});
@@ -321,6 +333,7 @@ describe("abstractField.vue", () => {
 		it("should called once the schema.onValidated", () => {
 			schema.onValidated.resetHistory();
 			let res = field.validate();
+
 			expect(res).to.be.an.instanceof(Array);
 			expect(res.length).to.be.equal(1);
 			expect(res[0]).to.be.equal("Validation error!");
@@ -352,6 +365,7 @@ describe("abstractField.vue", () => {
 		it("should return empty array", () => {
 			onValidated.resetHistory();
 			let res = field.validate();
+
 			expect(res).to.be.an.instanceof(Array);
 			expect(res.length).to.be.equal(0);
 
@@ -362,6 +376,7 @@ describe("abstractField.vue", () => {
 		it("should not call 'onValidated'", () => {
 			onValidated.resetHistory();
 			let res = field.validate(true);
+
 			expect(res).to.be.an.instanceof(Array);
 			expect(res.length).to.be.equal(0);
 
@@ -372,6 +387,7 @@ describe("abstractField.vue", () => {
 			model.name = "Al";
 			onValidated.resetHistory();
 			let res = field.validate();
+
 			expect(res).to.be.an.instanceof(Array);
 			expect(res.length).to.be.equal(1);
 			expect(res[0]).to.be.equal("The length of text is too small! Current: 2, Minimum: 3");
@@ -400,12 +416,14 @@ describe("abstractField.vue", () => {
 
 		it("should be an empty array", () => {
 			field.clearValidationErrors();
+
 			expect(field.errors).to.be.not.undefined;
 			expect(field.errors).to.be.length(0);
 		});
 
 		it("should contain one error string", () => {
 			field.validate();
+
 			expect(field.errors).to.be.length(1);
 			expect(field.errors[0]).to.be.equal("Validation error!");
 		});
@@ -430,11 +448,13 @@ describe("abstractField.vue", () => {
 
 		it("should return slugified label, if no inputName", () => {
 			delete schema.inputName;
+
 			expect(field.getFieldID(schema)).to.be.equal("first-name");
 		});
 
 		it("should return slugified model name, if no inputName or label", () => {
 			delete schema.label;
+
 			expect(field.getFieldID(schema)).to.be.equal("user-model");
 		});
 	});

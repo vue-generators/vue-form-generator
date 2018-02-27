@@ -50,6 +50,7 @@ describe("FieldCheckbox.vue", () => {
 		it("input value should be the model value after changed", () => {
 			model.status = false;
 			wrapper.update();
+
 			expect(input.element.checked).to.be.false;
 		});
 
