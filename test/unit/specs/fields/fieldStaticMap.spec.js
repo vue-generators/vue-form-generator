@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField } from "../util";
 
 import Vue from "vue";
@@ -10,11 +9,10 @@ Vue.component("FieldStaticMap", FieldStaticMap);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldStaticMap", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldStaticMap", schema, model, disabled, options);
 }
 
 describe.skip("fieldStaticMap.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "staticMap",
@@ -24,13 +22,13 @@ describe.skip("fieldStaticMap.vue", function() {
 				lat: "latitude",
 				lng: "longitude",
 				zoom: 6,
-				sizeX:640,
-				sizeY:640,
+				sizeX: 640,
+				sizeY: 640,
 				scale: 1,
-				format:"png",
-				maptype:"satellite",
-				language:"FR-fr",
-				markers:"size:mid%7Ccolor:0xff0000",
+				format: "png",
+				maptype: "satellite",
+				language: "FR-fr",
+				markers: "size:mid%7Ccolor:0xff0000"
 			}
 		};
 		let model = {
@@ -41,7 +39,7 @@ describe.skip("fieldStaticMap.vue", function() {
 		};
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByTagName("img")[0];
 		});
@@ -51,9 +49,9 @@ describe.skip("fieldStaticMap.vue", function() {
 			expect(field.$el).to.be.exist;
 
 			expect(input).to.be.defined;
-			expect(input.src).to.be.equal("http://maps.googleapis.com/maps/api/staticmap?center=13.4567,20.3321&zoom=6&size=640x640&scale=1&format=png&maptype=satellite&language=FR-fr&markers=size:mid%7Ccolor:0xff0000");
+			expect(input.src).to.be.equal(
+				"http://maps.googleapis.com/maps/api/staticmap?center=13.4567,20.3321&zoom=6&size=640x640&scale=1&format=png&maptype=satellite&language=FR-fr&markers=size:mid%7Ccolor:0xff0000"
+			);
 		});
-
 	});
-
 });

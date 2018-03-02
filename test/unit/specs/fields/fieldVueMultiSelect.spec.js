@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, trigger } from "../util";
 
 import Vue from "vue";
@@ -16,19 +15,13 @@ function createField(test, schema = {}, model = null, disabled = false, options)
 }
 
 describe.skip("fieldVueMultiSelect.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "vueMultiSelect",
 			label: "Cities",
 			model: "city",
 			required: false,
-			values: [
-				"London",
-				"Paris",
-				"Rome",
-				"Berlin"
-			],
+			values: ["London", "Paris", "Rome", "Berlin"],
 			selectOptions: {
 				multiple: true
 			}
@@ -57,7 +50,7 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 			expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;
 		});
 
-		it("should set disabled", (done) => {
+		it("should set disabled", done => {
 			field.disabled = true;
 			vm.$nextTick(() => {
 				expect(input.classList.contains("multiselect--disabled")).to.be.true;
@@ -66,7 +59,7 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			model.city = "Rome";
 			vm.$nextTick(() => {
 				expect(input.querySelectorAll("li .multiselect__option--selected").length).to.be.equal(1);
@@ -77,7 +70,7 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed (multiselection)", (done) => {
+		it("input value should be the model value after changed (multiselection)", done => {
 			model.city = ["Paris", "Rome"];
 			vm.$nextTick(() => {
 				expect(input.querySelectorAll("li .multiselect__option--selected").length).to.be.equal(2);
@@ -90,7 +83,7 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 			});
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			let options = input.querySelectorAll("li .multiselect__option");
 			trigger(options[2], "mousedown");
 
@@ -99,7 +92,6 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 				expect(model.city[0]).to.be.equal("Paris");
 				done();
 			});
-
 		});
 
 		describe("with objects", () => {
@@ -107,27 +99,31 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 				name: "Vue.js",
 				language: "JavaScript"
 			};
-			let schema = {...schema };
+			let schema = { ...schema };
 			let model = {
 				city: [option]
 			};
-			schema.values = [{
-				name: "Vue.js",
-				language: "JavaScript"
-			}, {
-				name: "Rails",
-				language: "Ruby"
-			}, {
-				name: "Sinatra",
-				language: "Ruby"
-			}];
+			schema.values = [
+				{
+					name: "Vue.js",
+					language: "JavaScript"
+				},
+				{
+					name: "Rails",
+					language: "Ruby"
+				},
+				{
+					name: "Sinatra",
+					language: "Ruby"
+				}
+			];
 			schema.selectOptions = {};
 			before(() => {
 				createField(this, schema, model, false);
 				input = el.querySelector(".multiselect");
 			});
 
-			it("model value should work with objects", (done) => {
+			it("model value should work with objects", done => {
 				schema.selectOptions = { label: "name", trackBy: "name" };
 				vm.$nextTick(() => {
 					expect(model.city.length).to.be.equal(1);
@@ -136,7 +132,7 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 				});
 			});
 
-			it("options should contain only text specified in label", (done) => {
+			it("options should contain only text specified in label", done => {
 				schema.selectOptions = { label: "language", trackBy: "language" };
 				vm.$nextTick(() => {
 					let options = input.querySelectorAll("li .multiselect__option");
@@ -145,7 +141,7 @@ describe.skip("fieldVueMultiSelect.vue", function() {
 				});
 			});
 
-			it("options should contain custom text specified in customLabel", (done) => {
+			it("options should contain custom text specified in customLabel", done => {
 				schema.selectOptions = {
 					label: "name",
 					trackBy: "name",

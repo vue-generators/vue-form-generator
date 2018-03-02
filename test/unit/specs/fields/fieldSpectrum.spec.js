@@ -1,4 +1,3 @@
-import { expect } from "chai";
 import { createVueField, trigger, checkAttribute } from "../util";
 
 import Vue from "vue";
@@ -10,24 +9,23 @@ Vue.component("FieldSpectrum", FieldSpectrum);
 let el, vm, field;
 
 function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldSpectrum", schema, model, disabled, options);
+	[el, vm, field] = createVueField(test, "fieldSpectrum", schema, model, disabled, options);
 }
 
 describe.skip("fieldSpectrum.vue", function() {
-
 	describe("check template", () => {
 		let schema = {
 			type: "color",
 			label: "Color",
 			model: "color",
-			autocomplete:"off",
+			autocomplete: "off",
 			placeholder: "Field placeholder",
 			readonly: false
 		};
 		let model = { color: "#ff8822" };
 		let input;
 
-		before( () => {
+		before(() => {
 			createField(this, schema, model, false);
 			input = el.getElementsByTagName("input")[0];
 		});
@@ -40,8 +38,8 @@ describe.skip("fieldSpectrum.vue", function() {
 			expect(input.type).to.be.equal("text");
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
+		it("should contain the value", done => {
+			vm.$nextTick(() => {
 				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ff8822");
 				done();
 			});
@@ -57,26 +55,22 @@ describe.skip("fieldSpectrum.vue", function() {
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", done => {
 			field.model = { color: "#ffff00" };
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(field.picker.spectrum("get").toHexString()).to.be.equal("#ffff00");
 				done();
 			});
-
 		});
 
-		it("model value should be the input value if changed", (done) => {
+		it("model value should be the input value if changed", done => {
 			field.picker.spectrum("set", "#123456");
 			trigger(document.querySelector(".sp-input"), "change");
 
-			vm.$nextTick( () => {
+			vm.$nextTick(() => {
 				expect(field.model.color).to.be.equal("#123456");
 				done();
 			});
-
 		});
-
 	});
-
 });

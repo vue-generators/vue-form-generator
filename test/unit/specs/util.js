@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import Vue from "vue";
 
-export function trigger (el, event, args) {
+export function trigger(el, event, args) {
 	let e = document.createEvent("HTMLEvents");
 	e.initEvent(event, true, false);
 
@@ -13,8 +13,8 @@ export function trigger (el, event, args) {
 
 	// Due to Firefox bug, events fired on disabled
 	// non-attached form controls can throw errors
-	try { 
-		el.dispatchEvent ? el.dispatchEvent(e) : el.fireEvent("on" + event, e);		
+	try {
+		el.dispatchEvent ? el.dispatchEvent(e) : el.fireEvent("on" + event, e);
 	} catch (e) {
 		// Ignored
 	}
@@ -23,7 +23,7 @@ export function trigger (el, event, args) {
 export function createVueField(test, type, schema = {}, model = null, disabled = false, options) {
 	let elName = type.replace(/([a-zA-Z])([A-Z])/g, "$1-$2").toLowerCase();
 
-	let container = document.createElement("div");		
+	let container = document.createElement("div");
 	container.className = "test-unit";
 	document.body.appendChild(container);
 
@@ -31,7 +31,7 @@ export function createVueField(test, type, schema = {}, model = null, disabled =
 	h2.textContent = test ? "Test: " + test.title : "Test case";
 	container.appendChild(h2);
 
-	let el = document.createElement("fieldset");		
+	let el = document.createElement("fieldset");
 	el.className = "vue-form-generator";
 	container.appendChild(el);
 	let vm = new Vue({
@@ -49,16 +49,26 @@ export function createVueField(test, type, schema = {}, model = null, disabled =
 }
 
 export let attributesList = {
-	"autocomplete": { before: "on", after: "off" },
-	"disabled": { before: true, after: false, field: true },
-	"multiSelect": { before: true, after: false, name: "multiple" },
-	"placeholder": { before: "Field placeholder", after: "" },
-	"readonly": { before: true, after: false, name: "readOnly" },
-	"inputName": { before: "test-name", after: "", name: "name" }
+	autocomplete: { before: "on", after: "off", name: "autocomplete" },
+	disabled: { before: true, after: false, field: true, name: "disabled" },
+	multiSelect: { before: true, after: false, name: "multiple" },
+	placeholder: { before: "Field placeholder", after: "", name: "placeholder" },
+	readonly: { before: true, after: false, name: "readOnly" },
+	inputName: { before: "test-name", after: "", name: "name" }
 };
 
-export function checkAttribute(name, vm, input, field, schema, done) {
+export function checkAttribute2(name, wrapper, schema, type = "input") {
+	let attr = attributesList[name];
+	let inputElement = wrapper.find(type).element;
 
+	inputElement[attr.name] = attr.before;
+	// console.log(inputElement[attr.name], schema[name]);
+	inputElement[attr.name] = attr.after;
+	// console.log(inputElement[attr.name], schema[name]);
+	expect(inputElement[attr.name]).to.be.equal(schema[name]);
+}
+
+export function checkAttribute(name, vm, input, field, schema, done) {
 	let schematic;
 	let attr = attributesList[name];
 
@@ -78,4 +88,8 @@ export function checkAttribute(name, vm, input, field, schema, done) {
 		Vue.set(vm.schema, name, attr.after);
 		return done();
 	});
+}
+
+export function nextTick() {
+	return;
 }
