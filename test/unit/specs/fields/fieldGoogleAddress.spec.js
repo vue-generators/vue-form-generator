@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldGoogleAddress from "src/fields/optional/fieldGoogleAddress.vue";
 
@@ -54,7 +53,7 @@ describe("fieldGoogleAddress.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema);
+					checkAttribute(name, wrapper, schema);
 				});
 			});
 		});

@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldCleave from "src/fields/optional/fieldCleave.vue";
 
@@ -61,7 +60,7 @@ describe("fieldCleave.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema);
+					checkAttribute(name, wrapper, schema);
 				});
 			});
 		});
