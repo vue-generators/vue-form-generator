@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldCheckbox from "src/fields/core/fieldCheckbox.vue";
 
@@ -72,7 +71,7 @@ describe("FieldCheckbox.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema);
+					checkAttribute(name, wrapper, schema);
 				});
 			});
 		});

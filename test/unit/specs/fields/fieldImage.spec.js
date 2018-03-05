@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldImage from "src/fields/optional/fieldImage.vue";
 
@@ -69,7 +68,7 @@ describe("fieldImage.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, input, schema);
+					checkAttribute(name, input, schema);
 				});
 			});
 		});
@@ -79,7 +78,7 @@ describe("fieldImage.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, fileInput, schema);
+					checkAttribute(name, fileInput, schema);
 				});
 			});
 		});

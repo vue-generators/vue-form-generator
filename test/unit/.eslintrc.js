@@ -4,6 +4,7 @@ module.exports = {
 	},
 	globals: {
 		expect: true,
-		sinon: true
+		sinon: true,
+		checkAttribute: true
 	}
 };

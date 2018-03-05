@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldMasked from "src/fields/optional/fieldMasked.vue";
 let jQuery = require("jquery");
@@ -58,7 +57,7 @@ describe("fieldMasked.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema);
+					checkAttribute(name, wrapper, schema);
 				});
 			});
 		});

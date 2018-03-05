@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldSelectEx from "src/fields/optional/fieldSelectEx.vue";
 
@@ -68,7 +67,7 @@ describe("fieldSelectEx.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema, "select");
+					checkAttribute(name, wrapper, schema, "select");
 				});
 			});
 		});

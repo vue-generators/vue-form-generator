@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import fieldInput from "src/fields/core/fieldInput.vue";
 
@@ -90,7 +89,7 @@ describe("fieldInput.vue", () => {
 				describe("check optional attribute", () => {
 					attributes.forEach(name => {
 						it("should set " + name, () => {
-							checkAttribute2(name, wrapper, schema);
+							checkAttribute(name, wrapper, schema);
 						});
 					});
 				});

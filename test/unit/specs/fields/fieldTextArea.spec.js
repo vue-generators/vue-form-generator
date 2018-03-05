@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldTextArea from "src/fields/core/fieldTextArea.vue";
 
@@ -63,7 +62,7 @@ describe("fieldTextArea.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema, "textarea");
+					checkAttribute(name, wrapper, schema, "textarea");
 				});
 			});
 		});

@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 import fecha from "fecha";
 
 let jQuery = require("jquery");
@@ -61,7 +60,7 @@ describe("fieldDateTimePicker.vue", () => {
 
 			attributes.forEach(function(name) {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema);
+					checkAttribute(name, wrapper, schema);
 				});
 			});
 		});

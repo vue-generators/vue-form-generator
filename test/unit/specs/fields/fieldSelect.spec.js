@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 
 import FieldSelect from "src/fields/core/fieldSelect.vue";
 
@@ -69,7 +68,7 @@ describe("fieldSelect.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, wrapper, schema, "select");
+					checkAttribute(name, wrapper, schema, "select");
 				});
 			});
 		});

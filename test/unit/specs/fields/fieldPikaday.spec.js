@@ -1,5 +1,4 @@
 import { mount, createLocalVue } from "@vue/test-utils";
-import { checkAttribute2 } from "../util";
 import fecha from "fecha";
 
 import FieldPikaday from "src/fields/optional/fieldPikaday.vue";
@@ -58,7 +57,7 @@ describe("fieldPikaday.vue", () => {
 
 			attributes.forEach(name => {
 				it("should set " + name, () => {
-					checkAttribute2(name, input, schema);
+					checkAttribute(name, input, schema);
 				});
 			});
 		});
