@@ -183,12 +183,6 @@ export default {
 		},
 		{
 			type: "input",
-			inputType: "file",
-			label: "File USELESS",
-			model: "file"
-		},
-		{
-			type: "input",
 			inputType: "image",
 			label: "Image USELESS",
 			model: "image",
@@ -375,15 +369,18 @@ export default {
 			model: "address.geo",
 			disabled: false,
 			get(model) {
-				if (model && model.address && model.address.geo) return model.address.geo.latitude + ", " + model.address.geo.longitude;
+				if (model && model.address && model.address.geo)
+					return model.address.geo.latitude + ", " + model.address.geo.longitude;
 			},
 			set(model, val) {
 				let values = val.split(",");
 				if (!model.address) model.address = {};
 				if (!model.address.geo) model.address.geo = {};
-				if (values.length > 0 && values[0].trim() !== "") model.address.geo.latitude = parseFloat(values[0].trim());
+				if (values.length > 0 && values[0].trim() !== "")
+					model.address.geo.latitude = parseFloat(values[0].trim());
 				else model.address.geo.latitude = 0;
-				if (values.length > 1 && values[1].trim() !== "") model.address.geo.longitude = parseFloat(values[1].trim());
+				if (values.length > 1 && values[1].trim() !== "")
+					model.address.geo.longitude = parseFloat(values[1].trim());
 				else model.address.geo.longitude = 0;
 			},
 			buttons: [

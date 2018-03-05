@@ -1,7 +1,15 @@
 const path = require("path");
 const webpack = require("webpack");
-const version = require("./package.json").version;
-const banner = "/**\n" + " * vue-form-generator v" + version + "\n" + " * https://github.com/icebob/vue-form-generator\n" + " * Released under the MIT License.\n" + " */\n";
+const utils = require("./utils");
+const version = require("../package.json").version;
+const banner =
+	"/**\n" +
+	" * vue-form-generator v" +
+	version +
+	"\n" +
+	" * https://github.com/icebob/vue-form-generator\n" +
+	" * Released under the MIT License.\n" +
+	" */\n";
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const StatsPlugin = require("stats-webpack-plugin");
 const vueLoaderConfig = require("./vue-loader.conf");
@@ -40,6 +48,7 @@ let rules = [
 		include: [path.resolve("src")]
 	}
 ];
+
 let cssFileName;
 if (process.env.FULL_BUNDLE !== "false") {
 	cssFileName = "vfg.css";
@@ -68,8 +77,8 @@ module.exports = [
 					warnings: false
 				}
 			}),
-			new webpack.optimize.DedupePlugin(),
-			new webpack.BannerPlugin(banner, {
+			new webpack.BannerPlugin({
+				banner,
 				raw: true
 			}),
 			new ExtractTextPlugin(cssFileName, { allChunks: true }),

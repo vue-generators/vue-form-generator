@@ -120,7 +120,7 @@ export default {
 		groups() {
 			let res = [];
 			if (this.schema && this.schema.groups) {
-				forEach(this.schema.groups, group => {
+				forEach(this.schema.groups.slice(0), group => {
 					res.push(group);
 				});
 			}
