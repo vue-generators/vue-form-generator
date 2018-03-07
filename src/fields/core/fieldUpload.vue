@@ -1,7 +1,7 @@
 <template lang="pug">
 .wrapper
 	input.form-control(
-		id="getFieldID(schema)",
+		:id="getFieldID(schema)",
 		type="file",
 		:name="schema.inputName",
 		@change="onChange",
@@ -10,7 +10,7 @@
 		:placeholder="schema.placeholder",
 		:readonly="schema.readonly",
 		:required="schema.required",
-		:disabled="disabled",)
+		:disabled="disabled")
 </template>
 
 <script>
