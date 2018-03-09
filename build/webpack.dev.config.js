@@ -2,7 +2,6 @@ const path = require("path");
 const webpack = require("webpack");
 const projectRoot = path.resolve(__dirname, "../");
 const vueLoaderConfig = require("./vue-loader.conf");
-const config = require("../config");
 
 let rules = [
 	{
