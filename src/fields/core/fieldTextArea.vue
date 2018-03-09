@@ -2,7 +2,7 @@
 	textarea.form-control(
 		v-model="value",
 		:id="getFieldID(schema)",
-	  :class="schema.fieldClasses",
+		:class="schema.fieldClasses",
 		:disabled="disabled",
 		:maxlength="schema.max",
 		:minlength="schema.min",
@@ -13,14 +13,14 @@
 </template>
 
 <script>
-	import abstractField from "../abstractField";
+import abstractField from "../abstractField";
 
-	export default {
-		mixins: [ abstractField ]
-	};
-	
+export default {
+	mixins: [abstractField]
+};
 </script>
 
 
-<style lang="sass">
+<style lang="scss">
+
 </style>

@@ -1,19 +1,23 @@
-import { expect } from "chai";
-import { createVueField, nextTick } from "../util";
+import { mount, createLocalVue } from "@vue/test-utils";
 
-import Vue from "vue";
 import FieldLabel from "src/fields/core/fieldLabel.vue";
 
-Vue.component("FieldLabel", FieldLabel);
+const localVue = createLocalVue();
+let wrapper;
 
-let el, vm, field;
+function createField2(data, methods) {
+	const _wrapper = mount(FieldLabel, {
+		localVue,
+		propsData: data,
+		methods: methods
+	});
 
-function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldLabel", schema, model, disabled, options);
+	wrapper = _wrapper;
+
+	return _wrapper;
 }
 
-describe("fieldLabel.vue", function() {
-
+describe("fieldLabel.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "label",
@@ -24,37 +28,30 @@ describe("fieldLabel.vue", function() {
 		let model = { timestamp: "2 days ago" };
 		let span;
 
-		before( () => {
-			createField(this, schema, model, false);
-			span = el.getElementsByTagName("span")[0];
+		before(() => {
+			createField2({ schema, model, disabled: false });
+			span = wrapper.find("span");
 		});
 
 		it("should contain a span element", () => {
-			expect(field).to.be.exist;
-			expect(field.$el).to.be.exist;
-
-			expect(span).to.be.defined;
+			expect(wrapper.exists()).to.be.true;
+			expect(span.is("span")).to.be.true;
 		});
 
-		it("should contain the value", (done) => {
-			nextTick( () => {
-				expect(span.textContent).to.be.equal("2 days ago");
-			}, vm, done);
+		it("should contain the value", () => {
+			expect(span.text()).to.be.equal("2 days ago");
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", () => {
 			model.timestamp = "Foo bar";
-			nextTick( () => {
-				expect(span.textContent).to.be.equal("Foo bar");
-			}, vm, done);
+			wrapper.update();
 
+			expect(span.text()).to.be.equal("Foo bar");
 		});
 
 		it("should have 2 classes", () => {
-			expect(span.className.indexOf("applied-class")).not.to.be.equal(-1);
-			expect(span.className.indexOf("another-class")).not.to.be.equal(-1);
+			expect(span.classes()).to.include("applied-class");
+			expect(span.classes()).to.include("another-class");
 		});
-
 	});
-
 });

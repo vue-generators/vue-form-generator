@@ -1,5 +1,18 @@
 {
-  "presets": ["es2015", "stage-2"],
-  "plugins": ["transform-runtime", "lodash"],
-  "comments": false
+	"presets": [
+		[
+			"env",
+			{
+				"modules": false,
+				"useBuiltIns": "entry"
+			}
+		],
+		"stage-2"
+	],
+	"plugins": ["transform-runtime", "lodash"],
+	"env": {
+		"test": {
+			"plugins": ["istanbul"]
+		}
+	}
 }
