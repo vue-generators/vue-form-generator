@@ -1,3 +1,15 @@
+<a name="2.2.1"></a>
+## 2.2.1 (2018-03-09)
+
+* ... ([eadccc2](https://github.com/icebob/vue-form-generator/commit/eadccc2))
+* #409 - fixed id property in fieldUpdate ([b86fddf](https://github.com/icebob/vue-form-generator/commit/b86fddf))
+* fixed markdown link ([3ef928a](https://github.com/icebob/vue-form-generator/commit/3ef928a))
+* removed extra paren ([a6df78b](https://github.com/icebob/vue-form-generator/commit/a6df78b))
+* resolves #368 added vue-tel-input ([a8859b3](https://github.com/icebob/vue-form-generator/commit/a8859b3)), closes [#368](https://github.com/icebob/vue-form-generator/issues/368)
+* setup automate releasing ([6e6527f](https://github.com/icebob/vue-form-generator/commit/6e6527f))
+
+
+
 <a name="2.2.0"></a>
 # 2.2.0 (2018-01-21)
 
