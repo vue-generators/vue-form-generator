@@ -24,6 +24,22 @@ export default {
 		};
 	},
 
+	directives: {
+		attributes: {
+			bind: function(el, binding, vnode) {
+				let attrs = objGet(vnode.context, "schema.attributes", {});
+				let container = binding.value || "input";
+				if(isString(container)) {
+					attrs = objGet(attrs, container, {});
+				}
+				forEach(attrs, (val, key) => {
+					console.log("v-attributes", key, val);
+					el.setAttribute(key, val);
+				});
+			}
+		}
+	},
+
 	computed: {
 		value: {
 			cache: false,

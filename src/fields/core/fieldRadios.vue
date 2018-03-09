@@ -1,7 +1,7 @@
 <template lang="pug">
-	.radio-list(:disabled="disabled")
+	.radio-list(:disabled="disabled", v-attributes="wrapper")
 		label(v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
-			input(:id="getFieldID(schema)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses")
+			input(:id="getFieldID(schema)", type="radio", :disabled="disabled", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses", v-attributes="input")
 			| {{ getItemName(item) }}
 
 </template>
