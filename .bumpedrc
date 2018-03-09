@@ -1,0 +1,24 @@
+files: [
+  'package.json',
+  'bower.json'
+]
+
+plugins:
+
+  postrelease:
+
+    'Compiling browser version':
+      plugin: 'bumped-terminal'
+      command: 'npm run build'
+
+    'Update changelog':
+      plugin: 'bumped-terminal'
+      command: 'npm run changelog'
+
+    'Commiting new version':
+      plugin: 'bumped-terminal'
+      command: 'git commit -am "$newVersion releases" && git push origin master'
+
+    'Publishing tag at GitHub':
+      plugin: 'bumped-terminal'
+      command: 'git tag v$newVersion && git push origin v$newVersion'

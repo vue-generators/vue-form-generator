@@ -20,7 +20,8 @@
     "e2e": "node test/e2e/runner.js",
     "pretest": "npm run lint",
     "test": "npm run unit",
-    "ci": "karma start test/unit/karma.conf.js --auto-watch --no-single-run --reporters=dots --port=9877"
+    "ci": "karma start test/unit/karma.conf.js --auto-watch --no-single-run --reporters=dots --port=9877",
+    "version": "bumped release"
   },
   "keywords": [
     "vue",
@@ -51,6 +52,8 @@
     "babel-preset-es2015": "6.22.0",
     "babel-preset-stage-2": "6.22.0",
     "babel-runtime": "6.23.0",
+    "bumped": "0.10.9",
+    "bumped-terminal": "0.7.3",
     "chai": "3.5.0",
     "conventional-changelog-cli": "1.2.0",
     "coveralls": "2.11.16",
@@ -103,5 +106,8 @@
     "webpack-dev-server": "1.16.2",
     "webpack-merge": "0.14.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
 }
