@@ -10,7 +10,7 @@
 		:readonly="schema.readonly",
 		:rows="schema.rows || 2",
 		:name="schema.inputName",
-		v-attributes="input")
+		v-attributes="'input'")
 </template>
 
 <script>

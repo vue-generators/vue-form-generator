@@ -242,4 +242,76 @@ describe("fieldSelect.vue", () => {
 			expect(input.classes()).to.include("another-class");
 		});
 	});
+
+	describe("check dynamic html attributes", () => {
+
+		describe("check input/wrapper attributes", () => {
+			let schema = {
+				type: "select",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				values() {
+					return [
+						{ id: 1, name: "London" },
+						{ id: 2, name: "Paris" },
+						{ id: 3, name: "Rome" },
+						{ id: 4, name: "Berlin" }
+					];
+				},
+				attributes: {
+					wrapper: {
+						"data-toggle": "collapse"
+					},
+					input: {
+						"data-toggle": "tooltip"
+					}
+				}
+			};
+			let model = {};
+			let input;
+
+			before(() => {
+				createField2({ schema, model});
+				input = wrapper.find('select');
+			});
+
+			it("input should have data-toggle attribute", () => {
+				expect(input.attributes()["data-toggle"]).to.be.equal("tooltip");
+			});
+		});
+
+		describe("check non-specific attributes", () => {
+			let schema = {
+				type: "select",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				values() {
+					return [
+						{ id: 1, name: "London" },
+						{ id: 2, name: "Paris" },
+						{ id: 3, name: "Rome" },
+						{ id: 4, name: "Berlin" }
+					];
+				},
+				attributes: {
+					"data-toggle": "tooltip"
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField2({ schema, model});
+				input = wrapper.find('select');
+			});
+
+			it("input should have data-toggle attribute", () => {
+				expect(input.attributes()["data-toggle"]).to.be.equal("tooltip");
+			});
+		});
+	});
 });

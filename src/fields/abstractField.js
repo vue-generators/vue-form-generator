@@ -13,6 +13,17 @@ function convertValidator(validator) {
 	return validator;
 }
 
+function attributesDirective(el, binding, vnode) {
+	let attrs = objGet(vnode.context, "schema.attributes", {});
+	let container = binding.value || "input";
+	if(isString(container)) {
+		attrs = objGet(attrs, container) || attrs;
+	}
+	forEach(attrs, (val, key) => {
+		el.setAttribute(key, val);
+	});
+}
+
 export default {
 	props: ["model", "schema", "formOptions", "disabled"],
 
@@ -26,17 +37,9 @@ export default {
 
 	directives: {
 		attributes: {
-			bind: function(el, binding, vnode) {
-				let attrs = objGet(vnode.context, "schema.attributes", {});
-				let container = binding.value || "input";
-				if(isString(container)) {
-					attrs = objGet(attrs, container, {});
-				}
-				forEach(attrs, (val, key) => {
-					console.log("v-attributes", key, val);
-					el.setAttribute(key, val);
-				});
-			}
+			bind: attributesDirective,
+			updated: attributesDirective,
+			componentUpdated: attributesDirective,
 		}
 	},
 
