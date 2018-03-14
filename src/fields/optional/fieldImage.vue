@@ -41,7 +41,10 @@ export default {
 
 	watch: {
 		model() {
-			this.$el.querySelector("input.file").value = "";
+			let el = this.$el.querySelector("input.file");
+			if(el) {
+				el.value = "";
+			}
 		}
 	},
 

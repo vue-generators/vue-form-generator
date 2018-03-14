@@ -29,8 +29,11 @@ export default {
 			cache: false,
 			get() {
 				let val;
-				if (isFunction(this.schema.get)) val = this.schema.get(this.model);
-				else if (this.model && this.schema.model) val = objGet(this.model, this.schema.model);
+				if (isFunction(objGet(this.schema, 'get'))) {
+					val = this.schema.get(this.model);
+				} else {
+					val = objGet(this.model, this.schema.model);
+				}
 
 				return this.formatValueToField(val);
 			},
@@ -137,8 +140,8 @@ export default {
 					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 				}
 
-				if (this.$parent.options && this.$parent.options.validateAfterChanged === true) {
-					if (this.$parent.options.validateDebounceTime > 0) {
+				if (objGet(this.$parent, "options.validateAfterChanged", false) === true) {
+					if (objGet(this.$parent, "options.validateDebounceTime", 0) > 0) {
 						this.debouncedValidate();
 					} else {
 						this.validate();
@@ -184,12 +187,12 @@ export default {
 		},
 
 		getFieldID(schema) {
-			const idPrefix = this.formOptions && this.formOptions.fieldIdPrefix ? this.formOptions.fieldIdPrefix : "";
+			const idPrefix = objGet(this.formOptions, "fieldIdPrefix", "");
 			return slugifyFormID(schema, idPrefix);
 		},
 
 		getFieldClasses() {
-			return this.schema.fieldClasses || [];
+			return objGet(this.schema, "fieldClasses", []);
 		},
 
 		formatValueToField(value) {
