@@ -38,22 +38,45 @@ export default {
 						type: "input",
 						inputType: "text",
 						label: "First Name",
-						model: "first_name"
+						model: "first_name",
+						attributes: {
+							input: {
+								"data-toggle": "tooltip"
+							},
+							wrapper: {
+								"data-target": "input"
+							}
+						}
 					},
 					{
 						type: "checkbox",
 						label: "Active",
-						model: "status"
+						model: "status",
+						attributes: {
+							input: {
+								"data-toggle": "tooltip"
+							}
+						}
 					},
 					{
 						type: "input",
 						inputType: "color",
 						label: "Color",
-						model: "color"
+						model: "color",
+						attributes: {
+							input: {
+								"data-target": "tooltip"
+							}
+						}
 					},
 					{
 						type: "submit",
 						buttonText: "Change Previous Type",
+						attributes: {
+							input: {
+								"data-target": "toggle"
+							}
+						},
 						onSubmit: () => {
 							// this.schema.fields[2].type = "input";
 							if (this.schema.fields[2].inputType === "color") {

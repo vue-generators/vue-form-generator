@@ -76,4 +76,60 @@ describe("FieldCheckbox.vue", () => {
 			});
 		});
 	});
+
+	describe("check dynamic html attributes", () => {
+
+		describe("check input/wrapper attributes", () => {
+			let schema = {
+				type: "checkbox",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				attributes: {
+					wrapper: {
+						"data-wrapper": "collapse"
+					},
+					input: {
+						"data-input": "tooltip"
+					}
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField({ schema, model});
+				input = wrapper.find('input');
+			});
+
+			it("input should have data-* attribute", () => {
+				expect(input.attributes()["data-input"]).to.be.equal("tooltip");
+			});
+		});
+
+		describe("check non-specific attributes", () => {
+			let schema = {
+				type: "checkbox",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				attributes: {
+					"data-input": "tooltip"
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField({ schema, model});
+				input = wrapper.find('input');
+			});
+
+			it("input should have data-* attribute", () => {
+				expect(input.attributes()["data-input"]).to.be.equal("tooltip");
+			});
+		});
+	});
 });

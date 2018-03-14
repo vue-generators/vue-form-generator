@@ -116,4 +116,69 @@ describe("fieldInput.vue", () => {
 			expect(input.classes()).to.include("another-class");
 		});
 	});
+
+
+	describe("check dynamic html attributes", () => {
+
+		describe("check input/wrapper attributes", () => {
+			let schema = {
+				type: "input",
+				inputType: "text",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				attributes: {
+					wrapper: {
+						"data-toggle": "collapse"
+					},
+					input: {
+						"data-toggle": "tooltip"
+					}
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField2({ schema, model});
+				input = wrapper.find('input');
+				wrap = wrapper.find('.wrapper');
+			});
+
+			it("wrapper should have data-toggle attribute", () => {
+				expect(wrap.attributes()["data-toggle"]).to.be.equal("collapse");
+			});
+
+			it("input should have data-toggle attribute", () => {
+				expect(input.attributes()["data-toggle"]).to.be.equal("tooltip");
+			});
+		});
+
+		describe("check non-specific attributes", () => {
+			let schema = {
+				type: "input",
+				inputType: "text",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				attributes: {
+					"data-toggle": "tooltip"
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField2({ schema, model});
+				input = wrapper.find('input');
+				wrap = wrapper.find('.wrapper');
+			});
+
+			it("input should have data-toggle attribute", () => {
+				expect(input.attributes()["data-toggle"]).to.be.equal("tooltip");
+			});
+		});
+	});
 });

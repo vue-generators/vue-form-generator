@@ -616,4 +616,111 @@ describe("fieldChecklist.vue", () => {
 			});
 		});
 	});
+
+	describe("check dynamic html attributes", () => {
+
+		describe("check listbox input/wrapper attributes", () => {
+			let schema = {
+				type: "checklist",
+				listBox: true,
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
+				attributes: {
+					wrapper: {
+						"data-wrapper": "collapse"
+					},
+					input: {
+						"data-input": "tooltip"
+					}
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField2({ schema, model});
+				input = wrapper.find('input');
+				wrap = wrapper.find('.wrapper');
+			});
+
+			it("wrapper should have data-* attribute", () => {
+				expect(wrap.attributes()["data-wrapper"]).to.be.equal("collapse");
+			});
+
+			it("input should have data-* attribute", () => {
+				expect(input.attributes()["data-input"]).to.be.equal("tooltip");
+			});
+		});
+
+		describe("check combobox input/wrapper attributes", () => {
+			let schema = {
+				type: "checklist",
+				listBox: false,
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
+				attributes: {
+					wrapper: {
+						"data-wrapper": "collapse"
+					},
+					input: {
+						"data-input": "tooltip"
+					}
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField2({ schema, model});
+				input = wrapper.find('input');
+				wrap = wrapper.find('.wrapper');
+			});
+
+			it("wrapper should have data-* attribute", () => {
+				expect(wrap.attributes()["data-wrapper"]).to.be.equal("collapse");
+			});
+
+			it.skip("input should have data-* attribute", (done) => {
+				// TODO: figure out how to get this test to work
+				wrapper.setData({ comboExpanded: true });
+				Vue.config.errorHandler = done;
+				Vue.nextTick(() => {
+					expect(input.attributes()["data-input"]).to.be.equal("tooltip");
+					done();
+				});				
+			});
+		});
+
+		describe("check non-specific attributes", () => {
+			let schema = {
+				type: "checklist",
+				listBox: true,
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
+				attributes: {
+					"data-input": "tooltip"
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField2({ schema, model});
+				input = wrapper.find('input');
+			});
+
+			it("input should have data-* attribute", () => {
+				expect(input.attributes()["data-input"]).to.be.equal("tooltip");
+			});
+		});
+	});
 });
