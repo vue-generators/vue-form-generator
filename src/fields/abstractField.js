@@ -29,8 +29,11 @@ export default {
 			cache: false,
 			get() {
 				let val;
-				if (isFunction(objGet(this.schema, 'get'))) val = this.schema.get(this.model);
-				else val = objGet(this.model, this.schema.model);
+				if (isFunction(objGet(this.schema, 'get'))) {
+					val = this.schema.get(this.model);
+				} else {
+					val = objGet(this.model, this.schema.model);
+				}
 
 				return this.formatValueToField(val);
 			},
