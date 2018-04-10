@@ -10,7 +10,6 @@
         "build:full": "cross-env FULL_BUNDLE=true  webpack --progress --config webpack.build.config.js --define process.env.FULL_BUNDLE=true",
         "build": "npm run build:core && npm run build:full",
         "dev": "webpack-dev-server --config webpack.dev.config.js --inline --hot --content-base dev/",
-        "examples": "webpack-dev-server --config webpack.dev.config.js --no-info --inline --hot --content-base ./ --open",
         "lint": "eslint --ext=.js,.vue src test/unit/specs",
         "coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
         "coverage": "npm run test && npm run coverall",
