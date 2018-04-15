@@ -20,10 +20,10 @@ import { isFunction } from "lodash";
 export default {
 	mixins: [abstractField],
 	methods: {
-		onChange(event){
+		onChange($event){
 			if(isFunction(this.schema.onChanged)){
 				// Schema has defined onChange method.
-				this.schema.onChanged.call(this, this.model, this.schema, event, this);
+				this.schema.onChanged.call(this, this.model, this.schema, $event, this);
 			}
 		}
 	}
