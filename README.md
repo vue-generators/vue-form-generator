@@ -181,6 +181,13 @@ This command will start a `webpack-dev-server` with content of `dev` folder.
 npm run dev
 ```
 
+## See Examples in Action
+This command will start a `webpack-dev-server` and open your browser in the root folder. From there,
+you may click on `examples` and choose an example folder.
+```bash
+npm run examples
+```
+
 ## Build
 This command will build a distributable version in the `dist` directory.
 ```bash
