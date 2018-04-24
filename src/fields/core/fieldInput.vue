@@ -113,7 +113,7 @@ export default {
 			case "range":
 				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
 					this.formatNumberToModel(newValue, oldValue);
-				}, parseInt(objGet(this.schema, 'debounceFormatTimeout', 1000)), {
+				}, parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)), {
 					trailing: true,
 					leading: false
 				});
@@ -124,7 +124,7 @@ export default {
 				// wait 1s before calling 'formatDatetimeToModel' to allow user to input data
 				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
 					this.formatDatetimeToModel(newValue, oldValue);
-				}, parseInt(objGet(this.schema, 'debounceFormatTimeout', 1000)), {
+				}, parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)), {
 					trailing: true,
 					leading: false
 				});
