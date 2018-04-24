@@ -41,7 +41,7 @@
 
 <script>
 import abstractField from "../abstractField";
-import { debounce, isFunction, isNumber } from "lodash";
+import { debounce, get as objGet, isFunction, isNumber } from "lodash";
 import fecha from "fecha";
 
 const DATETIME_FORMATS = {
@@ -49,8 +49,6 @@ const DATETIME_FORMATS = {
 	"datetime": "YYYY-MM-DD HH:mm:ss",
 	"datetime-local": "YYYY-MM-DDTHH:mm:ss",
 };
-
-const DEBOUNCE_FORMAT_MS = 1000;
 
 export default {
 	mixins: [abstractField],
@@ -115,8 +113,7 @@ export default {
 			case "range":
 				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
 					this.formatNumberToModel(newValue, oldValue);
-				}
-				, DEBOUNCE_FORMAT_MS, {
+				}, parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)), {
 					trailing: true,
 					leading: false
 				});
@@ -127,8 +124,7 @@ export default {
 				// wait 1s before calling 'formatDatetimeToModel' to allow user to input data
 				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
 					this.formatDatetimeToModel(newValue, oldValue);
-				}
-				, DEBOUNCE_FORMAT_MS, {
+				}, parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)), {
 					trailing: true,
 					leading: false
 				});
