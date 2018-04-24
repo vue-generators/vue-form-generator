@@ -168,8 +168,8 @@ div.vue-form-generator(v-if='schema != null')
 			getFieldRowClasses(field) {
 				const hasErrors = this.fieldErrors(field).length > 0;
 				let baseClasses = {
-					[objGet(this.options, 'validationErrorClass', 'error')]: hasErrors,
-					[objGet(this.options, 'validationSuccessClass', 'valid')]: !hasErrors,
+					[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
+					[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
 					disabled: this.fieldDisabled(field),
 					readonly: this.fieldReadonly(field),
 					featured: this.fieldFeatured(field),
