@@ -1,3 +1,14 @@
+<a name="2.2.2"></a>
+## 2.2.2 (2018-04-24)
+* Fix NaN with value 0 on input type number/range.
+* Fix bug in fieldUpload that threw error due to $event not being defined
+* Added $event to onValidationError in fieldSubmit
+* Fixed bug with validationErrorClass and validationSuccessClass depending on each
+* Made DEBOUNCE_FORMAT_MS configurable in fieldInput, just pass `debounceFormatTimeout: TIME_IN_MS` in field schema
+* $event.preventDefault() called when using async validation with fieldSubmit to prevent unwanted form submissions
+
+
+
 <a name="2.2.1"></a>
 ## 2.2.1 (2018-03-09)
 
