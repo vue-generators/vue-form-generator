@@ -129,7 +129,8 @@
 		}
 		input:checked ~ .handle {
 			left: $field-switch-width - ($field-switch-height - 1px);
-			left: calc(100% - ($field-switch-height - 1px));
+			// the 30px is the $field-switch-height, but it does not get parsed properly by the compiler
+			left: calc(100% - (30px - 1px));
 			box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
 		}
 		 
