@@ -50,6 +50,14 @@ div.vue-form-generator(v-if='schema != null')
 		fieldComponents[compName] = coreFields(key);
 	});
 
+	const frameworksFields = require.context("./fields/frameworks", true, /^\.\/([\w-_]+)\/field([\w-_]+)\.vue$/);
+
+	forEach(frameworksFields.keys(), (key) => {
+		// ./fields/frameworks/quassar/fieldCheckbox --> quassarFieldCheckbox
+		const compName = key.replace(/^\.\//, "").replace(/\.vue/, "").replace(/\/field/, "/Field").replace(/\//, "");
+		fieldComponents[compName] = frameworksFields(key);
+	});
+
 	if (process.env.FULL_BUNDLE) {  // eslint-disable-line
 		let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
 
@@ -77,7 +85,8 @@ div.vue-form-generator(v-if='schema != null')
 						validateAsync: false,
 						validateAfterChanged: false,
 						validationErrorClass: "error",
-						validationSuccessClass: ""
+						validationSuccessClass: "",
+						framework: null
 					};
 				}
 			},
@@ -191,7 +200,15 @@ div.vue-form-generator(v-if='schema != null')
 
 			// Get type of field 'field-xxx'. It'll be the name of HTML element
 			getFieldType(fieldSchema) {
-				return "field-" + fieldSchema.type;
+				const framework = objGet(this.options, "framework", null);
+				if (framework) {
+					// if type is implemented in the framework, use it
+					const schemaType = `${fieldSchema.type[0].toUpperCase()}${fieldSchema.type.slice(1)}`;
+					if (`${framework}Field${schemaType}` in this.$options.components) {
+						return `${framework}-field-${fieldSchema.type}`;
+					}
+				}
+				return `field-${fieldSchema.type}`;
 			},
 
 			// Should field type have a label?

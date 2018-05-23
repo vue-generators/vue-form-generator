@@ -70,7 +70,8 @@
 				formOptions: {
 					validateAfterLoad: true,
 					validateAfterChanged: true,
-					validateBeforeSave: true
+					validateBeforeSave: true,
+					framework: "quassar"
 				}
 			}
 		},
