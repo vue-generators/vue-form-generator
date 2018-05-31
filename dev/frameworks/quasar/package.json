@@ -11,7 +11,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "vue-form-generator": "link:../."
+    "vue-form-generator": "link:../../../../."
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
