@@ -31,11 +31,13 @@
           v-model="model.name"
           :stack-label="modelSchema.fields[0].label"
           :placeholder="modelSchema.fields[0].placeholder"
+          @input="modelUpdated"
         />
         <q-checkbox
           v-model="model.home"
           :label="modelSchema.fields[1].label"
           color="secondary"
+          @input="modelUpdated"
         />
       </div>
     </div>
@@ -83,6 +85,11 @@ export default {
         ...this.formOptionsNative,
         framework: 'quassar'
       }
+    }
+  },
+  methods: {
+    modelUpdated () {
+      console.log('Model updated')
     }
   }
 }
