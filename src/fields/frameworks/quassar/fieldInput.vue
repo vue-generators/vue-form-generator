@@ -50,6 +50,7 @@ const DATETIME_FORMATS = {
 };
 
 export default {
+// TODO: derive from fieds/core/fieldInput.vue
 	mixins: [abstractField],
 	methods: {
 		formatValueToModel(value) {
