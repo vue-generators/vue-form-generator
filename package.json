@@ -85,6 +85,7 @@
     "mocha": "2.5.3",
     "mocha-generators": "1.2.0",
     "mocha-loader": "0.7.1",
+    "nan": "git+https://github.com/nodejs/nan.git",
     "node-sass": "4.7.2",
     "phantomjs-prebuilt": "2.1.14",
     "pug": "2.0.0-beta11",
