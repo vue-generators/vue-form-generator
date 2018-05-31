@@ -36,7 +36,6 @@
         <q-checkbox
           v-model="model.home"
           :label="modelSchema.fields[1].label"
-          color="secondary"
           @input="modelUpdated"
         />
       </div>
