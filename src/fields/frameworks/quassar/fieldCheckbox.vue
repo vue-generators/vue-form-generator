@@ -3,7 +3,6 @@
 </template>
 
 <script>
-    // TODO: change this component to be Quasar component q-input
 	import abstractField from "../../abstractField";
 	
 	export default {
