@@ -6,7 +6,7 @@ with the [Quasar framework](https://quasar-framework.org/)
 
 ## Installing
 
-Make sure to use `yarm 1.6.0`. On MacOS:
+Make sure to use `yarn 1.6.0`. On MacOS:
 ```
 brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/76215230de5f7f7bee2cfcdd7185cf49d949862d/Formula/yarn.rb
 brew switch yarn 1.6.0_1
