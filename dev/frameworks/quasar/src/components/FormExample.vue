@@ -71,16 +71,19 @@ export default {
     formOptionsNative: {
       validateAfterLoad: true,
       validateAfterChanged: true
-    },
-    formOptionsQuasar: {
-      validateAfterLoad: true,
-      validateAfterChanged: true,
-      framework: 'quassar'
     }
   }),
   components: {
     'vue-form-generator': VueFormGenerator.component
     // ModelEditor
+  },
+  computed: {
+    formOptionsQuasar () {
+      return {
+        ...this.formOptionsNative,
+        framework: 'quassar'
+      }
+    }
   }
 }
 </script>
