@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex flex-center">
-    <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
+    <form-example/>
   </q-page>
 </template>
 
@@ -8,7 +8,12 @@
 </style>
 
 <script>
+import FormExample from '../components/FormExample'
+
 export default {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  components: {
+    FormExample
+  }
 }
 </script>
