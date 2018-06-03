@@ -45,8 +45,13 @@ You can find details about dependencies in the official [documentation](https://
 You can install it via [NPM](http://npmjs.org/) or [yarn](https://yarnpkg.com/).
 
 #### Latest version for Vue 2.x
-```
+via npm:
+```bash
 $ npm install vue-form-generator
+```
+via yarn:
+```bash
+$ yarn add vue-form-generator
 ```
 
 #### Legacy version for Vue 1.0.x
@@ -90,7 +95,11 @@ If you want the slim down version, here is the changes:
 ```html
 <template>
   <div class="panel-body">
-    <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+    <vue-form-generator
+      :schema="schema"
+      :model="model"
+      :options="formOptions"
+    />
   </div>
 </template>
 
@@ -164,7 +173,7 @@ export default {
 </script>
 ```
 
-Usage in local components
+### Usage in local components
 ```js
 import VueFormGenerator from "vue-form-generator";
 
@@ -175,6 +184,19 @@ export default{
   }
 }
 ```
+
+### Framework support
+vue-form-generator supports integration with 3rd party frameworks. Currently only the [_Quasar-Framework_](http://quasar-framework.org/) is supported.
+The framework name (e.g. _quasar_) needs to be specified in the _framework_ field of the _formOptions_ object: 
+```js
+formOptions: {
+      validateAfterLoad: true,
+      validateAfterChanged: true,
+      framework: 'quasar'
+    }
+```
+Integration with the framework will replace native HTML controls with the framework's component, and add framework specific components.
+Refer to the [Quasar Framework example](dev/frameworks/quasar/README.md)
 ## Development
 This command will start a `webpack-dev-server` with content of `dev` folder.
 ```bash
