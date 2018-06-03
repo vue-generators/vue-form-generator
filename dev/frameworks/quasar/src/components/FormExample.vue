@@ -33,13 +33,13 @@
             <br>
             <br>
             <q-input
-              v-model="model.name"
+              v-model="model.myText"
               :stack-label="modelSchema.fields[0].label"
               :placeholder="modelSchema.fields[0].placeholder"
               @input="modelUpdated"
             />
             <q-checkbox
-              v-model="model.home"
+              v-model="model.myCheckbox"
               :label="modelSchema.fields[1].label"
               @input="modelUpdated"
             />
