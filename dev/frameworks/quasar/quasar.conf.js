@@ -4,7 +4,8 @@ module.exports = function (ctx) {
   return {
     // app plugins (/src/plugins)
     plugins: [
-      'form-generator'
+      'form-generator',
+      'jsonEditor'
     ],
     css: [
       'app.styl'

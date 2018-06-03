@@ -13,7 +13,8 @@
     "build-and-run-dev": "pushd ../../../ && npm run build && popd && quasar dev"
   },
   "dependencies": {
-    "vue-form-generator": "link:../../../."
+    "vue-form-generator": "link:../../../.",
+    "vue-json-edit": "^1.1.5"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

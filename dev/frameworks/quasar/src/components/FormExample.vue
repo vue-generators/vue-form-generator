@@ -2,42 +2,74 @@
   <div class="doc-container">
     <div class="row gutter-md">
       <div class="col">
-        VFG Native
-        <br>
-        <br>
-        <vue-form-generator
-          :schema="modelSchema"
-          :model="model"
-          :options="formOptionsNative"
-          @model-updated="modelUpdated"
-        />
+        <p>
+          Comparison between different types
+        </p>
+        <div class="row gutter-md">
+          <div class="col">
+            VFG Native
+            <br>
+            <br>
+            <vue-form-generator
+              :schema="modelSchema"
+              :model="model"
+              :options="formOptionsNative"
+              @model-updated="modelUpdated"
+            />
+          </div>
+          <div class="col">
+            VFG Quasar
+            <br>
+            <br>
+            <vue-form-generator
+              :schema="modelSchema"
+              :model="model"
+              :options="formOptionsQuasar"
+              @model-updated="modelUpdated"
+            />
+          </div>
+          <div class="col">
+            Quasar Reference
+            <br>
+            <br>
+            <q-input
+              v-model="model.name"
+              :stack-label="modelSchema.fields[0].label"
+              :placeholder="modelSchema.fields[0].placeholder"
+              @input="modelUpdated"
+            />
+            <q-checkbox
+              v-model="model.home"
+              :label="modelSchema.fields[1].label"
+              @input="modelUpdated"
+            />
+          </div>
+        </div>
       </div>
+    </div>
+    <div class="row gutter-md">
       <div class="col">
-        VFG Quasar
+        <p>
+          Comparison between different types
+        </p>
         <br>
-        <br>
-        <vue-form-generator
-          :schema="modelSchema"
-          :model="model"
-          :options="formOptionsQuasar"
-          @model-updated="modelUpdated"
-        />
-      </div>
-      <div class="col">
-        Quasar Reference
-        <br>
-        <br>
-        <q-input
-          v-model="model.name"
-          :stack-label="modelSchema.fields[0].label"
-          :placeholder="modelSchema.fields[0].placeholder"
-          @input="modelUpdated"
-        />
-        <q-checkbox
-          v-model="model.home"
-          :label="modelSchema.fields[1].label"
-          @input="modelUpdated"
-        />
+        <div class="row gutter-md">
+          <div class="col">
+            <p>
+              Scheme
+            </p>
+            <JsonEditor
+              :objData="modelSchema"
+              v-model="modelSchema">
+            </JsonEditor>
+          </div>
+          <div class="col">
+            <p>
+              Model
+            </p>
+            {{ model }}
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -56,15 +88,15 @@ export default {
         {
           type: 'input',
           inputType: 'text',
-          label: 'Name',
-          model: 'name',
-          placeholder: 'Screen name',
+          label: 'My Text',
+          model: 'myText',
+          placeholder: 'Enter text here',
           featured: true,
           required: true
         }, {
           type: 'checkbox',
-          label: 'Is home screen',
-          model: 'home',
+          label: 'My Checkbox',
+          model: 'myCheckbox',
           default: true
         }
       ]
