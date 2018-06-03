@@ -9,7 +9,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue src",
     "test": "echo \"No test specified\" && exit 0",
-    "dev": "quasar dev"
+    "dev": "quasar dev",
+    "build-and-run-dev": "pushd ../../../ && npm run build && popd && quasar dev"
   },
   "dependencies": {
     "vue-form-generator": "link:../../../."
