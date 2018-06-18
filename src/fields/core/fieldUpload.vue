@@ -1,5 +1,5 @@
 <template lang="pug">
-.wrapper
+.wrapper(v-attributes="'wrapper'")
 	input.form-control(
 		:id="getFieldID(schema)",
 		type="file",
@@ -10,7 +10,8 @@
 		:placeholder="schema.placeholder",
 		:readonly="schema.readonly",
 		:required="schema.required",
-		:disabled="disabled")
+		:disabled="disabled", 
+		v-attributes="'input'")
 </template>
 
 <script>
@@ -21,23 +22,22 @@ export default {
 	mixins: [abstractField],
 	methods: {
 		onChange($event){
-			if(isFunction(this.schema.onChanged)){
+			if (isFunction(this.schema.onChanged)) {
 				// Schema has defined onChange method.
 				this.schema.onChanged.call(this, this.model, this.schema, $event, this);
 			}
 		}
 	}
 };
-
 </script>
 
-<style lang="sass">
-	.vue-form-generator .field-input {
-		.wrapper {
-			width: 100%;
-		}
-		.helper {
-			margin: auto 0.5em;
-		}
+<style lang="scss">
+.vue-form-generator .field-input {
+	.wrapper {
+		width: 100%;
 	}
+	.helper {
+		margin: auto 0.5em;
+	}
+}
 </style>

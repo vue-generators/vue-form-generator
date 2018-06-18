@@ -1,7 +1,6 @@
 import fecha from "fecha";
 
 export default {
-
 	formatValueToField(value) {
 		if (value != null) {
 			let dt = this.schema.format ? fecha.parse(value, this.schema.format) : new Date(value);
@@ -14,10 +13,11 @@ export default {
 	formatValueToModel(value) {
 		if (value != null) {
 			let m = fecha.parse(value, this.getDateFormat());
-			if (this.schema.format)
+			if (this.schema.format) {
 				value = fecha.format(m, this.schema.format);
-			else
+			} else {
 				value = m.valueOf();
+			}
 		}
 
 		return value;

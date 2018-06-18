@@ -1,10 +1,8 @@
-import { expect } from "chai";
-
 import v from "src/utils/validators";
 
 function check(validator, value, field, errorCount) {
 	let res = validator(value, field);
-	if (errorCount > 0 ||  res != undefined) {
+	if (errorCount > 0 || res !== undefined) {
 		expect(res).to.be.instanceof(Array);
 		expect(res).to.be.length(errorCount);
 	}
@@ -12,9 +10,7 @@ function check(validator, value, field, errorCount) {
 }
 
 describe("Validators", () => {
-
 	describe("test Validators.required", () => {
-
 		it("should NOT give error if value is null, but field is NOT required", () => {
 			check(v.required, null, { required: false }, 0);
 		});
@@ -22,11 +18,9 @@ describe("Validators", () => {
 		it("should give error if value is null, but field is required", () => {
 			check(v.required, null, { required: true }, 1);
 		});
-
 	});
 
 	describe("test Validators.number", () => {
-
 		let field = {
 			min: 5,
 			max: 10,
@@ -42,11 +36,11 @@ describe("Validators", () => {
 			check(v.number, 0, field, 1);
 			check(v.number, 3, field, 1);
 		});
-		
+
 		it("should give error if value is greater than max", () => {
 			check(v.number, 15, field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.number, 5, field, 0);
 			check(v.number, 8, field, 0);
@@ -65,11 +59,9 @@ describe("Validators", () => {
 			field.required = false;
 			check(v.number, null, field, 0);
 		});
-
 	});
 
 	describe("test Validators.integer", () => {
-
 		let field = {};
 
 		it("should give error if value is not integer", () => {
@@ -84,11 +76,9 @@ describe("Validators", () => {
 			check(v.integer, 0, field, 0);
 			check(v.integer, 10, field, 0);
 		});
-
 	});
 
 	describe("test Validators.double", () => {
-
 		let field = {};
 
 		it("should give error if value is not double", () => {
@@ -99,11 +89,9 @@ describe("Validators", () => {
 		it("should not give error if value is double", () => {
 			check(v.double, 3.14, field, 0);
 		});
-
 	});
 
 	describe("test Validators.string", () => {
-
 		let field = {
 			required: true,
 			min: 3,
@@ -119,7 +107,7 @@ describe("Validators", () => {
 			check(v.string, "A", field, 1);
 			check(v.string, "ab", field, 1);
 		});
-		
+
 		it("should give error if value is greater than max", () => {
 			check(v.string, "abcdefghijklmnop", field, 1);
 		});
@@ -129,7 +117,7 @@ describe("Validators", () => {
 			check(v.string, true, field, 1);
 			check(v.string, [], field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.string, "Foo", field, 0);
 			check(v.string, "Foobar", field, 0);
@@ -144,7 +132,6 @@ describe("Validators", () => {
 	});
 
 	describe("test Validators.array", () => {
-
 		let field = {
 			required: true,
 			min: 2,
@@ -161,9 +148,9 @@ describe("Validators", () => {
 			check(v.array, ["ab"], field, 1);
 			check(v.array, [true], field, 1);
 		});
-		
+
 		it("should give error if count of items is greater than max", () => {
-			check(v.array, [1,2,3,4,5], field, 1);
+			check(v.array, [1, 2, 3, 4, 5], field, 1);
 		});
 
 		it("should give error if value is not array", () => {
@@ -171,12 +158,12 @@ describe("Validators", () => {
 			check(v.array, true, field, 1);
 			check(v.array, "John", field, 1);
 		});
-		
+
 		it("should not give error", () => {
-			check(v.array, [1,4], field, 0);
+			check(v.array, [1, 4], field, 0);
 			check(v.array, ["John", "Doe", "Jane"], field, 0);
 			check(v.array, [true, true, false], field, 0);
-			check(v.array, [ [5], [3] ], field, 0);
+			check(v.array, [[5], [3]], field, 0);
 		});
 
 		it("should not give error if value is null and field is not required", () => {
@@ -188,11 +175,9 @@ describe("Validators", () => {
 			field.required = false;
 			check(v.array, ["Foo"], field, 1);
 		});
-
-	});	
+	});
 
 	describe("test Validators.date", () => {
-
 		let field = {
 			required: true,
 			min: 1262799081231,
@@ -212,7 +197,7 @@ describe("Validators", () => {
 			check(v.date, 1220000000000, field, 1);
 			check(v.date, "1900-04-05", field, 1);
 		});
-		
+
 		it("should give error if value is greater than max", () => {
 			check(v.date, 1600000000000, field, 1);
 			check(v.date, "2100-04-05", field, 1);
@@ -228,11 +213,9 @@ describe("Validators", () => {
 			field.required = false;
 			check(v.date, null, field, 0);
 		});
-
 	});
 
 	describe("test Validators.regexp", () => {
-
 		let field = {
 			required: true,
 			pattern: /^[a-z0-9-]+$/g
@@ -247,7 +230,7 @@ describe("Validators", () => {
 			check(v.regexp, "12 34", field, 1);
 			check(v.regexp, "555+666", field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.regexp, "foo-bar", field, 0);
 			check(v.regexp, "john-doe-123", field, 0);
@@ -260,7 +243,6 @@ describe("Validators", () => {
 	});
 
 	describe("test Validators.email", () => {
-
 		let field = { required: true };
 
 		it("should give error if value is null, but field is required", () => {
@@ -273,7 +255,7 @@ describe("Validators", () => {
 			check(v.email, "abc@gmail", field, 1);
 			check(v.email, "@gmail.com", field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.email, "john.doe@company.net", field, 0);
 			check(v.email, "james.123.45@mail.co.uk", field, 0);
@@ -285,9 +267,7 @@ describe("Validators", () => {
 		});
 	});
 
-
 	describe("test Validators.url", () => {
-
 		let field = { required: true };
 
 		it("should give error if value is null, but field is required", () => {
@@ -300,7 +280,7 @@ describe("Validators", () => {
 			check(v.url, "gmail.company1234", field, 1);
 			check(v.url, "@gmail.com", field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.url, "http://www.google.com", field, 0);
 			check(v.url, "http://nasa.gov", field, 0);
@@ -312,10 +292,9 @@ describe("Validators", () => {
 			field.required = false;
 			check(v.url, null, field, 0);
 		});
-	});	
+	});
 
 	describe("test Validators.creditCard", () => {
-
 		let field = { required: true };
 
 		it("should give error if value is null, but field is required", () => {
@@ -327,22 +306,21 @@ describe("Validators", () => {
 			check(v.creditCard, "4556778266680579000", field, 1);
 			check(v.creditCard, "343811242956600", field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.creditCard, "4556778266680579", field, 0); // Visa
 			check(v.creditCard, "5491345312191350", field, 0); // Mastercard
 			check(v.creditCard, "6011319767119926", field, 0); // Discover
-			check(v.creditCard, "343811242956601", field, 0);  // American Express
+			check(v.creditCard, "343811242956601", field, 0); // American Express
 		});
 
 		it("should not give error if value is null and  field is not required", () => {
 			field.required = false;
 			check(v.creditCard, null, field, 0);
 		});
-	});	
+	});
 
 	describe("test Validators.alpha", () => {
-
 		let field = {
 			required: true
 		};
@@ -358,7 +336,7 @@ describe("Validators", () => {
 			check(v.alpha, "john_doe", field, 1);
 			check(v.alpha, 512, field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.alpha, "F", field, 0);
 			check(v.alpha, "Foo", field, 0);
@@ -374,7 +352,6 @@ describe("Validators", () => {
 	});
 
 	describe("test Validators.alphaNumeric", () => {
-
 		let field = {
 			required: true
 		};
@@ -389,7 +366,7 @@ describe("Validators", () => {
 			check(v.alphaNumeric, "john.doe", field, 1);
 			check(v.alphaNumeric, "john_doe", field, 1);
 		});
-		
+
 		it("should not give error", () => {
 			check(v.alphaNumeric, "F", field, 0);
 			check(v.alphaNumeric, "Foo", field, 0);
@@ -408,7 +385,6 @@ describe("Validators", () => {
 	});
 
 	describe("test localized error messages", () => {
-
 		let field = {
 			min: 5,
 			max: 10,
@@ -427,11 +403,9 @@ describe("Validators", () => {
 			expect(v.number(null, field)[0]).to.be.equal("A mezőt kötelező kitölteni!");
 			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. Minimum 5 a 2 helyett");
 		});
-
 	});
 
 	describe("test local custom error messages", () => {
-
 		let field = {
 			min: 5,
 			max: 10,

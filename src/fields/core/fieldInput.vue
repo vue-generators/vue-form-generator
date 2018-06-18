@@ -1,5 +1,5 @@
 <template lang="pug">
-.wrapper
+.wrapper(v-attributes="'wrapper'")
 	input.form-control(
 		:id="getFieldID(schema)",
 		:type="schema.inputType.toLowerCase()",
@@ -35,7 +35,8 @@
 		:src="schema.src",
 		:step="schema.step",
 		:width="schema.width",
-		:files="schema.files")
+		:files="schema.files"
+		v-attributes="'input'")
 	span.helper(v-if="schema.inputType.toLowerCase() === 'color' || schema.inputType.toLowerCase() === 'range'") {{ value }}
 </template>
 
@@ -45,9 +46,9 @@ import { debounce, get as objGet, isFunction, isNumber } from "lodash";
 import fecha from "fecha";
 
 const DATETIME_FORMATS = {
-	"date": "YYYY-MM-DD",
-	"datetime": "YYYY-MM-DD HH:mm:ss",
-	"datetime-local": "YYYY-MM-DDTHH:mm:ss",
+	date: "YYYY-MM-DD",
+	datetime: "YYYY-MM-DD HH:mm:ss",
+	"datetime-local": "YYYY-MM-DDTHH:mm:ss"
 };
 
 export default {
@@ -83,17 +84,17 @@ export default {
 			this.updateModelValue(newValue, oldValue);
 		},
 		formatNumberToModel(newValue, oldValue) {
-			if(!isNumber(newValue)) {
+			if (!isNumber(newValue)) {
 				newValue = NaN;
 			}
 			this.updateModelValue(newValue, oldValue);
 		},
 		onInput($event) {
 			let value = $event.target.value;
-			switch(this.schema.inputType.toLowerCase()) {
+			switch (this.schema.inputType.toLowerCase()) {
 				case "number":
 				case "range":
-					if(isNumber($event.target.valueAsNumber)) {
+					if (isNumber($event.target.valueAsNumber)) {
 						value = $event.target.valueAsNumber;
 					}
 					break;
@@ -101,63 +102,70 @@ export default {
 			this.value = value;
 		},
 		onBlur() {
-			if(isFunction(this.debouncedFormatFunc)) {
+			if (isFunction(this.debouncedFormatFunc)) {
 				this.debouncedFormatFunc.flush();
 			}
 		}
 	},
 
-	mounted () {
-		switch(this.schema.inputType.toLowerCase()) {
+	mounted() {
+		switch (this.schema.inputType.toLowerCase()) {
 			case "number":
 			case "range":
-				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
-					this.formatNumberToModel(newValue, oldValue);
-				}, parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)), {
-					trailing: true,
-					leading: false
-				});
+				this.debouncedFormatFunc = debounce(
+					(newValue, oldValue) => {
+						this.formatNumberToModel(newValue, oldValue);
+					},
+					parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)),
+					{
+						trailing: true,
+						leading: false
+					}
+				);
 				break;
 			case "date":
 			case "datetime":
 			case "datetime-local":
 				// wait 1s before calling 'formatDatetimeToModel' to allow user to input data
-				this.debouncedFormatFunc = debounce((newValue, oldValue) => {
-					this.formatDatetimeToModel(newValue, oldValue);
-				}, parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)), {
-					trailing: true,
-					leading: false
-				});
+				this.debouncedFormatFunc = debounce(
+					(newValue, oldValue) => {
+						this.formatDatetimeToModel(newValue, oldValue);
+					},
+					parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)),
+					{
+						trailing: true,
+						leading: false
+					}
+				);
 				break;
 		}
 	},
 
-	created () {
-		if(this.schema.inputType.toLowerCase() == "file") {
+	created() {
+		if (this.schema.inputType.toLowerCase() === "file") {
 			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");
 		}
 	}
 };
-
 </script>
 
-<style lang="sass">
-	.vue-form-generator .field-input {
-		.wrapper {
-			width: 100%;
-		}
-		input[type="radio"] {
-			width: 100%;
-		}
-		input[type="color"] {
-			width: 60px;
-		}
-		input[type="range"] {
-			padding: 0;
-		}
-
-		.helper {
-			margin: auto 0.5em;
-		}
+<style lang="scss">
+.vue-form-generator .field-input {
+	.wrapper {
+		width: 100%;
 	}
+	input[type="radio"] {
+		width: 100%;
+	}
+	input[type="color"] {
+		width: 60px;
+	}
+	input[type="range"] {
+		padding: 0;
+	}
+
+	.helper {
+		margin: auto 0.5em;
+	}
+}
 </style>

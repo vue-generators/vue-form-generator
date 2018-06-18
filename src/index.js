@@ -1,10 +1,15 @@
-module.exports = {
-	component: require("./formGenerator.vue"),
-	schema: require("./utils/schema.js"),
-	validators: require("./utils/validators.js"),
-	abstractField: require("./fields/abstractField").default,
+const component = require("./formGenerator.vue").default;
+const schema = require("./utils/schema.js");
+const validators = require("./utils/validators.js").default;
+const abstractField = require("./fields/abstractField").default;
+const install = Vue => {
+	Vue.component("VueFormGenerator", module.exports.component);
+};
 
-	install(Vue) {
-		Vue.component("VueFormGenerator", module.exports.component);
-	}
+module.exports = {
+	component,
+	schema,
+	validators,
+	abstractField,
+	install
 };

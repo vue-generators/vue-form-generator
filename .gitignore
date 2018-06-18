@@ -1,6 +1,5 @@
 .DS_Store
 node_modules/
-coverage/
 docs/_book/
 npm-debug.log
 selenium-debug.log
