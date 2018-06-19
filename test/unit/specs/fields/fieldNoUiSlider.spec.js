@@ -54,9 +54,7 @@ describe("fieldNoUiSlider.vue", () => {
 			let origin = input.find(".noUi-origin");
 			wrapper.update();
 
-			expect(origin.element.style.getPropertyValue("-webkit-transform")).to.be.equal(
-				"translate(-22.22222222222223%, 0)"
-			);
+			expect(origin.element.style.getPropertyValue("transform")).to.be.equal("translate(-22.22222222222223%, 0)");
 		});
 
 		it("handle value should be the model value after changed", () => {
@@ -64,7 +62,7 @@ describe("fieldNoUiSlider.vue", () => {
 			wrapper.update();
 			let origin = input.find(".noUi-origin");
 
-			expect(origin.element.style.getPropertyValue("-webkit-transform")).to.be.equal("translate(0%, 0)");
+			expect(origin.element.style.getPropertyValue("transform")).to.be.equal("translate(0%, 0)");
 		});
 
 		it.skip("model value should be the handle value after changed", () => {
