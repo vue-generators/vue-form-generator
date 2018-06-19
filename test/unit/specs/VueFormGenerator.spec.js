@@ -359,7 +359,7 @@ describe("VueFormGenerator.vue", () => {
 		it("should be called with correct params", () => {
 			let spy = wrapper.vm.schema.fields[0].disabled;
 			expect(spy.called).to.be.true;
-			expect(spy.calledWith(model, wrapper.vm.schema.fields[0], wrapper.vm.$children[0])).to.be.true;
+			expect(spy.calledWith(model, wrapper.vm.schema.fields[0], wrapper.vm.$children[0].$children[0])).to.be.true;
 		});
 	});
 
@@ -975,7 +975,7 @@ describe("VueFormGenerator.vue", () => {
 				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
 			);
 			form = wrapper.vm.$refs.form;
-			field = form.$children[0];
+			field = form.$children[0].$children[0];
 		});
 
 		it("should no errors after mounted()", done => {
@@ -996,48 +996,6 @@ describe("VueFormGenerator.vue", () => {
 
 				done();
 			}, 15);
-		});
-	});
-
-	describe("check fieldTypeHasLabel function", () => {
-		let form;
-		before(() => {
-			createFormGenerator({ fields: [] }, {});
-			form = wrapper.vm.$refs.form;
-		});
-
-		it("should return true", () => {
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "checkbox", label: "checkbox" })).to.be.true;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "text", label: "text" })).to.be.true;
-			expect(form.fieldTypeHasLabel({ type: "checklist", label: "checklist" })).to.be.true;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "image", label: "image" })).to.be.true;
-		});
-
-		it("should return false", () => {
-			// with label text defined
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "button", label: "button" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "submit", label: "submit" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "reset", label: "reset" })).to.be.false;
-
-			// without label text defined
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "checkbox" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "text" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "checklist" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "image" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "button" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "submit" })).to.be.false;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "reset" })).to.be.false;
-		});
-
-		it("should default to true for unknown types", () => {
-			expect(
-				form.fieldTypeHasLabel({
-					type: "input",
-					inputType: "unsupported-or-unknown",
-					label: "unsupported"
-				})
-			).to.be.true;
-			expect(form.fieldTypeHasLabel({ type: "input", inputType: "unsupported-or-unknown" })).to.be.false;
 		});
 	});
 });
