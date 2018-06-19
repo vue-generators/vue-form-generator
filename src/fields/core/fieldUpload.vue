@@ -1,7 +1,7 @@
 <template lang="pug">
 .wrapper(v-attributes="'wrapper'")
 	input.form-control(
-		id="getFieldID(schema)",
+		:id="getFieldID(schema)",
 		type="file",
 		:name="schema.inputName",
 		@change="onChange",
@@ -21,10 +21,10 @@ import { isFunction } from "lodash";
 export default {
 	mixins: [abstractField],
 	methods: {
-		onChange() {
+		onChange($event){
 			if (isFunction(this.schema.onChanged)) {
 				// Schema has defined onChange method.
-				this.schema.onChanged.call(this, this.model, this.schema, event, this);
+				this.schema.onChanged.call(this, this.model, this.schema, $event, this);
 			}
 		}
 	}

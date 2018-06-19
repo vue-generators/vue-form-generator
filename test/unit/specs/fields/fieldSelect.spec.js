@@ -244,7 +244,6 @@ describe("fieldSelect.vue", () => {
 	});
 
 	describe("check dynamic html attributes", () => {
-
 		describe("check input/wrapper attributes", () => {
 			let schema = {
 				type: "select",
@@ -273,8 +272,8 @@ describe("fieldSelect.vue", () => {
 			let input;
 
 			before(() => {
-				createField2({ schema, model});
-				input = wrapper.find('select');
+				createField2({ schema, model });
+				input = wrapper.find("select");
 			});
 
 			it("input should have data-toggle attribute", () => {
@@ -302,11 +301,11 @@ describe("fieldSelect.vue", () => {
 				}
 			};
 			let model = {};
-			let input, wrap;
+			let input;
 
 			before(() => {
-				createField2({ schema, model});
-				input = wrapper.find('select');
+				createField2({ schema, model });
+				input = wrapper.find("select");
 			});
 
 			it("input should have data-toggle attribute", () => {

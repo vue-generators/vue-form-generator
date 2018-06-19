@@ -16,7 +16,7 @@ function convertValidator(validator) {
 function attributesDirective(el, binding, vnode) {
 	let attrs = objGet(vnode.context, "schema.attributes", {});
 	let container = binding.value || "input";
-	if(isString(container)) {
+	if (isString(container)) {
 		attrs = objGet(attrs, container) || attrs;
 	}
 	forEach(attrs, (val, key) => {
@@ -39,7 +39,7 @@ export default {
 		attributes: {
 			bind: attributesDirective,
 			updated: attributesDirective,
-			componentUpdated: attributesDirective,
+			componentUpdated: attributesDirective
 		}
 	},
 
@@ -48,7 +48,7 @@ export default {
 			cache: false,
 			get() {
 				let val;
-				if (isFunction(objGet(this.schema, 'get'))) {
+				if (isFunction(objGet(this.schema, "get"))) {
 					val = this.schema.get(this.model);
 				} else {
 					val = objGet(this.model, this.schema.model);
@@ -137,7 +137,10 @@ export default {
 
 		debouncedValidate() {
 			if (!isFunction(this.debouncedValidateFunc)) {
-				this.debouncedValidateFunc = debounce(this.validate.bind(this), objGet(this, "$parent.options.validateDebounceTime", 500));
+				this.debouncedValidateFunc = debounce(
+					this.validate.bind(this),
+					objGet(this, "$parent.options.validateDebounceTime", 500)
+				);
 			}
 			this.debouncedValidateFunc();
 		},

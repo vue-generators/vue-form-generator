@@ -9,19 +9,40 @@
 		:class="schema.fieldClasses",
 		@change="schema.onChange || null",
 		:disabled="disabled",
+		:accept="schema.accept",
+		:alt="schema.alt",
+		:autocomplete="schema.autocomplete",
+		:checked="schema.checked",
+		:dirname="schema.dirname",
+		:formaction="schema.formaction",
+		:formenctype="schema.formenctype",
+		:formmethod="schema.formmethod",
+		:formnovalidate="schema.formnovalidate",
+		:formtarget="schema.formtarget",
+		:height="schema.height",
+		:list="schema.list",
+		:max="schema.max",
+		:maxlength="schema.maxlength",
+		:min="schema.min",
+		:minlength="schema.minlength",
+		:multiple="schema.multiple",
 		:name="schema.inputName",
+		:pattern="schema.pattern",
+		:placeholder="schema.placeholder",
 		:readonly="schema.readonly",
 		:required="schema.required",
+		:size="schema.size",
 		:src="schema.src",
+		:step="schema.step",
+		:width="schema.width",
 		:files="schema.files"
 		v-attributes="'input'")
-
 	span.helper(v-if="schema.inputType.toLowerCase() === 'color' || schema.inputType.toLowerCase() === 'range'") {{ value }}
 </template>
 
 <script>
 import abstractField from "../abstractField";
-import { debounce, isFunction, isNumber } from "lodash";
+import { debounce, get as objGet, isFunction, isNumber } from "lodash";
 import fecha from "fecha";
 
 const DATETIME_FORMATS = {
@@ -29,8 +50,6 @@ const DATETIME_FORMATS = {
 	datetime: "YYYY-MM-DD HH:mm:ss",
 	"datetime-local": "YYYY-MM-DDTHH:mm:ss"
 };
-
-const DEBOUNCE_FORMAT_MS = 1000;
 
 export default {
 	mixins: [abstractField],
@@ -75,7 +94,7 @@ export default {
 			switch (this.schema.inputType.toLowerCase()) {
 				case "number":
 				case "range":
-					if ($event.target.valueAsNumber) {
+					if (isNumber($event.target.valueAsNumber)) {
 						value = $event.target.valueAsNumber;
 					}
 					break;
@@ -97,7 +116,7 @@ export default {
 					(newValue, oldValue) => {
 						this.formatNumberToModel(newValue, oldValue);
 					},
-					DEBOUNCE_FORMAT_MS,
+					parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)),
 					{
 						trailing: true,
 						leading: false
@@ -112,7 +131,7 @@ export default {
 					(newValue, oldValue) => {
 						this.formatDatetimeToModel(newValue, oldValue);
 					},
-					DEBOUNCE_FORMAT_MS,
+					parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)),
 					{
 						trailing: true,
 						leading: false

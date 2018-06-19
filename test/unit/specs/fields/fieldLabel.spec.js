@@ -56,7 +56,6 @@ describe("fieldLabel.vue", () => {
 	});
 
 	describe("check dynamic html attributes", () => {
-
 		describe("check label attributes", () => {
 			let schema = {
 				type: "label",
@@ -78,8 +77,8 @@ describe("fieldLabel.vue", () => {
 			let label;
 
 			before(() => {
-				createField2({ schema, model});
-				label = wrapper.find('span');
+				createField2({ schema, model });
+				label = wrapper.find("span");
 			});
 
 			it("label should have data-* attribute", () => {
@@ -105,8 +104,8 @@ describe("fieldLabel.vue", () => {
 			let label;
 
 			before(() => {
-				createField2({ schema, model});
-				label = wrapper.find('span');
+				createField2({ schema, model });
+				label = wrapper.find("span");
 			});
 
 			it("label should have data-* attribute", () => {

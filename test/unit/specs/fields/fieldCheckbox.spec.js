@@ -78,7 +78,6 @@ describe("FieldCheckbox.vue", () => {
 	});
 
 	describe("check dynamic html attributes", () => {
-
 		describe("check input/wrapper attributes", () => {
 			let schema = {
 				type: "checkbox",
@@ -96,11 +95,11 @@ describe("FieldCheckbox.vue", () => {
 				}
 			};
 			let model = {};
-			let input, wrap;
+			let input;
 
 			before(() => {
-				createField({ schema, model});
-				input = wrapper.find('input');
+				createField({ schema, model });
+				input = wrapper.find("input");
 			});
 
 			it("input should have data-* attribute", () => {
@@ -120,11 +119,11 @@ describe("FieldCheckbox.vue", () => {
 				}
 			};
 			let model = {};
-			let input, wrap;
+			let input;
 
 			before(() => {
-				createField({ schema, model});
-				input = wrapper.find('input');
+				createField({ schema, model });
+				input = wrapper.find("input");
 			});
 
 			it("input should have data-* attribute", () => {

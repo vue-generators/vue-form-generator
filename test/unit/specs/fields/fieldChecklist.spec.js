@@ -618,7 +618,6 @@ describe("fieldChecklist.vue", () => {
 	});
 
 	describe("check dynamic html attributes", () => {
-
 		describe("check listbox input/wrapper attributes", () => {
 			let schema = {
 				type: "checklist",
@@ -641,9 +640,9 @@ describe("fieldChecklist.vue", () => {
 			let input, wrap;
 
 			before(() => {
-				createField2({ schema, model});
-				input = wrapper.find('input');
-				wrap = wrapper.find('.wrapper');
+				createField2({ schema, model });
+				input = wrapper.find("input");
+				wrap = wrapper.find(".wrapper");
 			});
 
 			it("wrapper should have data-* attribute", () => {
@@ -677,23 +676,23 @@ describe("fieldChecklist.vue", () => {
 			let input, wrap;
 
 			before(() => {
-				createField2({ schema, model});
-				input = wrapper.find('input');
-				wrap = wrapper.find('.wrapper');
+				createField2({ schema, model });
+				input = wrapper.find("input");
+				wrap = wrapper.find(".wrapper");
 			});
 
 			it("wrapper should have data-* attribute", () => {
 				expect(wrap.attributes()["data-wrapper"]).to.be.equal("collapse");
 			});
 
-			it.skip("input should have data-* attribute", (done) => {
+			it.skip("input should have data-* attribute", done => {
 				// TODO: figure out how to get this test to work
 				wrapper.setData({ comboExpanded: true });
 				Vue.config.errorHandler = done;
 				Vue.nextTick(() => {
 					expect(input.attributes()["data-input"]).to.be.equal("tooltip");
 					done();
-				});				
+				});
 			});
 		});
 
@@ -711,11 +710,11 @@ describe("fieldChecklist.vue", () => {
 				}
 			};
 			let model = {};
-			let input, wrap;
+			let input;
 
 			before(() => {
-				createField2({ schema, model});
-				input = wrapper.find('input');
+				createField2({ schema, model });
+				input = wrapper.find("input");
 			});
 
 			it("input should have data-* attribute", () => {

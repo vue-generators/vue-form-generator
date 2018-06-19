@@ -167,22 +167,13 @@ export default {
 		getFieldRowClasses(field) {
 			const hasErrors = this.fieldErrors(field).length > 0;
 			let baseClasses = {
-				error: hasErrors,
+				[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
+				[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
 				disabled: this.fieldDisabled(field),
 				readonly: this.fieldReadonly(field),
 				featured: this.fieldFeatured(field),
 				required: this.fieldRequired(field)
 			};
-
-			let { validationErrorClass, validationSuccessClass } = this.options;
-			if (validationErrorClass && validationSuccessClass) {
-				if (hasErrors) {
-					baseClasses[validationErrorClass] = true;
-					baseClasses.error = false;
-				} else {
-					baseClasses[validationSuccessClass] = true;
-				}
-			}
 
 			if (isArray(field.styleClasses)) {
 				forEach(field.styleClasses, c => (baseClasses[c] = true));
