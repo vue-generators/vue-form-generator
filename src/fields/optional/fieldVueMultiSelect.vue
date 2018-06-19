@@ -41,6 +41,8 @@
 		@close="onClose",
 		:option-height="selectOptions.optionHeight",
 	)
+		span(slot="noResult").
+			{{ selectOptions.noResult }}
 </template>
 <script>
 	import abstractField from "../abstractField";
@@ -66,7 +68,7 @@
 				} else {
 					//this will let the multiselect library use the default behavior if customLabel is not specified
 					return undefined;
-				} 
+				}
 			}
 		},
 		methods: {
