@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import mixinUtils from "../../mixinUtils";
+import mixinUtils from "../../mixins/utils.js";
 
 export default {
 	mixins: [mixinUtils],

@@ -16,7 +16,7 @@
 
 <script>
 import { validators } from "../../../src";
-import mixinUtils from "../../mixinUtils";
+import mixinUtils from "../../mixins/utils.js";
 
 export default {
 	mixins: [mixinUtils],

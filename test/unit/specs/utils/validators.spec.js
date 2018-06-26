@@ -285,7 +285,7 @@ describe("Validators", () => {
 			check(v.url, "http://www.google.com", field, 0);
 			check(v.url, "http://nasa.gov", field, 0);
 			check(v.url, "http://github.com", field, 0);
-			check(v.url, "http://github.com/icebob/vue-form-generator", field, 0);
+			check(v.url, "http://github.com/vue-generators/vue-form-generator", field, 0);
 		});
 
 		it("should not give error if value is null and  field is not required", () => {

@@ -88,7 +88,7 @@ const slugify = (name = "") => {
 			.toString()
 			.trim()
 			// .toLowerCase()
-			// Spaces & underscores to dashes
+			// Spaces to dashes
 			.replace(/ /g, "-")
 			// Multiple dashes to one
 			.replace(/-{2,}/g, "-")

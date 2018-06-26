@@ -39,7 +39,7 @@ import Fakerator from "fakerator";
 
 import Schema from "./schema";
 import { users } from "./data";
-import mixinUtils from "../../mixinUtils";
+import mixinUtils from "../../mixins/utils.js";
 
 import Multiselect from "vue-multiselect";
 Vue.component("multiselect", Multiselect);

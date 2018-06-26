@@ -7,7 +7,7 @@ const banner =
 	" * vue-form-generator v" +
 	version +
 	"\n" +
-	" * https://github.com/icebob/vue-form-generator\n" +
+	" * https://github.com/vue-generators/vue-form-generator/\n" +
 	" * Released under the MIT License.\n" +
 	" */\n";
 const ExtractTextPlugin = require("extract-text-webpack-plugin");

@@ -991,7 +991,7 @@ export default {
 		// 		pattern: "^\\+[0-9]{2}-[237]0-[0-9]{3}-[0-9]{4}$",
 		// 		placeholder: "User's phone number",
 		// 		hint: "Format: +36-(20|30|70)-000-0000",
-		// 		help: "You can use any <b>formatted</b> texts. Or place a <a target='_blank' href='https://github.com/icebob/vue-form-generator'>link</a> to another site.",
+		// 		help: "You can use any <b>formatted</b> texts. Or place a <a target='_blank' href='https://github.com/vue-generators/vue-form-generator/'>link</a> to another site.",
 		// 		styleClasses: "half-width"
 		// 			//validator: validators.regexp
 		// 	},

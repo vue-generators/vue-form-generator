@@ -2,10 +2,10 @@
 	<div class="container">
 		<h1>Multiselect</h1>
 		<div class="row">
-            <div class="col-sm-12">
+			<div class="col-sm-12">
 				<vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-            </div>
-        </div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				<pre v-if="model" v-html="prettyModel"></pre>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import mixinUtils from "../../mixinUtils";
+import mixinUtils from "../../mixins/utils.js";
 
 import Vue from "vue";
 import Multiselect from "vue-multiselect";
