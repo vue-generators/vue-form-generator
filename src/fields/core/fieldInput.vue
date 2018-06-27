@@ -94,8 +94,8 @@ export default {
 			switch (this.schema.inputType.toLowerCase()) {
 				case "number":
 				case "range":
-					if (isNumber($event.target.valueAsNumber)) {
-						value = $event.target.valueAsNumber;
+					if (isNumber(parseFloat($event.target.value))) {
+						value = parseFloat($event.target.value);
 					}
 					break;
 			}
