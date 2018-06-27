@@ -1,19 +1,23 @@
-import { expect } from "chai";
-import { createVueField, trigger, checkAttribute } from "../util";
+import { mount, createLocalVue } from "@vue/test-utils";
 
-import Vue from "vue";
 import fieldInput from "src/fields/core/fieldInput.vue";
 
-Vue.component("fieldInput", fieldInput);
+const localVue = createLocalVue();
+let wrapper;
 
-let el, vm, field;
+function createField2(data, methods) {
+	const _wrapper = mount(fieldInput, {
+		localVue,
+		propsData: data,
+		methods: methods
+	});
 
-function createField(test, schema = {}, model = null, disabled = false, options) {
-	[el, vm, field] = createVueField(test, "fieldInput", schema, model, disabled, options);
+	wrapper = _wrapper;
+
+	return _wrapper;
 }
 
-describe("fieldInput.vue", function() {
-
+describe("fieldInput.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "input",
@@ -21,38 +25,35 @@ describe("fieldInput.vue", function() {
 			label: "Name",
 			model: "name",
 			autocomplete: "off",
-			placeholder: "Field placeholder",
+			disabled: false,
+			placeholder: "",
 			readonly: false,
+			inputName: "",
 			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { name: "John Doe" };
 		let input;
 
 		before(() => {
-			createField(this, schema, model, false);
-			input = el.getElementsByTagName("input")[0];
+			createField2({ schema, model, disabled: false });
+			input = wrapper.find("input");
 		});
 
 		it("should contain an input text element", () => {
-			expect(field).to.be.exist;
-			expect(field.$el).to.be.exist;
-
-			expect(input).to.be.defined;
-			expect(input.type).to.be.equal("text");
-			expect(input.classList.contains("form-control")).to.be.true;
+			expect(wrapper.exists()).to.be.true;
+			expect(input.is("input")).to.be.true;
+			expect(input.attributes().type).to.be.equal("text");
+			expect(input.classes()).to.include("form-control");
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick(() => {
-				expect(input.value).to.be.equal("John Doe");
-				done();
-			});
+		it("should contain the value", () => {
+			expect(input.element.value).to.be.equal("John Doe");
 		});
 
 		let inputTypes = new Map([
 			["text", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
 			["password", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
-			["checkbox", ["autocomplete", "disabled", "inputName"]],
+			// ["checkbox", ["autocomplete", "disabled", "inputName"]],
 			// ["radio", [] ],
 			// ["button", [] ],
 			// ["submit", [] ],
@@ -71,61 +72,110 @@ describe("fieldInput.vue", function() {
 			["email", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
 			["url", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
 			// ["search", ],
-			["tel", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
-			["color", ["autocomplete", "inputName"]]
+			["tel", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]]
+
+			// TODO: re-implement this test
+			// ["color", ["autocomplete", "inputName"]]
 		]);
 		for (let [inputType, attributes] of inputTypes) {
-			
 			describe("change type of input", () => {
-				
-				it("should become a " + inputType, function(done) {
-					field.schema.inputType = inputType;
-					vm.$nextTick(() => {
-						expect(input.type).to.be.equal(inputType);
-						done();
-					});
+				it("should become a " + inputType, () => {
+					schema.inputType = inputType;
+					wrapper.update();
 
+					expect(input.attributes().type).to.be.equal(inputType);
 				});
-				
+
 				describe("check optional attribute", () => {
-				
-					attributes.forEach(function(name) {
-						it("should set " + name, function(done) {
-							checkAttribute(name, vm, input, field, schema, done);
+					attributes.forEach(name => {
+						it("should set " + name, () => {
+							checkAttribute(name, wrapper, schema);
 						});
-				
 					});
-				
 				});
-
 			});
 		}
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", () => {
 			model.name = "Jane Doe";
-			vm.$nextTick(() => {
-				expect(input.value).to.be.equal("Jane Doe");
-				done();
-			});
+			wrapper.update();
 
+			expect(input.element.value).to.be.equal("Jane Doe");
 		});
 
-		it("model value should be the input value if changed", (done) => {
-			input.value = "John Smith";
-			trigger(input, "input");
+		it("model value should be the input value if changed", () => {
+			input.element.value = "John Smith";
+			input.trigger("input");
+			wrapper.update();
 
-			vm.$nextTick(() => {
-				expect(model.name).to.be.equal("John Smith");
-				done();
-			});
-
+			expect(model.name).to.be.equal("John Smith");
 		});
 
 		it("should have 2 classes", () => {
-			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
-			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
+			expect(input.classes()).to.include("applied-class");
+			expect(input.classes()).to.include("another-class");
 		});
-
 	});
 
+	describe("check dynamic html attributes", () => {
+		describe("check input/wrapper attributes", () => {
+			let schema = {
+				type: "input",
+				inputType: "text",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				attributes: {
+					wrapper: {
+						"data-toggle": "collapse"
+					},
+					input: {
+						"data-toggle": "tooltip"
+					}
+				}
+			};
+			let model = {};
+			let input, wrap;
+
+			before(() => {
+				createField2({ schema, model });
+				input = wrapper.find("input");
+				wrap = wrapper.find(".wrapper");
+			});
+
+			it("wrapper should have data-toggle attribute", () => {
+				expect(wrap.attributes()["data-toggle"]).to.be.equal("collapse");
+			});
+
+			it("input should have data-toggle attribute", () => {
+				expect(input.attributes()["data-toggle"]).to.be.equal("tooltip");
+			});
+		});
+
+		describe("check non-specific attributes", () => {
+			let schema = {
+				type: "input",
+				inputType: "text",
+				label: "First Name",
+				model: "user__model",
+				inputName: "input_name",
+				fieldClasses: ["applied-class", "another-class"],
+				attributes: {
+					"data-toggle": "tooltip"
+				}
+			};
+			let model = {};
+			let input;
+
+			before(() => {
+				createField2({ schema, model });
+				input = wrapper.find("input");
+			});
+
+			it("input should have data-toggle attribute", () => {
+				expect(input.attributes()["data-toggle"]).to.be.equal("tooltip");
+			});
+		});
+	});
 });
