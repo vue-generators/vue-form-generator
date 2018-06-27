@@ -145,7 +145,7 @@ export default {
 			}
 
 			let isValid = this.errors.length === 0;
-			this.$emit("validated", isValid, this.errors);
+			this.$emit("validated", isValid, this.errors, this);
 		},
 
 		// Validating the model properties
@@ -179,7 +179,7 @@ export default {
 				});
 				this.errors = formErrors;
 				let isValid = formErrors.length === 0;
-				this.$emit("validated", isValid, formErrors);
+				this.$emit("validated", isValid, formErrors, this);
 				return isAsync ? formErrors : isValid;
 			};
 
