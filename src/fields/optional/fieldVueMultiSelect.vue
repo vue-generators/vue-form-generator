@@ -41,6 +41,8 @@
 		@close="onClose",
 		:option-height="selectOptions.optionHeight",
 	)
+		span(slot="noResult").
+			{{ selectOptions.noResult }}
 </template>
 <script>
 import abstractField from "../abstractField";
