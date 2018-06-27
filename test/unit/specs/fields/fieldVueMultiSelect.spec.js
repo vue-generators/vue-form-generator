@@ -1,105 +1,117 @@
-import { expect } from "chai";
-import { createVueField, trigger } from "../util";
+import { mount, createLocalVue } from "@vue/test-utils";
 
 import Vue from "vue";
 import fieldVueMultiSelect from "src/fields/optional/fieldVueMultiSelect.vue";
 import VueMultiSelect from "vue-multiselect";
 
-Vue.component("fieldVueMultiSelect", fieldVueMultiSelect);
-Vue.component("multiselect", VueMultiSelect);
+const localVue = createLocalVue();
+let wrapper;
+let input;
 
-// eslint-disable-next-line
-let el, vm, field;
+function createField2(data, methods) {
+	const _wrapper = mount(fieldVueMultiSelect, {
+		localVue,
+		propsData: data,
+		methods: methods,
+		components: {
+			multiselect: VueMultiSelect
+		}
+	});
 
-function createField(test, schema = {}, model = null, disabled = false, options) {
-	[el, vm, field] = createVueField(test, "fieldVueMultiSelect", schema, model, disabled, options);
+	wrapper = _wrapper;
+	input = _wrapper.find(".multiselect");
+
+	return _wrapper;
 }
 
-describe("fieldVueMultiSelect.vue", function() {
-
+describe("fieldVueMultiSelect.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "vueMultiSelect",
 			label: "Cities",
 			model: "city",
 			required: false,
-			values: [
-				"London",
-				"Paris",
-				"Rome",
-				"Berlin"
-			],
+			values: ["London", "Paris", "Rome", "Berlin"],
 			selectOptions: {
 				multiple: true
 			}
 		};
 		let model = { city: "Paris" };
-		let input;
 
 		before(() => {
-			createField(this, schema, model, false);
-			input = el.querySelector(".multiselect");
+			createField2({ schema, model, disabled: false });
 		});
 
 		it("should contain a select element", () => {
-			expect(field).to.be.exist;
-			expect(field.$el).to.be.exist;
-
-			expect(input).to.be.defined;
-			expect(input.classList.contains("form-control")).to.be.false;
-			expect(input.classList.contains("multiselect--disabled")).to.be.false;
+			expect(wrapper.exists()).to.be.true;
+			expect(input.exists()).to.be.true;
+			expect(input.classes()).to.not.include("form-control");
+			expect(input.classes()).to.not.include("multiselect--disabled");
 		});
 
 		it("should contain option elements", () => {
-			let options = input.querySelectorAll("li.multiselect__element .multiselect__option");
+			let options = input.findAll("li.multiselect__element .multiselect__option");
 			expect(options.length).to.be.equal(schema.values.length);
-			expect(options[1].querySelector("span").textContent).to.be.equal("Paris");
-			expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;
+			expect(
+				options
+					.at(1)
+					.find("span")
+					.text()
+			).to.be.equal("Paris");
+			expect(options.at(1).classes()).to.include("multiselect__option--selected");
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick(() => {
-				expect(input.classList.contains("multiselect--disabled")).to.be.true;
-				field.disabled = false;
-				done();
-			});
+		it("should set disabled", () => {
+			wrapper.vm.disabled = true;
+			wrapper.update();
+
+			expect(input.classes()).to.include("multiselect--disabled");
+
+			wrapper.vm.disabled = false;
+			wrapper.update();
 		});
 
-		it("input value should be the model value after changed", (done) => {
-			model.city = "Rome";
-			vm.$nextTick(() => {
-				expect(input.querySelectorAll("li .multiselect__option--selected").length).to.be.equal(1);
-				let options = input.querySelectorAll("li .multiselect__option");
-				expect(options[2].querySelector("span").textContent).to.be.equal("Rome");
-				expect(options[2].classList.contains("multiselect__option--selected")).to.be.true;
-				done();
-			});
+		it("input value should be the model value after changed", () => {
+			model.city = ["Rome"];
+			wrapper.update();
+			let tags = input.findAll(".multiselect__tag");
+
+			expect(tags.length).to.be.equal(1);
+			expect(
+				tags
+					.at(0)
+					.find("span")
+					.text()
+			).to.be.equal("Rome");
 		});
 
-		it("input value should be the model value after changed (multiselection)", (done) => {
+		it("input value should be the model value after changed (multiselection)", () => {
 			model.city = ["Paris", "Rome"];
-			vm.$nextTick(() => {
-				expect(input.querySelectorAll("li .multiselect__option--selected").length).to.be.equal(2);
-				let options = input.querySelectorAll("li .multiselect__option");
-				expect(options[1].querySelector("span").textContent).to.be.equal("Paris");
-				expect(options[1].classList.contains("multiselect__option--selected")).to.be.true;
-				expect(options[2].querySelector("span").textContent).to.be.equal("Rome");
-				expect(options[2].classList.contains("multiselect__option--selected")).to.be.true;
-				done();
-			});
+			wrapper.update();
+			let tags = input.findAll(".multiselect__tag");
+
+			expect(tags.length).to.be.equal(2);
+			expect(
+				tags
+					.at(0)
+					.find("span")
+					.text()
+			).to.be.equal("Paris");
+			expect(
+				tags
+					.at(1)
+					.find("span")
+					.text()
+			).to.be.equal("Rome");
 		});
 
-		it("model value should be the input value if changed", (done) => {
-			let options = input.querySelectorAll("li .multiselect__option");
-			trigger(options[2], "mousedown");
+		it("model value should be the input value if changed", () => {
+			let options = input.findAll("li .multiselect__option");
+			options.at(2).trigger("click");
+			wrapper.update();
 
-			vm.$nextTick(() => {
-				expect(model.city.length).to.be.equal(1);
-				expect(model.city[0]).to.be.equal("Paris");
-				done();
-			});
-
+			expect(model.city.length).to.be.equal(1);
+			expect(model.city[0]).to.be.equal("Paris");
 		});
 
 		describe("with objects", () => {
@@ -107,45 +119,55 @@ describe("fieldVueMultiSelect.vue", function() {
 				name: "Vue.js",
 				language: "JavaScript"
 			};
-			let schema = {...schema };
+			let schema = { ...schema };
 			let model = {
 				city: [option]
 			};
-			schema.values = [{
-				name: "Vue.js",
-				language: "JavaScript"
-			}, {
-				name: "Rails",
-				language: "Ruby"
-			}, {
-				name: "Sinatra",
-				language: "Ruby"
-			}];
+			schema.values = [
+				{
+					name: "Vue.js",
+					language: "JavaScript"
+				},
+				{
+					name: "Rails",
+					language: "Ruby"
+				},
+				{
+					name: "Sinatra",
+					language: "Ruby"
+				}
+			];
 			schema.selectOptions = {};
+
 			before(() => {
-				createField(this, schema, model, false);
-				input = el.querySelector(".multiselect");
+				createField2({ schema, model, disabled: false });
 			});
 
-			it("model value should work with objects", (done) => {
+			it("model value should work with objects", () => {
 				schema.selectOptions = { label: "name", trackBy: "name" };
-				vm.$nextTick(() => {
-					expect(model.city.length).to.be.equal(1);
-					expect(model.city[0]).to.be.eql(schema.values[0]);
+				wrapper.update();
+
+				expect(model.city.length).to.be.equal(1);
+				expect(model.city[0]).to.be.deep.equal(schema.values[0]);
+			});
+
+			it("options should contain only text specified in label", done => {
+				wrapper.vm.schema.selectOptions = { label: "language", trackBy: "language" };
+				Vue.config.errorHandler = done;
+				Vue.nextTick(() => {
+					let options = input.findAll("li .multiselect__option");
+
+					expect(
+						options
+							.at(0)
+							.find("span")
+							.text()
+					).to.be.equal("JavaScript");
 					done();
 				});
 			});
 
-			it("options should contain only text specified in label", (done) => {
-				schema.selectOptions = { label: "language", trackBy: "language" };
-				vm.$nextTick(() => {
-					let options = input.querySelectorAll("li .multiselect__option");
-					expect(options[0].querySelector("span").textContent).to.be.equal("JavaScript");
-					done();
-				});
-			});
-
-			it("options should contain custom text specified in customLabel", (done) => {
+			it("options should contain custom text specified in customLabel", done => {
 				schema.selectOptions = {
 					label: "name",
 					trackBy: "name",
@@ -153,9 +175,16 @@ describe("fieldVueMultiSelect.vue", function() {
 						return `${name}-${language}`;
 					}
 				};
-				vm.$nextTick(() => {
-					let options = input.querySelectorAll("li .multiselect__option");
-					expect(options[0].querySelector("span").textContent).to.be.equal("Vue.js-JavaScript");
+				Vue.config.errorHandler = done;
+				Vue.nextTick(() => {
+					let options = input.findAll("li .multiselect__option");
+
+					expect(
+						options
+							.at(0)
+							.find("span")
+							.text()
+					).to.be.equal("Vue.js-JavaScript");
 					done();
 				});
 			});

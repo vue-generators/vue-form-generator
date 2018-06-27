@@ -1,98 +1,89 @@
-import { expect } from "chai";
-import { createVueField, trigger, checkAttribute } from "../util";
+import { mount, createLocalVue } from "@vue/test-utils";
 
-import Vue from "vue";
 import FieldTextArea from "src/fields/core/fieldTextArea.vue";
 
-Vue.component("FieldTextArea", FieldTextArea);
+const localVue = createLocalVue();
+let wrapper;
 
-let el, vm, field;
+function createField2(data, methods) {
+	const _wrapper = mount(FieldTextArea, {
+		localVue,
+		propsData: data,
+		methods: methods
+	});
 
-function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldTextArea", schema, model, disabled, options);
+	wrapper = _wrapper;
+
+	return _wrapper;
 }
 
-
-describe("fieldTextArea.vue", function() {
-
+describe("fieldTextArea.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "textarea",
 			label: "Description",
 			model: "desc",
 			max: 500,
-			placeholder: "Field placeholder",
+			disabled: false,
+			placeholder: "",
 			readonly: false,
+			inputName: "",
 			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." };
 		let input;
 
-		before( () => {
-			createField(this, schema, model, false);
-			input = el.getElementsByTagName("textarea")[0];
+		before(() => {
+			createField2({ schema, model, disabled: false });
+			input = wrapper.find("textarea");
 		});
 
 		it("should contain a textarea element", () => {
-			expect(field).to.be.exist;
-			expect(field.$el).to.be.exist;
-
-			expect(input).to.be.defined;
-			expect(input.classList.contains("form-control")).to.be.true;
-			expect(input.rows).to.be.equal(2);	// default value is 2
-			expect(input.maxLength).to.be.equal(500);
+			expect(wrapper.exists()).to.be.true;
+			expect(input.is("textarea")).to.be.true;
+			expect(input.classes()).to.include("form-control");
+			expect(input.attributes().rows).to.be.equal("2"); // default value is 2
+			expect(input.attributes().maxlength).to.be.equal("500");
 		});
 
-		it("should change rows to 4", (done) => {
-			Vue.set(field.schema, "rows", 4);
-			vm.$nextTick( () => {
-				expect(input.rows).to.be.equal(4);
-				done();
-			});
+		it("should change rows to 4", () => {
+			schema.rows = 4;
+			wrapper.update();
+
+			expect(input.attributes().rows).to.be.equal("4");
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
-				expect(input.value).to.be.equal(model.desc);
-				done();
-			});
+		it("should contain the value", () => {
+			expect(input.element.value).to.be.equal(model.desc);
 		});
 
 		describe("check optional attribute", () => {
 			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
-			attributes.forEach(function(name) {
-				it("should set " + name, function(done) {
-					checkAttribute(name, vm, input, field, schema, done);
+			attributes.forEach(name => {
+				it("should set " + name, () => {
+					checkAttribute(name, wrapper, schema, "textarea");
 				});
 			});
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", () => {
 			model.desc = "Jane Doe";
-			vm.$nextTick( () => {
-				expect(input.value).to.be.equal("Jane Doe");
-				done();
-			});
+			wrapper.update();
 
+			expect(input.element.value).to.be.equal("Jane Doe");
 		});
 
-		it("model value should be the input value if changed", (done) => {
-			input.value = "John Smith";
-			trigger(input, "input");
+		it("model value should be the input value if changed", () => {
+			input.element.value = "John Smith";
+			input.trigger("input");
 
-			vm.$nextTick( () => {
-				expect(model.desc).to.be.equal("John Smith");
-				done();
-			});
-
+			expect(model.desc).to.be.equal("John Smith");
 		});
 
 		it("should have 2 classes", () => {
-			expect(input.className.indexOf("applied-class")).not.to.be.equal(-1);
-			expect(input.className.indexOf("another-class")).not.to.be.equal(-1);
+			expect(input.classes()).to.include("applied-class");
+			expect(input.classes()).to.include("another-class");
 		});
-
 	});
-
 });
