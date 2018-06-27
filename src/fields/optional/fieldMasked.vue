@@ -3,28 +3,32 @@
 </template>
 
 <script>
-	/* global $ */
-	import abstractField from "../abstractField";
+/* global $ */
+import abstractField from "../abstractField";
 
-	export default {
-		mixins: [ abstractField ],
+export default {
+	mixins: [abstractField],
 
-		mounted() {
-			this.$nextTick(function () {
-				if (window.$ && window.$.fn.mask) {
-					$(this.$el).unmask().mask(this.schema.mask, this.schema.maskOptions);
-				} else {
-					console.warn("JQuery MaskedInput library is missing. Please download from https://github.com/digitalBush/jquery.maskedinput and load the script in the HTML head section!");
-				}
-			});
-		},
+	mounted() {
+		this.$nextTick(function() {
+			if (window.$ && window.$.fn.mask) {
+				$(this.$el)
+					.unmask()
+					.mask(this.schema.mask, this.schema.maskOptions);
+			} else {
+				console.warn(
+					"JQuery MaskedInput library is missing. Please download from https://github.com/digitalBush/jquery.maskedinput and load the script in the HTML head section!"
+				);
+			}
+		});
+	},
 
-		beforeDestroy() {
-			if (window.$ && window.$.fn.mask)
-				$(this.$el).unmask();
-		}	
-	};
+	beforeDestroy() {
+		if (window.$ && window.$.fn.mask) $(this.$el).unmask();
+	}
+};
 </script>
 
-<style lang="sass">
+<style lang="scss">
+
 </style>

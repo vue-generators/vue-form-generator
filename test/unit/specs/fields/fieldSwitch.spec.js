@@ -1,94 +1,88 @@
-import { expect } from "chai";
-import { createVueField, trigger, checkAttribute } from "../util";
+import { mount, createLocalVue } from "@vue/test-utils";
 
-import Vue from "vue";
 import FieldSwitch from "src/fields/optional/fieldSwitch.vue";
 
-Vue.component("FieldSwitch", FieldSwitch);
+const localVue = createLocalVue();
+let wrapper;
 
-let el, vm, field;
+function createField2(data, methods) {
+	const _wrapper = mount(FieldSwitch, {
+		localVue,
+		propsData: data,
+		methods: methods
+	});
 
-function createField(test, schema = {}, model = null, disabled = false, options) {
-	[ el, vm, field ] = createVueField(test, "fieldSwitch", schema, model, disabled, options);
+	wrapper = _wrapper;
+
+	return _wrapper;
 }
 
-describe("FieldSwitch.vue", function() {
-
+describe("FieldSwitch.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "switch",
 			label: "Status",
-			model: "status"
+			model: "status",
+			autocomplete: "off",
+			disabled: false,
+			inputName: ""
 		};
 		let model = { status: true };
 		let input;
 
-		before( () => {
-			createField(this, schema, model, false);
-			input = el.querySelector("input");
+		before(() => {
+			createField2({ schema, model, disabled: false });
+			input = wrapper.find("input");
 		});
 
 		it("should contain a checkbox element", () => {
-			expect(field).to.be.exist;
-			expect(field.$el).to.be.exist;
-
-			expect(input).to.be.defined;
-			expect(input.type).to.be.equal("checkbox");
-			expect(input.disabled).to.be.false;
+			expect(wrapper.exists()).to.be.true;
+			expect(input.is("input")).to.be.true;
+			expect(input.attributes().type).to.be.equal("checkbox");
 		});
 
-		it("should contain the value", (done) => {
-			vm.$nextTick( () => {
-				expect(input.checked).to.be.true;
-				done();
-			});
+		it("should contain the value", () => {
+			expect(input.element.checked).to.be.true;
 		});
 
 		describe("check optional attribute", () => {
 			let attributes = ["autocomplete", "disabled", "inputName"];
 
-			attributes.forEach(function(name) {
-				it("should set " + name, function(done) {
-					checkAttribute(name, vm, input, field, schema, done);
+			attributes.forEach(name => {
+				it("should set " + name, () => {
+					checkAttribute(name, wrapper, schema);
 				});
 			});
 		});
 
 		it("should contain the default On/Off texts", () => {
-			let span = field.$el.querySelector("span.label");
-			expect(span.getAttribute("data-on")).to.be.equal("On");
-			expect(span.getAttribute("data-off")).to.be.equal("Off");
+			let span = wrapper.find("span.label");
+			expect(span.attributes()["data-on"]).to.be.equal("On");
+			expect(span.attributes()["data-off"]).to.be.equal("Off");
 		});
 
-		it("should set disabled", (done) => {
-			field.disabled = true;
-			vm.$nextTick( () => {
-				expect(input.disabled).to.be.true;
-				field.disabled = false;
-				done();
-			});
+		it("should set disabled", () => {
+			wrapper.vm.disabled = true;
+			wrapper.update();
+
+			expect(input.attributes().disabled).to.be.equal("disabled");
+
+			wrapper.vm.disabled = false;
+			wrapper.update();
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", () => {
 			model.status = false;
-			vm.$nextTick( () => {
-				expect(input.checked).to.be.false;
-				done();
-			});
-
+			wrapper.update();
+			expect(input.element.checked).to.be.false;
 		});
 
-		it("model value should be the input value if changed", (done) => {
-			input.checked = true;
-			trigger(input, "click");
+		it("model value should be the input value if changed", () => {
+			input.element.checked = true;
+			input.trigger("change");
 
-			vm.$nextTick( () => {
-				expect(model.status).to.be.true;
-				done();
-			});
-
+			expect(model.status).to.be.true;
 		});
-
 	});
 
 	describe("check template with custom On/Off texts", () => {
@@ -101,16 +95,15 @@ describe("FieldSwitch.vue", function() {
 		};
 		let model = { status: true };
 
-		before( () => {
-			createField(this, schema, model, false);
+		before(() => {
+			createField2({ schema, model, disabled: false });
 		});
 
 		it("check attributes", () => {
-			let span = field.$el.querySelector("span.label");
-			expect(span.getAttribute("data-on")).to.be.equal("Yes");
-			expect(span.getAttribute("data-off")).to.be.equal("No");
+			let span = wrapper.find("span.label");
+			expect(span.attributes()["data-on"]).to.be.equal("Yes");
+			expect(span.attributes()["data-off"]).to.be.equal("No");
 		});
-
 	});
 
 	describe("check template with custom On/Off values", () => {
@@ -125,38 +118,27 @@ describe("FieldSwitch.vue", function() {
 		let model = { sex: "female" };
 		let input;
 
-		before( () => {
-			createField(this, schema, model, false);
-			input = el.querySelector("input");
+		before(() => {
+			createField2({ schema, model, disabled: false });
+			input = wrapper.find("input");
 		});
 
-		it("check input value", (done) => {
-			vm.$nextTick( () => {
-				expect(input.checked).to.be.true;
-				done();
-			});
+		it("check input value", () => {
+			expect(input.element.checked).to.be.true;
 		});
 
-		it("input value should be the model value after changed", (done) => {
+		it("input value should be the model value after changed", () => {
 			model.sex = "male";
-			vm.$nextTick( () => {
-				expect(input.checked).to.be.false;
-				done();
-			});
+			wrapper.update();
 
+			expect(input.element.checked).to.be.false;
 		});
 
-		it("model value should be the input value if changed", (done) => {
-			input.checked = true;
-			trigger(input, "click");
+		it("model value should be the input value if changed", () => {
+			input.element.checked = true;
+			input.trigger("change");
 
-			vm.$nextTick( () => {
-				expect(model.sex).to.be.equal("female");
-				done();
-			});
-
+			expect(model.sex).to.be.equal("female");
 		});
-
 	});
-
 });

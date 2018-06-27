@@ -1,11 +1,10 @@
-import { get as objGet, each, isFunction, isString, isArray, debounce } from "lodash";
+import { get as objGet, forEach, isFunction, isString, isArray, debounce } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
 function convertValidator(validator) {
 	if (isString(validator)) {
-		if (validators[validator] != null)
-			return validators[validator];
+		if (validators[validator] != null) return validators[validator];
 		else {
 			console.warn(`'${validator}' is not a validator function!`);
 			return null; // caller need to handle null
@@ -14,19 +13,34 @@ function convertValidator(validator) {
 	return validator;
 }
 
+function attributesDirective(el, binding, vnode) {
+	let attrs = objGet(vnode.context, "schema.attributes", {});
+	let container = binding.value || "input";
+	if (isString(container)) {
+		attrs = objGet(attrs, container) || attrs;
+	}
+	forEach(attrs, (val, key) => {
+		el.setAttribute(key, val);
+	});
+}
+
 export default {
-	props: [
-		"model",
-		"schema",
-		"formOptions",
-		"disabled",
-	],
+	props: ["model", "schema", "formOptions", "disabled"],
 
 	data() {
 		return {
 			errors: [],
-			debouncedValidateFunc: null
+			debouncedValidateFunc: null,
+			debouncedFormatFunction: null
 		};
+	},
+
+	directives: {
+		attributes: {
+			bind: attributesDirective,
+			updated: attributesDirective,
+			componentUpdated: attributesDirective
+		}
 	},
 
 	computed: {
@@ -34,44 +48,23 @@ export default {
 			cache: false,
 			get() {
 				let val;
-				if (isFunction(this.schema.get))
+				if (isFunction(objGet(this.schema, "get"))) {
 					val = this.schema.get(this.model);
-
-				else if (this.model && this.schema.model)
+				} else {
 					val = objGet(this.model, this.schema.model);
+				}
 
 				return this.formatValueToField(val);
 			},
 
 			set(newValue) {
 				let oldValue = this.value;
-
 				newValue = this.formatValueToModel(newValue);
 
-				let changed = false;
-				if (isFunction(this.schema.set)) {
-					this.schema.set(this.model, newValue);
-					changed = true;
-
-				} else if (this.schema.model) {
-					this.setModelValueByPath(this.schema.model, newValue);
-					changed = true;
-				}
-
-				if (changed) {
-					this.$emit("model-updated", newValue, this.schema.model);
-
-					if (isFunction(this.schema.onChanged)) {
-						this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
-					}
-
-					if (this.$parent.options && this.$parent.options.validateAfterChanged === true) {
-						if (this.$parent.options.validateDebounceTime > 0) {
-							this.debouncedValidate();
-						} else {
-							this.validate();
-						}
-					}
+				if (isFunction(newValue)) {
+					newValue(newValue, oldValue);
+				} else {
+					this.updateModelValue(newValue, oldValue);
 				}
 			}
 		}
@@ -80,60 +73,105 @@ export default {
 	methods: {
 		validate(calledParent) {
 			this.clearValidationErrors();
+			let validateAsync = objGet(this.formOptions, "validateAsync", false);
+
+			let results = [];
 
 			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
-
 				let validators = [];
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
 				} else {
-					each(this.schema.validator, (validator) => {
+					forEach(this.schema.validator, validator => {
 						validators.push(convertValidator(validator).bind(this));
 					});
 				}
 
-				each(validators, (validator) => {
-					let addErrors = err => {
-						if (isArray(err))
-							Array.prototype.push.apply(this.errors, err);
-						else if (isString(err))
-							this.errors.push(err);
-					};
-
-					let res = validator(this.value, this.schema, this.model);
-					if (res && isFunction(res.then)) {
-						// It is a Promise, async validator
-						res.then(err => {
-							if (err) {
-								addErrors(err);
-								let isValid = this.errors.length == 0;
-								this.$emit("validated", isValid, this.errors, this);
-							}
-						});
+				forEach(validators, validator => {
+					if (validateAsync) {
+						results.push(validator(this.value, this.schema, this.model));
 					} else {
-						if (res)
-							addErrors(res);
+						let result = validator(this.value, this.schema, this.model);
+						if (result && isFunction(result.then)) {
+							result.then(err => {
+								if (err) {
+									this.errors = this.errors.concat(err);
+								}
+								let isValid = this.errors.length === 0;
+								this.$emit("validated", isValid, this.errors, this);
+							});
+						} else if (result) {
+							results = results.concat(result);
+						}
 					}
 				});
-
 			}
 
-			if (isFunction(this.schema.onValidated)) {
-				this.schema.onValidated.call(this, this.model, this.errors, this.schema);
+			let handleErrors = errors => {
+				let fieldErrors = [];
+				forEach(errors, err => {
+					if (isArray(err) && err.length > 0) {
+						fieldErrors = fieldErrors.concat(err);
+					} else if (isString(err)) {
+						fieldErrors.push(err);
+					}
+				});
+				if (isFunction(this.schema.onValidated)) {
+					this.schema.onValidated.call(this, this.model, fieldErrors, this.schema);
+				}
+
+				let isValid = fieldErrors.length === 0;
+				if (!calledParent) {
+					this.$emit("validated", isValid, fieldErrors, this);
+				}
+				this.errors = fieldErrors;
+				return fieldErrors;
+			};
+
+			if (!validateAsync) {
+				return handleErrors(results);
 			}
 
-			let isValid = this.errors.length == 0;
-			if (!calledParent)
-				this.$emit("validated", isValid, this.errors, this);
-
-			return this.errors;
+			return Promise.all(results).then(handleErrors);
 		},
+
 		debouncedValidate() {
-			if(!isFunction(this.debouncedValidateFunc)) {
-				this.debouncedValidateFunc = debounce(this.validate.bind(this), objGet(this, "$parent.options.validateDebounceTime", 500));
+			if (!isFunction(this.debouncedValidateFunc)) {
+				this.debouncedValidateFunc = debounce(
+					this.validate.bind(this),
+					objGet(this, "$parent.options.validateDebounceTime", 500)
+				);
 			}
 			this.debouncedValidateFunc();
 		},
+
+		updateModelValue(newValue, oldValue) {
+			let changed = false;
+			if (isFunction(this.schema.set)) {
+				this.schema.set(this.model, newValue);
+				changed = true;
+			} else if (this.schema.model) {
+				this.setModelValueByPath(this.schema.model, newValue);
+				changed = true;
+			}
+
+			if (changed) {
+				this.$emit("model-updated", newValue, this.schema.model);
+
+				if (isFunction(this.schema.onChanged)) {
+					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
+				}
+
+				if (objGet(this.$parent, "options.validateAfterChanged", false) === true) {
+					if (objGet(this.$parent, "options.validateDebounceTime", 0) > 0) {
+						this.debouncedValidate();
+					} else {
+						this.validate();
+					}
+				}
+			}
+		},
+
 		clearValidationErrors() {
 			this.errors.splice(0);
 		},
@@ -171,12 +209,12 @@ export default {
 		},
 
 		getFieldID(schema) {
-			const idPrefix = this.formOptions && this.formOptions.fieldIdPrefix ? this.formOptions.fieldIdPrefix : "";
+			const idPrefix = objGet(this.formOptions, "fieldIdPrefix", "");
 			return slugifyFormID(schema, idPrefix);
 		},
 
 		getFieldClasses() {
-			return this.schema.fieldClasses || [];
+			return objGet(this.schema, "fieldClasses", []);
 		},
 
 		formatValueToField(value) {
