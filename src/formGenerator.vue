@@ -16,6 +16,24 @@ import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
 import formMixin from "./formMixin.js";
 import formGroup from "./formGroup.vue";
 
+let fieldComponents = { formGroup };
+
+let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
+
+forEach(coreFields.keys(), key => {
+	let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
+	fieldComponents[compName] = coreFields(key).default;
+});
+
+if (process.env.FULL_BUNDLE) {
+	let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
+
+	forEach(Fields.keys(), key => {
+		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
+		fieldComponents[compName] = Fields(key).default;
+	});
+}
+
 export default {
 	name: "formGenerator",
 	components: { formGroup },
