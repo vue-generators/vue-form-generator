@@ -23,27 +23,10 @@
 	</div>
 </template>
 <script>
-import { get as objGet, forEach, isNil, isFunction } from "lodash";
+import { get as objGet, isNil, isFunction } from "lodash";
 import { slugifyFormID } from "./utils/schema";
 import formMixin from "./formMixin.js";
-
-let fieldComponents = {};
-
-let coreFields = require.context("./fields/core", false, /^\.\/field([\w-_]+)\.vue$/);
-
-forEach(coreFields.keys(), key => {
-	let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-	fieldComponents[compName] = coreFields(key).default;
-});
-
-if (process.env.FULL_BUNDLE) {
-	let Fields = require.context("./fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
-
-	forEach(Fields.keys(), key => {
-		let compName = key.replace(/^\.\//, "").replace(/\.vue/, "");
-		fieldComponents[compName] = Fields(key).default;
-	});
-}
+import fieldComponents from "./utils/fieldsLoader.js";
 
 export default {
 	name: "form-group",
@@ -111,7 +94,7 @@ export default {
 			return field.hint;
 		},
 		fieldErrors(field) {
-			return this.errors.filter(e => e.field === field).map(item => item.error);
+			return this.errors.filter((e) => e.field === field).map((item) => item.error);
 		},
 		modelUpdated(newVal, schema) {
 			this.$emit("model-updated", newVal, schema);

@@ -133,7 +133,8 @@
 		"trailingComma": "none",
 		"bracketSpacing": true,
 		"semi": true,
-		"useTabs": true
+		"useTabs": true,
+		"arrowParens": "always"
 	},
 	"nyc": {
 		"include": [
