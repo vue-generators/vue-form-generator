@@ -39,15 +39,19 @@ export default {
 						fields: [
 							{
 								type: "input",
-								inputType: "text",
+								model: "name",
 								label: "Name",
-								model: "name"
+								fieldOptions: {
+									inputType: "text"
+								}
 							},
 							{
 								type: "input",
-								inputType: "email",
+								model: "email",
 								label: "Email",
-								model: "email"
+								fieldOptions: {
+									inputType: "email"
+								}
 							}
 						]
 					},
@@ -56,15 +60,19 @@ export default {
 						fields: [
 							{
 								type: "input",
-								inputType: "text",
+								model: "others.more",
 								label: "More",
-								model: "others.more"
+								fieldOptions: {
+									inputType: "text"
+								}
 							},
 							{
 								type: "input",
-								inputType: "text",
+								model: "others.things",
 								label: "Things",
-								model: "others.things"
+								fieldOptions: {
+									inputType: "text"
+								}
 							}
 						]
 					}
@@ -72,9 +80,11 @@ export default {
 				fields: [
 					{
 						type: "input",
-						inputType: "text",
+						model: "single",
 						label: "Single field (without group)",
-						model: "single"
+						fieldOptions: {
+							inputType: "text"
+						}
 					}
 				]
 			},

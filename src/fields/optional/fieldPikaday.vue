@@ -1,5 +1,5 @@
 <template lang="pug">
-	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+	input.form-control(type="text", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName")
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
 
 	methods: {
 		getDateFormat() {
-			if (this.schema.pikadayOptions && this.schema.pikadayOptions.format) return this.schema.pikadayOptions.format;
+			if (typeof this.fieldOptions.format !== "undefined") return this.fieldOptions.format;
 			else return inputFormat;
 		},
 
@@ -28,7 +28,7 @@ export default {
 		this.$nextTick(() => {
 			if (window.Pikaday) {
 				this.picker = new window.Pikaday(
-					defaults(this.schema.pikadayOptions || {}, {
+					defaults(this.fieldOptions || {}, {
 						field: this.$el, // bind the datepicker to a form field
 						onSelect: () => {
 							this.value = this.picker.toString();
@@ -37,7 +37,9 @@ export default {
 					})
 				);
 			} else {
-				console.warn("Pikaday is missing. Please download from https://github.com/dbushell/Pikaday/ and load the script and CSS in the HTML head section!");
+				console.warn(
+					"Pikaday is missing. Please download from https://github.com/dbushell/Pikaday/ and load the script and CSS in the HTML head section!"
+				);
 			}
 		});
 	},
@@ -47,8 +49,3 @@ export default {
 	}
 };
 </script>
-
-
-<style lang="scss">
-
-</style>

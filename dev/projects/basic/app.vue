@@ -77,12 +77,14 @@ export default {
 								"data-target": "toggle"
 							}
 						},
-						onSubmit: () => {
-							// this.schema.fields[2].type = "input";
-							if (this.schema.fields[2].inputType === "color") {
-								this.schema.fields[2].inputType = "text";
-							} else {
-								this.schema.fields[2].inputType = "color";
+						fieldOptions: {
+							onSubmit: () => {
+								// this.schema.fields[2].type = "input";
+								if (this.schema.fields[2].inputType === "color") {
+									this.schema.fields[2].inputType = "text";
+								} else {
+									this.schema.fields[2].inputType = "color";
+								}
 							}
 						}
 					}

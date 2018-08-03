@@ -1,5 +1,5 @@
 <template lang="pug">
-	input(type="text", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+	input(type="text", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName", :id="getFieldID(schema)")
 </template>
 
 <script>
@@ -34,20 +34,22 @@ export default {
 				this.picker = $(this.$el)
 					.spectrum("destroy")
 					.spectrum(
-						defaults(this.schema.colorOptions || {}, {
+						defaults(this.fieldOptions, {
 							showInput: true,
 							showAlpha: true,
 							disabled: this.schema.disabled,
 							allowEmpty: !this.schema.required,
 							preferredFormat: "hex",
-							change: color => {
+							change: (color) => {
 								this.value = color ? color.toString() : null;
 							}
 						})
 					);
 				this.picker.spectrum("set", this.value);
 			} else {
-				console.warn("Spectrum color library is missing. Please download from http://bgrins.github.io/spectrum/ and load the script and CSS in the HTML head section!");
+				console.warn(
+					"Spectrum color library is missing. Please download from http://bgrins.github.io/spectrum/ and load the script and CSS in the HTML head section!"
+				);
 			}
 		});
 	},
@@ -57,8 +59,3 @@ export default {
 	}
 };
 </script>
-
-
-<style lang="scss">
-
-</style>

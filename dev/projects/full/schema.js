@@ -18,29 +18,35 @@ export default {
 		/** *********/
 		{
 			type: "input",
-			inputType: "hidden",
-			label: "--- INPUT ---",
 			model: "",
-			styleClasses: "alert alert-info"
+			label: "--- INPUT ---",
+			fieldClasses: "alert alert-info",
+			fieldOptions: {
+				inputType: "hidden"
+			}
 		},
 		{
 			type: "input",
-			inputType: "hidden",
-			label: "Hidden",
 			model: "id",
-			inputName: "hiddenField"
+			label: "Hidden",
+			inputName: "hiddenField",
+			fieldOptions: {
+				inputType: "hidden"
+			}
 		},
 		{
 			type: "input",
-			inputType: "text",
-			label: "First name",
 			model: "firstName",
+			label: "First name",
+			placeholder: "User's first name",
 			featured: true,
 			required: true,
 			help: "First name of user",
-			placeholder: "User's first name",
-			styleClasses: "half-width",
 			validator: validators.string,
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "text"
+			},
 			onChanged(model, newVal, oldVal) {
 				console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
 			},
@@ -50,42 +56,50 @@ export default {
 		},
 		{
 			type: "input",
-			inputType: "text",
-			label: "Last name",
 			model: "lastName",
+			label: "Last name",
+			placeholder: "User's last name",
 			featured: true,
 			required: true,
-			placeholder: "User's last name",
-			styleClasses: "half-width",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "text"
+			},
 			validator: validators.string
 		},
 		{
 			type: "input",
-			inputType: "url",
-			label: "URL",
 			model: "website",
+			label: "URL",
 			placeholder: "Enter your website",
 			inputName: "website",
+			fieldOptions: {
+				inputType: "url"
+			},
 			validator: customAsyncValidator // validators.url
 		},
 		{
 			type: "input",
-			inputType: "tel",
-			label: "Telephone",
 			model: "phone",
+			label: "Telephone",
 			placeholder: "Enter your phone number",
-			styleClasses: "half-width"
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "tel"
+			}
 		},
 		{
 			type: "input",
-			inputType: "password",
-			label: "Password",
 			model: "password",
+			label: "Password",
 			placeholder: "Enter your password",
-			min: 6,
-			required: true,
 			hint: "Minimum 6 characters",
-			styleClasses: "half-width",
+			required: true,
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "password",
+				min: 6
+			},
 			validator: validators.string.locale({
 				fieldIsRequired: "The password is required!",
 				textTooSmall: "Password must be at least {1} characters!"
@@ -93,121 +107,153 @@ export default {
 		},
 		{
 			type: "input",
-			inputType: "date",
+			model: "dob",
 			label: "Date",
-			model: "dob",
-			styleClasses: "half-width"
-			// format: "YYYY.MM.DD HH:mm:ss"
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "date"
+				// format: "YYYY.MM.DD HH:mm:ss"
+			}
 		},
 		{
 			type: "input",
-			inputType: "datetime",
+			model: "dob2",
 			label: "Datetime",
-			model: "dob",
-			styleClasses: "half-width"
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "datetime"
+			}
 		},
 		{
 			type: "input",
-			inputType: "datetime-local",
+			model: "dob3",
 			label: "Datetime local",
-			model: "dob",
-			styleClasses: "half-width"
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "datetime-local"
+			}
 		},
 		{
 			type: "input",
-			inputType: "time",
-			label: "Time",
 			model: "time",
-			step: 1,
-			styleClasses: "half-width"
+			label: "Time",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "time",
+				step: 1
+			}
 		},
 		{
 			type: "input",
-			inputType: "month",
-			label: "Month",
 			model: "month",
-			styleClasses: "half-width"
+			label: "Month",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "month"
+			}
 		},
 		{
 			type: "input",
-			inputType: "week",
-			label: "Week",
 			model: "week",
-			styleClasses: "half-width"
+			label: "Week",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "week"
+			}
 		},
 		{
 			type: "input",
-			inputType: "number",
 			label: "Number",
 			model: "age",
-			styleClasses: "half-width"
 			// validator: validators.number
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "number"
+			}
 		},
 		{
 			type: "input",
-			inputType: "range",
-			label: "Range",
 			model: "rank",
-			min: 0,
-			max: 10,
-			styleClasses: "half-width"
+			label: "Range",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "range",
+				min: 0,
+				max: 10
+			}
 		},
 		{
 			type: "input",
-			inputType: "color",
-			label: "Color",
 			model: "color",
-			styleClasses: "half-width"
+			label: "Color",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "color"
+			}
 		},
 		{
 			type: "input",
-			inputType: "checkbox",
-			label: "Checkbox (show useless)",
 			model: "checkbox",
-			styleClasses: "half-width"
+			label: "Checkbox (show useless)",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "checkbox"
+			}
 		},
 		{
 			type: "input",
-			inputType: "search",
-			label: "Search USELESS",
 			model: "search",
+			label: "Search USELESS",
 			placeholder: "Entrez un mot-clef",
-			styleClasses: "half-width"
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "search"
+			}
 		},
 		{
 			type: "input",
-			inputType: "radio",
-			label: "radio USELESS",
 			model: "radio",
-			styleClasses: "half-width"
+			label: "radio USELESS",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "radio"
+			}
 		},
 		{
 			type: "input",
-			inputType: "image",
-			label: "Image USELESS",
 			model: "image",
-			styleClasses: "half-width"
+			label: "Image USELESS",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "image"
+			}
 		},
 		{
 			type: "input",
-			inputType: "button",
-			label: "Button USELESS",
 			model: "button",
-			styleClasses: "half-width"
+			label: "Button USELESS",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "button"
+			}
 		},
 		{
 			type: "input",
-			inputType: "reset",
-			label: "Reset USELESS",
 			model: "reset",
-			styleClasses: "half-width"
+			label: "Reset USELESS",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "reset"
+			}
 		},
 		{
 			type: "input",
-			inputType: "submit",
-			label: "Submit USELESS",
 			model: "submit",
-			styleClasses: "half-width"
+			label: "Submit USELESS",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				inputType: "submit"
+			}
 		},
 
 		/** ************/
@@ -216,158 +262,170 @@ export default {
 
 		{
 			type: "input",
-			inputType: "hidden",
-			label: "--- BUILD IN ---",
 			model: "",
-			styleClasses: "alert alert-info"
-		},
-		{
-			type: "checklist",
-			label: "CHECKLIST combobox",
-			model: "checklistcombobox",
-			listBox: false,
-			values: [
-				{
-					name: "HTML5",
-					value: "HTML5-123"
-				},
-				{
-					name: "Javascript",
-					value: "Javascript-123"
-				},
-				{
-					name: "CSS3",
-					value: "CSS3-123"
-				},
-				{
-					name: "CoffeeScript",
-					value: "CoffeeScript-123"
-				},
-				{
-					name: "AngularJS",
-					value: "AngularJS-123"
-				},
-				{
-					name: "ReactJS",
-					value: "ReactJS-123"
-				},
-				{
-					name: "VueJS",
-					value: "VueJS-123"
-				}
-			]
-		},
-		{
-			type: "checklist",
-			label: "CHECKLIST listBox",
-			model: "checklistlistbox",
-			listBox: true,
-			values: [
-				{
-					name: "HTML5",
-					value: "HTML5-123"
-				},
-				{
-					name: "Javascript",
-					value: "Javascript-123"
-				},
-				{
-					name: "CSS3",
-					value: "CSS3-123"
-				},
-				{
-					name: "CoffeeScript",
-					value: "CoffeeScript-123"
-				},
-				{
-					name: "AngularJS",
-					value: "AngularJS-123"
-				},
-				{
-					name: "ReactJS",
-					value: "ReactJS-123"
-				},
-				{
-					name: "VueJS",
-					value: "VueJS-123"
-				}
-			]
-		},
-		{
-			type: "radios",
-			label: "RADIOS",
-			model: "radios",
-			values: [
-				{
-					name: "HTML5",
-					value: "HTML5-123"
-				},
-				{
-					name: "Javascript",
-					value: "Javascript-123"
-				},
-				{
-					name: "CSS3",
-					value: "CSS3-123"
-				},
-				{
-					name: "CoffeeScript",
-					value: "CoffeeScript-123"
-				},
-				{
-					name: "AngularJS",
-					value: "AngularJS-123"
-				},
-				{
-					name: "ReactJS",
-					value: "ReactJS-123"
-				},
-				{
-					name: "VueJS",
-					value: "VueJS-123"
-				}
-			],
-			radiosOptions: {
-				value: "value",
-				name: "name"
+			label: "--- BUILD IN ---",
+			fieldClasses: "alert alert-info",
+			fieldOptions: {
+				inputType: "hidden"
 			}
 		},
 		{
+			type: "checklist",
+			model: "checklistcombobox",
+			label: "CHECKLIST combobox",
+			fieldOptions: {
+				listBox: false
+			},
+			values: [
+				{
+					name: "HTML5",
+					value: "HTML5-123"
+				},
+				{
+					name: "Javascript",
+					value: "Javascript-123"
+				},
+				{
+					name: "CSS3",
+					value: "CSS3-123"
+				},
+				{
+					name: "CoffeeScript",
+					value: "CoffeeScript-123"
+				},
+				{
+					name: "AngularJS",
+					value: "AngularJS-123"
+				},
+				{
+					name: "ReactJS",
+					value: "ReactJS-123"
+				},
+				{
+					name: "VueJS",
+					value: "VueJS-123"
+				}
+			]
+		},
+		{
+			type: "checklist",
+			model: "checklistlistbox",
+			label: "CHECKLIST listBox",
+			fieldOptions: {
+				listBox: false
+			},
+			values: [
+				{
+					name: "HTML5",
+					value: "HTML5-123"
+				},
+				{
+					name: "Javascript",
+					value: "Javascript-123"
+				},
+				{
+					name: "CSS3",
+					value: "CSS3-123"
+				},
+				{
+					name: "CoffeeScript",
+					value: "CoffeeScript-123"
+				},
+				{
+					name: "AngularJS",
+					value: "AngularJS-123"
+				},
+				{
+					name: "ReactJS",
+					value: "ReactJS-123"
+				},
+				{
+					name: "VueJS",
+					value: "VueJS-123"
+				}
+			]
+		},
+		{
 			type: "radios",
-			label: "RADIOS2",
+			model: "radios",
+			label: "RADIOS",
+			fieldOptions: {
+				value: "value",
+				name: "name"
+			},
+			values: [
+				{
+					name: "HTML5",
+					value: "HTML5-123"
+				},
+				{
+					name: "Javascript",
+					value: "Javascript-123"
+				},
+				{
+					name: "CSS3",
+					value: "CSS3-123"
+				},
+				{
+					name: "CoffeeScript",
+					value: "CoffeeScript-123"
+				},
+				{
+					name: "AngularJS",
+					value: "AngularJS-123"
+				},
+				{
+					name: "ReactJS",
+					value: "ReactJS-123"
+				},
+				{
+					name: "VueJS",
+					value: "VueJS-123"
+				}
+			]
+		},
+		{
+			type: "radios",
 			model: "radios2",
+			label: "RADIOS2",
 			values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"]
 		},
 		{
 			type: "image",
-			label: "Avatar (image field)",
 			model: "avatar",
-			required: true,
-			browse: true,
-			hideInput: false,
+			label: "Avatar (image field)",
 			inputName: "photo",
-			validator: validators.required
+			required: true,
+			validator: validators.required,
+			fieldOptions: {
+				browse: true,
+				hideInput: false
+			}
 		},
 		{
 			type: "textArea",
-			label: "Biography (textArea field)",
 			model: "bio",
+			label: "Biography (textArea field)",
+			placeholder: "User's biography",
 			hint(model) {
 				if (model && model.bio) {
 					return model.bio.length + " of max 500 characters used!";
 				}
 			},
-			max: 500,
-			placeholder: "User's biography",
-			rows: 4,
-			validator: validators.string
+			validator: validators.string,
+			fieldOptions: {
+				max: 500,
+				rows: 4
+			}
 		},
 		{
 			type: "input",
-			inputType: "text",
-			label: "Field with buttons",
 			model: "address.geo",
+			label: "Field with buttons",
 			disabled: false,
+			fieldOptions: {
+				inputType: "text"
+			},
 			get(model) {
 				if (model && model.address && model.address.geo)
 					return model.address.geo.latitude + ", " + model.address.geo.longitude;
@@ -405,10 +463,10 @@ export default {
 		},
 		{
 			type: "staticMap",
-			label: "Map",
 			model: "address.geo",
+			label: "Map",
 			visible: false,
-			staticMapOptions: {
+			fieldOptions: {
 				lat: "latitude",
 				lng: "longitude",
 				zoom: 6,
@@ -429,54 +487,53 @@ export default {
 		},
 		{
 			type: "switch",
-			label: "Status (switch field)",
 			model: "status",
-			multi: true,
-			default: true,
-			textOn: "Active",
-			textOff: "Inactive",
-			styleClasses: "half-width"
+			label: "Status (switch field)",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				textOn: "Active",
+				textOff: "Inactive"
+			}
 		},
 		{
 			type: "switch",
-			label: "Sex (switch field)",
 			model: "sex",
-			multi: true,
-			default: "male",
-			textOn: "Female",
-			textOff: "Male",
-			valueOn: "female",
-			valueOff: "male",
-			styleClasses: "half-width"
+			label: "Sex (switch field)",
+			fieldClasses: "half-width",
+			fieldOptions: {
+				textOn: "Female",
+				textOff: "Male",
+				valueOn: "female",
+				valueOff: "male"
+			}
 		},
 		{
 			type: "label",
-			label: "Created (label field)",
 			model: "created",
-			// get(model) {
-			// 	// return model && model.created ? fecha.format(model.created,"MMMM  D YYYY H") : "-";
-			// },
-			styleClasses: "half-width"
+			label: "Created (label field)",
+			fieldClasses: "half-width"
 		},
 		{
 			type: "submit",
 			label: "",
-			buttonText: "Submit form",
-			validateBeforeSubmit: true,
-			onSubmit(model) {
-				console.log("Form submitted!", model);
-				alert("Form submitted!");
-			},
-			styleClasses: "half-width",
 			disabled() {
 				// console.log("Disabled: ", this.errors.length > 0);
 				return this.errors.length > 0;
+			},
+			fieldClasses: "half-width",
+			fieldOptions: {
+				buttonText: "Submit form",
+				validateBeforeSubmit: true,
+				onSubmit(model) {
+					console.log("Form submitted!", model);
+					alert("Form submitted!");
+				}
 			}
 		},
 		{
 			type: "select",
-			label: "Type (select field)",
 			model: "type",
+			label: "Type (select field)",
 			required: true,
 			values: [
 				{
@@ -487,16 +544,17 @@ export default {
 					id: "business",
 					name: "Business"
 				}
-			],
-			default: "personal"
+			]
 		},
 
 		{
 			type: "select",
-			label: "Role",
 			model: "role",
+			label: "Role",
 			required: true,
-			selectOptions: {
+			validator: validators.required,
+			fieldClasses: "half-width",
+			fieldOptions: {
 				noneSelectedText: "Nincs kijelölve"
 			},
 			values: [
@@ -520,15 +578,16 @@ export default {
 					id: "visitor",
 					name: "Visitor"
 				}
-			],
-			styleClasses: "half-width",
-			validator: validators.required
+			]
 		},
 		{
 			type: "select",
-			label: "Language",
 			model: "language",
+			label: "Language",
+			hint: "Your native language",
 			required: true,
+			validator: validators.required,
+			fieldClasses: "half-width",
 			values: [
 				{
 					id: "en-GB",
@@ -550,10 +609,7 @@ export default {
 					id: "fr",
 					name: "French"
 				}
-			],
-			hint: "Your native language",
-			styleClasses: "half-width",
-			validator: validators.required
+			]
 		},
 
 		/** **********/
@@ -562,61 +618,65 @@ export default {
 
 		{
 			type: "input",
-			inputType: "hidden",
-			label: "--- JQUERY ---",
 			model: "",
-			styleClasses: "alert alert-info"
+			label: "--- JQUERY ---",
+			fieldClasses: "alert alert-info",
+			fieldOptions: {
+				inputType: "hidden"
+			}
 		},
 		{
 			type: "spectrum",
-			label: "Color (spectrum field)",
 			model: "favoriteColor",
+			label: "Color (spectrum field)",
 			required: true,
-			colorOptions: {
+			validator: validators.required,
+			fieldOptions: {
 				// preferredFormat: "rgb"
-			},
-			validator: validators.required
+			}
 		},
 		{
 			type: "masked",
-			label: "Mobile  (masked field)",
 			model: "mobile",
-			mask: "(99) 999-9999",
-			styleClasses: ["half-width", "first"],
-			validator: validators.required
+			label: "Mobile  (masked field)",
+			validator: validators.required,
+			fieldClasses: ["half-width", "first"],
+			fieldOptions: {
+				mask: "(99) 999-9999"
+			}
 		},
 		/* {
 			type: "selectEx",
-			label: "Country (selectEx field)",
 			model: "address.country",
-			multi: true,
+			label: "Country (selectEx field)",
 			required: true,
-			values: ["United Kingdom", "France", "Germany"],
-			//default: "United Kingdom",
-			multiSelect: false,
-			selectOptions: {
+			validator: validators.required,
+			fieldClasses: "half-width",
+			fieldOptions: {
 				// https://silviomoreto.github.io/bootstrap-select/options/
 				liveSearch: true,
 				size: 10,
 				noneSelectedText: "Nincs kijelölve"
+				multiSelect: false,
 			},
-			styleClasses: "half-width",
-			validator: validators.required
+			values: ["United Kingdom", "France", "Germany"]
 		}, */
 		/* {
 			type: "selectEx",
-			label: "Skills (selectEx field)",
 			model: "skills",
-			multi: true,
+			label: "Skills (selectEx field)",
 			required: false,
-			multiSelect: true,
-			selectOptions: {
+			validator: validators.array
+			fieldOptions: {
 				// https://silviomoreto.github.io/bootstrap-select/options/
 				liveSearch: true,
 				//maxOptions: 3,
 				//size: 4,
 				//actionsBox: true,
-				selectedTextFormat: "count > 3"
+				selectedTextFormat: "count > 3",
+				multiSelect: true,
+				min: 2,
+				max: 4,
 			},
 			values: [
 				"HTML5",
@@ -626,32 +686,27 @@ export default {
 				"AngularJS",
 				"ReactJS",
 				"VueJS"
-			],
-			min: 2,
-			max: 4,
-			validator: validators.array
+			]
 		}, */
 		{
 			type: "rangeSlider",
-			label: "Rank (rangeSlider field)",
 			model: "rank",
-			multi: true,
-			min: 0,
-			max: 10,
+			label: "Rank (rangeSlider field)",
 			required: true,
-			rangeSliderOptions: {
+			validator: validators.integer,
+			fieldOptions: {
+				min: 0,
+				max: 10,
 				grid: true
-			},
-			validator: validators.integer
+			}
 		},
 		{
 			type: "rangeSlider",
-			label: "Income",
 			model: "income",
-			multi: true,
-			min: 0,
-			max: 100000,
-			rangeSliderOptions: {
+			label: "Income",
+			fieldOptions: {
+				min: 0,
+				max: 100000,
 				type: "double",
 				prefix: "$",
 				step: 1000,
@@ -660,27 +715,23 @@ export default {
 		},
 		{
 			type: "dateTimePicker",
+			model: "dob4",
 			label: "DOB (dateTimePicker field)",
-			model: "dob",
-			required: true,
 			placeholder: "User's birth of date",
-			min: fecha.parse("1900-01-01", "YYYY-MM-DD"),
-			max: fecha.parse("2018-01-01", "YYYY-MM-DD"),
+			required: true,
 			validator: [validators.date],
-			dateTimePickerOptions: {
+			fieldOptions: {
+				minDate: fecha.parse("1900-01-01", "YYYY-MM-DD"),
+				maxDate: new Date(),
 				format: "YYYY-MM-DD"
 			}
-			// onChanged(model, newVal, oldVal, field) {
-			// 	// model.age = moment().year() - moment(newVal).year();
-			// }
 		},
 		{
 			type: "dateTimePicker",
+			model: "dob5",
 			label: "DT",
-			model: "dob",
-			multi: true,
 			validator: [validators.date],
-			dateTimePickerOptions: {
+			fieldOptions: {
 				format: "YYYY-MM-DD HH:mm:ss"
 			}
 		},
@@ -688,12 +739,10 @@ export default {
 			type: "dateTimePicker",
 			label: "Time",
 			model: "time",
-			multi: true,
-			format: "HH:mm:ss",
 			/* validator: [
 				validators.time
 			], */
-			dateTimePickerOptions: {
+			fieldOptions: {
 				format: "HH:mm:ss"
 			}
 		},
@@ -704,32 +753,35 @@ export default {
 
 		{
 			type: "input",
-			inputType: "hidden",
-			label: "--- VANILLA ---",
 			model: "",
-			styleClasses: "alert alert-info"
+			label: "--- VANILLA ---",
+			fieldClasses: "alert alert-info",
+			fieldOptions: {
+				inputType: "hidden"
+			}
 		},
 		{
 			type: "googleAddress",
-			label: "Location (googleAddress)",
 			model: "location",
+			label: "Location (googleAddress)",
 			placeholder: "Location",
-			onPlaceChanged(value, place, rawPlace) {
-				console.log("Location changed! " + value);
-				console.log(place);
-				console.log(rawPlace);
+			fieldOptions: {
+				onPlaceChanged(value, place, rawPlace) {
+					console.log("Location changed! " + value);
+					console.log(place);
+					console.log(rawPlace);
+				}
 			}
 		},
 		{
 			type: "noUiSlider",
-			label: "Rank (noUiSlider field)",
 			model: "rank",
-			multi: true,
-			min: 1,
-			max: 10,
+			label: "Rank (noUiSlider field)",
 			required: true,
 			disabled: false,
-			noUiSliderOptions: {
+			fieldOptions: {
+				min: 1,
+				max: 10,
 				connect: [true, false], // "lower", "upper", true, false
 				// margin: 2 //number
 				// limit: 2 //number
@@ -752,14 +804,13 @@ export default {
 		},
 		{
 			type: "noUiSlider",
-			label: "Rank (noUiSlider field)",
 			model: "income",
-			multi: true,
-			min: 0,
-			max: 100000,
+			label: "Rank (noUiSlider field)",
 			required: true,
 			disabled: false,
-			noUiSliderOptions: {
+			fieldOptions: {
+				min: 0,
+				max: 100000,
 				double: true,
 				connect: [false, true, false], // "lower", "upper", true, false
 				// margin: 2 //number
@@ -783,9 +834,11 @@ export default {
 		},
 		{
 			type: "cleave",
-			label: "Mobile  (Cleave.js field)",
 			model: "mobile",
-			cleaveOptions: {
+			label: "Mobile  (Cleave.js field)",
+			validator: validators.required,
+			fieldClasses: "half-width",
+			fieldOptions: {
 				// Credit Card
 				creditCard: false,
 				onCreditCardTypeChanged(type) {
@@ -810,18 +863,16 @@ export default {
 				numericOnly: true,
 				uppercase: false,
 				lowercase: false
-			},
-			styleClasses: "half-width",
-			validator: validators.required
+			}
 		},
 		{
 			type: "pikaday",
+			model: "dob6",
 			label: "DOB (pikaday field)",
-			model: "dob",
-			required: true,
 			placeholder: "User's birth of date",
+			required: true,
 			validator: validators.date,
-			pikadayOptions: {
+			fieldOptions: {
 				// bound: true,
 				// position: 'bottom left',
 				// reposition: true,
@@ -862,11 +913,14 @@ export default {
 		},
 		{
 			type: "vueMultiSelect",
-			label: "Skills (vue-multiSelect field)",
 			model: "skills",
+			label: "Skills (vue-multiSelect field)",
 			required: true,
-			selectOptions: {
+			validator: validators.array,
+			placeholder: "placeholder",
+			fieldOptions: {
 				multiple: true,
+				max: 4,
 				// id:25,
 				// trackBy:"name",
 				// label: "name",
@@ -899,10 +953,7 @@ export default {
 			values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
 			onChanged(model, newVal, oldVal) {
 				console.log(`Model's skills changed from ${oldVal} to ${newVal}. Model:`, model);
-			},
-			max: 4,
-			placeholder: "placeholder",
-			validator: validators.array
+			}
 		},
 
 		/** *****************/
@@ -911,177 +962,17 @@ export default {
 
 		{
 			type: "input",
-			inputType: "hidden",
-			label: "--- CUSTOM FIELDS ---",
 			model: "",
-			styleClasses: "alert alert-info"
+			label: "--- CUSTOM FIELDS ---",
+			fieldClasses: "alert alert-info",
+			fieldOptions: {
+				inputType: "hidden"
+			}
 		},
 		{
 			type: "awesome",
-			label: "Awesome (custom field)",
-			model: "userName"
+			model: "userName",
+			label: "Awesome (custom field)"
 		}
-
-		/** **************/
-		/*  DEPRECATED   */
-		/** **************/
-
-		// {
-		// 	type: "text",
-		// 	label: "ID (disabled text field)",
-		// 	model: "id",
-		// 	readonly: true,
-		// 	editableIfNew: true, // TODO
-		// 	featured: false,
-		// 	disabled: true
-		// },
-		// {
-		// 	type: "password",
-		// 	label: "Password (password field)",
-		// 	model: "password",
-		// 	min: 6,
-		// 	required: true,
-		// 	hint: "Minimum 6 characters",
-		// 	styleClasses: "half-width",
-		// 	validator: validators.string
-		// },
-		// {
-		// 		type: "text",
-		// 		label: "Username",
-		// 		model: "userName",
-		// 		featured: true,
-		// 		required: true,
-		// 		min: 5,
-		// 		placeholder: "User's last name",
-		// 		styleClasses: ["half-width", "first"],
-		// 		validator: validators.string
-		// 	},
-		// {
-		// 		type: "text",
-		// 		label: "Company name",
-		// 		model: "company.name",
-		// 		styleClasses: ["company", "half-width"],
-		// 		visible(model) {
-		// 			return model && model.type == "business";
-		// 		}
-		// 	},
-		// 	{
-		// 		type: "text",
-		// 		label: "Company phone",
-		// 		model: "company.phone",
-		// 		styleClasses: "company",
-		// 		pattern: "^\\+[0-9]{2}-[237]0-[0-9]{3}-[0-9]{4}$",
-		// 		placeholder: "User's phone number",
-		// 		hint: "Format: +36-(20|30|70)-000-0000",
-		// 		styleClasses: "half-width",
-		// 		visible(model) {
-		// 			return model && model.type == "business";
-		// 		}
-		// 	},
-		// 	{
-		// 		type: "email",
-		// 		label: "E-mail (email field)",
-		// 		model: "email",
-		// 		placeholder: "User's e-mail address"
-		// 	},
-		// 	{
-		// 		type: "text",
-		// 		label: "Phone",
-		// 		model: "phone",
-		// 		pattern: "^\\+[0-9]{2}-[237]0-[0-9]{3}-[0-9]{4}$",
-		// 		placeholder: "User's phone number",
-		// 		hint: "Format: +36-(20|30|70)-000-0000",
-		// 		help: "You can use any <b>formatted</b> texts. Or place a <a target='_blank' href='https://github.com/vue-generators/vue-form-generator/'>link</a> to another site.",
-		// 		styleClasses: "half-width"
-		// 			//validator: validators.regexp
-		// 	},
-		// 	{
-		// 		type: "color",
-		// 		label: "Color (basic)",
-		// 		model: "favoriteColor",
-		// 		required: true,
-		// 		colorOptions: {
-		// 			//preferredFormat: "rgb"
-		// 		},
-		// 		validator: validators.required
-		// 	},
-		// 	{
-		// 		type: "number",
-		// 		label: "Age (number field)",
-		// 		model: "age",
-		// 		multi: true,
-		// 		disabled: true,
-		// 		placeholder: "User's age",
-		// 		hint: "Minimum 18 age.",
-		// 		min: 18,
-		// 		max: 100,
-		// 		validator: [
-		// 			validators.integer,
-		// 			validators.number
-		// 		]
-		// 	},
-		// 	{
-		// 		type: "text",
-		// 		label: "City",
-		// 		model: "address.city",
-		// 		multi: true,
-		// 		styleClasses: "half-width",
-		// 		validator: validators.required
-		// 	}, {
-		// 		type: "text",
-		// 		label: "Street",
-		// 		model: "address.street"
-		// 	}, {
-		// 		type: "text",
-		// 		label: "GPS",
-		// 		model: "address.geo",
-		// 		disabled: false,
-		// 		get(model) {
-		// 			if (model && model.address && model.address.geo)
-		// 				return model.address.geo.latitude + ", " + model.address.geo.longitude;
-		// 		},
-		// 		set(model, val) {
-		// 			let values = val.split(",");
-		// 			if (!model.address)
-		// 				model.address = {};
-		// 			if (!model.address.geo)
-		// 				model.address.geo = {};
-		// 			if (values.length > 0 && values[0].trim() != "")
-		// 				model.address.geo.latitude = parseFloat(values[0].trim());
-		// 			else
-		// 				model.address.geo.latitude = 0
-		// 			if (values.length > 1 && values[1].trim() != "")
-		// 				model.address.geo.longitude = parseFloat(values[1].trim());
-		// 			else
-		// 				model.address.geo.longitude = 0
-		// 		},
-		// 		buttons: [{
-		// 			classes: "btn-location",
-		// 			label: "Current location",
-		// 			onclick: function(model) {
-		// 				if (navigator.geolocation) {
-		// 					navigator.geolocation.getCurrentPosition((pos) => {
-		// 						if (!model.address)
-		// 							model.address = {};
-		// 						if (!model.address.geo)
-		// 							model.address.geo = {};
-		// 						model.address.geo.latitude = pos.coords.latitude.toFixed(5);
-		// 						model.address.geo.longitude = pos.coords.longitude.toFixed(5);
-		// 					});
-		// 				} else {
-		// 					alert("Geolocation is not supported by this browser.");
-		// 				}
-		// 			}
-		// 		}, {
-		// 			classes: "btn-clear",
-		// 			label: "Clear",
-		// 			onclick: function(model) {
-		// 				model.address.geo = {
-		// 					latitude: 0,
-		// 					longitude: 0
-		// 				};
-		// 			}
-		// 		}]
-		// 	},
 	]
 };

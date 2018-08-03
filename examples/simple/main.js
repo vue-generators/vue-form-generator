@@ -103,7 +103,6 @@ var vm = new Vue({
 					type: "checkbox",
 					label: "Status",
 					model: "status",
-					multi: true,
 					readonly: false,
 					featured: false,
 					disabled: false,

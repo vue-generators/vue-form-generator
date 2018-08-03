@@ -67,12 +67,12 @@ const validators = {
 
 		let err = [];
 		if (isNumber(value)) {
-			if (!isNil(field.min) && value < field.min) {
-				err.push(msg(messages.numberTooSmall, field.min));
+			if (!isNil(field.fieldOptions.min) && value < field.fieldOptions.min) {
+				err.push(msg(messages.numberTooSmall, field.fieldOptions.min));
 			}
 
-			if (!isNil(field.max) && value > field.max) {
-				err.push(msg(messages.numberTooBig, field.max));
+			if (!isNil(field.fieldOptions.max) && value > field.fieldOptions.max) {
+				err.push(msg(messages.numberTooBig, field.fieldOptions.max));
 			}
 		} else {
 			err.push(msg(messages.invalidNumber));
@@ -108,12 +108,12 @@ const validators = {
 
 		let err = [];
 		if (isString(value)) {
-			if (!isNil(field.min) && value.length < field.min) {
-				err.push(msg(messages.textTooSmall, value.length, field.min));
+			if (!isNil(field.fieldOptions.min) && value.length < field.fieldOptions.min) {
+				err.push(msg(messages.textTooSmall, value.length, field.fieldOptions.min));
 			}
 
-			if (!isNil(field.max) && value.length > field.max) {
-				err.push(msg(messages.textTooBig, value.length, field.max));
+			if (!isNil(field.fieldOptions.max) && value.length > field.fieldOptions.max) {
+				err.push(msg(messages.textTooBig, value.length, field.fieldOptions.max));
 			}
 		} else {
 			err.push(msg(messages.thisNotText));
@@ -134,12 +134,12 @@ const validators = {
 		}
 
 		if (!isNil(value)) {
-			if (!isNil(field.min) && value.length < field.min) {
-				return [msg(messages.selectMinItems, field.min)];
+			if (!isNil(field.fieldOptions.min) && value.length < field.fieldOptions.min) {
+				return [msg(messages.selectMinItems, field.fieldOptions.min)];
 			}
 
-			if (!isNil(field.max) && value.length > field.max) {
-				return [msg(messages.selectMaxItems, field.max)];
+			if (!isNil(field.fieldOptions.max) && value.length > field.fieldOptions.max) {
+				return [msg(messages.selectMaxItems, field.fieldOptions.max)];
 			}
 		}
 	},
@@ -155,15 +155,15 @@ const validators = {
 
 		let err = [];
 
-		if (!isNil(field.min)) {
-			let min = new Date(field.min);
+		if (!isNil(field.fieldOptions.min)) {
+			let min = new Date(field.fieldOptions.min);
 			if (m.valueOf() < min.valueOf()) {
 				err.push(msg(messages.dateIsEarly, fecha.format(m), fecha.format(min)));
 			}
 		}
 
-		if (!isNil(field.max)) {
-			let max = new Date(field.max);
+		if (!isNil(field.fieldOptions.max)) {
+			let max = new Date(field.fieldOptions.max);
 			if (m.valueOf() > max.valueOf()) {
 				err.push(msg(messages.dateIsLate, fecha.format(m), fecha.format(max)));
 			}
@@ -262,10 +262,11 @@ const validators = {
 	}
 };
 
-Object.keys(validators).forEach(name => {
+Object.keys(validators).forEach((name) => {
 	const fn = validators[name];
 	if (isFunction(fn)) {
-		fn.locale = customMessages => (value, field, model) => fn(value, field, model, defaults(customMessages, resources));
+		fn.locale = (customMessages) => (value, field, model) =>
+			fn(value, field, model, defaults(customMessages, resources));
 	}
 });
 

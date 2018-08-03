@@ -1,6 +1,6 @@
 <template lang="pug">
 	.input-group.date
-		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+		input.form-control(type="text", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName", :id="getFieldID(schema)")
 		span.input-group-addon
 			span.glyphicon.glyphicon-calendar
 </template>
@@ -18,7 +18,7 @@ export default {
 
 	methods: {
 		getDateFormat() {
-			if (this.schema.dateTimePickerOptions && this.schema.dateTimePickerOptions.format) return this.schema.dateTimePickerOptions.format;
+			if (typeof this.fieldOptions.format !== "undefined") return this.fieldOptions.format;
 			else return inputFormat;
 		},
 
@@ -26,12 +26,12 @@ export default {
 	},
 
 	mounted() {
-		this.$nextTick(function() {
+		this.$nextTick(() => {
 			if (window.$ && window.$.fn.datetimepicker) {
 				let input = this.$el.querySelector(".form-control");
 				$(this.$el)
 					.datetimepicker(
-						defaults(this.schema.dateTimePickerOptions || {}, {
+						defaults(this.fieldOptions, {
 							format: inputFormat
 						})
 					)
@@ -55,8 +55,3 @@ export default {
 	}
 };
 </script>
-
-
-<style lang="scss">
-
-</style>

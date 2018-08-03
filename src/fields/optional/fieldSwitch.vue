@@ -1,7 +1,7 @@
 <template lang="pug">
 	label
-		input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName", :id="getFieldID(schema)")
-		span.label(:data-on="schema.textOn || 'On'", :data-off="schema.textOff || 'Off'", :for="getFieldID(schema)")
+		input(type="checkbox", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :name="inputName", :id="getFieldID(schema)")
+		span.label(:data-on="fieldOptions.textOn || 'On'", :data-off="fieldOptions.textOff || 'Off'", :for="getFieldID(schema)")
 		span.handle
 </template>
 
@@ -13,15 +13,15 @@ export default {
 
 	methods: {
 		formatValueToField(value) {
-			if (value != null && this.schema.valueOn) return value === this.schema.valueOn;
+			if (value != null && this.fieldOptions.valueOn) return value === this.fieldOptions.valueOn;
 
 			return value;
 		},
 
 		formatValueToModel(value) {
-			if (value != null && this.schema.valueOn) {
-				if (value) return this.schema.valueOn;
-				else return this.schema.valueOff;
+			if (value != null && this.fieldOptions.valueOn) {
+				if (value) return this.fieldOptions.valueOn;
+				else return this.fieldOptions.valueOff;
 			}
 
 			return value;

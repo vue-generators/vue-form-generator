@@ -25,7 +25,19 @@ function attributesDirective(el, binding, vnode) {
 }
 
 export default {
-	props: ["model", "schema", "formOptions", "disabled"],
+	props: [
+		"model",
+		"schema",
+		"formOptions",
+		"inputName",
+		"placeholder",
+		"disabled",
+		"required",
+		"readonly",
+		"fieldClasses",
+		"fieldOptions",
+		"values"
+	],
 
 	data() {
 		return {
@@ -77,23 +89,23 @@ export default {
 
 			let results = [];
 
-			if (this.schema.validator && this.schema.readonly !== true && this.disabled !== true) {
+			if (this.schema.validator && this.readonly !== true && this.disabled !== true) {
 				let validators = [];
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
 				} else {
-					forEach(this.schema.validator, validator => {
+					forEach(this.schema.validator, (validator) => {
 						validators.push(convertValidator(validator).bind(this));
 					});
 				}
 
-				forEach(validators, validator => {
+				forEach(validators, (validator) => {
 					if (validateAsync) {
 						results.push(validator(this.value, this.schema, this.model));
 					} else {
 						let result = validator(this.value, this.schema, this.model);
 						if (result && isFunction(result.then)) {
-							result.then(err => {
+							result.then((err) => {
 								if (err) {
 									this.errors = this.errors.concat(err);
 								}
@@ -107,9 +119,9 @@ export default {
 				});
 			}
 
-			let handleErrors = errors => {
+			let handleErrors = (errors) => {
 				let fieldErrors = [];
-				forEach(errors, err => {
+				forEach(errors, (err) => {
 					if (isArray(err) && err.length > 0) {
 						fieldErrors = fieldErrors.concat(err);
 					} else if (isString(err)) {
@@ -213,16 +225,56 @@ export default {
 			return slugifyFormID(schema, idPrefix);
 		},
 
-		getFieldClasses() {
-			return objGet(this.schema, "fieldClasses", []);
-		},
-
 		formatValueToField(value) {
 			return value;
 		},
 
 		formatValueToModel(value) {
 			return value;
+		}
+	},
+	mounted() {
+		const diff = function(a, b) {
+			return b.filter(function(i) {
+				return a.indexOf(i) < 0;
+			});
+		};
+		const allowedKeys = [
+			// Minimal
+			"type",
+			"model",
+			// Identity
+			"id",
+			"inputName",
+			// Texts
+			"label",
+			"placeholder",
+			"hint",
+			"help",
+			// Modifiers
+			"featured",
+			"visible",
+			"disabled",
+			"required",
+			"readonly",
+			"validator",
+			// Other options
+			"fieldClasses",
+			"fieldOptions",
+			"values",
+			"buttons",
+			"attributes",
+			// Getter/Setter
+			"get",
+			"set",
+			// Events
+			"onChanged",
+			"onValidated"
+		];
+		let currentKeys = Object.keys(this.schema);
+		let result = diff(allowedKeys, currentKeys);
+		if (result.length > 0) {
+			console.log("diff", result, this.schema.type, this.schema.model);
 		}
 	}
 };

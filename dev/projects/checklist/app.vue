@@ -1,16 +1,16 @@
 <template>
 	<div class="container">
-        <h1>Checklist</h1>
+		<h1>Checklist</h1>
 		<div class="row">
-            <div class="col-sm-12">
+			<div class="col-sm-12">
 				<vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-            </div>
-        </div>
+			</div>
+		</div>
 		<div class="row">
-            <div class="col-sm-12">
-                <pre v-if="model" v-html="prettyModel"></pre>
-            </div>
-        </div>
+			<div class="col-sm-12">
+				<pre v-if="model" v-html="prettyModel"></pre>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -35,8 +35,10 @@ export default {
 						model: "skills",
 						required: true,
 						inputName: "skill",
-						min: 2,
-						listBox: true,
+						fieldOptions: {
+							min: 2,
+							listBox: true
+						},
 						values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
 						validator: validators.array,
 						onChanged(model) {

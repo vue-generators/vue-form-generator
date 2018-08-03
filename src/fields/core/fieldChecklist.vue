@@ -1,12 +1,12 @@
 <template lang="pug">
 	.wrapper(v-attributes="'wrapper'")
-		.listbox.form-control(v-if="schema.listBox", :disabled="disabled")
+		.listbox.form-control(v-if="fieldOptions.listBox", :disabled="disabled")
 			.list-row(v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
 				label
 					input(:id="getFieldID(schema)", type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
 					| {{ getItemName(item) }}
 
-		.combobox.form-control(v-if="!schema.listBox", :disabled="disabled")
+		.combobox.form-control(v-if="!fieldOptions.listBox", :disabled="disabled")
 			.mainRow(@click="onExpandCombo", :class="{ expanded: comboExpanded }")
 				.info {{ selectedCount }} selected
 				.arrow
@@ -49,21 +49,21 @@ export default {
 
 	methods: {
 		getInputName(item) {
-			if (this.schema && this.schema.inputName && this.schema.inputName.length > 0) {
-				return slugify(this.schema.inputName + "_" + this.getItemValue(item));
+			if (this.schema && this.inputName && this.inputName.length > 0) {
+				return slugify(this.inputName + "_" + this.getItemValue(item));
 			}
 			return slugify(this.getItemValue(item));
 		},
 
 		getItemValue(item) {
 			if (isObject(item)) {
-				if (typeof this.schema["checklistOptions"] !== "undefined" && typeof this.schema["checklistOptions"]["value"] !== "undefined") {
-					return item[this.schema.checklistOptions.value];
+				if (typeof this.fieldOptions["value"] !== "undefined") {
+					return item[this.fieldOptions.value];
 				} else {
 					if (typeof item["value"] !== "undefined") {
 						return item.value;
 					} else {
-						throw "`value` is not defined. If you want to use another key name, add a `value` property under `checklistOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/checklist.html#checklist-field-with-object-values";
+						throw "`value` is not defined. If you want to use another key name, add a `value` property under `fieldOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/checklist.html#checklist-field-with-object-values";
 					}
 				}
 			} else {
@@ -72,13 +72,13 @@ export default {
 		},
 		getItemName(item) {
 			if (isObject(item)) {
-				if (typeof this.schema["checklistOptions"] !== "undefined" && typeof this.schema["checklistOptions"]["name"] !== "undefined") {
-					return item[this.schema.checklistOptions.name];
+				if (typeof this.fieldOptions["name"] !== "undefined") {
+					return item[this.fieldOptions.name];
 				} else {
 					if (typeof item["name"] !== "undefined") {
 						return item.name;
 					} else {
-						throw "`name` is not defined. If you want to use another key name, add a `name` property under `checklistOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/checklist.html#checklist-field-with-object-values";
+						throw "`name` is not defined. If you want to use another key name, add a `name` property under `fieldOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/checklist.html#checklist-field-with-object-values";
 					}
 				}
 			} else {

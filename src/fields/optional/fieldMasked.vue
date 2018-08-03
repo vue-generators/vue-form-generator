@@ -1,5 +1,5 @@
 <template lang="pug">
-	input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+	input.form-control(type="text", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName", :id="getFieldID(schema)")
 </template>
 
 <script>
@@ -14,7 +14,7 @@ export default {
 			if (window.$ && window.$.fn.mask) {
 				$(this.$el)
 					.unmask()
-					.mask(this.schema.mask, this.schema.maskOptions);
+					.mask(this.fieldOptions.mask, this.fieldOptions.maskOptions);
 			} else {
 				console.warn(
 					"JQuery MaskedInput library is missing. Please download from https://github.com/digitalBush/jquery.maskedinput and load the script in the HTML head section!"
@@ -28,7 +28,3 @@ export default {
 	}
 };
 </script>
-
-<style lang="scss">
-
-</style>

@@ -2,14 +2,14 @@
 	textarea.form-control(
 		v-model="value",
 		:id="getFieldID(schema)",
-		:class="schema.fieldClasses",
+		:class="fieldClasses",
 		:disabled="disabled",
-		:maxlength="schema.max",
-		:minlength="schema.min",
-		:placeholder="schema.placeholder",
-		:readonly="schema.readonly",
-		:rows="schema.rows || 2",
-		:name="schema.inputName",
+		:maxlength="fieldOptions.max",
+		:minlength="fieldOptions.min",
+		:placeholder="placeholder",
+		:readonly="readonly",
+		:rows="fieldOptions.rows || 2",
+		:name="inputName",
 		v-attributes="'input'")
 </template>
 
@@ -20,8 +20,3 @@ export default {
 	mixins: [abstractField]
 };
 </script>
-
-
-<style lang="scss">
-
-</style>
