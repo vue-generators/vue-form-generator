@@ -272,7 +272,7 @@ export default {
 		{
 			type: "checklist",
 			model: "checklistcombobox",
-			label: "CHECKLIST combobox",
+			label: "CHECKLIST (combobox)",
 			fieldOptions: {
 				listBox: false
 			},
@@ -310,9 +310,9 @@ export default {
 		{
 			type: "checklist",
 			model: "checklistlistbox",
-			label: "CHECKLIST listBox",
+			label: "CHECKLIST (listBox)",
 			fieldOptions: {
-				listBox: false
+				listBox: true
 			},
 			values: [
 				{
@@ -348,7 +348,7 @@ export default {
 		{
 			type: "radios",
 			model: "radios",
-			label: "RADIOS",
+			label: "RADIOS (object)",
 			fieldOptions: {
 				value: "value",
 				name: "name"
@@ -387,7 +387,7 @@ export default {
 		{
 			type: "radios",
 			model: "radios2",
-			label: "RADIOS2",
+			label: "RADIOS2 (array)",
 			values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"]
 		},
 		{
@@ -775,7 +775,7 @@ export default {
 		},
 		{
 			type: "noUiSlider",
-			model: "rank",
+			model: "rank2",
 			label: "Rank (noUiSlider field)",
 			required: true,
 			disabled: false,
@@ -804,7 +804,7 @@ export default {
 		},
 		{
 			type: "noUiSlider",
-			model: "income",
+			model: "income2",
 			label: "Rank (noUiSlider field)",
 			required: true,
 			disabled: false,

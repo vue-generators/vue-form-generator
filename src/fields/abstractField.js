@@ -1,8 +1,8 @@
-import { get as objGet, forEach, isFunction, isString, isArray, debounce } from "lodash";
+import { get as objGet, forEach, isFunction, isString, isArray, debounce, isNil } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
-function convertValidator(validator) {
+const convertValidator = (validator) => {
 	if (isString(validator)) {
 		if (validators[validator] != null) return validators[validator];
 		else {
@@ -11,7 +11,7 @@ function convertValidator(validator) {
 		}
 	}
 	return validator;
-}
+};
 
 function attributesDirective(el, binding, vnode) {
 	let attrs = objGet(vnode.context, "schema.attributes", {});
@@ -25,19 +25,20 @@ function attributesDirective(el, binding, vnode) {
 }
 
 export default {
-	props: [
-		"model",
-		"schema",
-		"formOptions",
-		"inputName",
-		"placeholder",
-		"disabled",
-		"required",
-		"readonly",
-		"fieldClasses",
-		"fieldOptions",
-		"values"
-	],
+	props: {
+		model: {
+			type: Object
+		},
+		schema: {
+			type: Object
+		},
+		formOptions: {
+			type: [Object, Function],
+			default: () => {
+				return {};
+			}
+		}
+	},
 
 	data() {
 		return {
@@ -79,17 +80,57 @@ export default {
 					this.updateModelValue(newValue, oldValue);
 				}
 			}
+		},
+		disabled() {
+			return this.getValueFromOption(this.schema, "disabled");
+		},
+		fieldClasses() {
+			return this.getValueFromOption(this.schema, "fieldClasses", []);
+		},
+		fieldOptions() {
+			return this.getValueFromOption(this.schema, "fieldOptions", {});
+		},
+		inputName() {
+			return this.getValueFromOption(this.schema, "inputName", "");
+		},
+		placeholder() {
+			return this.getValueFromOption(this.schema, "placeholder", "");
+		},
+		readonly() {
+			return this.getValueFromOption(this.schema, "readonly");
+		},
+		required() {
+			return this.getValueFromOption(this.schema, "required");
+		},
+		values() {
+			return this.getValueFromOption(this.schema, "values", []);
 		}
 	},
 
 	methods: {
+		getValueFromOption(field, option, defaultValue) {
+			if (typeof this.$parent.getValueFromOption === "function") {
+				return this.$parent.getValueFromOption(field, option, defaultValue);
+			} else {
+				// Environnement de test ?
+				if (isNil(field[option])) return defaultValue;
+
+				return field[option];
+			}
+		},
 		validate(calledParent) {
 			this.clearValidationErrors();
 			let validateAsync = objGet(this.formOptions, "validateAsync", false);
 
 			let results = [];
+			// console.log("validate", this.schema.readonly);
 
-			if (this.schema.validator && this.readonly !== true && this.disabled !== true) {
+			if (
+				this.schema.validator &&
+				this.readonly !== true &&
+				this.schema.readonly !== true && // only for the test
+				this.disabled !== true
+			) {
 				let validators = [];
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
@@ -259,6 +300,8 @@ export default {
 			"readonly",
 			"validator",
 			// Other options
+			"styleClasses",
+			"labelClasses",
 			"fieldClasses",
 			"fieldOptions",
 			"values",
@@ -271,10 +314,12 @@ export default {
 			"onChanged",
 			"onValidated"
 		];
-		let currentKeys = Object.keys(this.schema);
-		let result = diff(allowedKeys, currentKeys);
-		if (result.length > 0) {
-			console.log("diff", result, this.schema.type, this.schema.model);
+		if (this.schema) {
+			let currentKeys = Object.keys(this.schema);
+			let result = diff(allowedKeys, currentKeys);
+			if (result.length > 0) {
+				console.log("diff", result, this.schema.type, this.schema.model);
+			}
 		}
 	}
 };

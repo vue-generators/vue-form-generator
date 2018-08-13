@@ -37,7 +37,7 @@ export default {
 						label: "Skills",
 						model: "skills",
 						fieldOptions: {
-							multiSelect: true
+							multiple: true
 						},
 						values: ["Javascript", "VueJS", "CSS3", "HTML5"]
 					}

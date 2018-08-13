@@ -9,7 +9,7 @@
 		</label>
 
 		<div class="field-wrap">
-			<component ref="child" :is="getFieldType(field)" :model="model" :schema="field" :formOptions="options" :inputName="getValueFromOption(field, 'inputName', undefined)" :placeholder="getValueFromOption(field, 'placeholder', undefined)" :disabled="getValueFromOption(field, 'disabled')" :required="getValueFromOption(field, 'required')" :readonly="getValueFromOption(field, 'readonly')" :fieldClasses="getValueFromOption(field, 'fieldClasses', [])" :fieldOptions="getValueFromOption(field, 'fieldOptions', {})" :values="getValueFromOption(field, 'values', [])" @model-updated="onModelUpdated" @validated="onFieldValidated"></component>
+			<component ref="child" :is="getFieldType(field)" :model="model" :schema="field" :formOptions="options" @model-updated="onModelUpdated" @validated="onFieldValidated"></component>
 			<div v-if="buttonVisibility(field)" class="buttons">
 				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
 			</div>
@@ -54,8 +54,8 @@ export default {
 			if (isNil(field.label)) return false;
 
 			let relevantType = "";
-			if (field.type === "input") {
-				relevantType = field.fieldOptions.inputType;
+			if (field.type === "input" && typeof this.getValueFromOption(field, "fieldOptions") !== "undefined") {
+				relevantType = this.getValueFromOption(field, "fieldOptions").inputType;
 			} else {
 				relevantType = field.type;
 			}

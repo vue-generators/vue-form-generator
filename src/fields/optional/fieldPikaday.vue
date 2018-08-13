@@ -7,8 +7,6 @@ import abstractField from "../abstractField";
 import { defaults } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 
-let inputFormat = "YYYY-MM-DD";
-
 export default {
 	mixins: [abstractField],
 	data() {
@@ -16,11 +14,6 @@ export default {
 	},
 
 	methods: {
-		getDateFormat() {
-			if (typeof this.fieldOptions.format !== "undefined") return this.fieldOptions.format;
-			else return inputFormat;
-		},
-
 		...dateFieldHelper
 	},
 
@@ -28,7 +21,7 @@ export default {
 		this.$nextTick(() => {
 			if (window.Pikaday) {
 				this.picker = new window.Pikaday(
-					defaults(this.fieldOptions || {}, {
+					defaults(this.fieldOptions, {
 						field: this.$el, // bind the datepicker to a form field
 						onSelect: () => {
 							this.value = this.picker.toString();

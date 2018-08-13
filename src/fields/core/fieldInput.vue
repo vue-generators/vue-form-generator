@@ -2,7 +2,7 @@
 .wrapper(v-attributes="'wrapper'")
 	input.form-control(
 		:id="getFieldID(schema)",
-		:type="fieldOptions.inputType.toLowerCase()",
+		:type="inputType",
 		:value="value",
 		@input="onInput",
 		@blur="onBlur",
@@ -37,7 +37,7 @@
 		:width="fieldOptions.width",
 		:files="fieldOptions.files"
 		v-attributes="'input'")
-	span.helper(v-if="fieldOptions.inputType.toLowerCase() === 'color' || fieldOptions.inputType.toLowerCase() === 'range'") {{ value }}
+	span.helper(v-if="inputType === 'color' || inputType === 'range'") {{ value }}
 </template>
 
 <script>
@@ -55,7 +55,11 @@ export default {
 	mixins: [abstractField],
 	computed: {
 		inputType() {
-			return this.fieldOptions.inputType.toLowerCase();
+			if (typeof this.fieldOptions.inputType !== "undefined") {
+				return this.fieldOptions.inputType.toLowerCase();
+			} else {
+				console.warn("Missing inputType", this.fieldOptions, this.fieldOptions.inputType);
+			}
 		}
 	},
 	methods: {

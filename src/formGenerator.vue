@@ -67,7 +67,7 @@ export default {
 		fields() {
 			let res = [];
 			if (this.schema && this.schema.fields) {
-				forEach(this.schema.fields, field => {
+				forEach(this.schema.fields, (field) => {
 					if (!this.multiple || field.multi === true) res.push(field);
 				});
 			}
@@ -77,7 +77,7 @@ export default {
 		groups() {
 			let res = [];
 			if (this.schema && this.schema.groups) {
-				forEach(this.schema.groups.slice(0), group => {
+				forEach(this.schema.groups.slice(0), (group) => {
 					res.push(group);
 				});
 			}
@@ -132,11 +132,11 @@ export default {
 		// Child field executed validation
 		onFieldValidated(res, errors, field) {
 			// Remove old errors for this field
-			this.errors = this.errors.filter(e => e.field !== field.schema);
+			this.errors = this.errors.filter((e) => e.field !== field.schema);
 
 			if (!res && errors && errors.length > 0) {
 				// Add errors with this field
-				forEach(errors, err => {
+				forEach(errors, (err) => {
 					this.errors.push({
 						field: field.schema,
 						error: err
@@ -162,18 +162,18 @@ export default {
 			let fields = [];
 			let results = [];
 
-			forEach(this.$children, child => {
+			forEach(this.$children, (child) => {
 				if (isFunction(child.validate)) {
 					fields.push(child.$refs.child); // keep track of validated children
 					results.push(child.validate(true));
 				}
 			});
 
-			let handleErrors = errors => {
+			let handleErrors = (errors) => {
 				let formErrors = [];
 				forEach(errors, (err, i) => {
 					if (isArray(err) && err.length > 0) {
-						forEach(err, error => {
+						forEach(err, (error) => {
 							formErrors.push({
 								field: fields[i].schema,
 								error: error
@@ -198,10 +198,10 @@ export default {
 		clearValidationErrors() {
 			this.errors.splice(0);
 
-			forEach(this.$children, child => {
+			forEach(this.$children, (child) => {
 				child.clearValidationErrors();
 			});
-		},
+		}
 	}
 };
 </script>

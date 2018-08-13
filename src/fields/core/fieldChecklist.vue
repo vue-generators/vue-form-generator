@@ -1,12 +1,12 @@
 <template lang="pug">
 	.wrapper(v-attributes="'wrapper'")
-		.listbox.form-control(v-if="fieldOptions.listBox", :disabled="disabled")
+		.listbox.form-control(v-if="useListBox", :disabled="disabled")
 			.list-row(v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
 				label
 					input(:id="getFieldID(schema)", type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
 					| {{ getItemName(item) }}
 
-		.combobox.form-control(v-if="!fieldOptions.listBox", :disabled="disabled")
+		.combobox.form-control(v-if="!useListBox", :disabled="disabled")
 			.mainRow(@click="onExpandCombo", :class="{ expanded: comboExpanded }")
 				.info {{ selectedCount }} selected
 				.arrow
@@ -39,17 +39,19 @@ export default {
 				return values.apply(this, [this.model, this.schema]);
 			} else return values;
 		},
-
 		selectedCount() {
 			if (this.value) return this.value.length;
 
 			return 0;
+		},
+		useListBox() {
+			return this.fieldOptions.listBox;
 		}
 	},
 
 	methods: {
 		getInputName(item) {
-			if (this.schema && this.inputName && this.inputName.length > 0) {
+			if (this.inputName && this.inputName.length > 0) {
 				return slugify(this.inputName + "_" + this.getItemValue(item));
 			}
 			return slugify(this.getItemValue(item));
@@ -91,11 +93,12 @@ export default {
 		},
 
 		onChanged(event, item) {
+			let isChecked = event.target.checked;
 			if (isNil(this.value) || !Array.isArray(this.value)) {
 				this.value = [];
 			}
 
-			if (event.target.checked) {
+			if (isChecked) {
 				// Note: If you modify this.value array, it won't trigger the `set` in computed field
 				const arr = clone(this.value);
 				arr.push(this.getItemValue(item));

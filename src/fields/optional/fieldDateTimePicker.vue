@@ -11,17 +11,10 @@ import abstractField from "../abstractField";
 import { defaults } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 
-let inputFormat = "YYYY-MM-DD HH:mm:ss";
-
 export default {
 	mixins: [abstractField],
 
 	methods: {
-		getDateFormat() {
-			if (typeof this.fieldOptions.format !== "undefined") return this.fieldOptions.format;
-			else return inputFormat;
-		},
-
 		...dateFieldHelper
 	},
 
@@ -32,7 +25,7 @@ export default {
 				$(this.$el)
 					.datetimepicker(
 						defaults(this.fieldOptions, {
-							format: inputFormat
+							format: this.getDefaultInputFormat()
 						})
 					)
 					.on("dp.change", () => {

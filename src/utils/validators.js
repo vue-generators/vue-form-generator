@@ -67,11 +67,11 @@ const validators = {
 
 		let err = [];
 		if (isNumber(value)) {
-			if (!isNil(field.fieldOptions.min) && value < field.fieldOptions.min) {
+			if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.min) && value < field.fieldOptions.min) {
 				err.push(msg(messages.numberTooSmall, field.fieldOptions.min));
 			}
 
-			if (!isNil(field.fieldOptions.max) && value > field.fieldOptions.max) {
+			if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.max) && value > field.fieldOptions.max) {
 				err.push(msg(messages.numberTooBig, field.fieldOptions.max));
 			}
 		} else {

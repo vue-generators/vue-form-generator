@@ -58,13 +58,13 @@ export default {
 
 	watch: {
 		model: function() {
-			if ($.fn.selectpicker) $(this.$el).selectpicker("refresh");
+			if (typeof $.fn !== "undefined" && $.fn.selectpicker) $(this.$el).selectpicker("refresh");
 		}
 	},
 
 	mounted() {
-		this.$nextTick(function() {
-			if ($.fn.selectpicker) {
+		this.$nextTick(() => {
+			if (typeof $.fn !== "undefined" && $.fn.selectpicker) {
 				$(this.$el)
 					.selectpicker("destroy")
 					.selectpicker(this.fieldOptions);

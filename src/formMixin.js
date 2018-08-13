@@ -13,11 +13,12 @@ export default {
 				featured: this.getValueFromOption(field, "featured"),
 				required: this.getValueFromOption(field, "required")
 			};
+			let styleClasses = field.styleClasses;
 
-			if (isArray(field.styleClasses)) {
-				forEach(field.styleClasses, (c) => (baseClasses[c] = true));
-			} else if (isString(field.styleClasses)) {
-				baseClasses[field.styleClasses] = true;
+			if (isArray(styleClasses)) {
+				forEach(styleClasses, (c) => (baseClasses[c] = true));
+			} else if (isString(styleClasses)) {
+				baseClasses[styleClasses] = true;
 			}
 
 			if (!isNil(field.type)) {

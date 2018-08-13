@@ -19,7 +19,7 @@ export default {
 				let handleErrors = (errors) => {
 					if (!isEmpty(errors) && isFunction(this.fieldOptions.onValidationError)) {
 						this.fieldOptions.onValidationError(this.model, this.schema, errors, $event);
-					} else if (isFunction(this.schema.onSubmit)) {
+					} else if (isFunction(this.fieldOptions.onSubmit)) {
 						this.fieldOptions.onSubmit(this.model, this.schema, $event);
 					}
 				};
