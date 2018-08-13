@@ -8,10 +8,17 @@ let wrapper;
 function createField(data, methods) {
 	const _wrapper = mount(FieldCheckbox, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -24,7 +31,9 @@ describe("FieldCheckbox.vue", () => {
 			label: "Status",
 			model: "status",
 			fieldClasses: ["applied-class", "another-class"],
-			autocomplete: "off",
+			fieldOptions: {
+				autocomplete: "off"
+			},
 			disabled: false,
 			inputName: ""
 		};
@@ -47,18 +56,17 @@ describe("FieldCheckbox.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.status = false;
-			wrapper.update();
+			wrapper.setProps({ model: { status: false } });
 
 			expect(input.element.checked).to.be.false;
 		});
 
-		it.skip("model value should be the input value if changed", () => {
-			model.status = true;
-			wrapper.trigger("click");
-			wrapper.update();
+		it("model value should be the input value if changed", () => {
+			wrapper.setProps({ model: { status: true } });
 
-			expect(model.status).to.be.false;
+			wrapper.setChecked(false);
+
+			expect(wrapper.props().model.status).to.be.false;
 		});
 
 		it("should have 2 classes", () => {
@@ -67,9 +75,9 @@ describe("FieldCheckbox.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "inputName"];
+			let attributes = ["disabled", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema);
 				});

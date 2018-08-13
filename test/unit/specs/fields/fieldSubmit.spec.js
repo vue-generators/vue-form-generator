@@ -5,13 +5,20 @@ import FieldSubmit from "src/fields/core/fieldSubmit.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldSubmit, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -21,17 +28,19 @@ describe("fieldSubmit.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "submit",
-			buttonText: "Submit form",
 			inputName: "",
-			validateBeforeSubmit: false,
-			onSubmit() {},
-			fieldClasses: ["applied-class", "another-class"]
+			fieldClasses: ["applied-class", "another-class"],
+			fieldOptions: {
+				validateBeforeSubmit: false,
+				buttonText: "Submit form",
+				onSubmit() {}
+			}
 		};
 		let model = { name: "John Doe" };
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -43,34 +52,38 @@ describe("fieldSubmit.vue", () => {
 		});
 
 		describe("valid form", () => {
-			it.skip("should not call validate if validateBeforeSubmit is false", () => {
-				schema.onSubmit = sinon.spy();
+			it("should not call validate if validateBeforeSubmit is false", () => {
+				schema.fieldOptions.onSubmit = sinon.spy();
+				wrapper.setProps({ schema: { ...schema } });
 				let cb = sinon.spy();
 				wrapper.vm.$parent.validate = cb;
 
-				input.click();
+				input.trigger("click");
+
 				expect(cb.called).to.be.false;
-				expect(schema.onSubmit.calledOnce).to.be.true;
-				expect(schema.onSubmit.calledWith(model, schema)).to.be.true;
+				expect(schema.fieldOptions.onSubmit.calledOnce).to.be.true;
+				expect(schema.fieldOptions.onSubmit.calledWith(model, schema)).to.be.true;
 			});
 
-			it.skip("should call validate if validateBeforeSubmit is true", () => {
-				schema.validateBeforeSubmit = true;
-				schema.onSubmit = sinon.spy();
+			it("should call validate if validateBeforeSubmit is true", () => {
+				schema.fieldOptions.validateBeforeSubmit = true;
+				schema.fieldOptions.onSubmit = sinon.spy();
+				wrapper.setProps({ schema: { ...schema } });
 				let cb = sinon.spy();
 				wrapper.vm.$parent.validate = cb;
 
 				input.trigger("click");
 
 				expect(cb.called).to.be.true;
-				expect(schema.onSubmit.called).to.be.true;
+				expect(schema.fieldOptions.onSubmit.called).to.be.true;
 			});
 		});
 
 		describe("invalid form", () => {
-			it.skip("should not call onSubmit if validateBeforeSubmit is true", () => {
-				schema.validateBeforeSubmit = true;
-				schema.onSubmit = sinon.spy();
+			it("should not call onSubmit if validateBeforeSubmit is true", () => {
+				schema.fieldOptions.validateBeforeSubmit = true;
+				schema.fieldOptions.onSubmit = sinon.spy();
+				wrapper.setProps({ schema: { ...schema } });
 				let cb = sinon.spy(() => {
 					return ["an error occurred"];
 				});
@@ -79,14 +92,14 @@ describe("fieldSubmit.vue", () => {
 				input.trigger("click");
 
 				expect(cb.called).to.be.true;
-				expect(schema.onSubmit.called).to.be.true;
+				expect(schema.fieldOptions.onSubmit.called).to.be.true;
 			});
 		});
 
 		describe("check optional attribute", () => {
 			let attributes = ["inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema);
 				});

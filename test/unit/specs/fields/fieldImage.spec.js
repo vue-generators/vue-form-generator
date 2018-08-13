@@ -5,13 +5,20 @@ import FieldImage from "src/fields/optional/fieldImage.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldImage, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -23,17 +30,17 @@ describe("fieldImage.vue", () => {
 			type: "image",
 			label: "Avatar",
 			model: "avatar",
-			autocomplete: "off",
 			disabled: false,
 			placeholder: "",
 			readonly: false,
-			inputName: ""
+			inputName: "",
+			fieldOptions: {}
 		};
 		let model = { avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/calebogden/128.jpg" };
 		let input, fileInput;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input[type=text]");
 		});
 
@@ -64,9 +71,9 @@ describe("fieldImage.vue", () => {
 		});
 
 		describe("check optional attribute on text input", () => {
-			let attributes = ["autocomplete", "disabled", "placeholder", "readonly", "inputName"];
+			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, input, schema);
 				});
@@ -76,7 +83,7 @@ describe("fieldImage.vue", () => {
 		describe("check optional attribute on file input", () => {
 			let attributes = ["disabled", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, fileInput, schema);
 				});
@@ -84,23 +91,22 @@ describe("fieldImage.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.avatar = "https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg";
-			wrapper.update();
+			wrapper.setProps({ model: { avatar: "https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg" } });
 
 			expect(input.element.value).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/felipebsb/128.jpg");
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = "https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg";
-			input.trigger("input");
-			wrapper.update();
+			input.setValue("https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg");
 
-			expect(model.avatar).to.be.equal("https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg");
+			expect(wrapper.props().model.avatar).to.be.equal(
+				"https://s3.amazonaws.com/uifaces/faces/twitter/peterme/128.jpg"
+			);
 		});
 
 		it("should not contain a file input element if browse is false", () => {
-			wrapper.vm.schema.browse = false;
-			wrapper.update();
+			schema.fieldOptions.browse = false;
+			wrapper.setProps({ schema: { ...schema } });
 
 			let fileInput = wrapper.find("input[type=file]");
 
@@ -108,8 +114,8 @@ describe("fieldImage.vue", () => {
 		});
 
 		it("should not visible the preview div", () => {
-			wrapper.vm.schema.preview = false;
-			wrapper.update();
+			schema.fieldOptions.preview = false;
+			wrapper.setProps({ schema: { ...schema } });
 
 			let preview = wrapper.find(".preview");
 
@@ -117,39 +123,37 @@ describe("fieldImage.vue", () => {
 		});
 
 		it("should not show the link input element if hideInput is true", () => {
-			wrapper.vm.schema.hideInput = true;
-			wrapper.update();
+			schema.fieldOptions.hideInput = true;
+			wrapper.setProps({ schema: { ...schema } });
+
 			let fileInput = wrapper.find("input[type=text]");
 
 			expect(fileInput.element.style.display).to.be.equal("none");
 
-			wrapper.vm.schema.hideInput = false;
-			wrapper.update();
+			schema.fieldOptions.hideInput = false;
+			wrapper.setProps({ schema: { ...schema } });
 		});
 
 		it("should not show base64 data in input field", () => {
-			model.avatar = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ";
-			wrapper.update();
+			wrapper.setProps({ model: { avatar: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ" } });
 
 			expect(input.element.value).to.be.equal("<inline base64 image>");
 		});
 
 		it("should clear input if press remove icon", () => {
-			wrapper.vm.schema.preview = true;
-			wrapper.update();
+			schema.fieldOptions.preview = true;
+			wrapper.setProps({ schema: { ...schema } });
+
 			let remove = wrapper.find(".remove");
 
 			expect(input.element.value).to.be.not.equal("");
 
 			remove.trigger("click");
-			wrapper.update();
 
 			expect(input.element.value).to.be.equal("");
 		});
 
 		it.skip("should convert image to base64 if file input changed", () => {
-			console.log(new FileReader());
-
 			// Stub the browser FileReader
 			let FR = window.FileReader;
 			global.FileReader = window.FileReader;
@@ -164,17 +168,13 @@ describe("fieldImage.vue", () => {
 			});
 			wrapper.vm.fileChanged({
 				target: {
-					files: [
-						{
-							name: "test.jpg",
-							length: 55431
-						}
-					]
+					files: new File(["foo"], "test.jpg", {
+						type: "image/jpeg"
+					})
 				}
 			});
-			// wrapper.update();
 			expect(input.element.value).to.be.equal("base64 image data");
-			expect(model.avatar).to.be.equal("base64 image data");
+			expect(wrapper.props().model.avatar).to.be.equal("base64 image data");
 
 			window.FileReader = FR;
 		});

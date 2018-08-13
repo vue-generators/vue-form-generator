@@ -8,18 +8,25 @@ const localVue = createLocalVue();
 let wrapper;
 let input;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(fieldVueMultiSelect, {
 		localVue,
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
 		propsData: data,
-		methods: methods,
 		components: {
 			multiselect: VueMultiSelect
 		}
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
-	input = _wrapper.find(".multiselect");
+	input = wrapper.find(".multiselect");
 
 	return _wrapper;
 }
@@ -32,14 +39,14 @@ describe("fieldVueMultiSelect.vue", () => {
 			model: "city",
 			required: false,
 			values: ["London", "Paris", "Rome", "Berlin"],
-			selectOptions: {
+			fieldOptions: {
 				multiple: true
 			}
 		};
 		let model = { city: "Paris" };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
 		it("should contain a select element", () => {
@@ -62,18 +69,17 @@ describe("fieldVueMultiSelect.vue", () => {
 		});
 
 		it("should set disabled", () => {
-			wrapper.vm.disabled = true;
-			wrapper.update();
+			schema.disabled = true;
+			wrapper.setProps({ schema: { ...schema } });
 
 			expect(input.classes()).to.include("multiselect--disabled");
 
-			wrapper.vm.disabled = false;
-			wrapper.update();
+			schema.disabled = false;
+			wrapper.setProps({ schema: { ...schema } });
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.city = ["Rome"];
-			wrapper.update();
+			wrapper.setProps({ model: { city: ["Rome"] } });
 			let tags = input.findAll(".multiselect__tag");
 
 			expect(tags.length).to.be.equal(1);
@@ -86,8 +92,7 @@ describe("fieldVueMultiSelect.vue", () => {
 		});
 
 		it("input value should be the model value after changed (multiselection)", () => {
-			model.city = ["Paris", "Rome"];
-			wrapper.update();
+			wrapper.setProps({ model: { city: ["Paris", "Rome"] } });
 			let tags = input.findAll(".multiselect__tag");
 
 			expect(tags.length).to.be.equal(2);
@@ -108,10 +113,9 @@ describe("fieldVueMultiSelect.vue", () => {
 		it("model value should be the input value if changed", () => {
 			let options = input.findAll("li .multiselect__option");
 			options.at(2).trigger("click");
-			wrapper.update();
 
-			expect(model.city.length).to.be.equal(1);
-			expect(model.city[0]).to.be.equal("Paris");
+			expect(wrapper.props().model.city.length).to.be.equal(1);
+			expect(wrapper.props().model.city[0]).to.be.equal("Paris");
 		});
 
 		describe("with objects", () => {
@@ -137,22 +141,24 @@ describe("fieldVueMultiSelect.vue", () => {
 					language: "Ruby"
 				}
 			];
-			schema.selectOptions = {};
+			schema.fieldOptions = {};
 
 			before(() => {
-				createField2({ schema, model, disabled: false });
+				createField({ schema, model });
 			});
 
 			it("model value should work with objects", () => {
-				schema.selectOptions = { label: "name", trackBy: "name" };
-				wrapper.update();
+				schema.fieldOptions = { label: "name", trackBy: "name" };
+				wrapper.setProps({ schema: { ...schema } });
 
-				expect(model.city.length).to.be.equal(1);
-				expect(model.city[0]).to.be.deep.equal(schema.values[0]);
+				expect(wrapper.props().model.city.length).to.be.equal(1);
+				expect(wrapper.props().model.city[0]).to.be.deep.equal(schema.values[0]);
 			});
 
-			it("options should contain only text specified in label", done => {
-				wrapper.vm.schema.selectOptions = { label: "language", trackBy: "language" };
+			it("options should contain only text specified in label", (done) => {
+				schema.fieldOptions = { label: "language", trackBy: "language" };
+				wrapper.setProps({ schema: { ...schema } });
+
 				Vue.config.errorHandler = done;
 				Vue.nextTick(() => {
 					let options = input.findAll("li .multiselect__option");
@@ -167,14 +173,16 @@ describe("fieldVueMultiSelect.vue", () => {
 				});
 			});
 
-			it("options should contain custom text specified in customLabel", done => {
-				schema.selectOptions = {
+			it("options should contain custom text specified in customLabel", (done) => {
+				schema.fieldOptions = {
 					label: "name",
 					trackBy: "name",
 					customLabel: ({ name, language }) => {
 						return `${name}-${language}`;
 					}
 				};
+				wrapper.setProps({ schema: { ...schema } });
+
 				Vue.config.errorHandler = done;
 				Vue.nextTick(() => {
 					let options = input.findAll("li .multiselect__option");

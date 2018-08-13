@@ -1,6 +1,5 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 
-import Vue from "vue";
 import FieldChecklist from "src/fields/core/fieldChecklist.vue";
 
 const localVue = createLocalVue();
@@ -9,13 +8,20 @@ let listbox;
 let checkboxes;
 let listRowList;
 
-function createField2(data, methods) {
-	const _wrapper = mount(FieldChecklist, {
+function createField(data, methods) {
+	let _wrapper = mount(FieldChecklist, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	listbox = wrapper.find(".listbox");
@@ -36,13 +42,16 @@ describe("fieldChecklist.vue", () => {
 				type: "checklist",
 				label: "Skills",
 				model: "skills",
-				listBox: true,
+				fieldOptions: {
+					min: 2,
+					listBox: true
+				},
 				values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"]
 			};
 			let model = { skills: ["Javascript", "VueJS"] };
 
 			before(() => {
-				createField2({ schema, model, disabled: false });
+				createField({ schema, model });
 			});
 
 			it("should contain a .listbox element", () => {
@@ -63,8 +72,7 @@ describe("fieldChecklist.vue", () => {
 
 			describe("test values reactivity to changes", () => {
 				it("listbox value should be the model value after changed", () => {
-					model.skills = ["ReactJS"];
-					checkboxes.update();
+					wrapper.setProps({ model: { skills: ["ReactJS"] } });
 
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
@@ -75,16 +83,14 @@ describe("fieldChecklist.vue", () => {
 				it("model value should be the listbox value if changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
-					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
+					expect(wrapper.props().model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 				});
 			});
 
 			describe("test 'is-checked' class attribution reactivity to changes", () => {
 				it(".list-row with checked input should have a 'is-checked' class", () => {
-					model.skills = ["HTML5", "ReactJS"];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: ["HTML5", "ReactJS"] } });
 
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -96,8 +102,7 @@ describe("fieldChecklist.vue", () => {
 				});
 
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
-					model.skills = ["AngularJS"];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: ["AngularJS"] } });
 
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -128,7 +133,9 @@ describe("fieldChecklist.vue", () => {
 				type: "checklist",
 				label: "Skills",
 				model: "skills",
-				listBox: true,
+				fieldOptions: {
+					listBox: true
+				},
 				values: [
 					{ value: 1, name: "HTML5" },
 					{ value: 2, name: "Javascript" },
@@ -142,7 +149,7 @@ describe("fieldChecklist.vue", () => {
 			let model = { skills: [2, 7] };
 
 			before(() => {
-				createField2({ schema, model, disabled: false });
+				createField({ schema, model });
 			});
 
 			it("should contain items", () => {
@@ -161,8 +168,7 @@ describe("fieldChecklist.vue", () => {
 
 			describe("test values reactivity to changes", () => {
 				it("listbox value should be the model value after changed", () => {
-					model.skills = [3];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: [3] } });
 
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
@@ -176,9 +182,8 @@ describe("fieldChecklist.vue", () => {
 				it("model value should be the listbox value if changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
-					expect(model.skills).to.be.deep.equal([3, 1]);
+					expect(wrapper.props().model.skills).to.be.deep.equal([3, 1]);
 				});
 			});
 
@@ -194,8 +199,7 @@ describe("fieldChecklist.vue", () => {
 				});
 
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
-					model.skills = [4];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: [4] } });
 
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -209,7 +213,6 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after listbox value is changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -227,7 +230,6 @@ describe("fieldChecklist.vue", () => {
 				type: "checklist",
 				label: "Skills",
 				model: "skills",
-				listBox: true,
 				values: [
 					{ id: 1, label: "HTML5" },
 					{ id: 2, label: "Javascript" },
@@ -237,7 +239,8 @@ describe("fieldChecklist.vue", () => {
 					{ id: 6, label: "ReactJS" },
 					{ id: 7, label: "VueJS" }
 				],
-				checklistOptions: {
+				fieldOptions: {
+					listBox: true,
 					value: "id",
 					name: "label"
 				}
@@ -245,7 +248,7 @@ describe("fieldChecklist.vue", () => {
 			let model = { skills: [2, 7] };
 
 			before(() => {
-				createField2({ schema, model, disabled: false });
+				createField({ schema, model });
 			});
 
 			it("should contain items", () => {
@@ -264,8 +267,7 @@ describe("fieldChecklist.vue", () => {
 
 			describe("test values reactivity to changes", () => {
 				it("listbox value should be the model value after changed", () => {
-					model.skills = [3];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: [3] } });
 
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
@@ -279,9 +281,8 @@ describe("fieldChecklist.vue", () => {
 				it("model value should be the listbox value if changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
-					expect(model.skills).to.be.deep.equal([3, 1]);
+					expect(wrapper.props().model.skills).to.be.deep.equal([3, 1]);
 				});
 			});
 
@@ -297,8 +298,7 @@ describe("fieldChecklist.vue", () => {
 				});
 
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
-					model.skills = [4];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: [4] } });
 
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -312,7 +312,6 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after listbox value is changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -331,7 +330,9 @@ describe("fieldChecklist.vue", () => {
 				label: "Skills",
 				model: "skills",
 				inputName: "",
-				listBox: true,
+				fieldOptions: {
+					listBox: true
+				},
 				values() {
 					return [
 						{ value: 1, name: "HTML5" },
@@ -347,7 +348,7 @@ describe("fieldChecklist.vue", () => {
 			let model = { skills: [2, 7] };
 
 			before(() => {
-				createField2({ schema, model, disabled: false });
+				createField({ schema, model });
 			});
 
 			it("should contain items", () => {
@@ -376,7 +377,7 @@ describe("fieldChecklist.vue", () => {
 
 			it("should contain input name field with inputName", () => {
 				schema.inputName = "skill";
-				wrapper.update();
+				wrapper.setProps({ schema: { ...schema } });
 
 				expect(checkboxes.at(0).attributes().name).to.be.equal("skill_1");
 				expect(checkboxes.at(1).attributes().name).to.be.equal("skill_2");
@@ -389,8 +390,7 @@ describe("fieldChecklist.vue", () => {
 
 			describe("test values reactivity to changes", () => {
 				it("listbox value should be the model value after changed", () => {
-					model.skills = [3];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: [3] } });
 
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
@@ -400,9 +400,8 @@ describe("fieldChecklist.vue", () => {
 				it("model value should be the listbox value if changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
-					expect(model.skills).to.be.deep.equal([3, 1]);
+					expect(wrapper.props().model.skills).to.be.deep.equal([3, 1]);
 				});
 			});
 
@@ -418,8 +417,7 @@ describe("fieldChecklist.vue", () => {
 				});
 
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
-					model.skills = [4];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: [4] } });
 
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -433,7 +431,6 @@ describe("fieldChecklist.vue", () => {
 				it(".list-row with checked input should have a 'is-checked' class after listbox value is changed", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -462,7 +459,7 @@ describe("fieldChecklist.vue", () => {
 			let mainRow;
 
 			before(() => {
-				createField2({ schema, model, disabled: false });
+				createField({ schema, model });
 				combobox = wrapper.find(".combobox");
 				dropList = combobox.find(".dropList");
 				mainRow = combobox.find(".mainRow");
@@ -510,7 +507,7 @@ describe("fieldChecklist.vue", () => {
 
 			it("should contain input name field with inputName", () => {
 				schema.inputName = "skill";
-				wrapper.update();
+				wrapper.setProps({ schema: { ...schema } });
 				checkboxes = dropList.findAll("input[type=checkbox]");
 
 				expect(checkboxes.at(0).attributes().name).to.be.equal("skill_HTML5");
@@ -530,8 +527,7 @@ describe("fieldChecklist.vue", () => {
 
 			describe("test values reactivity to changes", () => {
 				it("dropList value should be the model value after changed", () => {
-					model.skills = ["ReactJS"];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: ["ReactJS"] } });
 
 					expect(isChecked(0)).to.be.false;
 					expect(isChecked(1)).to.be.false;
@@ -542,37 +538,39 @@ describe("fieldChecklist.vue", () => {
 				it("model value should be the dropList value if changed (add)", () => {
 					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
-					expect(model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
+					expect(wrapper.props().model.skills).to.be.deep.equal(["ReactJS", "HTML5"]);
 				});
 
 				it("model value should be the checklist value if changed (remove)", () => {
 					checkboxes.at(0).element.checked = false;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
 
-					expect(model.skills).to.be.deep.equal(["ReactJS"]);
+					expect(wrapper.props().model.skills).to.be.deep.equal(["ReactJS"]);
 				});
 
-				it.skip("model value should be the dropList value if changed (null)", done => {
-					model.skills = null;
-					wrapper.update();
-					Vue.config.errorHandler = done;
-					Vue.nextTick(() => {
-						checkboxes.at(0).element.checked = true;
-						checkboxes.at(0).trigger("change");
-						wrapper.update();
-						expect(model.skills).to.be.deep.equal(["HTML5"]);
-						done();
-					});
+				it("model value should be the dropList value if changed (null)", () => {
+					wrapper.setProps({ model: { skills: null } });
+
+					checkboxes.at(0).element.checked = true;
+					checkboxes.at(0).trigger("change");
+
+					expect(wrapper.props().model.skills).to.be.deep.equal(["HTML5"]);
+				});
+
+				it("model value should be the dropList value if changed (empty Array)", () => {
+					wrapper.setProps({ model: { skills: [] } });
+
+					checkboxes.at(0).element.checked = true;
+					checkboxes.at(0).trigger("change");
+
+					expect(wrapper.props().model.skills).to.be.deep.equal(["HTML5"]);
 				});
 			});
 
 			describe("test 'is-checked' class attribution reactivity to changes", () => {
 				it(".list-row with checked input should have a 'is-checked' class", () => {
-					model.skills = ["HTML5"]; // TODO remove when previous step is fixed
-					wrapper.update();
+					wrapper.setProps({ model: { skills: ["HTML5"] } });
 					listRowList = wrapper.findAll(".list-row");
 
 					expect(listRowList.at(0).classes()).to.include("is-checked");
@@ -585,8 +583,7 @@ describe("fieldChecklist.vue", () => {
 				});
 
 				it(".list-row with checked input should have a 'is-checked' class after model value is changed", () => {
-					model.skills = ["ReactJS"];
-					wrapper.update();
+					wrapper.setProps({ model: { skills: ["ReactJS"] } });
 					listRowList = wrapper.findAll(".list-row");
 
 					expect(listRowList.at(0).classes()).to.not.include("is-checked");
@@ -598,12 +595,10 @@ describe("fieldChecklist.vue", () => {
 					expect(listRowList.at(6).classes()).to.not.include("is-checked");
 				});
 
-				it.skip(".list-row with checked input should have a 'is-checked' class after listbox value is changed", () => {
-					checkboxes.at(0).element.checked = false;
+				it(".list-row with checked input should have a 'is-checked' class after listbox value is changed", () => {
+					checkboxes.at(0).element.checked = true;
 					checkboxes.at(0).trigger("change");
-					wrapper.update();
-					dropList.update();
-					listRowList = dropList.findAll(".list-row");
+					listRowList = wrapper.findAll(".list-row");
 
 					expect(listRowList.at(0).classes()).to.include("is-checked");
 					expect(listRowList.at(1).classes()).to.not.include("is-checked");
@@ -621,11 +616,13 @@ describe("fieldChecklist.vue", () => {
 		describe("check listbox input/wrapper attributes", () => {
 			let schema = {
 				type: "checklist",
-				listBox: true,
 				label: "First Name",
 				model: "user__model",
 				inputName: "input_name",
 				fieldClasses: ["applied-class", "another-class"],
+				fieldOptions: {
+					listBox: true
+				},
 				values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
 				attributes: {
 					wrapper: {
@@ -640,7 +637,7 @@ describe("fieldChecklist.vue", () => {
 			let input, wrap;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				input = wrapper.find("input");
 				wrap = wrapper.find(".wrapper");
 			});
@@ -657,11 +654,14 @@ describe("fieldChecklist.vue", () => {
 		describe("check combobox input/wrapper attributes", () => {
 			let schema = {
 				type: "checklist",
-				listBox: false,
+
 				label: "First Name",
 				model: "user__model",
 				inputName: "input_name",
 				fieldClasses: ["applied-class", "another-class"],
+				fieldOptions: {
+					listBox: true
+				},
 				values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
 				attributes: {
 					wrapper: {
@@ -676,7 +676,7 @@ describe("fieldChecklist.vue", () => {
 			let input, wrap;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				input = wrapper.find("input");
 				wrap = wrapper.find(".wrapper");
 			});
@@ -685,25 +685,22 @@ describe("fieldChecklist.vue", () => {
 				expect(wrap.attributes()["data-wrapper"]).to.be.equal("collapse");
 			});
 
-			it.skip("input should have data-* attribute", done => {
-				// TODO: figure out how to get this test to work
+			it("input should have data-* attribute", () => {
 				wrapper.setData({ comboExpanded: true });
-				Vue.config.errorHandler = done;
-				Vue.nextTick(() => {
-					expect(input.attributes()["data-input"]).to.be.equal("tooltip");
-					done();
-				});
+				expect(input.attributes()["data-input"]).to.be.equal("tooltip");
 			});
 		});
 
 		describe("check non-specific attributes", () => {
 			let schema = {
 				type: "checklist",
-				listBox: true,
 				label: "First Name",
 				model: "user__model",
 				inputName: "input_name",
 				fieldClasses: ["applied-class", "another-class"],
+				fieldOptions: {
+					listBox: true
+				},
 				values: ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"],
 				attributes: {
 					"data-input": "tooltip"
@@ -713,7 +710,7 @@ describe("fieldChecklist.vue", () => {
 			let input;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				input = wrapper.find("input");
 			});
 

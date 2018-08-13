@@ -8,13 +8,20 @@ let radioList;
 let radios;
 let labelList;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldRadios, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 	radioList = wrapper.find(".radio-list");
 	radios = wrapper.findAll("input[type=radio]");
@@ -39,7 +46,7 @@ describe("FieldRadios.vue", () => {
 		let model = { skills: "Javascript" };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
 		it("should contain a checkbox element", () => {
@@ -78,8 +85,7 @@ describe("FieldRadios.vue", () => {
 
 		describe("test values reactivity to changes", () => {
 			it("radioList value should be the model value after changed", () => {
-				model.skills = "ReactJS";
-				wrapper.update();
+				wrapper.setProps({ model: { skills: "ReactJS" } });
 
 				expect(isChecked(0)).to.be.false;
 				expect(isChecked(1)).to.be.false;
@@ -93,14 +99,13 @@ describe("FieldRadios.vue", () => {
 			it("model value should be the radioList value if changed", () => {
 				radios.at(0).trigger("click");
 
-				expect(model.skills).to.be.equal("HTML5");
+				expect(wrapper.props().model.skills).to.be.equal("HTML5");
 			});
 		});
 
 		describe("test 'is-checked' class attribution reactivity to changes", () => {
 			it("label with checked input should have a 'is-checked' class after model value is changed", () => {
-				model.skills = "ReactJS";
-				wrapper.update();
+				wrapper.setProps({ model: { skills: "ReactJS" } });
 
 				expect(labelList.at(0).classes()).to.not.include("is-checked");
 				expect(labelList.at(1).classes()).to.not.include("is-checked");
@@ -143,7 +148,7 @@ describe("FieldRadios.vue", () => {
 		let model = { skills: "CSS3-123" };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
 		it("should contain a checkbox element", () => {
@@ -176,8 +181,7 @@ describe("FieldRadios.vue", () => {
 		});
 		describe("test values reactivity to changes", () => {
 			it("radioList value should be the model value after changed", () => {
-				model.skills = "ReactJS-123";
-				wrapper.update();
+				wrapper.setProps({ model: { skills: "ReactJS-123" } });
 
 				expect(isChecked(0)).to.be.false;
 				expect(isChecked(1)).to.be.false;
@@ -191,14 +195,13 @@ describe("FieldRadios.vue", () => {
 			it("model value should be the radioList value if changed", () => {
 				radios.at(0).trigger("click");
 
-				expect(model.skills).to.be.equal("HTML5-123");
+				expect(wrapper.props().model.skills).to.be.equal("HTML5-123");
 			});
 		});
 
 		describe("test 'is-checked' class attribution reactivity to changes", () => {
 			it("label with checked input should have a 'is-checked' class after model value is changed", () => {
-				model.skills = "ReactJS-123";
-				wrapper.update();
+				wrapper.setProps({ model: { skills: "ReactJS-123" } });
 
 				expect(labelList.at(0).classes()).to.not.include("is-checked");
 				expect(labelList.at(1).classes()).to.not.include("is-checked");
@@ -223,7 +226,7 @@ describe("FieldRadios.vue", () => {
 		});
 	});
 
-	describe("check static values with { id, label } objects (custom key name with `radiosOptions`)", () => {
+	describe("check static values with { id, label } objects (custom key name with `fieldOptions`)", () => {
 		let schema = {
 			type: "radios",
 			label: "radios",
@@ -237,7 +240,7 @@ describe("FieldRadios.vue", () => {
 				{ label: "ReactJS", id: "ReactJS-123" },
 				{ label: "VueJS", id: "VueJS-123" }
 			],
-			radiosOptions: {
+			fieldOptions: {
 				value: "id",
 				name: "label"
 			}
@@ -245,7 +248,7 @@ describe("FieldRadios.vue", () => {
 		let model = { skills: "CSS3-123" };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
 		it("should contain a checkbox element", () => {
@@ -278,8 +281,7 @@ describe("FieldRadios.vue", () => {
 		});
 		describe("test values reactivity to changes", () => {
 			it("radioList value should be the model value after changed", () => {
-				model.skills = "ReactJS-123";
-				wrapper.update();
+				wrapper.setProps({ model: { skills: "ReactJS-123" } });
 
 				expect(isChecked(0)).to.be.false;
 				expect(isChecked(1)).to.be.false;
@@ -293,14 +295,13 @@ describe("FieldRadios.vue", () => {
 			it("model value should be the radioList value if changed", () => {
 				radios.at(0).trigger("click");
 
-				expect(model.skills).to.be.equal("HTML5-123");
+				expect(wrapper.props().model.skills).to.be.equal("HTML5-123");
 			});
 		});
 
 		describe("test 'is-checked' class attribution reactivity to changes", () => {
 			it("label with checked input should have a 'is-checked' class after model value is changed", () => {
-				model.skills = "ReactJS-123";
-				wrapper.update();
+				wrapper.setProps({ model: { skills: "ReactJS-123" } });
 
 				expect(labelList.at(0).classes()).to.not.include("is-checked");
 				expect(labelList.at(1).classes()).to.not.include("is-checked");
