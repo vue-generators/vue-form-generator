@@ -19,7 +19,6 @@
 		"mocha": "mocha-webpack --webpack-config build/webpack.test.config.js --require test/unit/setup.js test/unit/specs/**/*.spec.js",
 		"unit": "cross-env NODE_ENV=test nyc npm run mocha",
 		"e2e": "node test/e2e/runner.js",
-		"pretest": "npm run lint",
 		"ci": "cross-env NODE_ENV=test mocha-webpack --watch --webpack-config build/webpack.test.config.js --require test/unit/setup.js test/unit/specs/**/*.spec.js",
 		"test": "npm run unit",
 		"version": "bumped release"
