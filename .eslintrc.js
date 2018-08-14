@@ -12,7 +12,7 @@ module.exports = {
 	globals: {
 		process: true
 	},
-	extends: ["eslint:recommended", "plugin:vue/essential"],
+	extends: ["eslint:recommended", "prettier", "plugin:vue/essential"],
 	plugins: ["prettier"],
 	rules: {
 		indent: [1, "tab", { SwitchCase: 1 }],
