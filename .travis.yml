@@ -8,6 +8,12 @@ node_js:
   - "8"
   - "6"
 
+install:
+  - npm install
+
+script:
+  - npm test
+
 deploy:
   provider: npm
   email: $NPM_EMAIL
