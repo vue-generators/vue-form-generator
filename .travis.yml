@@ -1,6 +1,5 @@
 language: node_js
 cache:
-	yarn: true
   directories:
     - node_modules
 
@@ -8,12 +7,6 @@ node_js:
   - "10"
   - "8"
   - "6"
-
-install:
-  - npm install
-
-script:
-  - npm run test
 
 deploy:
   provider: npm
