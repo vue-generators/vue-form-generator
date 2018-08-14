@@ -13,7 +13,7 @@ module.exports = {
 		process: true
 	},
 	extends: ["eslint:recommended", "prettier", "plugin:vue/essential"],
-	plugins: ["prettier"],
+	plugins: ["prettier", "babel"],
 	rules: {
 		indent: [1, "tab", { SwitchCase: 1 }],
 		quotes: [1, "double", { allowTemplateLiterals: true }],
