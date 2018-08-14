@@ -1,18 +1,28 @@
 language: node_js
 cache:
-    directories:
-        - node_modules
+	yarn: true
+  directories:
+    - node_modules
+
 node_js:
-    - "10"
-    - "8"
-    - "6"
+  - "10"
+  - "8"
+  - "6"
+
+install:
+  - npm install
+
+script:
+  - npm run test
+
 deploy:
-    provider: npm
-    email: $NPM_EMAIL
-    api_key: $NPM_API_KEY
-    skip_cleanup: true
-    on:
-        tags: true
-        node: "8"
+  provider: npm
+  email: $NPM_EMAIL
+  api_key: $NPM_API_KEY
+  skip_cleanup: true
+  on:
+    tags: true
+    node: "8"
+
 after_success:
-    - npm run coverall
+  - npm run coverall
