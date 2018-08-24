@@ -461,30 +461,30 @@ export default {
 				}
 			]
 		},
-		{
-			type: "staticMap",
-			model: "address.geo",
-			label: "Map",
-			visible: false,
-			fieldOptions: {
-				lat: "latitude",
-				lng: "longitude",
-				zoom: 6,
-				sizeX: 640,
-				sizeY: 640,
-				scale: 1,
-				format: "png",
-				// maptype:"satellite",
-				language: "FR-fr",
-				// region:
-				markers: "color:blue%7Clabel:S%7C43.107733,4.541936"
-				// path:
-				// visible:
-				// style:"feature:road.highway%7Celement:labels.text.stroke%7Cvisibility:on%7Ccolor:0xb06eba&style=feature:road.highway%7Celement:labels.text.fill%7Cvisibility:on%7Ccolor:0xffffff",
-				// key:
-				// signature:
-			}
-		},
+		// {
+		// 	type: "staticMap",
+		// 	model: "address.geo",
+		// 	label: "Map",
+		// 	visible: false,
+		// 	fieldOptions: {
+		// 		lat: "latitude",
+		// 		lng: "longitude",
+		// 		zoom: 6,
+		// 		sizeX: 640,
+		// 		sizeY: 640,
+		// 		scale: 1,
+		// 		format: "png",
+		// 		// maptype:"satellite",
+		// 		language: "FR-fr",
+		// 		// region:
+		// 		markers: "color:blue%7Clabel:S%7C43.107733,4.541936"
+		// 		// path:
+		// 		// visible:
+		// 		// style:"feature:road.highway%7Celement:labels.text.stroke%7Cvisibility:on%7Ccolor:0xb06eba&style=feature:road.highway%7Celement:labels.text.fill%7Cvisibility:on%7Ccolor:0xffffff",
+		// 		// key:
+		// 		// signature:
+		// 	}
+		// },
 		{
 			type: "switch",
 			model: "status",

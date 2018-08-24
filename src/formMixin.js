@@ -4,7 +4,7 @@ export default {
 	methods: {
 		// Get style classes of field
 		getFieldRowClasses(field) {
-			const hasErrors = this.fieldErrors(field).length > 0;
+			const hasErrors = this.fieldErrors().length > 0;
 			let baseClasses = {
 				[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
 				[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
@@ -28,8 +28,16 @@ export default {
 			return baseClasses;
 		},
 		fieldErrors(field) {
-			let res = this.errors.filter((e) => e.field === field);
-			return res.map((item) => item.error);
+			let errors = [];
+
+			if (field) {
+				errors = this.errors.filter((e) => e.field === field).map((item) => item.error);
+			} else {
+				if (this.$children.length > 0) {
+					errors = this.$children[0].errors;
+				}
+			}
+			return errors;
 		},
 		getValueFromOption(field, option, defaultValue = false) {
 			if (isFunction(field[option])) return field[option].call(this, this.model, field, this);

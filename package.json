@@ -47,9 +47,9 @@
 	"devDependencies": {
 		"@vue/test-utils": "1.0.0-beta.24",
 		"ajv": "6.5.2",
-		"autoprefixer": "8.6.3",
+		"autoprefixer": "9.1.1",
 		"babel-core": "6.26.3",
-		"babel-eslint": "8.2.1",
+		"babel-eslint": "8.2.6",
 		"babel-loader": "7.1.5",
 		"babel-plugin-istanbul": "4.1.6",
 		"babel-plugin-lodash": "3.3.4",
@@ -59,13 +59,13 @@
 		"bumped": "0.10.10",
 		"bumped-terminal": "0.7.5",
 		"chai": "4.1.2",
-		"cleave.js": "1.4.2",
+		"cleave.js": "1.4.3",
 		"conventional-changelog-cli": "2.0.1",
 		"coveralls": "3.0.2",
 		"cross-env": "5.2.0",
 		"css-loader": "0.28.11",
 		"eonasdan-bootstrap-datetimepicker": "4.17.47",
-		"eslint": "4.19.1",
+		"eslint": "5.3.0",
 		"eslint-config-prettier": "3.0.1",
 		"eslint-friendly-formatter": "4.0.1",
 		"eslint-loader": "2.1.0",
@@ -103,7 +103,7 @@
 		"sinon-chai": "3.2.0",
 		"spectrum-colorpicker": "1.8.0",
 		"stats-webpack-plugin": "0.6.2",
-		"url-loader": "1.0.1",
+		"url-loader": "1.1.1",
 		"vue": "2.5.17",
 		"vue-loader": "14.2.2",
 		"vue-multiselect": "2.1.0",
@@ -130,16 +130,7 @@
 		"bracketSpacing": true,
 		"semi": true,
 		"useTabs": true,
-		"arrowParens": "always",
-		"overrides": [
-			{
-				"files": "*.yml",
-				"options": {
-					"tabWidth": 2,
-					"useTabs": false
-				}
-			}
-		]
+		"arrowParens": "always"
 	},
 	"nyc": {
 		"include": [
