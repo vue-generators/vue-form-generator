@@ -48,6 +48,7 @@ module.exports = {
 		basic: path.resolve("dev", "projects", "basic", "main.js"),
 		mselect: path.resolve("dev", "projects", "multiselect", "main.js"),
 		grouping: path.resolve("dev", "projects", "grouping", "main.js"),
+		multi: path.resolve("dev", "projects", "multi", "main.js"),
 		checklist: path.resolve("dev", "projects", "checklist", "main.js"),
 		picker: path.resolve("dev", "projects", "picker", "main.js")
 	},
