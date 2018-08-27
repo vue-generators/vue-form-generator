@@ -9,7 +9,7 @@
 		</label>
 
 		<div class="field-wrap">
-			<component ref="child" :is="getFieldType(field)" :model="model" :schema="field" :formOptions="options"></component>
+			<component ref="child" :is="getFieldType(field)" :model="model" :schema="field" :formOptions="options" :eventBus="eventBus" @errors-updated="childValidated"></component>
 			<div v-if="buttonVisibility(field)" class="buttons">
 				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
 			</div>
@@ -17,8 +17,8 @@
 
 		<div v-if="field.hint" class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
 
-		<div v-if="fieldErrors().length > 0" class="errors help-block">
-			<span v-for="(error, index) in fieldErrors()" :key="index" v-html="error"></span>
+		<div v-if="childErrors.length > 0" class="errors help-block">
+			<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>
 		</div>
 	</div>
 </template>
@@ -27,7 +27,6 @@ import { get as objGet, isNil } from "lodash";
 import { slugifyFormID } from "./utils/schema";
 import formMixin from "./formMixin.js";
 import fieldComponents from "./utils/fieldsLoader.js";
-// import { eventBus } from "./event-bus.js";
 
 export default {
 	name: "form-group",
@@ -47,7 +46,15 @@ export default {
 			default() {
 				return [];
 			}
+		},
+		eventBus: {
+			type: Object
 		}
+	},
+	data() {
+		return {
+			childErrors: []
+		};
 	},
 	methods: {
 		// Should field type have a label?
@@ -78,16 +85,14 @@ export default {
 		getFieldType(fieldSchema) {
 			return "field-" + fieldSchema.type;
 		},
-		// Child field executed validation
-		// onFieldValidated(res, errors, field) {
-		// 	this.$emit("validated", res, errors, field);
-		// 	// eventBus.$emit("validated", res, errors, field);
-		// },
 		buttonVisibility(field) {
 			return field.buttons && field.buttons.length > 0;
 		},
 		buttonClickHandler(btn, field, event) {
 			return btn.onclick.call(this, this.model, field, event, this);
+		},
+		childValidated(errors) {
+			this.childErrors = errors;
 		}
 	}
 };

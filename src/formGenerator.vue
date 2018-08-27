@@ -4,20 +4,20 @@ div.vue-form-generator(v-if='schema != null')
 	div(v-html="errors")
 	fieldset(v-if="schema.fields", :is='tag')
 		template(v-for='field in fields')
-			form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options")
+			form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options", :eventBus="eventBus")
 
 	template(v-for='group in groups')
 		fieldset(:is='tag', :class='getFieldRowClasses(group)')
 			legend(v-if='group.legend') {{ group.legend }}
 			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options")
+				form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options", :eventBus="eventBus")
 </template>
 
 <script>
+import Vue from "vue";
 import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
 import formMixin from "./formMixin.js";
 import formGroup from "./formGroup.vue";
-import { eventBus } from "./event-bus.js";
 
 export default {
 	name: "formGenerator",
@@ -61,7 +61,9 @@ export default {
 	},
 
 	data() {
+		const eventBus = new Vue();
 		return {
+			eventBus: eventBus,
 			totalNumberOfFields: 0,
 			errors: [] // Validation errors
 		};
@@ -157,9 +159,9 @@ export default {
 
 				let formErrors = [];
 
-				eventBus.$on("field-deregistering", () => {
+				this.eventBus.$on("field-deregistering", () => {
 					console.warn("Fields were deleted during validation process");
-					eventBus.$emit("fields-validation-terminated", formErrors);
+					this.eventBus.$emit("fields-validation-terminated", formErrors);
 					reject(formErrors);
 				});
 
@@ -175,14 +177,14 @@ export default {
 					}
 
 					if (fieldsValidated === this.totalNumberOfFields) {
-						eventBus.$off("field-validated", counter);
+						this.eventBus.$off("field-validated", counter);
 						if (objGet(this.options, "validateAfterChanged", false)) {
-							eventBus.$on("field-validated", this.onFieldValidated);
+							this.eventBus.$on("field-validated", this.onFieldValidated);
 						}
 						this.errors = formErrors;
 						let isValid = formErrors.length === 0;
 						this.$emit("validated", isValid, formErrors, this);
-						eventBus.$emit("fields-validation-terminated", formErrors);
+						this.eventBus.$emit("fields-validation-terminated", formErrors);
 
 						if (isValid) {
 							resolve();
@@ -192,39 +194,39 @@ export default {
 					}
 				};
 				if (objGet(this.options, "validateAfterChanged", false)) {
-					eventBus.$off("field-validated", this.onFieldValidated);
+					this.eventBus.$off("field-validated", this.onFieldValidated);
 				}
-				eventBus.$on("field-validated", counter);
-				eventBus.$emit("validate-fields", this);
+				this.eventBus.$on("field-validated", counter);
+				this.eventBus.$emit("validate-fields", this);
 			});
 		},
 
 		// Clear validation errors
 		clearValidationErrors() {
 			this.errors.splice(0);
-			eventBus.$emit("clear-validation-errors", this.clearValidationErrors);
+			this.eventBus.$emit("clear-validation-errors", this.clearValidationErrors);
 		}
 	},
 
 	created() {
 		if (objGet(this.options, "validateAfterChanged", false)) {
-			eventBus.$on("field-validated", this.onFieldValidated);
+			this.eventBus.$on("field-validated", this.onFieldValidated);
 		}
-		eventBus.$on("model-updated", this.onModelUpdated);
-		eventBus.$on("fields-validation-trigger", this.validate);
-		eventBus.$on("field-registering", () => {
+		this.eventBus.$on("model-updated", this.onModelUpdated);
+		this.eventBus.$on("fields-validation-trigger", this.validate);
+		this.eventBus.$on("field-registering", () => {
 			this.totalNumberOfFields = this.totalNumberOfFields + 1;
 		});
-		eventBus.$on("field-deregistering", () => {
+		this.eventBus.$on("field-deregistering", () => {
 			this.totalNumberOfFields = this.totalNumberOfFields - 1;
 		});
 	},
 	beforeDestroy() {
-		eventBus.$off("field-validated");
-		eventBus.$off("model-updated");
-		eventBus.$off("fields-validation-trigger");
-		eventBus.$off("field-registering");
-		eventBus.$off("field-deregistering");
+		this.eventBus.$off("field-validated");
+		this.eventBus.$off("model-updated");
+		this.eventBus.$off("fields-validation-trigger");
+		this.eventBus.$off("field-registering");
+		this.eventBus.$off("field-deregistering");
 	}
 };
 </script>

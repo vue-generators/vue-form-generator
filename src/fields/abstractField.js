@@ -1,7 +1,6 @@
 import { get as objGet, forEach, isFunction, isString, isArray, debounce, isNil } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
-import { eventBus } from "../event-bus.js";
 
 const convertValidator = (validator) => {
 	if (isString(validator)) {
@@ -34,6 +33,9 @@ export default {
 			type: Object
 		},
 		formOptions: {
+			type: Object
+		},
+		eventBus: {
 			type: Object
 		}
 	},
@@ -105,6 +107,14 @@ export default {
 		}
 	},
 
+	watch: {
+		errors: {
+			handler: function(errors) {
+				this.$emit("errors-updated", errors);
+			}
+		}
+	},
+
 	methods: {
 		getValueFromOption(field, option, defaultValue) {
 			if (typeof this.$parent.getValueFromOption === "function") {
@@ -147,9 +157,6 @@ export default {
 								if (err) {
 									this.errors = this.errors.concat(err);
 								}
-								// let isValid = this.errors.length === 0;
-								// this.$emit("validated", isValid, this.errors, this);
-								// eventBus.$emit("validated", isValid, this.errors, this);
 							});
 						} else if (result) {
 							results = results.concat(result);
@@ -174,7 +181,8 @@ export default {
 				let isValid = fieldErrors.length === 0;
 
 				this.errors = fieldErrors;
-				eventBus.$emit("field-validated", isValid, fieldErrors, this._uid);
+
+				this.eventBus.$emit("field-validated", isValid, fieldErrors, this._uid);
 				return fieldErrors;
 			};
 
@@ -206,7 +214,7 @@ export default {
 			}
 
 			if (changed) {
-				eventBus.$emit("model-updated", newValue, this.schema.model);
+				this.eventBus.$emit("model-updated", newValue, this.schema.model);
 
 				if (isFunction(this.schema.onChanged)) {
 					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
@@ -271,9 +279,9 @@ export default {
 		}
 	},
 	created() {
-		eventBus.$on("clear-validation-errors", this.clearValidationErrors);
-		eventBus.$on("validate-fields", this.validate);
-		eventBus.$emit("field-registering");
+		this.eventBus.$on("clear-validation-errors", this.clearValidationErrors);
+		this.eventBus.$on("validate-fields", this.validate);
+		this.eventBus.$emit("field-registering");
 	},
 	mounted() {
 		const diff = function(a, b) {
@@ -324,8 +332,8 @@ export default {
 		}
 	},
 	beforeDestroy() {
-		eventBus.$off("clear-validation-errors");
-		eventBus.$off("validate-fields");
-		eventBus.$emit("field-deregistering", this);
+		this.eventBus.$off("clear-validation-errors");
+		this.eventBus.$off("validate-fields");
+		this.eventBus.$emit("field-deregistering", this);
 	}
 };

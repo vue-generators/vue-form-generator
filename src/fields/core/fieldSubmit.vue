@@ -4,7 +4,6 @@
 
 <script>
 import abstractField from "../abstractField";
-import { eventBus } from "../../event-bus.js";
 import { isFunction, isEmpty } from "lodash";
 
 export default {
@@ -17,8 +16,8 @@ export default {
 				// when we have to validate data first
 				$event.preventDefault();
 
-				eventBus.$emit("fields-validation-trigger");
-				eventBus.$on("fields-validation-terminated", (formErrors) => {
+				this.eventBus.$emit("fields-validation-trigger");
+				this.eventBus.$on("fields-validation-terminated", (formErrors) => {
 					if (!isEmpty(formErrors) && isFunction(this.fieldOptions.onValidationError)) {
 						this.fieldOptions.onValidationError(this.model, this.schema, formErrors, $event);
 					} else if (isFunction(this.fieldOptions.onSubmit)) {

@@ -3,7 +3,6 @@ const schema = require("./utils/schema.js");
 const validators = require("./utils/validators.js").default;
 const fieldComponents = require("./utils/fieldsLoader").default;
 const abstractField = require("./fields/abstractField").default;
-const eventBus = require("./event-bus.js").eventBus;
 const install = (Vue) => {
 	Vue.component("VueFormGenerator", module.exports.component);
 };
@@ -14,6 +13,5 @@ module.exports = {
 	validators,
 	abstractField,
 	fieldComponents,
-	eventBus,
 	install
 };
