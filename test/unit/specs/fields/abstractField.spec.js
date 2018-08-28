@@ -428,36 +428,36 @@ describe("abstractField.vue", () => {
 			expect(field.errors[0]).to.be.equal("Validation error!");
 		});
 	});
+	// TODO move into formElement.spec
+	// describe("check getFieldID function", () => {
+	// 	let schema = {
+	// 		type: "text",
+	// 		label: "First Name",
+	// 		model: "user__model",
+	// 		inputName: "input_name"
+	// 	};
+	// 	let model = {};
 
-	describe("check getFieldID function", () => {
-		let schema = {
-			type: "text",
-			label: "First Name",
-			model: "user__model",
-			inputName: "input_name"
-		};
-		let model = {};
+	// 	before(() => {
+	// 		createField({ schema, model });
+	// 	});
 
-		before(() => {
-			createField({ schema, model });
-		});
+	// 	it("should return slugified inputName, if available", () => {
+	// 		expect(field.getFieldID(schema)).to.be.equal("input-name");
+	// 	});
 
-		it("should return slugified inputName, if available", () => {
-			expect(field.getFieldID(schema)).to.be.equal("input-name");
-		});
+	// 	it("should return slugified label, if no inputName", () => {
+	// 		delete schema.inputName;
 
-		it("should return slugified label, if no inputName", () => {
-			delete schema.inputName;
+	// 		expect(field.getFieldID(schema)).to.be.equal("first-name");
+	// 	});
 
-			expect(field.getFieldID(schema)).to.be.equal("first-name");
-		});
+	// 	it("should return slugified model name, if no inputName or label", () => {
+	// 		delete schema.label;
 
-		it("should return slugified model name, if no inputName or label", () => {
-			delete schema.label;
-
-			expect(field.getFieldID(schema)).to.be.equal("user-model");
-		});
-	});
+	// 		expect(field.getFieldID(schema)).to.be.equal("user-model");
+	// 	});
+	// });
 
 	describe("check classes application to fields", () => {
 		let schema = {

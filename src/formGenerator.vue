@@ -1,32 +1,27 @@
-<template lang="pug">
-div.vue-form-generator(v-if='schema != null')
-	div(v-text="totalNumberOfFields")
-	div(v-html="errors")
-	fieldset(v-if="schema.fields", :is='tag')
-		template(v-for='field in fields')
-			form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options", :eventBus="eventBus")
-
-	template(v-for='group in groups')
-		fieldset(:is='tag', :class='getFieldRowClasses(group)')
-			legend(v-if='group.legend') {{ group.legend }}
-			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options", :eventBus="eventBus")
+<template>
+	<div class="vue-form-generator" v-if='schema != null'>
+		<div v-text="totalNumberOfFields"></div>
+		<div v-html="errors"></div>
+		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus"></form-group>
+	</div>
 </template>
 
 <script>
 import Vue from "vue";
-import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
-import formMixin from "./formMixin.js";
+import { get as objGet, isArray } from "lodash";
 import formGroup from "./formGroup.vue";
 
 export default {
 	name: "formGenerator",
 	components: { formGroup },
-	mixins: [formMixin],
 	props: {
-		schema: Object,
+		schema: {
+			type: Object
+		},
 
-		model: Object,
+		model: {
+			type: Object
+		},
 
 		options: {
 			type: Object,
@@ -39,11 +34,6 @@ export default {
 					validationSuccessClass: ""
 				};
 			}
-		},
-
-		multiple: {
-			type: Boolean,
-			default: false
 		},
 
 		isNewModel: {
@@ -71,31 +61,16 @@ export default {
 
 	computed: {
 		fields() {
-			let res = [];
 			if (this.schema && this.schema.fields) {
-				forEach(this.schema.fields, (field) => {
-					if (!this.multiple || field.multi === true) res.push(field);
-				});
+				return this.schema.fields;
 			}
-
-			return res;
-		},
-		groups() {
-			let res = [];
-			if (this.schema && this.schema.groups) {
-				forEach(this.schema.groups.slice(0), (group) => {
-					res.push(group);
-				});
-			}
-
-			return res;
 		}
 	},
 
 	watch: {
 		// new model loaded
 		model: {
-			handler: function(newModel, oldModel) {
+			handler(newModel, oldModel) {
 				if (oldModel === newModel)
 					// model property changed, skip
 					return;
@@ -118,13 +93,15 @@ export default {
 	},
 
 	methods: {
-		// Get visible prop of field
-		fieldVisible(field) {
-			if (isFunction(field.visible)) return field.visible.call(this, this.model, field, this);
-
-			if (isNil(field.visible)) return true;
-
-			return field.visible;
+		fillErrors(fieldErrors, errors, uid) {
+			if (isArray(fieldErrors) && fieldErrors.length > 0) {
+				fieldErrors.forEach((error) => {
+					errors.push({
+						uid: uid,
+						error: error
+					});
+				});
+			}
 		},
 
 		// Child field executed validation
@@ -132,15 +109,7 @@ export default {
 			// Remove old errors for this field
 			this.errors = this.errors.filter((e) => e.uid !== uid);
 
-			if (!fieldIsValid && fieldErrors && fieldErrors.length > 0) {
-				// Add errors with this field
-				forEach(fieldErrors, (err) => {
-					this.errors.push({
-						uid: uid,
-						error: err
-					});
-				});
-			}
+			this.fillErrors(fieldErrors, this.errors, uid);
 
 			let isValid = this.errors.length === 0;
 			this.$emit("validated", isValid, this.errors, this);
@@ -167,14 +136,8 @@ export default {
 
 				const counter = (isValid, fieldErrors, uid) => {
 					fieldsValidated++;
-					if (isArray(fieldErrors) && fieldErrors.length > 0) {
-						forEach(fieldErrors, (error) => {
-							formErrors.push({
-								uid: uid,
-								error: error
-							});
-						});
-					}
+
+					this.fillErrors(fieldErrors, formErrors, uid);
 
 					if (fieldsValidated === this.totalNumberOfFields) {
 						this.eventBus.$off("field-validated", counter);

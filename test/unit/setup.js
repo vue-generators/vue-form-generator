@@ -25,9 +25,13 @@ global.checkAttribute = (name, wrapper, schema, type = "input") => {
 
 const { isNil, isFunction } = require("lodash");
 global.getValueFromOption = (field, option, defaultValue = false) => {
-	if (isFunction(field[option])) return field[option].call(this, this.model, field, this);
+	if (isFunction(field[option])) {
+		return field[option].call(this, this.model, field, this);
+	}
 
-	if (isNil(field[option])) return defaultValue;
+	if (isNil(field[option])) {
+		return defaultValue;
+	}
 
 	return field[option];
 };

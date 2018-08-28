@@ -1,4 +1,4 @@
-import { get, set, each, isObject, isArray, isFunction, cloneDeep } from "lodash";
+import { get, set, each, isObject, isArray, isFunction, isNil, cloneDeep } from "lodash";
 
 // Create a new model by schema default values
 const createDefaultObject = (schema, obj = {}) => {
@@ -54,7 +54,7 @@ const mergeMultiObjectFields = (schema, objs) => {
 const slugifyFormID = (schema, prefix = "") => {
 	// Try to get a reasonable default id from the schema,
 	// then slugify it.
-	if (typeof schema.id !== "undefined") {
+	if (!isNil(schema.id)) {
 		// If an ID's been explicitly set, use it unchanged
 		return prefix + schema.id;
 	} else {

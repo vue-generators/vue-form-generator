@@ -1,7 +1,7 @@
 <template lang="pug">
 	textarea.form-control(
 		v-model="value",
-		:id="getFieldID(schema)",
+		:id="fieldID",
 		:class="fieldClasses",
 		:disabled="disabled",
 		:maxlength="fieldOptions.max",

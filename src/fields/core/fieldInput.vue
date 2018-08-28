@@ -1,7 +1,7 @@
 <template lang="pug">
 .wrapper(v-attributes="'wrapper'")
 	input.form-control(
-		:id="getFieldID(schema)",
+		:id="fieldID",
 		:type="inputType",
 		:value="value",
 		@input="onInput",

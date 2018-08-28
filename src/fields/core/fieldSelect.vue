@@ -1,5 +1,5 @@
 <template lang="pug">
-	select.form-control(v-model="value", :disabled="disabled", :name="inputName", :id="getFieldID(schema)", :class="fieldClasses", v-attributes="'input'")
+	select.form-control(v-model="value", :disabled="disabled", :name="inputName", :id="fieldID", :class="fieldClasses", v-attributes="'input'")
 		option(v-if="!fieldOptions.hideNoneSelectedText", :disabled="schema.required", :value="null") {{ fieldOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
 
 		template(v-for="item in items")

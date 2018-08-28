@@ -1,6 +1,5 @@
-import { get as objGet, forEach, isFunction, isString, isArray, debounce, isNil } from "lodash";
+import { get as objGet, forEach, isFunction, isString, isArray, debounce, isNil, uniqueId } from "lodash";
 import validators from "../utils/validators";
-import { slugifyFormID } from "../utils/schema";
 
 const convertValidator = (validator) => {
 	if (isString(validator)) {
@@ -37,11 +36,16 @@ export default {
 		},
 		eventBus: {
 			type: Object
+		},
+		fieldID: {
+			type: String
 		}
 	},
 
 	data() {
+		const fieldUID = uniqueId(this.fieldID + "_");
 		return {
+			fieldUID,
 			errors: [],
 			debouncedValidateFunc: null,
 			debouncedFormatFunction: null
@@ -109,7 +113,7 @@ export default {
 
 	watch: {
 		errors: {
-			handler: function(errors) {
+			handler(errors) {
 				this.$emit("errors-updated", errors);
 			}
 		}
@@ -117,11 +121,13 @@ export default {
 
 	methods: {
 		getValueFromOption(field, option, defaultValue) {
-			if (typeof this.$parent.getValueFromOption === "function") {
+			if (isFunction(this.$parent.getValueFromOption)) {
 				return this.$parent.getValueFromOption(field, option, defaultValue);
 			} else {
 				// Environnement de test ?
-				if (isNil(field[option])) return defaultValue;
+				if (isNil(field[option])) {
+					return defaultValue;
+				}
 
 				return field[option];
 			}
@@ -142,12 +148,12 @@ export default {
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
 				} else {
-					forEach(this.schema.validator, (validator) => {
+					this.schema.validator.forEach((validator) => {
 						validators.push(convertValidator(validator).bind(this));
 					});
 				}
 
-				forEach(validators, (validator) => {
+				validators.forEach((validator) => {
 					if (validateAsync) {
 						results.push(validator(this.value, this.schema, this.model));
 					} else {
@@ -167,7 +173,7 @@ export default {
 
 			let handleErrors = (errors) => {
 				let fieldErrors = [];
-				forEach(errors, (err) => {
+				errors.forEach((err) => {
 					if (isArray(err) && err.length > 0) {
 						fieldErrors = fieldErrors.concat(err);
 					} else if (isString(err)) {
@@ -182,7 +188,7 @@ export default {
 
 				this.errors = fieldErrors;
 
-				this.eventBus.$emit("field-validated", isValid, fieldErrors, this._uid);
+				this.eventBus.$emit("field-validated", isValid, fieldErrors, this.fieldUID);
 				return fieldErrors;
 			};
 
@@ -263,11 +269,6 @@ export default {
 
 				++i;
 			}
-		},
-
-		getFieldID(schema) {
-			const idPrefix = objGet(this.formOptions, "fieldIdPrefix", "");
-			return slugifyFormID(schema, idPrefix);
 		},
 
 		formatValueToField(value) {
