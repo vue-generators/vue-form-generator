@@ -2,7 +2,7 @@ import fecha from "fecha";
 
 import { validators } from "../../../src";
 
-let customAsyncValidator = function(value) {
+let customAsyncValidator = function (value) {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			if (value) resolve();
@@ -39,7 +39,7 @@ export default {
 			required: true,
 			help: "First name of user",
 			placeholder: "User's first name",
-			styleClasses: "half-width",
+			styleClasses: "half-width col-xs-12 col-sm-6",
 			validator: validators.string,
 			onChanged(model, newVal, oldVal) {
 				console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
@@ -56,7 +56,7 @@ export default {
 			featured: true,
 			required: true,
 			placeholder: "User's last name",
-			styleClasses: "half-width",
+			styleClasses: "half-width col-xs-12 col-sm-6",
 			validator: validators.string
 		},
 		{
@@ -387,14 +387,14 @@ export default {
 				{
 					classes: "btn-location",
 					label: "Current location",
-					onclick: function(model) {
+					onclick: function (model) {
 						return this.$parent.getLocation(model);
 					}
 				},
 				{
 					classes: "btn-clear",
 					label: "Clear",
-					onclick: function(model) {
+					onclick: function (model) {
 						model.address.geo = {
 							latitude: 0,
 							longitude: 0
