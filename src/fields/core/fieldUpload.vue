@@ -3,14 +3,14 @@
 	input.form-control(
 		:id="getFieldID(schema)",
 		type="file",
-		:name="schema.inputName",
+		:name="inputName",
 		@change="onChange",
-		:accept="schema.accept",
-		:multiple="schema.multiple",
-		:placeholder="schema.placeholder",
-		:readonly="schema.readonly",
+		:accept="fieldOptions.accept",
+		:multiple="fieldOptions.multiple",
+		:placeholder="placeholder",
+		:readonly="readonly",
 		:required="schema.required",
-		:disabled="disabled", 
+		:disabled="disabled",
 		v-attributes="'input'")
 </template>
 
@@ -21,7 +21,7 @@ import { isFunction } from "lodash";
 export default {
 	mixins: [abstractField],
 	methods: {
-		onChange($event){
+		onChange($event) {
 			if (isFunction(this.schema.onChanged)) {
 				// Schema has defined onChange method.
 				this.schema.onChanged.call(this, this.model, this.schema, $event, this);

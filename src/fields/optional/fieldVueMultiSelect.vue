@@ -1,37 +1,37 @@
 <template lang="pug">
 	multiselect(
-		:id="selectOptions.id",
+		:id="fieldOptions.id",
 		:options="options",
 		:value="value",
-		:multiple="selectOptions.multiple",
-		:track-by="selectOptions.trackBy || null",
-		:label="selectOptions.label || null",
-		:searchable="selectOptions.searchable",
-		:clear-on-select="selectOptions.clearOnSelect",
-		:hide-selected="selectOptions.hideSelected",
-		:placeholder="schema.placeholder",
-		:allow-empty="selectOptions.allowEmpty",
-		:reset-after="selectOptions.resetAfter",
-		:close-on-select="selectOptions.closeOnSelect",
+		:multiple="fieldOptions.multiple",
+		:track-by="fieldOptions.trackBy || null",
+		:label="fieldOptions.label || null",
+		:searchable="fieldOptions.searchable",
+		:clear-on-select="fieldOptions.clearOnSelect",
+		:hide-selected="fieldOptions.hideSelected",
+		:placeholder="placeholder",
+		:allow-empty="fieldOptions.allowEmpty",
+		:reset-after="fieldOptions.resetAfter",
+		:close-on-select="fieldOptions.closeOnSelect",
 		:custom-label="customLabel",
-		:taggable="selectOptions.taggable",
-		:tag-placeholder="selectOptions.tagPlaceholder",
-		:max="schema.max || null",
-		:options-limit="selectOptions.optionsLimit",
-		:group-values="selectOptions.groupValues",
-		:group-label="selectOptions.groupLabel",
-		:block-keys="selectOptions.blockKeys",
-		:internal-search="selectOptions.internalSearch",
-		:select-label="selectOptions.selectLabel",
-		:selected-label="selectOptions.selectedLabel",
-		:deselect-label="selectOptions.deselectLabel",
-		:show-labels="selectOptions.showLabels",
-		:limit="selectOptions.limit",
-		:limit-text="selectOptions.limitText",
-		:loading="selectOptions.loading",
+		:taggable="fieldOptions.taggable",
+		:tag-placeholder="fieldOptions.tagPlaceholder",
+		:max="fieldOptions.max || null",
+		:options-limit="fieldOptions.optionsLimit",
+		:group-values="fieldOptions.groupValues",
+		:group-label="fieldOptions.groupLabel",
+		:block-keys="fieldOptions.blockKeys",
+		:internal-search="fieldOptions.internalSearch",
+		:select-label="fieldOptions.selectLabel",
+		:selected-label="fieldOptions.selectedLabel",
+		:deselect-label="fieldOptions.deselectLabel",
+		:show-labels="fieldOptions.showLabels",
+		:limit="fieldOptions.limit",
+		:limit-text="fieldOptions.limitText",
+		:loading="fieldOptions.loading",
 		:disabled="disabled",
-		:max-height="selectOptions.maxHeight",
-		:show-pointer="selectOptions.showPointer",
+		:max-height="fieldOptions.maxHeight",
+		:show-pointer="fieldOptions.showPointer",
 		@input="updateSelected",
 		@select="onSelect",
 		@remove="onRemove",
@@ -39,10 +39,10 @@
 		@tag="addTag",
 		@open="onOpen",
 		@close="onClose",
-		:option-height="selectOptions.optionHeight",
+		:option-height="fieldOptions.optionHeight",
 	)
 		span(slot="noResult").
-			{{ selectOptions.noResult }}
+			{{ fieldOptions.noResult }}
 </template>
 <script>
 import abstractField from "../abstractField";
@@ -50,10 +50,6 @@ import abstractField from "../abstractField";
 export default {
 	mixins: [abstractField],
 	computed: {
-		selectOptions() {
-			return this.schema.selectOptions || {};
-		},
-
 		options() {
 			let values = this.schema.values;
 			if (typeof values == "function") {
@@ -64,11 +60,10 @@ export default {
 		},
 		customLabel() {
 			if (
-				typeof this.schema.selectOptions !== "undefined" &&
-				typeof this.schema.selectOptions.customLabel !== "undefined" &&
-				typeof this.schema.selectOptions.customLabel === "function"
+				typeof this.fieldOptions.customLabel !== "undefined" &&
+				typeof this.fieldOptions.customLabel === "function"
 			) {
-				return this.schema.selectOptions.customLabel;
+				return this.fieldOptions.customLabel;
 			} else {
 				// this will let the multiselect library use the default behavior if customLabel is not specified
 				return undefined;
@@ -80,13 +75,13 @@ export default {
 			this.value = value;
 		},
 		addTag(newTag, id) {
-			let onNewTag = this.selectOptions.onNewTag;
+			let onNewTag = this.fieldOptions.onNewTag;
 			if (typeof onNewTag == "function") {
 				onNewTag(newTag, id, this.options, this.value);
 			}
 		},
 		onSearchChange(searchQuery, id) {
-			let onSearch = this.selectOptions.onSearch;
+			let onSearch = this.fieldOptions.onSearch;
 			if (typeof onSearch == "function") {
 				onSearch(searchQuery, id, this.options);
 			}
@@ -107,7 +102,9 @@ export default {
 	created() {
 		// Check if the component is loaded globally
 		if (!this.$root.$options.components["multiselect"]) {
-			console.error("'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and register the component globally!");
+			console.error(
+				"'vue-multiselect' is missing. Please download from https://github.com/monterail/vue-multiselect and register the component globally!"
+			);
 		}
 	}
 };

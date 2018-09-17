@@ -34,9 +34,11 @@ export default {
 				fields: [
 					{
 						type: "vueMultiSelect",
-						multiSelect: true,
 						label: "Skills",
 						model: "skills",
+						fieldOptions: {
+							multiple: true
+						},
 						values: ["Javascript", "VueJS", "CSS3", "HTML5"]
 					}
 				]

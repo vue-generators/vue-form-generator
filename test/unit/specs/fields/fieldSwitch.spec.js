@@ -5,13 +5,20 @@ import FieldSwitch from "src/fields/optional/fieldSwitch.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldSwitch, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -23,15 +30,17 @@ describe("FieldSwitch.vue", () => {
 			type: "switch",
 			label: "Status",
 			model: "status",
-			autocomplete: "off",
 			disabled: false,
-			inputName: ""
+			inputName: "",
+			fieldOptions: {
+				autocomplete: "off"
+			}
 		};
 		let model = { status: true };
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -46,9 +55,9 @@ describe("FieldSwitch.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "inputName"];
+			let attributes = ["disabled", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema);
 				});
@@ -62,18 +71,18 @@ describe("FieldSwitch.vue", () => {
 		});
 
 		it("should set disabled", () => {
-			wrapper.vm.disabled = true;
-			wrapper.update();
+			schema.disabled = true;
+			wrapper.setProps({ schema: { ...schema } });
 
 			expect(input.attributes().disabled).to.be.equal("disabled");
 
-			wrapper.vm.disabled = false;
-			wrapper.update();
+			schema.disabled = false;
+			wrapper.setProps({ schema: { ...schema } });
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.status = false;
-			wrapper.update();
+			wrapper.setProps({ model: { status: false } });
+
 			expect(input.element.checked).to.be.false;
 		});
 
@@ -81,7 +90,7 @@ describe("FieldSwitch.vue", () => {
 			input.element.checked = true;
 			input.trigger("change");
 
-			expect(model.status).to.be.true;
+			expect(wrapper.props().model.status).to.be.true;
 		});
 	});
 
@@ -90,13 +99,15 @@ describe("FieldSwitch.vue", () => {
 			type: "switch",
 			label: "Status",
 			model: "status",
-			textOn: "Yes",
-			textOff: "No"
+			fieldOptions: {
+				textOn: "Yes",
+				textOff: "No"
+			}
 		};
 		let model = { status: true };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
 		it("check attributes", () => {
@@ -110,16 +121,18 @@ describe("FieldSwitch.vue", () => {
 		let schema = {
 			type: "switch",
 			model: "sex",
-			textOn: "Female",
-			textOff: "Male",
-			valueOn: "female",
-			valueOff: "male"
+			fieldOptions: {
+				textOn: "Female",
+				textOff: "Male",
+				valueOn: "female",
+				valueOff: "male"
+			}
 		};
 		let model = { sex: "female" };
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -128,8 +141,7 @@ describe("FieldSwitch.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.sex = "male";
-			wrapper.update();
+			wrapper.setProps({ model: { sex: "male" } });
 
 			expect(input.element.checked).to.be.false;
 		});

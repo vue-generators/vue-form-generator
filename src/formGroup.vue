@@ -9,13 +9,13 @@
 		</label>
 
 		<div class="field-wrap">
-			<component ref="child" :is="getFieldType(field)" :disabled="fieldDisabled(field)" :model="model" :schema="field" :formOptions="options" @model-updated="onModelUpdated" @validated="onFieldValidated"></component>
+			<component ref="child" :is="getFieldType(field)" :model="model" :schema="field" :formOptions="options" @model-updated="onModelUpdated" @validated="onFieldValidated"></component>
 			<div v-if="buttonVisibility(field)" class="buttons">
 				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
 			</div>
 		</div>
 
-		<div v-if="field.hint" class="hint" v-html="fieldHint(field)"></div>
+		<div v-if="field.hint" class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
 
 		<div v-if="fieldErrors(field).length > 0" class="errors help-block">
 			<span v-for="(error, index) in fieldErrors(field)" :key="index" v-html="error"></span>
@@ -23,7 +23,7 @@
 	</div>
 </template>
 <script>
-import { get as objGet, isNil, isFunction } from "lodash";
+import { get as objGet, isNil } from "lodash";
 import { slugifyFormID } from "./utils/schema";
 import formMixin from "./formMixin.js";
 import fieldComponents from "./utils/fieldsLoader.js";
@@ -54,8 +54,8 @@ export default {
 			if (isNil(field.label)) return false;
 
 			let relevantType = "";
-			if (field.type === "input") {
-				relevantType = field.inputType;
+			if (field.type === "input" && typeof this.getValueFromOption(field, "fieldOptions") !== "undefined") {
+				relevantType = this.getValueFromOption(field, "fieldOptions").inputType;
 			} else {
 				relevantType = field.type;
 			}
@@ -86,12 +86,6 @@ export default {
 		},
 		buttonClickHandler(btn, field, event) {
 			return btn.onclick.call(this, this.model, field, event, this);
-		},
-		// Get current hint.
-		fieldHint(field) {
-			if (isFunction(field.hint)) return field.hint.call(this, this.model, field, this);
-
-			return field.hint;
 		},
 		fieldErrors(field) {
 			return this.errors.filter((e) => e.field === field).map((item) => item.error);

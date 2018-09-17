@@ -5,13 +5,20 @@ import FieldGoogleAddress from "src/fields/optional/fieldGoogleAddress.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldGoogleAddress, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -23,7 +30,6 @@ describe("fieldGoogleAddress.vue", () => {
 			type: "text",
 			label: "Address",
 			model: "address",
-			autocomplete: "off",
 			disabled: false,
 			placeholder: "",
 			readonly: false,
@@ -33,7 +39,7 @@ describe("fieldGoogleAddress.vue", () => {
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -49,9 +55,9 @@ describe("fieldGoogleAddress.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "placeholder", "readonly", "inputName"];
+			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema);
 				});
@@ -59,18 +65,15 @@ describe("fieldGoogleAddress.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.address = "Rome, Italy";
-			wrapper.update();
+			wrapper.setProps({ model: { address: "Rome, Italy" } });
 
 			expect(input.element.value).to.be.equal("Rome, Italy");
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = "Budapest, Hungary";
-			input.trigger("input");
-			wrapper.update();
+			input.setValue("Budapest, Hungary");
 
-			expect(model.address).to.be.equal("Budapest, Hungary");
+			expect(wrapper.props().model.address).to.be.equal("Budapest, Hungary");
 		});
 
 		/*

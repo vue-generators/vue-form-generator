@@ -5,13 +5,20 @@ import FieldLabel from "src/fields/core/fieldLabel.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldLabel, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -29,7 +36,7 @@ describe("fieldLabel.vue", () => {
 		let span;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			span = wrapper.find("span");
 		});
 
@@ -43,8 +50,7 @@ describe("fieldLabel.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.timestamp = "Foo bar";
-			wrapper.update();
+			wrapper.setProps({ model: { timestamp: "Foo bar" } });
 
 			expect(span.text()).to.be.equal("Foo bar");
 		});
@@ -77,7 +83,7 @@ describe("fieldLabel.vue", () => {
 			let label;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				label = wrapper.find("span");
 			});
 
@@ -89,11 +95,13 @@ describe("fieldLabel.vue", () => {
 		describe("check non-specific attributes", () => {
 			let schema = {
 				type: "input",
-				inputType: "text",
 				label: "First Name",
 				model: "user__model",
 				inputName: "input_name",
 				fieldClasses: ["applied-class", "another-class"],
+				fieldOptions: {
+					inputType: "text"
+				},
 				attributes: {
 					"data-label": "help-block",
 					"data-wrapper": "collapse",
@@ -104,7 +112,7 @@ describe("fieldLabel.vue", () => {
 			let label;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				label = wrapper.find("span");
 			});
 

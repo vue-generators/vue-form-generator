@@ -114,7 +114,6 @@ var vm = new Vue({
 					label: "Status",
 					model: "status",
 					inputName: "status",
-					multi: true,
 					readonly: false,
 					featured: false,
 					disabled: false,

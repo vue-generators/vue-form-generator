@@ -1,5 +1,5 @@
 <template lang="pug">
-	input(:id="getFieldID(schema)", type="submit", :value="schema.buttonText", @click="onClick", :name="schema.inputName", :disabled="disabled", :class="schema.fieldClasses", v-attributes="'input'")
+	input(:id="getFieldID(schema)", type="submit", :value="fieldOptions.buttonText", @click="onClick", :name="inputName", :disabled="disabled", :class="fieldClasses", v-attributes="'input'")
 </template>
 
 <script>
@@ -11,16 +11,16 @@ export default {
 
 	methods: {
 		onClick($event) {
-			if (this.schema.validateBeforeSubmit === true) {
+			if (this.fieldOptions.validateBeforeSubmit === true) {
 				// prevent a <form /> from having it's submit event triggered
 				// when we have to validate data first
 				$event.preventDefault();
 				let errors = this.$parent.validate();
-				let handleErrors = errors => {
-					if (!isEmpty(errors) && isFunction(this.schema.onValidationError)) {
-						this.schema.onValidationError(this.model, this.schema, errors, $event);
-					} else if (isFunction(this.schema.onSubmit)) {
-						this.schema.onSubmit(this.model, this.schema, $event);
+				let handleErrors = (errors) => {
+					if (!isEmpty(errors) && isFunction(this.fieldOptions.onValidationError)) {
+						this.fieldOptions.onValidationError(this.model, this.schema, errors, $event);
+					} else if (isFunction(this.fieldOptions.onSubmit)) {
+						this.fieldOptions.onSubmit(this.model, this.schema, $event);
 					}
 				};
 
@@ -29,10 +29,10 @@ export default {
 				} else {
 					handleErrors(errors);
 				}
-			} else if (isFunction(this.schema.onSubmit)) {
+			} else if (isFunction(this.fieldOptions.onSubmit)) {
 				// if we aren't validating, just pass the onSubmit handler the $event
 				// so it can be handled there
-				this.schema.onSubmit(this.model, this.schema, $event);
+				this.fieldOptions.onSubmit(this.model, this.schema, $event);
 			}
 		}
 	}

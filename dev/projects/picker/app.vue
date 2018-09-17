@@ -28,8 +28,6 @@ export default {
 				fields: [
 					{
 						type: "dateTimePicker",
-						/* type: "input",
-						inputType: "date",*/
 						label: "DT",
 						model: "dt",
 						dateTimePickerOptions: {

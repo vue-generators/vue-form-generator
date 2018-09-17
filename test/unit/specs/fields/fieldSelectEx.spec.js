@@ -6,13 +6,20 @@ const localVue = createLocalVue();
 let wrapper;
 let input;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldSelectEx, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 	input = wrapper.find("select");
 
@@ -23,18 +30,20 @@ describe("fieldSelectEx.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "selectEx",
-			label: "Cities",
 			model: "city",
+			label: "Cities",
 			disabled: false,
-			multiSelect: false,
 			required: false,
 			inputName: "",
-			values: ["London", "Paris", "Rome", "Berlin"]
+			values: ["London", "Paris", "Rome", "Berlin"],
+			fieldOptions: {
+				multiSelect: false
+			}
 		};
 		let model = { city: "Paris" };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
 		it("should contain a select element", () => {
@@ -63,9 +72,9 @@ describe("fieldSelectEx.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["disabled", "multiSelect", "inputName"];
+			let attributes = ["disabled", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema, "select");
 				});
@@ -73,31 +82,25 @@ describe("fieldSelectEx.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.city = "Rome";
-			wrapper.update();
+			wrapper.setProps({ model: { city: "Rome" } });
 
 			expect(input.element.value).to.be.equal("Rome");
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = "London";
-			input.trigger("change");
+			input.setValue("London");
 
-			expect(model.city).to.be.equal("London");
+			expect(wrapper.props().model.city).to.be.equal("London");
 		});
 
-		it.skip("should not be multiple", () => {
-			model.city = []; // For multiselect need empty array
-			schema.multiSelect = true;
-			wrapper.update();
+		it("should not be multiple", () => {
+			// For multiselect need empty array
+			wrapper.setProps({ model: { city: [] } });
+			schema.fieldOptions.multiSelect = true;
+			wrapper.setProps({ schema: { ...schema } });
 
 			expect(input.attributes().multiple).to.equal("multiple");
 			let options = input.findAll("option");
-			console.log(options.at(0).html());
-			console.log(options.at(1).html());
-			console.log(options.at(2).html());
-			console.log(options.at(3).html());
-			console.log(options.at(4).html());
 
 			expect(options.length).to.be.equal(4); // no <non selected>
 		});
@@ -118,26 +121,24 @@ describe("fieldSelectEx.vue", () => {
 		let model = { city: [2] };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
-		it.skip("should contain option elements", () => {
+		it("should contain option elements", () => {
 			let options = input.findAll("option");
 
 			expect(options.length).to.be.equal(4 + 1); // +1 for <non selected>
 			expect(options.at(2).element.value).to.be.equal("2");
 			expect(options.at(2).text()).to.be.equal("Paris");
-			expect(options.at(2).element.selected).to.be.true;
-			expect(options.at(1).element.selected).to.be.false;
 		});
 
-		it.skip("should contain the value", () => {
-			expect(input.element.value).to.be.equal("2");
+		it("should contain the value", () => {
+			let options = input.findAll("option");
+			expect(options.at(2).element.value).to.be.equal("2");
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.city = 3;
-			wrapper.update();
+			wrapper.setProps({ model: { city: 3 } });
 
 			expect(input.element.value).to.be.equal("3");
 		});
@@ -146,7 +147,7 @@ describe("fieldSelectEx.vue", () => {
 			input.element.value = "4";
 			input.trigger("change");
 
-			expect(model.city).to.be.equal(4);
+			expect(wrapper.props().model.city).to.be.equal(4);
 		});
 	});
 
@@ -167,24 +168,24 @@ describe("fieldSelectEx.vue", () => {
 		let model = { city: [2] };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
-			wrapper.update();
+			createField({ schema, model });
 		});
 
-		it.skip("should contain the value", () => {
-			expect(input.element.value).to.be.equal("2");
+		it("should contain the value", () => {
+			let options = input.findAll("option");
+			expect(options.at(2).element.value).to.be.equal("2");
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.city = 3;
-			wrapper.update();
+			wrapper.setProps({ model: { city: 3 } });
+
 			expect(input.element.value).to.be.equal("3");
 		});
 
 		it("model value should be the input value if changed", () => {
 			input.element.value = "4";
 			input.trigger("change");
-			expect(model.city).to.be.equal(4);
+			expect(wrapper.props().model.city).to.be.equal(4);
 		});
 	});
 });

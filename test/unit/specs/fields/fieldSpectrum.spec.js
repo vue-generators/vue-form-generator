@@ -4,17 +4,22 @@ import FieldSpectrum from "src/fields/optional/fieldSpectrum.vue";
 
 const localVue = createLocalVue();
 let wrapper;
-let input;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldSpectrum, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
-	input = wrapper.find("input");
 
 	return _wrapper;
 }
@@ -34,13 +39,13 @@ describe("fieldSpectrum.vue", () => {
 		let model = { color: "#ff8822" };
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 		});
 
 		it("should contain an input color element", () => {
 			expect(wrapper.exists()).to.be.true;
-			expect(input.is("input")).to.be.true;
-			expect(input.attributes().type).to.be.equal("text");
+			expect(wrapper.is("input")).to.be.true;
+			expect(wrapper.attributes().type).to.be.equal("text");
 		});
 
 		it.skip("should contain the value", () => {
@@ -48,9 +53,9 @@ describe("fieldSpectrum.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "placeholder", "readonly", "inputName"];
+			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema);
 				});
@@ -58,8 +63,7 @@ describe("fieldSpectrum.vue", () => {
 		});
 
 		it.skip("input value should be the model value after changed", () => {
-			model.color = "#ffff00";
-			wrapper.update();
+			wrapper.setProps({ model: { color: "#ffff00" } });
 
 			expect(wrapper.vm.picker.spectrum("get").toHexString()).to.be.equal("#ffff00");
 		});
@@ -68,7 +72,7 @@ describe("fieldSpectrum.vue", () => {
 			wrapper.vm.picker.spectrum("set", "#123456");
 			wrapper.find(".sp-input").trigger("change");
 
-			expect(model.color).to.be.equal("#123456");
+			expect(wrapper.props().model.color).to.be.equal("#123456");
 		});
 	});
 });

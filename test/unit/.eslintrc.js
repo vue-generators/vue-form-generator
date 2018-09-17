@@ -5,6 +5,7 @@ module.exports = {
 	globals: {
 		expect: true,
 		sinon: true,
-		checkAttribute: true
+		checkAttribute: true,
+		getValueFromOption: true
 	}
 };

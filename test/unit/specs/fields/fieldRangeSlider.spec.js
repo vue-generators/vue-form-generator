@@ -10,13 +10,20 @@ global.$ = $;
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldRangeSlider, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -26,20 +33,21 @@ describe("fieldRangeSlider.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "rangeSlider",
-			label: "Rating",
 			model: "rating",
-			min: 1,
-			max: 10,
-			autocomplete: "off",
+			label: "Rating",
 			placeholder: "",
 			readonly: false,
-			inputName: ""
+			inputName: "",
+			fieldOptions: {
+				min: 1,
+				max: 10
+			}
 		};
 		let model = { rating: 8 };
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -54,15 +62,14 @@ describe("fieldRangeSlider.vue", () => {
 
 		it.skip("should contain the value", () => {
 			let origin = wrapper.find(".irs-slider.single");
-			console.log(origin.element.style);
 
 			expect(origin.element.style.left).to.be.within("70%", "90%");
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "placeholder", "readonly", "inputName"];
+			let attributes = ["placeholder", "readonly", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema);
 				});
@@ -70,7 +77,7 @@ describe("fieldRangeSlider.vue", () => {
 		});
 
 		it.skip("input value should be the model value after changed", () => {
-			model.rating = 3;
+			wrapper.setProps({ model: { rating: 3 } });
 			let origin = wrapper.find(".irs-slider.single");
 
 			expect(origin.element.style.left).to.be.within("20%", "40%");
@@ -80,7 +87,7 @@ describe("fieldRangeSlider.vue", () => {
 			wrapper.vm.slider.update({ from: 6 });
 			wrapper.vm.slider.callOnChange(wrapper.vm.slider); // trigger changes
 
-			expect(model.rating).to.be.equal(6);
+			expect(wrapper.props().model.rating).to.be.equal(6);
 		});
 	});
 });

@@ -8,13 +8,20 @@ global.$ = $;
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldMasked, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -26,8 +33,9 @@ describe("fieldMasked.vue", () => {
 			type: "masked",
 			label: "Phone",
 			model: "phone",
-			mask: "(99) 999-9999",
-			autocomplete: "off",
+			fieldOptions: {
+				mask: "(99) 999-9999"
+			},
 			disabled: false,
 			placeholder: "",
 			readonly: false,
@@ -37,7 +45,7 @@ describe("fieldMasked.vue", () => {
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -53,9 +61,9 @@ describe("fieldMasked.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "placeholder", "readonly", "inputName"];
+			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema);
 				});
@@ -63,20 +71,18 @@ describe("fieldMasked.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.phone = "(70) 555- 4433";
-			wrapper.update();
+			wrapper.setProps({ model: { phone: "(70) 555- 4433" } });
 
 			expect(input.element.value).to.be.equal("(70) 555- 4433");
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = "(21) 888-6655";
-			input.trigger("input");
+			input.setValue("(21) 888-6655");
 
-			expect(model.phone).to.be.equal("(21) 888-6655");
+			expect(wrapper.props().model.phone).to.be.equal("(21) 888-6655");
 		});
 
-		it.skip("should be formatted data in model", done => {
+		it.skip("should be formatted data in model", (done) => {
 			input.element.value = "123456789";
 			// Call the paste event what trigger the formatter
 			let $input = jQuery(input.element);
@@ -86,7 +92,7 @@ describe("fieldMasked.vue", () => {
 				expect(input.element.value).to.be.equal("(12) 345-6789");
 				input.trigger("input");
 
-				expect(model.phone).to.be.equal("(12) 345-6789");
+				expect(wrapper.props().model.phone).to.be.equal("(12) 345-6789");
 				done();
 			}, 10);
 		});

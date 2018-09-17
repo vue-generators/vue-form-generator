@@ -1,6 +1,6 @@
 <template lang="pug">
-	select.selectpicker(v-model="value", :disabled="disabled", :multiple="schema.multiSelect", :title="schema.placeholder", data-width="100%", :name="schema.inputName")
-		option(:disabled="schema.required", v-if="schema.multiSelect !== true", :value="null", :selected="value == undefined")
+	select.selectpicker(v-model="value", :disabled="disabled", :multiple="fieldOptions.multiSelect", :title="placeholder", data-width="100%", :name="inputName")
+		option(:disabled="schema.required", v-if="fieldOptions.multiSelect !== true", :value="null", :selected="value == undefined")
 		option(v-for="item in items", :value="getItemValue(item)") {{ getItemName(item) }}
 </template>
 
@@ -24,14 +24,14 @@ export default {
 	methods: {
 		getItemValue(item) {
 			if (isObject(item)) {
-				if (typeof this.schema["selectOptions"] !== "undefined" && typeof this.schema["selectOptions"]["value"] !== "undefined") {
-					return item[this.schema.selectOptions.value];
+				if (typeof this.fieldOptions["value"] !== "undefined") {
+					return item[this.fieldOptions.value];
 				} else {
 					// Use 'id' instead of 'value' cause of backward compatibility
 					if (typeof item["id"] !== "undefined") {
 						return item.id;
 					} else {
-						throw "`id` is not defined. If you want to use another key name, add a `value` property under `selectOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
+						throw "`id` is not defined. If you want to use another key name, add a `value` property under `fieldOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
 					}
 				}
 			} else {
@@ -41,13 +41,13 @@ export default {
 
 		getItemName(item) {
 			if (isObject(item)) {
-				if (typeof this.schema["selectOptions"] !== "undefined" && typeof this.schema["selectOptions"]["name"] !== "undefined") {
-					return item[this.schema.selectOptions.name];
+				if (typeof this.fieldOptions["name"] !== "undefined") {
+					return item[this.fieldOptions.name];
 				} else {
 					if (typeof item["name"] !== "undefined") {
 						return item.name;
 					} else {
-						throw "`name` is not defined. If you want to use another key name, add a `name` property under `selectOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
+						throw "`name` is not defined. If you want to use another key name, add a `name` property under `fieldOptions` in the schema. https://icebob.gitbooks.io/vueformgenerator/content/fields/select.html#select-field-with-object-items";
 					}
 				}
 			} else {
@@ -58,16 +58,16 @@ export default {
 
 	watch: {
 		model: function() {
-			if ($.fn.selectpicker) $(this.$el).selectpicker("refresh");
+			if (typeof $.fn !== "undefined" && $.fn.selectpicker) $(this.$el).selectpicker("refresh");
 		}
 	},
 
 	mounted() {
-		this.$nextTick(function() {
-			if ($.fn.selectpicker) {
+		this.$nextTick(() => {
+			if (typeof $.fn !== "undefined" && $.fn.selectpicker) {
 				$(this.$el)
 					.selectpicker("destroy")
-					.selectpicker(this.schema.selectOptions);
+					.selectpicker(this.fieldOptions);
 			} else {
 				console.warn(
 					"Bootstrap-select library is missing. Please download from https://silviomoreto.github.io/bootstrap-select/ and load the script and CSS in the HTML head section!"

@@ -1,5 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import fecha from "fecha";
+import Vue from "vue";
 
 let jQuery = require("jquery");
 let $ = jQuery(window);
@@ -12,13 +13,20 @@ import FieldDateTimePicker from "src/fields/optional/fieldDateTimePicker.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldDateTimePicker, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -30,7 +38,6 @@ describe("fieldDateTimePicker.vue", () => {
 			type: "dateTimePicker",
 			label: "Event",
 			model: "event",
-			autocomplete: "off",
 			disabled: false,
 			placeholder: "",
 			readonly: false,
@@ -40,7 +47,7 @@ describe("fieldDateTimePicker.vue", () => {
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -56,7 +63,7 @@ describe("fieldDateTimePicker.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "placeholder", "readonly", "inputName"];
+			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
 			attributes.forEach(function(name) {
 				it("should set " + name, () => {
@@ -65,18 +72,20 @@ describe("fieldDateTimePicker.vue", () => {
 			});
 		});
 
-		it("input value should be the model value after changed", () => {
-			model.event = 1234567890123;
-			wrapper.update();
+		it("input value should be the model value after changed", (done) => {
+			wrapper.setProps({ model: { event: 1234567890123 } });
 
-			expect(input.element.value).to.be.equal(fecha.format(new Date(1234567890123), "YYYY-MM-DD HH:mm:ss"));
+			Vue.config.errorHandler = done;
+			Vue.nextTick(() => {
+				expect(input.element.value).to.be.equal(fecha.format(new Date(1234567890123), "YYYY-MM-DD HH:mm:ss"));
+				done();
+			});
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = fecha.format(new Date(1420194153000), "YYYY-MM-DD HH:mm:ss");
-			input.trigger("input");
+			input.setValue(fecha.format(new Date(1420194153000), "YYYY-MM-DD HH:mm:ss"));
 
-			expect(model.event).to.be.equal(1420194153000);
+			expect(wrapper.props().model.event).to.be.equal(1420194153000);
 		});
 	});
 
@@ -85,34 +94,26 @@ describe("fieldDateTimePicker.vue", () => {
 			type: "dateTimePicker",
 			label: "Event",
 			model: "event",
-			format: "YYYYMMDD",
-			dateTimePickerOptions: {
-				format: "YYYY.MM.DD"
+			fieldOptions: {
+				format: "YYYYMMDD"
 			}
 		};
 		let model = { event: "20160509" };
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
-		it.skip("should contain the value", () => {
-			console.log(input.element.value);
-			console.log(schema.format);
-			console.log(new Date(20160509));
-			console.log(fecha.format(new Date(20160509), schema.format));
-			console.log(schema.dateTimePickerOptions.format);
-
-			expect(input.element.value).to.be.equal(fecha.format(new Date(20160509), schema.format));
+		it("should contain the value", () => {
+			expect(input.element.value).to.be.equal(fecha.format(new Date("2016-05-09"), schema.fieldOptions.format));
 		});
 
 		it("model value should be the formatted input value if changed", () => {
-			input.element.value = "2015.01.02";
-			input.trigger("input");
+			input.setValue("2015.01.02");
 
-			expect(model.event).to.be.equal("20150102");
+			expect(wrapper.props().model.event).to.be.equal("20150102");
 		});
 	});
 });

@@ -5,13 +5,20 @@ import fieldInput from "src/fields/core/fieldInput.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(fieldInput, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -21,21 +28,23 @@ describe("fieldInput.vue", () => {
 	describe("check template", () => {
 		let schema = {
 			type: "input",
-			inputType: "text",
-			label: "Name",
 			model: "name",
+			label: "Name",
 			autocomplete: "off",
 			disabled: false,
 			placeholder: "",
 			readonly: false,
 			inputName: "",
+			fieldOptions: {
+				inputType: "text"
+			},
 			fieldClasses: ["applied-class", "another-class"]
 		};
 		let model = { name: "John Doe" };
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -51,9 +60,9 @@ describe("fieldInput.vue", () => {
 		});
 
 		let inputTypes = new Map([
-			["text", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
-			["password", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
-			// ["checkbox", ["autocomplete", "disabled", "inputName"]],
+			["text", ["disabled", "placeholder", "readonly", "inputName"]],
+			["password", ["disabled", "placeholder", "readonly", "inputName"]],
+			// ["checkbox", [ "disabled", "inputName"]],
 			// ["radio", [] ],
 			// ["button", [] ],
 			// ["submit", [] ],
@@ -67,27 +76,27 @@ describe("fieldInput.vue", () => {
 			// ["month", ],
 			// ["time", ],
 			// ["week", ],
-			["number", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
+			["number", ["disabled", "placeholder", "readonly", "inputName"]],
 			// ["range", ["autocomplete"]],
-			["email", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
-			["url", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]],
+			["email", ["disabled", "placeholder", "readonly", "inputName"]],
+			["url", ["disabled", "placeholder", "readonly", "inputName"]],
 			// ["search", ],
-			["tel", ["autocomplete", "disabled", "placeholder", "readonly", "inputName"]]
+			["tel", ["disabled", "placeholder", "readonly", "inputName"]]
 
 			// TODO: re-implement this test
-			// ["color", ["autocomplete", "inputName"]]
+			// ["color", [ "inputName"]]
 		]);
 		for (let [inputType, attributes] of inputTypes) {
 			describe("change type of input", () => {
 				it("should become a " + inputType, () => {
-					schema.inputType = inputType;
-					wrapper.update();
+					schema.fieldOptions.inputType = inputType;
+					wrapper.setProps({ schema: { ...schema } });
 
 					expect(input.attributes().type).to.be.equal(inputType);
 				});
 
 				describe("check optional attribute", () => {
-					attributes.forEach(name => {
+					attributes.forEach((name) => {
 						it("should set " + name, () => {
 							checkAttribute(name, wrapper, schema);
 						});
@@ -97,18 +106,15 @@ describe("fieldInput.vue", () => {
 		}
 
 		it("input value should be the model value after changed", () => {
-			model.name = "Jane Doe";
-			wrapper.update();
+			wrapper.setProps({ model: { name: "Jane Doe" } });
 
 			expect(input.element.value).to.be.equal("Jane Doe");
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = "John Smith";
-			input.trigger("input");
-			wrapper.update();
+			input.setValue("John Smith");
 
-			expect(model.name).to.be.equal("John Smith");
+			expect(wrapper.props().model.name).to.be.equal("John Smith");
 		});
 
 		it("should have 2 classes", () => {
@@ -121,11 +127,13 @@ describe("fieldInput.vue", () => {
 		describe("check input/wrapper attributes", () => {
 			let schema = {
 				type: "input",
-				inputType: "text",
 				label: "First Name",
 				model: "user__model",
 				inputName: "input_name",
 				fieldClasses: ["applied-class", "another-class"],
+				fieldOptions: {
+					inputType: "text"
+				},
 				attributes: {
 					wrapper: {
 						"data-toggle": "collapse"
@@ -139,7 +147,7 @@ describe("fieldInput.vue", () => {
 			let input, wrap;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				input = wrapper.find("input");
 				wrap = wrapper.find(".wrapper");
 			});
@@ -156,11 +164,13 @@ describe("fieldInput.vue", () => {
 		describe("check non-specific attributes", () => {
 			let schema = {
 				type: "input",
-				inputType: "text",
 				label: "First Name",
 				model: "user__model",
 				inputName: "input_name",
 				fieldClasses: ["applied-class", "another-class"],
+				fieldOptions: {
+					inputType: "text"
+				},
 				attributes: {
 					"data-toggle": "tooltip"
 				}
@@ -169,7 +179,7 @@ describe("fieldInput.vue", () => {
 			let input;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				input = wrapper.find("input");
 			});
 

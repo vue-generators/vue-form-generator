@@ -5,13 +5,20 @@ import FieldSelect from "src/fields/core/fieldSelect.vue";
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldSelect, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -33,7 +40,7 @@ describe("fieldSelect.vue", () => {
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("select");
 		});
 
@@ -66,7 +73,7 @@ describe("fieldSelect.vue", () => {
 		describe("check optional attribute", () => {
 			let attributes = ["disabled", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, wrapper, schema, "select");
 				});
@@ -74,55 +81,57 @@ describe("fieldSelect.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.city = "Rome";
-			wrapper.update();
+			wrapper.setProps({ model: { city: "Rome" } });
 
 			expect(input.element.value).to.be.equal("Rome");
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = "London";
-			input.trigger("change");
+			input.setValue("London");
 
-			expect(model.city).to.be.equal("London");
+			expect(wrapper.props().model.city).to.be.equal("London");
 		});
 
 		it("should contain a disabled <non selected> element if required", () => {
 			schema.required = true;
-			wrapper.update();
+			wrapper.setProps({ schema: { ...schema } });
+
 			let options = input.findAll("option");
 
+			expect(options.length).to.be.equal(5);
 			expect(options.at(0).attributes().disabled).to.be.equal("disabled");
 			expect(options.at(0).text()).to.be.equal("<Nothing selected>");
 		});
 
 		it("should show the customized <non selected> text", () => {
-			schema.selectOptions = {
+			schema.fieldOptions = {
 				noneSelectedText: "Empty list"
 			};
-			wrapper.update();
+			wrapper.setProps({ schema: { ...schema } });
+
 			let options = input.findAll("option");
 
 			expect(options.at(0).attributes().disabled).to.be.equal("disabled");
 			expect(options.at(0).text()).to.be.equal("Empty list");
 
-			schema.selectOptions = null;
-			wrapper.update();
+			schema.fieldOptions = null;
+			wrapper.setProps({ schema: { ...schema } });
 		});
 
 		it("should hide the customized <non selected> text", () => {
-			schema.selectOptions = {
+			schema.fieldOptions = {
 				noneSelectedText: "Empty list",
 				hideNoneSelectedText: true
 			};
-			wrapper.update();
+			wrapper.setProps({ schema: { ...schema } });
 			let options = input.findAll("option");
 
-			expect(options.at(0).attributes().disabled).to.be.equal("disabled");
+			expect(options.length).to.be.equal(4);
+			expect(options.at(0).attributes().disabled).to.not.be.equal("disabled");
 			expect(options.at(0).text()).to.not.be.equal("Empty list");
 
-			schema.selectOptions = null;
-			wrapper.update();
+			schema.fieldOptions = null;
+			wrapper.setProps({ schema: { ...schema } });
 		});
 	});
 
@@ -144,9 +153,8 @@ describe("fieldSelect.vue", () => {
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("select");
-			wrapper.update();
 		});
 
 		it("should contain option elements", () => {
@@ -182,8 +190,7 @@ describe("fieldSelect.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.city = 3;
-			wrapper.update();
+			wrapper.setProps({ model: { city: 3 } });
 
 			expect(input.element.value).to.be.equal("3");
 		});
@@ -192,7 +199,7 @@ describe("fieldSelect.vue", () => {
 			input.element.value = "4";
 			input.trigger("change");
 
-			expect(model.city).to.be.equal(4);
+			expect(wrapper.props().model.city).to.be.equal(4);
 		});
 	});
 
@@ -215,7 +222,7 @@ describe("fieldSelect.vue", () => {
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("select");
 		});
 
@@ -224,17 +231,15 @@ describe("fieldSelect.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.city = 3;
-			wrapper.update();
+			wrapper.setProps({ model: { city: 3 } });
 
 			expect(input.element.value).to.be.equal("3");
 		});
 
 		it("model value should be the input value if changed", () => {
-			input.element.value = "4";
-			input.trigger("change");
+			input.setValue("4");
 
-			expect(model.city).to.be.equal(4);
+			expect(wrapper.props().model.city).to.be.equal(4);
 		});
 
 		it("should have 2 classes", () => {
@@ -272,7 +277,7 @@ describe("fieldSelect.vue", () => {
 			let input;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				input = wrapper.find("select");
 			});
 
@@ -304,7 +309,7 @@ describe("fieldSelect.vue", () => {
 			let input;
 
 			before(() => {
-				createField2({ schema, model });
+				createField({ schema, model });
 				input = wrapper.find("select");
 			});
 

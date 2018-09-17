@@ -36,9 +36,11 @@ export default {
 				fields: [
 					{
 						type: "input",
-						inputType: "text",
-						label: "First Name",
 						model: "first_name",
+						label: "First Name",
+						fieldOptions: {
+							inputType: "text"
+						},
 						attributes: {
 							input: {
 								"data-toggle": "tooltip"
@@ -60,9 +62,11 @@ export default {
 					},
 					{
 						type: "input",
-						inputType: "color",
 						label: "Color",
 						model: "color",
+						fieldOptions: {
+							inputType: "color"
+						},
 						attributes: {
 							input: {
 								"data-target": "tooltip"
@@ -71,18 +75,20 @@ export default {
 					},
 					{
 						type: "submit",
-						buttonText: "Change Previous Type",
 						attributes: {
 							input: {
 								"data-target": "toggle"
 							}
 						},
-						onSubmit: () => {
-							// this.schema.fields[2].type = "input";
-							if (this.schema.fields[2].inputType === "color") {
-								this.schema.fields[2].inputType = "text";
-							} else {
-								this.schema.fields[2].inputType = "color";
+						fieldOptions: {
+							buttonText: "Change Previous Type",
+							onSubmit: () => {
+								// this.schema.fields[2].type = "input";
+								if (this.schema.fields[2].fieldOptions.inputType === "color") {
+									this.schema.fields[2].fieldOptions.inputType = "text";
+								} else {
+									this.schema.fields[2].fieldOptions.inputType = "color";
+								}
 							}
 						}
 					}

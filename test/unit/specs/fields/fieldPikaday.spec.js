@@ -1,6 +1,7 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 import fecha from "fecha";
 
+import Vue from "vue";
 import FieldPikaday from "src/fields/optional/fieldPikaday.vue";
 
 let Pikaday = require("pikaday");
@@ -9,13 +10,20 @@ window.Pikaday = Pikaday;
 const localVue = createLocalVue();
 let wrapper;
 
-function createField2(data, methods) {
+function createField(data, methods) {
 	const _wrapper = mount(FieldPikaday, {
 		localVue,
-		propsData: data,
-		methods: methods
+		attachToDocument: true,
+		mocks: {
+			$parent: {
+				getValueFromOption: global.getValueFromOption
+			}
+		},
+		propsData: data
 	});
-
+	if (methods) {
+		_wrapper.setMethods(methods);
+	}
 	wrapper = _wrapper;
 
 	return _wrapper;
@@ -27,7 +35,6 @@ describe("fieldPikaday.vue", () => {
 			type: "dateTime",
 			label: "Event",
 			model: "event",
-			autocomplete: "off",
 			disabled: false,
 			placeholder: "",
 			readonly: false,
@@ -37,7 +44,7 @@ describe("fieldPikaday.vue", () => {
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField({ schema, model });
 			input = wrapper.find("input");
 		});
 
@@ -53,9 +60,9 @@ describe("fieldPikaday.vue", () => {
 		});
 
 		describe("check optional attribute", () => {
-			let attributes = ["autocomplete", "disabled", "placeholder", "readonly", "inputName"];
+			let attributes = ["disabled", "placeholder", "readonly", "inputName"];
 
-			attributes.forEach(name => {
+			attributes.forEach((name) => {
 				it("should set " + name, () => {
 					checkAttribute(name, input, schema);
 				});
@@ -63,17 +70,21 @@ describe("fieldPikaday.vue", () => {
 		});
 
 		it("input value should be the model value after changed", () => {
-			model.event = 1234567890123;
-			wrapper.update();
-			expect(input.element.value).to.be.equal(fecha.format(new Date(1234567890123), "YYYY-MM-DD"));
+			wrapper.setProps({ model: { event: 1234567890123 } });
+
+			expect(input.element.value).to.be.equal(fecha.format(new Date(1234567890123), "YYYY-MM-DD HH:mm:ss"));
 		});
 
-		it.skip("model value should be the input value if changed", () => {
+		it.skip("model value should be the input value if changed", (done) => {
 			let day = fecha.format(new Date(1420070400000), "YYYY-MM-DD");
 			wrapper.vm.picker.setDate(day);
-			// wrapper.update();
-			// expect(input.element.value).to.be.equal(day);
-			// expect(fecha.format(new Date(model.event), "YYYY-MM-DD")).to.be.equal(day);
+
+			Vue.config.errorHandler = done;
+			Vue.nextTick(() => {
+				expect(input.element.value).to.be.equal(day);
+				expect(fecha.format(wrapper.props().model.event, "YYYY-MM-DD")).to.be.equal(day);
+				done();
+			});
 		});
 	});
 });

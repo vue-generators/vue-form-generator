@@ -22,8 +22,10 @@ describe("Validators", () => {
 
 	describe("test Validators.number", () => {
 		let field = {
-			min: 5,
-			max: 10,
+			fieldOptions: {
+				min: 5,
+				max: 10
+			},
 			required: true
 		};
 
@@ -94,8 +96,10 @@ describe("Validators", () => {
 	describe("test Validators.string", () => {
 		let field = {
 			required: true,
-			min: 3,
-			max: 10
+			fieldOptions: {
+				min: 3,
+				max: 10
+			}
 		};
 
 		it("should give error if value is null, but field is required", () => {
@@ -134,8 +138,10 @@ describe("Validators", () => {
 	describe("test Validators.array", () => {
 		let field = {
 			required: true,
-			min: 2,
-			max: 4
+			fieldOptions: {
+				min: 2,
+				max: 4
+			}
 		};
 
 		it("should give error if value is null, but field is required", () => {
@@ -180,8 +186,10 @@ describe("Validators", () => {
 	describe("test Validators.date", () => {
 		let field = {
 			required: true,
-			min: 1262799081231,
-			max: 1562799081231
+			fieldOptions: {
+				min: 1262799081231,
+				max: 1562799081231
+			}
 		};
 
 		it("should give error if value is null, but field is required", () => {
@@ -386,9 +394,11 @@ describe("Validators", () => {
 
 	describe("test localized error messages", () => {
 		let field = {
-			min: 5,
-			max: 10,
-			required: true
+			required: true,
+			fieldOptions: {
+				min: 5,
+				max: 10
+			}
 		};
 
 		it("should give the default error message", () => {
@@ -407,9 +417,11 @@ describe("Validators", () => {
 
 	describe("test local custom error messages", () => {
 		let field = {
-			min: 5,
-			max: 10,
-			required: true
+			required: true,
+			fieldOptions: {
+				min: 5,
+				max: 10
+			}
 		};
 
 		let locNumber = v.number.locale({
