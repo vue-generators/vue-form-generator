@@ -16,9 +16,9 @@
 			<slot name="hint" :field="field" :getValueFromOption="getValueFromOption"></slot>
 		</template>
 
-		<div v-if="childErrors.length > 0" class="errors help-block">
-			<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>
-		</div>
+		<template v-if="fieldHasErrors">
+			<slot name="errors" :childErrors="childErrors" :field="field" :getValueFromOption="getValueFromOption" ></slot>
+		</template>
 	</div>
 </template>
 <script>
@@ -87,11 +87,13 @@ export default {
 		fieldHasHint() {
 			return !isNil(this.field.hint);
 		},
+		fieldHasErrors() {
+			return this.childErrors.length > 0;
+		},
 		fieldRowClasses() {
-			const hasErrors = this.childErrors.length > 0;
 			let baseClasses = {
-				[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
-				[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
+				[objGet(this.options, "validationErrorClass", "error")]: this.fieldHasErrors,
+				[objGet(this.options, "validationSuccessClass", "valid")]: !this.fieldHasErrors,
 				disabled: this.getValueFromOption(this.field, "disabled"),
 				readonly: this.getValueFromOption(this.field, "readonly"),
 				featured: this.getValueFromOption(this.field, "featured"),

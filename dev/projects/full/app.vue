@@ -23,9 +23,11 @@
 					</div>
 				</div>
 				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated">
+
 					<template slot="label" slot-scope="{ field }">
 						<h1>Custom label : {{ field.label }}</h1>
 					</template>
+
 					<template slot="help" slot-scope="{ field }">
 						<span v-if='field.help' class="help">
 							<span @click.prevent="testClick(field.help, $event)">Custom help</span>
@@ -33,10 +35,22 @@
 							<!-- <div class="helpText-" v-html='field.help'></div> -->
 						</span>
 					</template>
+
 					<template slot="hint" slot-scope="{ field, getValueFromOption }">
 						<span>Custom hint</span>
 						<div class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
 					</template>
+
+					<template slot="errors" slot-scope="{ errors, field, getValueFromOption }">
+						<table class="errors help-block">
+							<tbody>
+								<tr>
+									<td v-for="(error, index) in errors" :key="index" v-html="error"></td>
+								</tr>
+							</tbody>
+						</table>
+					</template>
+
 				</vue-form-generator>
 			</div>
 			<div class="col-md-6">
