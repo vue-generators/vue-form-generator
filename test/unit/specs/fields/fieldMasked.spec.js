@@ -1,5 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 
+import Vue from "vue";
 import FieldMasked from "src/fields/optional/fieldMasked.vue";
 let jQuery = require("jquery");
 let $ = jQuery(window);
@@ -17,7 +18,10 @@ function createField(data, methods) {
 				getValueFromOption: global.getValueFromOption
 			}
 		},
-		propsData: data
+		propsData: {
+			eventBus: new Vue(),
+			...data
+		}
 	});
 	if (methods) {
 		_wrapper.setMethods(methods);

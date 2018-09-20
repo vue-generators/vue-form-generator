@@ -1,5 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 
+import Vue from "vue";
 import FieldRangeSlider from "src/fields/optional/fieldRangeSlider.vue";
 
 let jQuery = require("jquery");
@@ -19,7 +20,10 @@ function createField(data, methods) {
 				getValueFromOption: global.getValueFromOption
 			}
 		},
-		propsData: data
+		propsData: {
+			eventBus: new Vue(),
+			...data
+		}
 	});
 	if (methods) {
 		_wrapper.setMethods(methods);

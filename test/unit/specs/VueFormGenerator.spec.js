@@ -32,7 +32,7 @@ function createFormGenerator(data, methods, template) {
 	return _wrapper;
 }
 
-describe("VueFormGenerator.vue", () => {
+describe.skip("VueFormGenerator.vue", () => {
 	describe("with empty schema", () => {
 		let schema = {
 			fields: []
