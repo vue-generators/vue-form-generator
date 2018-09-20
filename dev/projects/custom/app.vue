@@ -5,29 +5,41 @@
 			<div class="col-sm-12">
 				<vue-form-generator :schema="schema" :model="model" :options="formOptions" tag="section">
 
-					<template slot="label" slot-scope="{ field }">
-						<h1>Custom label : {{ field.label }}</h1>
+					<template slot="label" slot-scope="{ field, getValueFromOption }">
+						<h3><i :class="`fa fa-${getIcon(field, getValueFromOption)}`"></i> {{ field.label }}</h3>
 					</template>
 
 					<template slot="help" slot-scope="{ field }">
 						<span v-if='field.help' class="help">
-							<span @click.prevent="testClick(field.help, $event)">Custom help</span>
-							<i class="icon"></i>
+							<span @click.prevent="testClick(field.help, $event)">Need help</span>
+							<i class="fa fa-question"></i>
+							<vue-markdown class="helpText" :source="field.help"></vue-markdown>
 						</span>
 					</template>
 
 					<template slot="hint" slot-scope="{ field, getValueFromOption }">
-						<span>Custom hint</span>
-						<div class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+						<div class="hint hint--info">
+							<i class="fa fa-info-circle"></i>
+							<span v-html="getValueFromOption(field, 'hint', undefined)"></span>
+						</div>
 					</template>
 
 					<template slot="errors" slot-scope="{ errors, field, getValueFromOption }">
 						<span>Custom errors</span>
 						<table class="errors help-block">
 							<tbody>
-								<tr>
-									<td v-for="(error, index) in errors" :key="index" v-html="error"></td>
-								</tr>
+								<thead>
+									<tr>
+										<th scope="col" id="">Index</th>
+										<th scope="col" id="">Error</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="(error, index) in errors" :key="index">
+										<td>{{index}}</td>
+										<td v-html="error"></td>
+									</tr>
+								</tbody>
 							</tbody>
 						</table>
 					</template>
@@ -45,21 +57,24 @@
 
 <script>
 import mixinUtils from "../../mixins/utils.js";
+import VueMarkdown from "vue-markdown";
 
 export default {
 	mixins: [mixinUtils],
-
+	components: {
+		VueMarkdown
+	},
 	data() {
 		return {
 			model: {
 				name: "Brian Blessed",
 				email: "brian@hawkman.mongo",
 				others: {
-					more: "More",
-					things: "Things"
+					more: "",
+					things: 2
 				},
 				single: "blah",
-				subname: ""
+				color: ""
 			},
 
 			schema: {
@@ -87,10 +102,10 @@ export default {
 								fields: [
 									{
 										type: "input",
-										model: "subname",
-										label: "Name",
+										model: "color",
+										label: "Some color",
 										fieldOptions: {
-											inputType: "text"
+											inputType: "color"
 										},
 										required: true,
 										validator: ["required"]
@@ -101,6 +116,7 @@ export default {
 								type: "input",
 								model: "email",
 								label: "Email",
+								hint: "We will not share your email with third-party",
 								fieldOptions: {
 									inputType: "email"
 								}
@@ -125,8 +141,22 @@ export default {
 								type: "input",
 								model: "others.more",
 								label: "More",
+								help: `
+Welcome to this *custom help*
+
+	some code example
+
+
+You need a modern browser to fill this field in the best condition.
+* test1
+* test2
+
+https://google.com/
+
+# Markdown !
+								`,
 								fieldOptions: {
-									inputType: "text"
+									inputType: "date"
 								}
 							},
 							{
@@ -134,7 +164,7 @@ export default {
 								model: "others.things",
 								label: "Things",
 								fieldOptions: {
-									inputType: "text"
+									inputType: "number"
 								}
 							}
 						]
@@ -153,6 +183,25 @@ export default {
 	methods: {
 		testClick(helpText, event) {
 			console.log(helpText, event);
+		},
+		getIcon(field, getValueFromOption) {
+			let fieldType = getValueFromOption(field, "type");
+			let fieldOptions = getValueFromOption(field, "fieldOptions");
+
+			if (fieldType === "input") {
+				switch (fieldOptions.inputType) {
+					case "email":
+						return "at";
+					case "number":
+						return "calculator";
+					case "date":
+						return "calendar-alt";
+					case "color":
+						return "palette";
+					default:
+						return "file-alt";
+				}
+			}
 		}
 	},
 
@@ -174,5 +223,29 @@ export default {
 	legend {
 		color: #00268d;
 	}
+}
+.hint {
+	&--info {
+		color: #339af0;
+	}
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+thead th {
+	background-color: #efdddd;
+	border: solid 1px #eedddd;
+	color: #6b3333;
+	padding: 10px;
+	text-align: left;
+	text-shadow: 1px 1px 1px #fff;
+}
+tbody td {
+	border: solid 1px #eedddd;
+	color: #333;
+	padding: 10px;
+	text-shadow: 1px 1px 1px #fff;
 }
 </style>

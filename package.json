@@ -106,6 +106,7 @@
 		"url-loader": "1.1.1",
 		"vue": "2.5.17",
 		"vue-loader": "14.2.2",
+		"vue-markdown": "^2.2.4",
 		"vue-multiselect": "2.1.0",
 		"vue-style-loader": "4.1.2",
 		"vue-template-compiler": "2.5.17",
