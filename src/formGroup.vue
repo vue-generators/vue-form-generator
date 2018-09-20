@@ -5,7 +5,11 @@
 		<template v-for="(field, index) in fields">
 			<template v-if="fieldVisible(field)">
 				<template v-if="field.type === 'group'">
-					<form-group :fields="field.fields" :group="field" :tag="getGroupTag(field)" :model="model" :options="options" :errors="errors" :eventBus="eventBus" :key="index"></form-group>
+					<form-group :fields="field.fields" :group="field" :tag="getGroupTag(field)" :model="model" :options="options" :errors="errors" :eventBus="eventBus" :key="index">
+						<template slot="element" slot-scope="slotProps">
+							<slot name="element" :field="slotProps.field" :model="slotProps.model" :options="slotProps.options" :errors="slotProps.errors" :eventBus="slotProps.eventBus"></slot>
+						</template>
+					</form-group>
 				</template>
 				<template v-else>
 					<slot name="element" :field="field" :model="model" :options="options" :errors="errors" :eventBus="eventBus"></slot>
