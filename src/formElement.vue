@@ -1,11 +1,8 @@
 <template>
 	<div class="form-element" :class="[fieldRowClasses]">
 		<label v-if="fieldTypeHasLabel" :for="fieldID" :class="field.labelClasses">
-			<span v-html="field.label"></span>
-			<span v-if='field.help' class="help">
-				<i class="icon"></i>
-				<div class="helpText" v-html='field.help'></div>
-			</span>
+			<slot name="label" :field="field" :getValueFromOption="getValueFromOption"></slot>
+			<slot name="help" :field="field" :getValueFromOption="getValueFromOption"></slot>
 		</label>
 
 		<div class="field-wrap">
@@ -15,7 +12,9 @@
 			</div>
 		</div>
 
-		<div v-if="fieldHasHint" class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+		<template v-if="fieldHasHint">
+			<slot name="hint" :field="field" :getValueFromOption="getValueFromOption"></slot>
+		</template>
 
 		<div v-if="childErrors.length > 0" class="errors help-block">
 			<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>

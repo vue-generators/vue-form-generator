@@ -22,7 +22,22 @@
 						<strong>{{ item.error }}</strong>
 					</div>
 				</div>
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
+				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated">
+					<template slot="label" slot-scope="{ field }">
+						<h1>Custom label : {{ field.label }}</h1>
+					</template>
+					<template slot="help" slot-scope="{ field }">
+						<span v-if='field.help' class="help">
+							<span @click.prevent="testClick(field.help, $event)">Custom help</span>
+							<i class="icon"></i>
+							<!-- <div class="helpText-" v-html='field.help'></div> -->
+						</span>
+					</template>
+					<template slot="hint" slot-scope="{ field, getValueFromOption }">
+						<span>Custom hint</span>
+						<div class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+					</template>
+				</vue-form-generator>
 			</div>
 			<div class="col-md-6">
 				<pre v-if="model" v-html="prettyModel"></pre>
@@ -89,6 +104,9 @@ export default {
 	},
 
 	methods: {
+		testClick(helpText, event) {
+			console.log(helpText, event);
+		},
 		showWarning() {
 			if (this.$refs.form && this.$refs.form.errors) {
 				return this.$refs.form.errors.length > 0;

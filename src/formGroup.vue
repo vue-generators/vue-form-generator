@@ -1,24 +1,25 @@
 <template>
 	<fieldset v-if="fields" :is="tag" :class="[groupRowClasses, validationClass]" ref="group">
+
 		<legend v-if="groupLegend">{{ groupLegend }}</legend>
 		<template v-for="(field, index) in fields">
-			<template v-if="field.type === 'group'">
-				<form-group v-if="fieldVisible(field)" :fields="field.fields" :group="field" :tag="getGroupTag(field)" :model="model" :options="options" :errors="errors" :eventBus="eventBus" :key="index"></form-group>
-			</template>
-			<template v-else>
-				<form-element v-if="fieldVisible(field)" :field="field" :model="model" :options="options" :errors="errors" :eventBus="eventBus" :key="index"></form-element>
+			<template v-if="fieldVisible(field)">
+				<template v-if="field.type === 'group'">
+					<form-group :fields="field.fields" :group="field" :tag="getGroupTag(field)" :model="model" :options="options" :errors="errors" :eventBus="eventBus" :key="index"></form-group>
+				</template>
+				<template v-else>
+					<slot name="element" :field="field" :model="model" :options="options" :errors="errors" :eventBus="eventBus"></slot>
+				</template>
 			</template>
 		</template>
 	</fieldset>
 </template>
 <script>
-import formElement from "./formElement.vue";
 import formMixin from "./formMixin.js";
 import { get as objGet, isFunction, isNil } from "lodash";
 
 export default {
 	name: "form-group",
-	components: { formElement },
 	mixins: [formMixin],
 	props: {
 		fields: { type: Array },
