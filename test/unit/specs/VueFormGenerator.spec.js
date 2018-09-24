@@ -1090,7 +1090,7 @@ describe("VueFormGenerator.vue", () => {
 		});
 	});
 
-	describe.only("check custom slot", () => {
+	describe("check custom slot", () => {
 		let schema = {
 			fields: [
 				{
