@@ -1,5 +1,21 @@
+<a name="2.3.0"></a>
+## 2.3.0 (2018-09-19)
+
+* Fixed issue with SCSS variables being referenced incorrectly (#449)
+* Updated README to include new third-party VFG Fields
+* Rework of formGenerator use a component
+* Allow HTML for Field Label and Hints
+* Updated package.json URL's for VFG
+* Added a "noResult" slot to FieldVueMultiSelect
+* Include a reference to the VFG instance that triggered a "validated" event (3rd param)
+* Fixed a number parsing bug in IE/Edge with FieldInput
+* Added support for Bootstrap CSS Classes (`form-group` will not set width on `col-*` elements)
+
+
+
 <a name="2.2.2"></a>
 ## 2.2.2 (2018-04-24)
+
 * Fix NaN with value 0 on input type number/range.
 * Fix bug in fieldUpload that threw error due to $event not being defined
 * Added $event to onValidationError in fieldSubmit
