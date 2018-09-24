@@ -1,5 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 
+import Vue from "vue";
 import VueFormGenerator from "src/index";
 
 const localVue = createLocalVue();
@@ -32,7 +33,7 @@ function createFormGenerator(data, methods, template) {
 	return _wrapper;
 }
 
-describe.skip("VueFormGenerator.vue", () => {
+describe("VueFormGenerator.vue", () => {
 	describe("with empty schema", () => {
 		let schema = {
 			fields: []
@@ -70,7 +71,7 @@ describe.skip("VueFormGenerator.vue", () => {
 		});
 	});
 
-	describe("check form-group classes", () => {
+	describe("check form-element classes", () => {
 		let group;
 		let schema = {
 			fields: [
@@ -108,13 +109,12 @@ describe.skip("VueFormGenerator.vue", () => {
 				]
 			};
 			createFormGenerator({ schema });
-
-			group = wrapper.find(".form-group");
+			group = wrapper.find(".form-element");
 		});
 
 		it("should be minimal classes", () => {
 			expect(group.classes().length).to.be.equal(2);
-			expect(group.classes()).to.include("form-group");
+			expect(group.classes()).to.include("form-element");
 			expect(group.classes()).to.include("field-input");
 		});
 
@@ -143,29 +143,33 @@ describe.skip("VueFormGenerator.vue", () => {
 		});
 
 		it("should be error class", () => {
-			wrapper.vm.$refs.form.errors.push({ field: wrapper.vm.schema.fields[0], error: "Validation error!" });
-
+			const formElement = wrapper.find({ name: "form-element" });
+			formElement.vm.onChildValidated(["Validation error!"]);
 			expect(group.classes()).to.include("error");
 		});
 
 		describe("custom validation classes", () => {
 			beforeEach(() => {
-				let options = {
-					validationErrorClass: "has-error",
-					validationSuccessClass: "has-success"
-				};
-				createFormGenerator({ schema, options: options });
-				group = wrapper.find(".form-group");
+				let options = { validationErrorClass: "has-error", validationSuccessClass: "has-success" };
+				createFormGenerator({
+					schema,
+					options: options
+				});
+				group = wrapper.find(".form-element");
 			});
 
 			it("error class", () => {
-				wrapper.vm.$refs.form.errors.push({ field: wrapper.vm.schema.fields[0], error: "Validation error!" });
+				const formElement = wrapper.find({ name: "form-element" });
+				formElement.vm.onChildValidated(["Validation error!"]);
 
 				expect(group.classes()).to.include("has-error");
 			});
 
 			it("success class", () => {
-				wrapper.vm.$refs.form.errors = [];
+				const formElement = wrapper.find({
+					name: "form-element"
+				});
+				formElement.vm.onChildValidated([]);
 
 				expect(group.classes()).to.include("has-success");
 			});
@@ -230,7 +234,7 @@ describe.skip("VueFormGenerator.vue", () => {
 
 		before(() => {
 			createFormGenerator({ schema });
-			group = wrapper.find(".form-group");
+			group = wrapper.find(".form-element");
 			label = group.find("label");
 		});
 
@@ -252,7 +256,7 @@ describe.skip("VueFormGenerator.vue", () => {
 	});
 
 	describe("check form row field cell", () => {
-		let group; //, label;
+		let formElement; //, label;
 		let schema = {
 			fields: [
 				{
@@ -271,23 +275,22 @@ describe.skip("VueFormGenerator.vue", () => {
 
 		before(() => {
 			createFormGenerator({ schema });
-			group = wrapper.find(".form-group");
+			formElement = wrapper.find({ name: "form-element" });
 		});
 
 		it("should be a .field-wrap div", () => {
-			expect(group.find(".field-wrap").exists()).to.be.true;
+			expect(formElement.find(".field-wrap").exists()).to.be.true;
 		});
 
 		it("should be a hint div if hint is not null", () => {
-			let hint = group.find(".hint");
+			let hint = formElement.find(".hint");
 			expect(hint.exists()).to.be.true;
 			expect(hint.text()).to.be.equal("Hint text");
 		});
 
 		it("should be .errors div if there are errors in fields", () => {
-			wrapper.vm.$refs.form.errors.push({ field: wrapper.vm.schema.fields[0], error: "Some error!" });
-			wrapper.vm.$refs.form.errors.push({ field: wrapper.vm.schema.fields[0], error: "Another error!" });
-			let div = group.find(".errors");
+			formElement.vm.onChildValidated(["Some error!", "Another error!"]);
+			let div = formElement.find(".errors");
 
 			expect(div.exists()).to.be.true;
 
@@ -295,50 +298,6 @@ describe.skip("VueFormGenerator.vue", () => {
 
 			expect(errors.at(0).text()).to.be.equal("Some error!");
 			expect(errors.at(1).text()).to.be.equal("Another error!");
-		});
-	});
-	// TODO: to delete
-	describe.skip("check computed fields if multiple is true", () => {
-		let schema = {
-			fields: [
-				{
-					type: "input",
-					model: "name",
-					label: "name",
-					fieldOptions: {
-						inputType: "text"
-					},
-					multi: false
-				},
-				{
-					type: "input",
-					model: "phone",
-					label: "phone",
-					fieldOptions: {
-						inputType: "text"
-					},
-					multi: true
-				},
-				{
-					type: "input",
-					model: "email",
-					label: "email",
-					fieldOptions: {
-						inputType: "text"
-					}
-				}
-			]
-		};
-		let form;
-
-		before(() => {
-			createFormGenerator({ schema, multiple: true });
-			form = wrapper.vm.$refs.form;
-		});
-
-		it("should render only phone field", () => {
-			expect(form.fields.length).to.be.equal(1);
-			expect(wrapper.find(".form-group label").text()).to.be.equal("phone");
 		});
 	});
 
@@ -382,17 +341,16 @@ describe.skip("VueFormGenerator.vue", () => {
 		});
 	});
 
-	describe("check fieldDisabled function parameters", () => {
+	describe.skip("check fieldDisabled function parameters", () => {
+		let fieldDisabled = sinon.spy();
 		let schema = {
 			fields: [
 				{
 					type: "input",
-					fieldOptions: {
-						inputType: "text"
-					},
+					fieldOptions: { inputType: "text" },
 					label: "Name",
 					model: "name",
-					disabled: sinon.spy()
+					disabled: fieldDisabled
 				}
 			]
 		};
@@ -407,9 +365,9 @@ describe.skip("VueFormGenerator.vue", () => {
 		});
 
 		it("should be called with correct params", () => {
-			let spy = wrapper.vm.schema.fields[0].disabled;
-			expect(spy.called).to.be.true;
-			expect(spy.calledWith(model, wrapper.vm.schema.fields[0], wrapper.vm.$children[0].$children[0])).to.be.true;
+			expect(fieldDisabled.called).to.be.true;
+			expect(fieldDisabled.calledWith(model, wrapper.vm.schema.fields[0], wrapper.vm.$children[0].$children[0]))
+				.to.be.true;
 		});
 	});
 
@@ -474,7 +432,7 @@ describe.skip("VueFormGenerator.vue", () => {
 
 		before(() => {
 			createFormGenerator({ schema, model });
-			group = wrapper.find(".form-group");
+			group = wrapper.find(".form-element");
 		});
 
 		it("should be readonly", () => {
@@ -517,13 +475,13 @@ describe.skip("VueFormGenerator.vue", () => {
 		});
 
 		it("should be applay", () => {
-			expect(wrapper.find(".form-group .hint").text()).to.be.equal("8 of max 500 characters used!");
+			expect(wrapper.find(".form-element .hint").text()).to.be.equal("8 of max 500 characters used!");
 		});
 
 		it("should be changed", () => {
 			model.note = "Dr. John Doe";
 
-			expect(wrapper.find(".form-group .hint").text()).to.be.equal("12 of max 500 characters used!");
+			expect(wrapper.find(".form-element .hint").text()).to.be.equal("12 of max 500 characters used!");
 		});
 	});
 
@@ -553,7 +511,7 @@ describe.skip("VueFormGenerator.vue", () => {
 
 		before(() => {
 			createFormGenerator({ schema, model });
-			group = wrapper.find(".form-group");
+			group = wrapper.find(".form-element");
 		});
 
 		it("should be featured", () => {
@@ -593,7 +551,7 @@ describe.skip("VueFormGenerator.vue", () => {
 
 		before(() => {
 			createFormGenerator({ schema, model });
-			group = wrapper.find(".form-group");
+			group = wrapper.find(".form-element");
 		});
 
 		it("should be required", () => {
@@ -704,23 +662,39 @@ describe.skip("VueFormGenerator.vue", () => {
 			form = wrapper.vm.$refs.form;
 		});
 
-		it("should empty the errors", () => {
-			expect(form.validate()).to.be.true;
-			expect(form.errors).to.be.length(0);
+		it("should empty the errors", (done) => {
+			form.validate().then(
+				() => {
+					expect(form.errors).to.be.length(0);
+					done();
+				},
+				() => {}
+			);
 		});
 
-		it("should give a validation error", () => {
+		it("should give a validation error", (done) => {
 			model.name = "Ab";
 			wrapper.setData({ model: { ...model } });
-
-			expect(form.validate()).to.be.false;
-			expect(form.errors).to.be.length(1);
+			form.validate().then(
+				() => {},
+				(errors) => {
+					expect(errors[0].error).to.be.equal("The length of text is too small! Current: 2, Minimum: 3");
+					expect(form.errors).to.be.length(1);
+					done();
+				}
+			);
 		});
 
-		it("should no validation error", () => {
-			wrapper.vm.model.name = "Abc";
-			expect(form.validate()).to.be.true;
-			expect(form.errors).to.be.length(0);
+		it("should no validation error", (done) => {
+			model.name = "Abc";
+			wrapper.setData({ model: { ...model } });
+			form.validate().then(
+				() => {
+					expect(form.errors).to.be.length(0);
+					done();
+				},
+				() => {}
+			);
 		});
 	});
 
@@ -748,21 +722,39 @@ describe.skip("VueFormGenerator.vue", () => {
 			form = wrapper.vm.$refs.form;
 		});
 
-		it("should empty the errors", () => {
-			expect(form.validate()).to.be.true;
-			expect(form.errors).to.be.length(0);
+		it("should empty the errors", (done) => {
+			form.validate().then(
+				() => {
+					expect(form.errors).to.be.length(0);
+					done();
+				},
+				() => {}
+			);
 		});
 
-		it("should give a validation error", () => {
-			wrapper.vm.model.name = "Ab";
-			expect(form.validate()).to.be.false;
-			expect(form.errors).to.be.length(1);
+		it("should give a validation error", (done) => {
+			model.name = "Ab";
+			wrapper.setData({ model: { ...model } });
+			form.validate().then(
+				() => {},
+				(errors) => {
+					expect(errors[0].error).to.be.equal("The length of text is too small! Current: 2, Minimum: 3");
+					expect(form.errors).to.be.length(1);
+					done();
+				}
+			);
 		});
 
-		it("should no validation error", () => {
-			wrapper.vm.model.name = "Abc";
-			expect(form.validate()).to.be.true;
-			expect(form.errors).to.be.length(0);
+		it("should no validation error", (done) => {
+			model.name = "Abc";
+			wrapper.setData({ model: { ...model } });
+			form.validate().then(
+				() => {
+					expect(form.errors).to.be.length(0);
+					done();
+				},
+				() => {}
+			);
 		});
 	});
 
@@ -863,47 +855,46 @@ describe.skip("VueFormGenerator.vue", () => {
 		};
 
 		let model = { name: "Bob" };
+		let formGenerator;
 		let form;
-		let onValidated = sinon.spy();
 
 		beforeEach(() => {
-			createFormGenerator(
-				{ schema, model },
-				{ onValidated: onValidated },
-				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
-			);
-			form = wrapper.vm.$refs.form;
+			createFormGenerator({ schema, model });
+			formGenerator = wrapper.find({ name: "formGenerator" });
+			form = formGenerator.vm;
 		});
 
 		it("should no errors after mounted()", () => {
 			expect(form.errors).to.be.length(0);
 		});
 
-		it.skip("should be validation error if model value is not valid", () => {
-			wrapper.vm.model.name = "A";
-			onValidated.resetHistory();
+		it("should be validation error if model value is not valid", () => {
+			formGenerator.setProps({ model: { name: "A" } });
 			form.validate();
 
 			expect(form.errors).to.be.length(1);
-			expect(onValidated.callCount).to.be.equal(1);
-			expect(
-				onValidated.calledWith(false, [
-					{
-						field: schema.fields[0],
-						error: "The length of text is too small! Current: 1, Minimum: 3"
-					}
-				])
-			).to.be.true;
+			expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
+			expect(formGenerator.emitted().validated.length).to.be.equal(1);
+			expect(formGenerator.emitted().validated[0][0]).to.be.false;
+			expect(formGenerator.emitted().validated[0][1]).to.be.an.instanceof(Array);
+			expect(formGenerator.emitted().validated[0][1].length).to.be.equal(1);
+			expect(formGenerator.emitted().validated[0][1][0].uid).to.be.a("string");
+			expect(formGenerator.emitted().validated[0][1][0].error).to.be.a("string");
+			expect(formGenerator.emitted().validated[0][1][0].error).to.be.equal(
+				"The length of text is too small! Current: 1, Minimum: 3"
+			);
 		});
 
 		it("should no validation error if model valie is valid", () => {
-			wrapper.vm.model.name = "Alan";
-			onValidated.resetHistory();
+			formGenerator.setProps({ model: { name: "Alan" } });
 			form.validate();
 
 			expect(form.errors).to.be.length(0);
-			expect(onValidated.callCount).to.be.equal(1);
-			expect(onValidated.calledWith(true, [])).to.be.true;
+			expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
+			expect(formGenerator.emitted().validated.length).to.be.equal(1);
+			expect(formGenerator.emitted().validated[0][0]).to.be.true;
+			expect(formGenerator.emitted().validated[0][1]).to.be.an.instanceof(Array);
+			expect(formGenerator.emitted().validated[0][1].length).to.be.equal(0);
 		});
 	});
 
@@ -965,6 +956,7 @@ describe.skip("VueFormGenerator.vue", () => {
 		};
 
 		let model = { name: "Bob" };
+		let formGenerator;
 		let form;
 		let field;
 		let onValidated = sinon.spy();
@@ -975,13 +967,14 @@ describe.skip("VueFormGenerator.vue", () => {
 				{ onValidated: onValidated },
 				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
 			);
-			form = wrapper.vm.$refs.form;
+			formGenerator = wrapper.find({ name: "formGenerator" });
+			form = formGenerator.vm;
 			field = form.$children[0];
 		});
 
 		it("should no errors after mounted()", (done) => {
+			expect(form.errors).to.be.length(0);
 			wrapper.vm.$nextTick(() => {
-				expect(form.errors).to.be.length(0);
 				done();
 			});
 		});
@@ -1047,6 +1040,7 @@ describe.skip("VueFormGenerator.vue", () => {
 		};
 
 		let model = { name: "Bob" };
+		let formGenerator;
 		let form;
 		let field;
 		let onValidated = sinon.spy();
@@ -1057,8 +1051,9 @@ describe.skip("VueFormGenerator.vue", () => {
 				{ onValidated: onValidated },
 				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
 			);
-			form = wrapper.vm.$refs.form;
-			field = form.$children[0].$children[0];
+			formGenerator = wrapper.find({ name: "formGenerator" });
+			form = formGenerator.vm;
+			field = formGenerator.find({ name: "form-element" }).vm.$children[0];
 		});
 
 		it("should no errors after mounted()", (done) => {
@@ -1068,17 +1063,30 @@ describe.skip("VueFormGenerator.vue", () => {
 			});
 		});
 
-		it("should be validation error if model value is not valid", (done) => {
+		it.skip("should be validation error if model value is not valid", (done) => {
 			onValidated.resetHistory();
 			wrapper.vm.model.name = "A";
+			// console.log(formGenerator.find({ name: "form-element" }).vm.$children[0].validate);
 			field.validate();
+			Vue.config.errorHandler = done;
+			Vue.nextTick(() => {
+				console.log(form.errors);
+				console.log(formGenerator.emitted().validated);
 
-			setTimeout(() => {
 				expect(form.errors).to.be.length(1);
+				expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
+				expect(formGenerator.emitted().validated.length).to.be.equal(1);
+				expect(formGenerator.emitted().validated[0][0]).to.be.false;
+				expect(formGenerator.emitted().validated[0][1]).to.be.an.instanceof(Array);
+				expect(formGenerator.emitted().validated[0][1].length).to.be.equal(1);
+				expect(formGenerator.emitted().validated[0][1][0].uid).to.be.a("string");
+				expect(formGenerator.emitted().validated[0][1][0].error).to.be.a("string");
+				expect(formGenerator.emitted().validated[0][1][0].error).to.be.equal(
+					"The length of text is too small! Current: 1, Minimum: 3"
+				);
 				expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "Invalid name" }])).to.be.true;
-
 				done();
-			}, 15);
+			});
 		});
 	});
 });

@@ -19,7 +19,7 @@ function createField(data, methods) {
 			eventBus: new Vue(),
 			...data
 		},
-		template: `<div></div>`
+		template: `<div><input type="text" v-model="value"></div>`
 	});
 	if (methods) {
 		_wrapper.setMethods(methods);
@@ -201,26 +201,36 @@ describe("abstractField.vue", () => {
 		};
 
 		let model = { name: "John Doe" };
-		let options = {
-			validateAfterChanged: false
-		};
+		let formOptions = { validateAfterChanged: false };
 
 		beforeEach(() => {
-			createField({ schema, model, options });
+			createField({ schema, model, formOptions });
+
 			field.validate = sinon.spy();
 		});
 
 		it("should not call validate function after value changed", () => {
-			model.name = "Jane Doe";
+			wrapper.setProps({ model: { name: "Jane Doe" } });
 
 			expect(field.validate.callCount).to.be.equal(0);
 		});
 
-		it.skip("should call validate function after value changed", () => {
-			options.validateAfterChanged = true;
-			field.value = "Jane Roe";
+		it.skip("should call validate function after value changed", (done) => {
+			// options.validateAfterChanged = true;
 
-			expect(field.validate.callCount).to.be.equal(1);
+			wrapper.setProps({ formOptions: { validateAfterChanged: true } });
+			console.log("---", field.value);
+			// console.log("---", wrapper);
+			const textInput = wrapper.find(`input[type="text"]`);
+			textInput.setValue("Jane Roe");
+			// field.value.set("Jane Roe");
+			console.log("---", field.value);
+			// wrapper.setData({ value: "Jane Roe" });
+			Vue.config.errorHandler = done;
+			Vue.nextTick(() => {
+				expect(field.validate.callCount).to.be.equal(1);
+				done();
+			});
 		});
 	});
 
@@ -359,15 +369,21 @@ describe("abstractField.vue", () => {
 				model
 			});
 		});
-		// TODO: Find a way to test a promise instead of a synchronous function
-		it.skip("should return empty array", () => {
+
+		it("should return empty array", () => {
+			const spy = sinon.spy(wrapper.props().eventBus, "$emit");
+
 			let res = field.validate();
 
 			expect(res).to.be.an.instanceof(Array);
 			expect(res.length).to.be.equal(0);
-			expect(wrapper.emitted().validated).to.be.an.instanceof(Array);
-			expect(wrapper.emitted().validated[0][0]).to.be.true;
-			expect(wrapper.emitted().validated[0][1]).to.be.an.instanceof(Array);
+			expect(spy.calledOnce).to.be.true;
+			expect(spy.args[0][0]).to.be.equal("field-validated");
+			expect(spy.args[0][1]).to.be.true;
+			expect(spy.args[0][2]).to.be.an.instanceof(Array);
+			expect(spy.args[0][2].length).to.be.equal(0);
+
+			spy.restore();
 		});
 
 		it("should not call 'onValidated'", () => {
@@ -378,21 +394,25 @@ describe("abstractField.vue", () => {
 
 			expect(wrapper.emitted().validated).to.be.undefined;
 		});
-		// TODO: Find a way to test a promise instead of a synchronous function
-		it.skip("should return empty array", () => {
-			model.name = "Al";
+
+		it("should return empty array", () => {
+			const spy = sinon.spy(wrapper.props().eventBus, "$emit");
+
+			wrapper.setProps({ model: { name: "Al" } });
+
 			let res = field.validate();
 
 			expect(res).to.be.an.instanceof(Array);
 			expect(res.length).to.be.equal(1);
 			expect(res[0]).to.be.equal("The length of text is too small! Current: 2, Minimum: 3");
 
-			expect(wrapper.emitted().validated).to.be.an.instanceof(Array);
-			expect(wrapper.emitted().validated[0][0]).to.be.false;
-			expect(wrapper.emitted().validated[0][1]).to.be.an.instanceof(Array);
-			expect(wrapper.emitted().validated[0][1][0]).to.be.equal(
-				"The length of text is too small! Current: 2, Minimum: 3"
-			);
+			expect(spy.calledOnce).to.be.true;
+			expect(spy.args[0][0]).to.be.equal("field-validated");
+			expect(spy.args[0][1]).to.be.false;
+			expect(spy.args[0][2]).to.be.an.instanceof(Array);
+			expect(spy.args[0][2][0]).to.be.equal("The length of text is too small! Current: 2, Minimum: 3");
+
+			spy.restore();
 		});
 	});
 
