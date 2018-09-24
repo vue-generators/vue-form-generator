@@ -6,7 +6,7 @@
 		</label>
 
 		<div class="field-wrap">
-			<component ref="child" :is="fieldType" :model="model" :schema="field" :formOptions="options" :eventBus="eventBus" :fieldID="fieldID" @errors-updated="onChildValidated"></component>
+			<component ref="child" :is="fieldType" :model="model" :schema="field" :formOptions="options" :eventBus="eventBus" :fieldID="fieldID" @field-touched="onFieldTouched" @errors-updated="onChildValidated"></component>
 			<div v-if="buttonsAreVisible" class="buttons">
 				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
 			</div>
@@ -51,7 +51,8 @@ export default {
 	},
 	data() {
 		return {
-			childErrors: []
+			childErrors: [],
+			childTouched: false
 		};
 	},
 	computed: {
@@ -84,7 +85,8 @@ export default {
 		fieldRowClasses() {
 			let baseClasses = {
 				[objGet(this.options, "validationErrorClass", "error")]: this.fieldHasErrors,
-				[objGet(this.options, "validationSuccessClass", "valid")]: !this.fieldHasErrors,
+				[objGet(this.options, "validationSuccessClass", "valid")]: !this.fieldHasErrors && this.childTouched,
+				[objGet(this.options, "validationCleanClass", "clean")]: !this.fieldHasErrors && !this.childTouched,
 				disabled: this.getValueFromOption(this.field, "disabled"),
 				readonly: this.getValueFromOption(this.field, "readonly"),
 				featured: this.getValueFromOption(this.field, "featured"),
@@ -118,6 +120,9 @@ export default {
 
 		buttonClickHandler(btn, field, event) {
 			return btn.onclick.call(this, this.model, field, event, this);
+		},
+		onFieldTouched() {
+			this.childTouched = true;
 		},
 		onChildValidated(errors) {
 			this.childErrors = errors;
