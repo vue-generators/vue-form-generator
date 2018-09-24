@@ -18,7 +18,10 @@ function createField(data, methods) {
 				getValueFromOption: global.getValueFromOption
 			}
 		},
-		propsData: data
+		propsData: {
+			eventBus: new Vue(),
+			...data
+		}
 	});
 	if (methods) {
 		_wrapper.setMethods(methods);

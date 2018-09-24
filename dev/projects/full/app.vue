@@ -75,8 +75,7 @@ export default {
 
 			formOptions: {
 				validateAfterLoad: true,
-				validateAfterChanged: true,
-				validateBeforeSave: true
+				validateAfterChanged: true
 			}
 		};
 	},
@@ -118,7 +117,7 @@ export default {
 		},
 
 		onValidated(res, errors) {
-			console.log("VFG validated:", res, errors);
+			console.log("onValidated VFG validated:", arguments, res, errors);
 		},
 
 		generateModel() {
@@ -145,24 +144,28 @@ export default {
 		},
 
 		saveModel() {
-			console.log("Save model...");
-			if (this.formOptions.validateBeforeSave === false || this.validate()) {
-				this.mergeModelValues();
+			console.log("Save model...", this.validate, typeof this.validate);
+			this.validate().then(
+				(test) => {
+					console.log("saveModel", test);
+					this.mergeModelValues();
 
-				if (this.isNewModel) {
-					this.rows.push(this.model);
-					this.selectRow(null, this.model, false);
+					if (this.isNewModel) {
+						this.rows.push(this.model);
+						this.selectRow(null, this.model, false);
+					}
+				},
+				(error) => {
+					// Validation error
+					console.warn("Error saving model...", error);
 				}
-			} else {
-				console.warn("Error saving model...");
-				// Validation error
-			}
+			);
 		},
 
 		mergeModelValues() {
 			let model = this.model;
 			if (model && this.selected.length > 0) {
-				each(this.selected, row => {
+				each(this.selected, (row) => {
 					merge(row, model);
 				});
 			}
@@ -170,7 +173,7 @@ export default {
 
 		deleteModel() {
 			if (this.selected.length > 0) {
-				each(this.selected, row => {
+				each(this.selected, (row) => {
 					let index = this.rows.indexOf(row);
 					this.rows.splice(index, 1);
 				});
@@ -181,7 +184,7 @@ export default {
 		getNextID() {
 			let id = 0;
 
-			each(this.rows, row => {
+			each(this.rows, (row) => {
 				if (row.id > id) id = row.id;
 			});
 
@@ -189,7 +192,8 @@ export default {
 		},
 
 		validate() {
-			// console.log("validate", this.$refs.form, this.$refs.form.validate());
+			console.log("APP validate", this.$refs.form, typeof this.$refs.form.validate);
+
 			return this.$refs.form.validate();
 		},
 
@@ -199,7 +203,7 @@ export default {
 
 		getLocation(model) {
 			if (navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(pos => {
+				navigator.geolocation.getCurrentPosition((pos) => {
 					if (!model.address) model.address = {};
 					if (!model.address.geo) model.address.geo = {};
 					model.address.geo.latitude = pos.coords.latitude.toFixed(5);

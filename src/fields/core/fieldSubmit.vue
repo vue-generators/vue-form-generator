@@ -1,5 +1,5 @@
 <template lang="pug">
-	input(:id="getFieldID(schema)", type="submit", :value="fieldOptions.buttonText", @click="onClick", :name="inputName", :disabled="disabled", :class="fieldClasses", v-attributes="'input'")
+	input(:id="fieldID", type="submit", :value="fieldOptions.buttonText", @click="onClick", :name="inputName", :disabled="disabled", :class="fieldClasses", v-attributes="'input'")
 </template>
 
 <script>
@@ -15,20 +15,15 @@ export default {
 				// prevent a <form /> from having it's submit event triggered
 				// when we have to validate data first
 				$event.preventDefault();
-				let errors = this.$parent.validate();
-				let handleErrors = (errors) => {
-					if (!isEmpty(errors) && isFunction(this.fieldOptions.onValidationError)) {
-						this.fieldOptions.onValidationError(this.model, this.schema, errors, $event);
+
+				this.eventBus.$emit("fields-validation-trigger");
+				this.eventBus.$on("fields-validation-terminated", (formErrors) => {
+					if (!isEmpty(formErrors) && isFunction(this.fieldOptions.onValidationError)) {
+						this.fieldOptions.onValidationError(this.model, this.schema, formErrors, $event);
 					} else if (isFunction(this.fieldOptions.onSubmit)) {
 						this.fieldOptions.onSubmit(this.model, this.schema, $event);
 					}
-				};
-
-				if (errors && isFunction(errors.then)) {
-					errors.then(handleErrors);
-				} else {
-					handleErrors(errors);
-				}
+				});
 			} else if (isFunction(this.fieldOptions.onSubmit)) {
 				// if we aren't validating, just pass the onSubmit handler the $event
 				// so it can be handled there

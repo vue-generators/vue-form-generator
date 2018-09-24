@@ -1,7 +1,7 @@
 <template lang="pug">
 .wrapper(v-attributes="'wrapper'")
 	input.form-control(
-		:id="getFieldID(schema)",
+		:id="fieldID",
 		type="file",
 		:name="inputName",
 		@change="onChange",

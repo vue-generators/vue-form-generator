@@ -1,5 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 
+import Vue from "vue";
 import FieldChecklist from "src/fields/core/fieldChecklist.vue";
 
 const localVue = createLocalVue();
@@ -17,7 +18,10 @@ function createField(data, methods) {
 				getValueFromOption: global.getValueFromOption
 			}
 		},
-		propsData: data
+		propsData: {
+			eventBus: new Vue(),
+			...data
+		}
 	});
 	if (methods) {
 		_wrapper.setMethods(methods);

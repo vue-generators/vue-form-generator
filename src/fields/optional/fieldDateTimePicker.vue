@@ -1,6 +1,6 @@
 <template lang="pug">
 	.input-group.date
-		input.form-control(type="text", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName", :id="getFieldID(schema)")
+		input.form-control(type="text", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName", :id="fieldID")
 		span.input-group-addon
 			span.glyphicon.glyphicon-calendar
 </template>

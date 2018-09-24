@@ -1,5 +1,5 @@
 <template lang="pug">
-	input(:id="getFieldID(schema)", type="checkbox", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :name="inputName", :class="fieldClasses", v-attributes="'input'")
+	input(:id="fieldID", type="checkbox", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :name="inputName", :class="fieldClasses", v-attributes="'input'")
 </template>
 
 <script>

@@ -29,13 +29,16 @@ export default {
 					more: "More",
 					things: "Things"
 				},
-				single: "blah"
+				single: "blah",
+				subname: ""
 			},
 
 			schema: {
-				groups: [
+				fields: [
 					{
+						type: "group",
 						legend: "Contact Details",
+						tag: "div",
 						fields: [
 							{
 								type: "input",
@@ -43,7 +46,27 @@ export default {
 								label: "Name",
 								fieldOptions: {
 									inputType: "text"
-								}
+								},
+								required: true,
+								validator: ["required"]
+							},
+							{
+								type: "group",
+								legend: "Subgroup",
+								styleClasses: "subgroup",
+								tag: "fieldset",
+								fields: [
+									{
+										type: "input",
+										model: "subname",
+										label: "Name",
+										fieldOptions: {
+											inputType: "text"
+										},
+										required: true,
+										validator: ["required"]
+									}
+								]
 							},
 							{
 								type: "input",
@@ -56,6 +79,17 @@ export default {
 						]
 					},
 					{
+						type: "input",
+						model: "single",
+						label: "Single field (without group)",
+						fieldOptions: {
+							inputType: "text"
+						},
+						required: true,
+						validator: ["string"]
+					},
+					{
+						type: "group",
 						legend: "Other Details",
 						fields: [
 							{
@@ -76,20 +110,12 @@ export default {
 							}
 						]
 					}
-				],
-				fields: [
-					{
-						type: "input",
-						model: "single",
-						label: "Single field (without group)",
-						fieldOptions: {
-							inputType: "text"
-						}
-					}
 				]
 			},
 
 			formOptions: {
+				validateAfterLoad: true,
+				validateAfterChanged: true,
 				fieldIdPrefix: "frm1-"
 			}
 		};
@@ -103,4 +129,15 @@ export default {
 
 <style lang="scss">
 @import "../../style.scss";
+.field-group {
+	border: 2px solid #bbb;
+	padding: 8px;
+	border-radius: 4px;
+}
+.subgroup {
+	border-color: goldenrod;
+	legend {
+		color: #00268d;
+	}
+}
 </style>

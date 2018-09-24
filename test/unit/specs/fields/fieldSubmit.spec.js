@@ -1,5 +1,6 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 
+import Vue from "vue";
 import FieldSubmit from "src/fields/core/fieldSubmit.vue";
 
 const localVue = createLocalVue();
@@ -14,7 +15,10 @@ function createField(data, methods) {
 				getValueFromOption: global.getValueFromOption
 			}
 		},
-		propsData: data
+		propsData: {
+			eventBus: new Vue(),
+			...data
+		}
 	});
 	if (methods) {
 		_wrapper.setMethods(methods);
@@ -55,44 +59,56 @@ describe("fieldSubmit.vue", () => {
 			it("should not call validate if validateBeforeSubmit is false", () => {
 				schema.fieldOptions.onSubmit = sinon.spy();
 				wrapper.setProps({ schema: { ...schema } });
-				let cb = sinon.spy();
-				wrapper.vm.$parent.validate = cb;
 
 				input.trigger("click");
 
-				expect(cb.called).to.be.false;
 				expect(schema.fieldOptions.onSubmit.calledOnce).to.be.true;
 				expect(schema.fieldOptions.onSubmit.calledWith(model, schema)).to.be.true;
 			});
 
 			it("should call validate if validateBeforeSubmit is true", () => {
+				const spyEmit = sinon.spy(wrapper.props().eventBus, "$emit");
 				schema.fieldOptions.validateBeforeSubmit = true;
 				schema.fieldOptions.onSubmit = sinon.spy();
 				wrapper.setProps({ schema: { ...schema } });
-				let cb = sinon.spy();
-				wrapper.vm.$parent.validate = cb;
 
 				input.trigger("click");
 
-				expect(cb.called).to.be.true;
+				expect(spyEmit.calledOnce).to.be.true;
+				expect(spyEmit.args[0][0]).to.be.equal("fields-validation-trigger");
+
+				spyEmit.restore();
+
+				// Simulate feedback from formGenerator
+				wrapper.props().eventBus.$emit("fields-validation-terminated", []);
+
 				expect(schema.fieldOptions.onSubmit.called).to.be.true;
+				expect(schema.fieldOptions.onSubmit.calledWith(model, schema)).to.be.true;
 			});
 		});
 
 		describe("invalid form", () => {
-			it("should not call onSubmit if validateBeforeSubmit is true", () => {
+			it("should not call onSubmit if validateBeforeSubmit is true and onValidationError is defined", () => {
+				const spyEmit = sinon.spy(wrapper.props().eventBus, "$emit");
+				const formErrors = [{ uid: "123", error: ["an error occurred"] }];
 				schema.fieldOptions.validateBeforeSubmit = true;
+				schema.fieldOptions.onValidationError = sinon.spy();
 				schema.fieldOptions.onSubmit = sinon.spy();
 				wrapper.setProps({ schema: { ...schema } });
-				let cb = sinon.spy(() => {
-					return ["an error occurred"];
-				});
-				wrapper.vm.$parent.validate = cb;
 
 				input.trigger("click");
 
-				expect(cb.called).to.be.true;
-				expect(schema.fieldOptions.onSubmit.called).to.be.true;
+				expect(spyEmit.calledOnce).to.be.true;
+				expect(spyEmit.args[0][0]).to.be.equal("fields-validation-trigger");
+
+				spyEmit.restore();
+
+				// Simulate feedback from formGenerator
+				wrapper.props().eventBus.$emit("fields-validation-terminated", formErrors);
+
+				expect(schema.fieldOptions.onValidationError.called).to.be.true;
+				expect(schema.fieldOptions.onValidationError.calledWith(model, schema, formErrors)).to.be.true;
+				expect(schema.fieldOptions.onSubmit.called).to.be.false;
 			});
 		});
 

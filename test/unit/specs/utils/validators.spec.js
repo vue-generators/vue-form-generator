@@ -412,6 +412,9 @@ describe("Validators", () => {
 
 			expect(v.number(null, field)[0]).to.be.equal("A mezőt kötelező kitölteni!");
 			expect(v.string("Ab", field)[0]).to.be.equal("A szöveg túl rövid. Minimum 5 a 2 helyett");
+
+			v.resources.fieldIsRequired = "This field is required!";
+			v.resources.textTooSmall = "The length of text is too small! Current: {0}, Minimum: {1}";
 		});
 	});
 

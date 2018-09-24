@@ -1,29 +1,27 @@
-<template lang="pug">
-div.vue-form-generator(v-if='schema != null')
-	fieldset(v-if="schema.fields", :is='tag')
-		template(v-for='field in fields')
-			form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated")
-
-	template(v-for='group in groups')
-		fieldset(:is='tag', :class='getFieldRowClasses(group)')
-			legend(v-if='group.legend') {{ group.legend }}
-			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+<template>
+	<div class="vue-form-generator" v-if='schema != null'>
+		<div v-text="totalNumberOfFields"></div>
+		<div v-html="errors"></div>
+		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus"></form-group>
+	</div>
 </template>
 
 <script>
-import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
-import formMixin from "./formMixin.js";
+import Vue from "vue";
+import { get as objGet, isArray } from "lodash";
 import formGroup from "./formGroup.vue";
 
 export default {
 	name: "formGenerator",
 	components: { formGroup },
-	mixins: [formMixin],
 	props: {
-		schema: Object,
+		schema: {
+			type: Object
+		},
 
-		model: Object,
+		model: {
+			type: Object
+		},
 
 		options: {
 			type: Object,
@@ -36,11 +34,6 @@ export default {
 					validationSuccessClass: ""
 				};
 			}
-		},
-
-		multiple: {
-			type: Boolean,
-			default: false
 		},
 
 		isNewModel: {
@@ -58,91 +51,65 @@ export default {
 	},
 
 	data() {
+		const eventBus = new Vue();
 		return {
+			eventBus: eventBus,
+			totalNumberOfFields: 0,
 			errors: [] // Validation errors
 		};
 	},
 
 	computed: {
 		fields() {
-			let res = [];
 			if (this.schema && this.schema.fields) {
-				forEach(this.schema.fields, (field) => {
-					if (!this.multiple || field.multi === true) res.push(field);
-				});
+				return this.schema.fields;
 			}
-
-			return res;
-		},
-		groups() {
-			let res = [];
-			if (this.schema && this.schema.groups) {
-				forEach(this.schema.groups.slice(0), (group) => {
-					res.push(group);
-				});
-			}
-
-			return res;
 		}
 	},
 
 	watch: {
 		// new model loaded
-		model: function(newModel, oldModel) {
-			if (oldModel === newModel)
-				// model property changed, skip
-				return;
+		model: {
+			handler(newModel, oldModel) {
+				if (oldModel === newModel)
+					// model property changed, skip
+					return;
 
-			if (newModel != null) {
-				this.$nextTick(() => {
-					// Model changed!
-					if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
-						this.validate();
-					} else {
-						this.clearValidationErrors();
-					}
-				});
+				if (newModel != null) {
+					this.$nextTick(() => {
+						// Model changed!
+						if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
+							this.validate().then(() => {}, () => {});
+						} else {
+							this.clearValidationErrors();
+						}
+					});
+				}
+			},
+			immediate: () => {
+				return true;
 			}
 		}
 	},
 
-	mounted() {
-		this.$nextTick(() => {
-			if (this.model) {
-				// First load, running validation if neccessary
-				if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
-					this.validate();
-				} else {
-					this.clearValidationErrors();
-				}
-			}
-		});
-	},
-
 	methods: {
-		// Get visible prop of field
-		fieldVisible(field) {
-			if (isFunction(field.visible)) return field.visible.call(this, this.model, field, this);
-
-			if (isNil(field.visible)) return true;
-
-			return field.visible;
-		},
-
-		// Child field executed validation
-		onFieldValidated(res, errors, field) {
-			// Remove old errors for this field
-			this.errors = this.errors.filter((e) => e.field !== field.schema);
-
-			if (!res && errors && errors.length > 0) {
-				// Add errors with this field
-				forEach(errors, (err) => {
-					this.errors.push({
-						field: field.schema,
-						error: err
+		fillErrors(fieldErrors, errors, uid) {
+			if (isArray(fieldErrors) && fieldErrors.length > 0) {
+				fieldErrors.forEach((error) => {
+					errors.push({
+						uid: uid,
+						error: error
 					});
 				});
 			}
+		},
+
+		// Child field executed validation
+		onFieldValidated(fieldIsValid, fieldErrors, uid) {
+			// Remove old errors for this field
+			this.errors = this.errors.filter((e) => e.uid !== uid);
+
+			this.fillErrors(fieldErrors, this.errors, uid);
 
 			let isValid = this.errors.length === 0;
 			this.$emit("validated", isValid, this.errors, this);
@@ -153,55 +120,76 @@ export default {
 		},
 
 		// Validating the model properties
-		validate(isAsync = null) {
-			if (isAsync === null) {
-				isAsync = objGet(this.options, "validateAsync", false);
-			}
-			this.clearValidationErrors();
+		validate() {
+			return new Promise((resolve, reject) => {
+				this.clearValidationErrors();
 
-			let fields = [];
-			let results = [];
+				let fieldsValidated = 0;
 
-			forEach(this.$children, (child) => {
-				if (isFunction(child.validate)) {
-					fields.push(child.$refs.child); // keep track of validated children
-					results.push(child.validate(true));
-				}
-			});
-
-			let handleErrors = (errors) => {
 				let formErrors = [];
-				forEach(errors, (err, i) => {
-					if (isArray(err) && err.length > 0) {
-						forEach(err, (error) => {
-							formErrors.push({
-								field: fields[i].schema,
-								error: error
-							});
-						});
-					}
+
+				this.eventBus.$on("field-deregistering", () => {
+					console.warn("Fields were deleted during validation process");
+					this.eventBus.$emit("fields-validation-terminated", formErrors);
+					reject(formErrors);
 				});
-				this.errors = formErrors;
-				let isValid = formErrors.length === 0;
-				this.$emit("validated", isValid, formErrors, this);
-				return isAsync ? formErrors : isValid;
-			};
 
-			if (!isAsync) {
-				return handleErrors(results);
-			}
+				const counter = (isValid, fieldErrors, uid) => {
+					fieldsValidated++;
 
-			return Promise.all(results).then(handleErrors);
+					this.fillErrors(fieldErrors, formErrors, uid);
+
+					if (fieldsValidated === this.totalNumberOfFields) {
+						this.eventBus.$off("field-validated", counter);
+						if (objGet(this.options, "validateAfterChanged", false)) {
+							this.eventBus.$on("field-validated", this.onFieldValidated);
+						}
+						this.errors = formErrors;
+						let isValid = formErrors.length === 0;
+						this.$emit("validated", isValid, formErrors, this);
+						this.eventBus.$emit("fields-validation-terminated", formErrors);
+
+						if (isValid) {
+							resolve();
+						} else {
+							reject(formErrors);
+						}
+					}
+				};
+				if (objGet(this.options, "validateAfterChanged", false)) {
+					this.eventBus.$off("field-validated", this.onFieldValidated);
+				}
+				this.eventBus.$on("field-validated", counter);
+				this.eventBus.$emit("validate-fields", this);
+			});
 		},
 
 		// Clear validation errors
 		clearValidationErrors() {
 			this.errors.splice(0);
-
-			forEach(this.$children, (child) => {
-				child.clearValidationErrors();
-			});
+			this.eventBus.$emit("clear-validation-errors", this.clearValidationErrors);
 		}
+	},
+
+	created() {
+		if (objGet(this.options, "validateAfterChanged", false)) {
+			this.eventBus.$on("field-validated", this.onFieldValidated);
+		}
+		this.eventBus.$on("model-updated", this.onModelUpdated);
+		this.eventBus.$on("fields-validation-trigger", this.validate);
+		this.eventBus.$on("field-registering", () => {
+			this.totalNumberOfFields = this.totalNumberOfFields + 1;
+		});
+		this.eventBus.$on("field-deregistering", () => {
+			this.totalNumberOfFields = this.totalNumberOfFields - 1;
+		});
+	},
+	beforeDestroy() {
+		this.eventBus.$off("field-validated");
+		this.eventBus.$off("model-updated");
+		this.eventBus.$off("fields-validation-trigger");
+		this.eventBus.$off("field-registering");
+		this.eventBus.$off("field-deregistering");
 	}
 };
 </script>

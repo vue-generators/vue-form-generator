@@ -97,8 +97,7 @@ export default {
 
 			formOptions: {
 				validateAfterLoad: true,
-				validateAfterChanged: true,
-				validateBeforeSave: true
+				validateAfterChanged: true
 			}
 		};
 	},

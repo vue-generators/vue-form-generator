@@ -1,6 +1,5 @@
-import { get as objGet, forEach, isFunction, isString, isArray, debounce, isNil } from "lodash";
+import { get as objGet, forEach, isFunction, isString, isArray, debounce, isNil, uniqueId } from "lodash";
 import validators from "../utils/validators";
-import { slugifyFormID } from "../utils/schema";
 
 const convertValidator = (validator) => {
 	if (isString(validator)) {
@@ -33,15 +32,20 @@ export default {
 			type: Object
 		},
 		formOptions: {
-			type: [Object, Function],
-			default: () => {
-				return {};
-			}
+			type: Object
+		},
+		eventBus: {
+			type: Object
+		},
+		fieldID: {
+			type: String
 		}
 	},
 
 	data() {
+		const fieldUID = uniqueId(this.fieldID + "_");
 		return {
+			fieldUID,
 			errors: [],
 			debouncedValidateFunc: null,
 			debouncedFormatFunction: null
@@ -107,23 +111,32 @@ export default {
 		}
 	},
 
+	watch: {
+		errors: {
+			handler(errors) {
+				this.$emit("errors-updated", errors);
+			}
+		}
+	},
+
 	methods: {
 		getValueFromOption(field, option, defaultValue) {
-			if (typeof this.$parent.getValueFromOption === "function") {
+			if (isFunction(this.$parent.getValueFromOption)) {
 				return this.$parent.getValueFromOption(field, option, defaultValue);
 			} else {
 				// Environnement de test ?
-				if (isNil(field[option])) return defaultValue;
+				if (isNil(field[option])) {
+					return defaultValue;
+				}
 
 				return field[option];
 			}
 		},
-		validate(calledParent) {
+		validate() {
 			this.clearValidationErrors();
 			let validateAsync = objGet(this.formOptions, "validateAsync", false);
 
 			let results = [];
-			// console.log("validate", this.schema.readonly);
 
 			if (
 				this.schema.validator &&
@@ -135,12 +148,12 @@ export default {
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
 				} else {
-					forEach(this.schema.validator, (validator) => {
+					this.schema.validator.forEach((validator) => {
 						validators.push(convertValidator(validator).bind(this));
 					});
 				}
 
-				forEach(validators, (validator) => {
+				validators.forEach((validator) => {
 					if (validateAsync) {
 						results.push(validator(this.value, this.schema, this.model));
 					} else {
@@ -150,8 +163,6 @@ export default {
 								if (err) {
 									this.errors = this.errors.concat(err);
 								}
-								let isValid = this.errors.length === 0;
-								this.$emit("validated", isValid, this.errors, this);
 							});
 						} else if (result) {
 							results = results.concat(result);
@@ -162,7 +173,7 @@ export default {
 
 			let handleErrors = (errors) => {
 				let fieldErrors = [];
-				forEach(errors, (err) => {
+				errors.forEach((err) => {
 					if (isArray(err) && err.length > 0) {
 						fieldErrors = fieldErrors.concat(err);
 					} else if (isString(err)) {
@@ -174,10 +185,10 @@ export default {
 				}
 
 				let isValid = fieldErrors.length === 0;
-				if (!calledParent) {
-					this.$emit("validated", isValid, fieldErrors, this);
-				}
+
 				this.errors = fieldErrors;
+
+				this.eventBus.$emit("field-validated", isValid, fieldErrors, this.fieldUID);
 				return fieldErrors;
 			};
 
@@ -192,7 +203,7 @@ export default {
 			if (!isFunction(this.debouncedValidateFunc)) {
 				this.debouncedValidateFunc = debounce(
 					this.validate.bind(this),
-					objGet(this, "$parent.options.validateDebounceTime", 500)
+					objGet(this.formOptions, "validateDebounceTime", 500)
 				);
 			}
 			this.debouncedValidateFunc();
@@ -209,14 +220,13 @@ export default {
 			}
 
 			if (changed) {
-				this.$emit("model-updated", newValue, this.schema.model);
+				this.eventBus.$emit("model-updated", newValue, this.schema.model);
 
 				if (isFunction(this.schema.onChanged)) {
 					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 				}
-
-				if (objGet(this.$parent, "options.validateAfterChanged", false) === true) {
-					if (objGet(this.$parent, "options.validateDebounceTime", 0) > 0) {
+				if (objGet(this.formOptions, "validateAfterChanged", false)) {
+					if (objGet(this.formOptions, "validateDebounceTime", 500) > 0) {
 						this.debouncedValidate();
 					} else {
 						this.validate();
@@ -261,11 +271,6 @@ export default {
 			}
 		},
 
-		getFieldID(schema) {
-			const idPrefix = objGet(this.formOptions, "fieldIdPrefix", "");
-			return slugifyFormID(schema, idPrefix);
-		},
-
 		formatValueToField(value) {
 			return value;
 		},
@@ -273,6 +278,11 @@ export default {
 		formatValueToModel(value) {
 			return value;
 		}
+	},
+	created() {
+		this.eventBus.$on("clear-validation-errors", this.clearValidationErrors);
+		this.eventBus.$on("validate-fields", this.validate);
+		this.eventBus.$emit("field-registering");
 	},
 	mounted() {
 		const diff = function(a, b) {
@@ -321,5 +331,10 @@ export default {
 				console.log("diff", result, this.schema.type, this.schema.model);
 			}
 		}
+	},
+	beforeDestroy() {
+		this.eventBus.$off("clear-validation-errors");
+		this.eventBus.$off("validate-fields");
+		this.eventBus.$emit("field-deregistering", this);
 	}
 };
