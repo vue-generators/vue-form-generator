@@ -1,25 +1,24 @@
 <template>
 	<div class="form-element" :class="[fieldRowClasses]">
 		<label v-if="fieldTypeHasLabel" :for="fieldID" :class="field.labelClasses">
-			<span v-html="field.label"></span>
-			<span v-if='field.help' class="help">
-				<i class="icon"></i>
-				<div class="helpText" v-html='field.help'></div>
-			</span>
+			<slot name="label" :field="field" :getValueFromOption="getValueFromOption"></slot>
+			<slot name="help" :field="field" :getValueFromOption="getValueFromOption"></slot>
 		</label>
 
 		<div class="field-wrap">
-			<component ref="child" :is="fieldType" :model="model" :schema="field" :formOptions="options" :eventBus="eventBus" :fieldID="fieldID" @errors-updated="onChildValidated"></component>
+			<component ref="child" :is="fieldType" :model="model" :schema="field" :formOptions="options" :eventBus="eventBus" :fieldID="fieldID" @field-touched="onFieldTouched" @errors-updated="onChildValidated"></component>
 			<div v-if="buttonsAreVisible" class="buttons">
 				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
 			</div>
 		</div>
 
-		<div v-if="fieldHasHint" class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+		<template v-if="fieldHasHint">
+			<slot name="hint" :field="field" :getValueFromOption="getValueFromOption"></slot>
+		</template>
 
-		<div v-if="childErrors.length > 0" class="errors help-block">
-			<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>
-		</div>
+		<template v-if="fieldHasErrors">
+			<slot name="errors" :childErrors="childErrors" :field="field" :getValueFromOption="getValueFromOption" ></slot>
+		</template>
 	</div>
 </template>
 <script>
@@ -52,7 +51,8 @@ export default {
 	},
 	data() {
 		return {
-			childErrors: []
+			childErrors: [],
+			childTouched: false
 		};
 	},
 	computed: {
@@ -88,11 +88,14 @@ export default {
 		fieldHasHint() {
 			return !isNil(this.field.hint);
 		},
+		fieldHasErrors() {
+			return this.childErrors.length > 0;
+		},
 		fieldRowClasses() {
-			const hasErrors = this.childErrors.length > 0;
 			let baseClasses = {
-				[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
-				[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
+				[objGet(this.options, "validationErrorClass", "error")]: this.fieldHasErrors,
+				[objGet(this.options, "validationSuccessClass", "valid")]: !this.fieldHasErrors && this.childTouched,
+				[objGet(this.options, "validationCleanClass", "clean")]: !this.fieldHasErrors && !this.childTouched,
 				disabled: this.getValueFromOption(this.field, "disabled"),
 				readonly: this.getValueFromOption(this.field, "readonly"),
 				featured: this.getValueFromOption(this.field, "featured"),
@@ -127,6 +130,9 @@ export default {
 		buttonClickHandler(btn, field, event) {
 			return btn.onclick.call(this, this.model, field, event, this);
 		},
+		onFieldTouched() {
+			this.childTouched = true;
+		},
 		onChildValidated(errors) {
 			this.childErrors = errors;
 		}
@@ -135,11 +141,13 @@ export default {
 </script>
 <style lang="scss">
 $errorColor: #f00;
-
+.form-group:not([class*=" col-"]) {
+	width: 100%;
+}
 .form-element {
 	display: inline-block;
 	vertical-align: top;
-	width: 100%;
+	// width: 100%;
 	// margin: 0.5rem 0.26rem;
 	margin-bottom: 1rem;
 

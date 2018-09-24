@@ -22,7 +22,9 @@
 						<strong>{{ item.error }}</strong>
 					</div>
 				</div>
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
+				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated">
+
+				</vue-form-generator>
 			</div>
 			<div class="col-md-6">
 				<pre v-if="model" v-html="prettyModel"></pre>

@@ -2,7 +2,42 @@
 	<div class="vue-form-generator" v-if='schema != null'>
 		<div v-text="totalNumberOfFields"></div>
 		<div v-html="errors"></div>
-		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus"></form-group>
+		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus">
+			<template slot="element" slot-scope="slotProps">
+				<form-element :field="slotProps.field" :model="slotProps.model" :options="slotProps.options" :errors="slotProps.errors" :eventBus="eventBus">
+
+					<template slot="label" slot-scope="{ field, getValueFromOption }">
+						<slot name="label" :field="field" :getValueFromOption="getValueFromOption">
+							<span v-html="field.label"></span>
+						</slot>
+					</template>
+
+					<template slot="help" slot-scope="{ field, getValueFromOption }">
+						<slot name="help" :field="field" :getValueFromOption="getValueFromOption">
+							<span v-if='field.help' class="help">
+								<i class="icon"></i>
+								<div class="helpText" v-html='field.help'></div>
+							</span>
+						</slot>
+					</template>
+
+					<template slot="hint" slot-scope="{ field, getValueFromOption }">
+						<slot name="hint" :field="field" :getValueFromOption="getValueFromOption">
+							<div class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+						</slot>
+					</template>
+
+					<template slot="errors" slot-scope="{ childErrors, field, getValueFromOption }">
+						<slot name="errors" :errors="childErrors" :field="field" :getValueFromOption="getValueFromOption">
+							<div class="errors help-block">
+								<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>
+							</div>
+						</slot>
+					</template>
+
+				</form-element>
+			</template>
+		</form-group>
 	</div>
 </template>
 
@@ -10,10 +45,11 @@
 import Vue from "vue";
 import { get as objGet, isArray } from "lodash";
 import formGroup from "./formGroup.vue";
+import formElement from "./formElement.vue";
 
 export default {
 	name: "formGenerator",
-	components: { formGroup },
+	components: { formGroup, formElement },
 	props: {
 		schema: {
 			type: Object

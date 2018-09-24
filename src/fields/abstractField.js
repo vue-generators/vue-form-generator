@@ -46,6 +46,7 @@ export default {
 		const fieldUID = uniqueId(this.fieldID + "_");
 		return {
 			fieldUID,
+			touched: false,
 			errors: [],
 			debouncedValidateFunc: null,
 			debouncedFormatFunction: null
@@ -75,6 +76,8 @@ export default {
 			},
 
 			set(newValue) {
+				this.touch();
+
 				let oldValue = this.value;
 				newValue = this.formatValueToModel(newValue);
 
@@ -133,6 +136,8 @@ export default {
 			}
 		},
 		validate() {
+			this.touch();
+
 			this.clearValidationErrors();
 			let validateAsync = objGet(this.formOptions, "validateAsync", false);
 
@@ -277,6 +282,13 @@ export default {
 
 		formatValueToModel(value) {
 			return value;
+		},
+
+		touch() {
+			if (!this.touched) {
+				this.touched = true;
+				this.$emit("field-touched");
+			}
 		}
 	},
 	created() {
