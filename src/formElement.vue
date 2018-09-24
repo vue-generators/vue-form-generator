@@ -132,11 +132,13 @@ export default {
 </script>
 <style lang="scss">
 $errorColor: #f00;
-
+.form-element:not([class*=" col-"]) {
+	width: 100%;
+}
 .form-element {
 	display: inline-block;
 	vertical-align: top;
-	width: 100%;
+	// width: 100%;
 	// margin: 0.5rem 0.26rem;
 	margin-bottom: 1rem;
 

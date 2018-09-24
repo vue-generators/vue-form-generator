@@ -44,7 +44,7 @@ export default {
 			required: true,
 			help: "First name of user",
 			validator: validators.string,
-			fieldClasses: "half-width",
+			styleClasses: "half-width col-xs-12 col-sm-6",
 			fieldOptions: {
 				inputType: "text"
 			},
@@ -64,7 +64,7 @@ export default {
 			placeholder: "User's last name",
 			featured: true,
 			required: true,
-			fieldClasses: "half-width",
+			styleClasses: "half-width col-xs-12 col-sm-6",
 			fieldOptions: {
 				inputType: "text"
 			},
