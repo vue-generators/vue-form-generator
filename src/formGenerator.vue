@@ -1,7 +1,5 @@
 <template>
 	<div class="vue-form-generator" v-if='schema != null'>
-		<div v-text="totalNumberOfFields"></div>
-		<div v-html="errors"></div>
 		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus">
 			<template slot="element" slot-scope="slotProps">
 				<form-element :field="slotProps.field" :model="slotProps.model" :options="slotProps.options" :errors="slotProps.errors" :eventBus="eventBus">
