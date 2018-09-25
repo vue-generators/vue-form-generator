@@ -182,25 +182,21 @@ https://google.com/
 
 	methods: {
 		testClick(helpText, event) {
-			console.log(helpText, event);
+			// console.log(helpText, event);
 		},
 		getIcon(field, getValueFromOption) {
 			let fieldType = getValueFromOption(field, "type");
 			let fieldOptions = getValueFromOption(field, "fieldOptions");
-
-			if (fieldType === "input") {
-				switch (fieldOptions.inputType) {
-					case "email":
-						return "at";
-					case "number":
-						return "calculator";
-					case "date":
-						return "calendar-alt";
-					case "color":
-						return "palette";
-					default:
-						return "file-alt";
-				}
+			let icons = {
+				email: "at",
+				number: "calculator",
+				date: "calendar-alt",
+				color: "palette"
+			};
+			if (fieldType === "input" && typeof icons[fieldOptions.inputType] !== undefined) {
+				return icons[fieldOptions.inputType];
+			} else {
+				return "file-alt";
 			}
 		}
 	},
