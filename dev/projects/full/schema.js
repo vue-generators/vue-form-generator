@@ -51,7 +51,9 @@ export default {
 				console.log(`Model's name changed from ${oldVal} to ${newVal}. Model:`, model);
 			},
 			onValidated(model, errors) {
-				if (errors.length > 0) console.warn("Validation error in Name field! Errors:", errors);
+				if (errors.length > 0) {
+					console.warn("Validation error in Name field! Errors:", errors);
+				}
 			}
 		},
 		{
@@ -434,25 +436,29 @@ export default {
 				let values = val.split(",");
 				if (!model.address) model.address = {};
 				if (!model.address.geo) model.address.geo = {};
-				if (values.length > 0 && values[0].trim() !== "")
+				if (values.length > 0 && values[0].trim() !== "") {
 					model.address.geo.latitude = parseFloat(values[0].trim());
-				else model.address.geo.latitude = 0;
-				if (values.length > 1 && values[1].trim() !== "")
+				} else {
+					model.address.geo.latitude = 0;
+				}
+				if (values.length > 1 && values[1].trim() !== "") {
 					model.address.geo.longitude = parseFloat(values[1].trim());
-				else model.address.geo.longitude = 0;
+				} else {
+					model.address.geo.longitude = 0;
+				}
 			},
 			buttons: [
 				{
 					classes: "btn-location",
 					label: "Current location",
-					onclick: function(model) {
+					onclick(model) {
 						return this.$parent.getLocation(model);
 					}
 				},
 				{
 					classes: "btn-clear",
 					label: "Clear",
-					onclick: function(model) {
+					onclick(model) {
 						model.address.geo = {
 							latitude: 0,
 							longitude: 0

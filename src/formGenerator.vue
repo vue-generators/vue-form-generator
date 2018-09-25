@@ -78,7 +78,7 @@ export default {
 		tag: {
 			type: String,
 			default: "fieldset",
-			validator: function(value) {
+			validator(value) {
 				return value.length > 0;
 			}
 		}
@@ -87,7 +87,7 @@ export default {
 	data() {
 		const eventBus = new Vue();
 		return {
-			eventBus: eventBus,
+			eventBus,
 			totalNumberOfFields: 0,
 			errors: [] // Validation errors
 		};
@@ -105,9 +105,10 @@ export default {
 		// new model loaded
 		model: {
 			handler(newModel, oldModel) {
-				if (oldModel === newModel)
+				if (oldModel === newModel) {
 					// model property changed, skip
 					return;
+				}
 
 				if (newModel != null) {
 					this.$nextTick(() => {
@@ -131,8 +132,8 @@ export default {
 			if (isArray(fieldErrors) && fieldErrors.length > 0) {
 				fieldErrors.forEach((error) => {
 					errors.push({
-						uid: uid,
-						error: error
+						uid,
+						error
 					});
 				});
 			}
@@ -163,7 +164,7 @@ export default {
 				let formErrors = [];
 
 				this.eventBus.$on("field-deregistering", () => {
-					console.warn("Fields were deleted during validation process");
+					// console.warn("Fields were deleted during validation process");
 					this.eventBus.$emit("fields-validation-terminated", formErrors);
 					reject(formErrors);
 				});

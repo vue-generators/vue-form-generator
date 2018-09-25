@@ -31,7 +31,7 @@ export default {
 		tag: {
 			type: String,
 			default: "fieldset",
-			validator: function(value) {
+			validator(value) {
 				return value.length > 0;
 			}
 		},
@@ -74,9 +74,13 @@ export default {
 	methods: {
 		// Get visible prop of field
 		fieldVisible(field) {
-			if (isFunction(field.visible)) return field.visible.call(this, this.model, field, this);
+			if (isFunction(field.visible)) {
+				return field.visible.call(this, this.model, field, this);
+			}
 
-			if (isNil(field.visible)) return true;
+			if (isNil(field.visible)) {
+				return true;
+			}
 
 			return field.visible;
 		},

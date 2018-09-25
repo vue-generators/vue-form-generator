@@ -65,24 +65,15 @@ export default {
 		},
 		// Should field type have a label?
 		fieldTypeHasLabel() {
-			if (isNil(this.field.label)) return false;
-
-			let relevantType = "";
+			if (isNil(this.field.label)) {
+				return false;
+			}
 			let fieldOptions = this.getValueFromOption(this.field, "fieldOptions");
-			if (this.field.type === "input" && !isNil(fieldOptions)) {
-				relevantType = fieldOptions.inputType;
-			} else {
-				relevantType = this.field.type;
-			}
+			let condition = this.field.type === "input" && !isNil(fieldOptions);
+			let relevantType = condition ? fieldOptions.inputType : this.field.type;
+			const typeWithoutLabel = ["button", "submit", "reset"];
 
-			switch (relevantType) {
-				case "button":
-				case "submit":
-				case "reset":
-					return false;
-				default:
-					return true;
-			}
+			return !typeWithoutLabel.includes(relevantType);
 		},
 		fieldHasHint() {
 			return !isNil(this.field.hint);

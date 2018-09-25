@@ -84,7 +84,9 @@ export default {
 
 	computed: {
 		validationErrors() {
-			if (this.$refs.form && this.$refs.form.errors) return this.$refs.form.errors;
+			if (this.$refs.form && this.$refs.form.errors) {
+				return this.$refs.form.errors;
+			}
 
 			return [];
 		}
@@ -187,7 +189,9 @@ export default {
 			let id = 0;
 
 			each(this.rows, (row) => {
-				if (row.id > id) id = row.id;
+				if (row.id > id) {
+					id = row.id;
+				}
 			});
 
 			return ++id;
@@ -206,8 +210,12 @@ export default {
 		getLocation(model) {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition((pos) => {
-					if (!model.address) model.address = {};
-					if (!model.address.geo) model.address.geo = {};
+					if (!model.address) {
+						model.address = {};
+					}
+					if (!model.address.geo) {
+						model.address.geo = {};
+					}
 					model.address.geo.latitude = pos.coords.latitude.toFixed(5);
 					model.address.geo.longitude = pos.coords.longitude.toFixed(5);
 				});
