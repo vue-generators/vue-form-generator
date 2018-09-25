@@ -1070,9 +1070,6 @@ describe("VueFormGenerator.vue", () => {
 			field.validate();
 			Vue.config.errorHandler = done;
 			Vue.nextTick(() => {
-				console.log(form.errors);
-				console.log(formGenerator.emitted().validated);
-
 				expect(form.errors).to.be.length(1);
 				expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
 				expect(formGenerator.emitted().validated.length).to.be.equal(1);

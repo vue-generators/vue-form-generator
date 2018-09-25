@@ -34,6 +34,7 @@
 </template>
 
 <script>
+/* eslint no-console: 0 */
 import Vue from "vue";
 import VueFormGenerator from "../../../src";
 import DataTable from "./dataTable.vue";

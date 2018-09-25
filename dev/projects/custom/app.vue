@@ -56,6 +56,7 @@
 </template>
 
 <script>
+/* eslint no-console: 0 */
 import mixinUtils from "../../mixins/utils.js";
 import VueMarkdown from "vue-markdown";
 
@@ -182,7 +183,7 @@ https://google.com/
 
 	methods: {
 		testClick(helpText, event) {
-			// console.log(helpText, event);
+			console.log(helpText, event);
 		},
 		getIcon(field, getValueFromOption) {
 			let fieldType = getValueFromOption(field, "type");
@@ -193,7 +194,7 @@ https://google.com/
 				date: "calendar-alt",
 				color: "palette"
 			};
-			if (fieldType === "input" && typeof icons[fieldOptions.inputType] !== undefined) {
+			if (fieldType === "input" && typeof icons[fieldOptions.inputType] !== "undefined") {
 				return icons[fieldOptions.inputType];
 			} else {
 				return "file-alt";

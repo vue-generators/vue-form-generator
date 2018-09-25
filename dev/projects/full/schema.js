@@ -1,3 +1,4 @@
+/* eslint no-console: 0 */
 import fecha from "fecha";
 
 import { validators } from "../../../src";

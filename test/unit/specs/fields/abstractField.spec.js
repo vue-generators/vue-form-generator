@@ -219,12 +219,13 @@ describe("abstractField.vue", () => {
 			// options.validateAfterChanged = true;
 
 			wrapper.setProps({ formOptions: { validateAfterChanged: true } });
-			console.log("---", field.value);
+			// console.log("---", field.value);
 			// console.log("---", wrapper);
 			const textInput = wrapper.find(`input[type="text"]`);
+			// console.log("---", wrapper);
 			textInput.setValue("Jane Roe");
 			// field.value.set("Jane Roe");
-			console.log("---", field.value);
+			// console.log("---", field.value);
 			// wrapper.setData({ value: "Jane Roe" });
 			Vue.config.errorHandler = done;
 			Vue.nextTick(() => {
