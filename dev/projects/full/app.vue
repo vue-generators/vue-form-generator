@@ -22,7 +22,9 @@
 						<strong>{{ item.error }}</strong>
 					</div>
 				</div>
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
+				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated">
+
+				</vue-form-generator>
 			</div>
 			<div class="col-md-6">
 				<pre v-if="model" v-html="prettyModel"></pre>
@@ -32,6 +34,7 @@
 </template>
 
 <script>
+/* eslint no-console: 0 */
 import Vue from "vue";
 import VueFormGenerator from "../../../src";
 import DataTable from "./dataTable.vue";
@@ -82,7 +85,9 @@ export default {
 
 	computed: {
 		validationErrors() {
-			if (this.$refs.form && this.$refs.form.errors) return this.$refs.form.errors;
+			if (this.$refs.form && this.$refs.form.errors) {
+				return this.$refs.form.errors;
+			}
 
 			return [];
 		}
@@ -185,7 +190,9 @@ export default {
 			let id = 0;
 
 			each(this.rows, (row) => {
-				if (row.id > id) id = row.id;
+				if (row.id > id) {
+					id = row.id;
+				}
 			});
 
 			return ++id;
@@ -204,8 +211,12 @@ export default {
 		getLocation(model) {
 			if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition((pos) => {
-					if (!model.address) model.address = {};
-					if (!model.address.geo) model.address.geo = {};
+					if (!model.address) {
+						model.address = {};
+					}
+					if (!model.address.geo) {
+						model.address.geo = {};
+					}
 					model.address.geo.latitude = pos.coords.latitude.toFixed(5);
 					model.address.geo.longitude = pos.coords.longitude.toFixed(5);
 				});

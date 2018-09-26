@@ -1,11 +1,8 @@
 <template>
 	<div class="form-element" :class="[fieldRowClasses]">
 		<label v-if="fieldTypeHasLabel" :for="fieldID" :class="field.labelClasses">
-			<span v-html="field.label"></span>
-			<span v-if='field.help' class="help">
-				<i class="icon"></i>
-				<div class="helpText" v-html='field.help'></div>
-			</span>
+			<slot name="label" :field="field" :getValueFromOption="getValueFromOption"></slot>
+			<slot name="help" :field="field" :getValueFromOption="getValueFromOption"></slot>
 		</label>
 
 		<div class="field-wrap">
@@ -15,11 +12,13 @@
 			</div>
 		</div>
 
-		<div v-if="fieldHasHint" class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+		<template v-if="fieldHasHint">
+			<slot name="hint" :field="field" :getValueFromOption="getValueFromOption"></slot>
+		</template>
 
-		<div v-if="childErrors.length > 0" class="errors help-block">
-			<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>
-		</div>
+		<template v-if="fieldHasErrors">
+			<slot name="errors" :childErrors="childErrors" :field="field" :getValueFromOption="getValueFromOption" ></slot>
+		</template>
 	</div>
 </template>
 <script>
@@ -66,33 +65,26 @@ export default {
 		},
 		// Should field type have a label?
 		fieldTypeHasLabel() {
-			if (isNil(this.field.label)) return false;
-
-			let relevantType = "";
+			if (isNil(this.field.label)) {
+				return false;
+			}
 			let fieldOptions = this.getValueFromOption(this.field, "fieldOptions");
-			if (this.field.type === "input" && !isNil(fieldOptions)) {
-				relevantType = fieldOptions.inputType;
-			} else {
-				relevantType = this.field.type;
-			}
+			let condition = this.field.type === "input" && !isNil(fieldOptions);
+			let relevantType = condition ? fieldOptions.inputType : this.field.type;
+			const typeWithoutLabel = ["button", "submit", "reset"];
 
-			switch (relevantType) {
-				case "button":
-				case "submit":
-				case "reset":
-					return false;
-				default:
-					return true;
-			}
+			return !typeWithoutLabel.includes(relevantType);
 		},
 		fieldHasHint() {
 			return !isNil(this.field.hint);
 		},
+		fieldHasErrors() {
+			return this.childErrors.length > 0;
+		},
 		fieldRowClasses() {
-			const hasErrors = this.childErrors.length > 0;
 			let baseClasses = {
-				[objGet(this.options, "validationErrorClass", "error")]: hasErrors,
-				[objGet(this.options, "validationSuccessClass", "valid")]: !hasErrors,
+				[objGet(this.options, "validationErrorClass", "error")]: this.fieldHasErrors,
+				[objGet(this.options, "validationSuccessClass", "valid")]: !this.fieldHasErrors,
 				disabled: this.getValueFromOption(this.field, "disabled"),
 				readonly: this.getValueFromOption(this.field, "readonly"),
 				featured: this.getValueFromOption(this.field, "featured"),

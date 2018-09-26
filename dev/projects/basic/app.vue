@@ -15,6 +15,7 @@
 </template>
 
 <script>
+/* eslint no-console: 0 */
 import mixinUtils from "../../mixins/utils.js";
 
 export default {

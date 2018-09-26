@@ -63,7 +63,9 @@ const validators = {
 
 	number(value, field, model, messages = resources) {
 		let res = checkEmpty(value, field.required, messages);
-		if (res != null) return res;
+		if (res != null) {
+			return res;
+		}
 
 		let err = [];
 		if (isNumber(value)) {
@@ -226,7 +228,7 @@ const validators = {
 			if (shouldDouble) {
 				tmpNum *= 2;
 				if (tmpNum >= 10) {
-					sum += tmpNum % 10 + 1;
+					sum += (tmpNum % 10) + 1;
 				} else {
 					sum += tmpNum;
 				}

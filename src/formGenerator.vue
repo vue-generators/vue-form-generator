@@ -1,8 +1,41 @@
 <template>
 	<div class="vue-form-generator" v-if='schema != null'>
-		<div v-text="totalNumberOfFields"></div>
-		<div v-html="errors"></div>
-		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus"></form-group>
+		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus">
+			<template slot="element" slot-scope="slotProps">
+				<form-element :field="slotProps.field" :model="slotProps.model" :options="slotProps.options" :errors="slotProps.errors" :eventBus="eventBus">
+
+					<template slot="label" slot-scope="{ field, getValueFromOption }">
+						<slot name="label" :field="field" :getValueFromOption="getValueFromOption">
+							<span v-html="field.label"></span>
+						</slot>
+					</template>
+
+					<template slot="help" slot-scope="{ field, getValueFromOption }">
+						<slot name="help" :field="field" :getValueFromOption="getValueFromOption">
+							<span v-if='field.help' class="help">
+								<i class="icon"></i>
+								<div class="helpText" v-html='field.help'></div>
+							</span>
+						</slot>
+					</template>
+
+					<template slot="hint" slot-scope="{ field, getValueFromOption }">
+						<slot name="hint" :field="field" :getValueFromOption="getValueFromOption">
+							<div class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+						</slot>
+					</template>
+
+					<template slot="errors" slot-scope="{ childErrors, field, getValueFromOption }">
+						<slot name="errors" :errors="childErrors" :field="field" :getValueFromOption="getValueFromOption">
+							<div class="errors help-block">
+								<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>
+							</div>
+						</slot>
+					</template>
+
+				</form-element>
+			</template>
+		</form-group>
 	</div>
 </template>
 
@@ -10,10 +43,11 @@
 import Vue from "vue";
 import { get as objGet, isArray } from "lodash";
 import formGroup from "./formGroup.vue";
+import formElement from "./formElement.vue";
 
 export default {
 	name: "formGenerator",
-	components: { formGroup },
+	components: { formGroup, formElement },
 	props: {
 		schema: {
 			type: Object
@@ -44,7 +78,7 @@ export default {
 		tag: {
 			type: String,
 			default: "fieldset",
-			validator: function(value) {
+			validator(value) {
 				return value.length > 0;
 			}
 		}
@@ -53,7 +87,7 @@ export default {
 	data() {
 		const eventBus = new Vue();
 		return {
-			eventBus: eventBus,
+			eventBus,
 			totalNumberOfFields: 0,
 			errors: [] // Validation errors
 		};
@@ -71,9 +105,10 @@ export default {
 		// new model loaded
 		model: {
 			handler(newModel, oldModel) {
-				if (oldModel === newModel)
+				if (oldModel === newModel) {
 					// model property changed, skip
 					return;
+				}
 
 				if (newModel != null) {
 					this.$nextTick(() => {
@@ -97,8 +132,8 @@ export default {
 			if (isArray(fieldErrors) && fieldErrors.length > 0) {
 				fieldErrors.forEach((error) => {
 					errors.push({
-						uid: uid,
-						error: error
+						uid,
+						error
 					});
 				});
 			}
@@ -129,7 +164,7 @@ export default {
 				let formErrors = [];
 
 				this.eventBus.$on("field-deregistering", () => {
-					console.warn("Fields were deleted during validation process");
+					// console.warn("Fields were deleted during validation process");
 					this.eventBus.$emit("fields-validation-terminated", formErrors);
 					reject(formErrors);
 				});

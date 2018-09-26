@@ -3,7 +3,12 @@ import fecha from "fecha";
 
 let fakerator = new Fakerator();
 
-let roles = [{ id: "admin", name: "Administrator" }, { id: "moderator", name: "Moderator" }, { id: "user", name: "Registered User" }, { id: "visitor", name: "Visitor" }];
+let roles = [
+	{ id: "admin", name: "Administrator" },
+	{ id: "moderator", name: "Moderator" },
+	{ id: "user", name: "Registered User" },
+	{ id: "visitor", name: "Visitor" }
+];
 
 let skills = ["HTML5", "Javascript", "CSS3", "CoffeeScript", "AngularJS", "ReactJS", "VueJS"];
 
@@ -34,7 +39,9 @@ let users = (function() {
 		user.favoriteColor = "#" + fakerator.internet.color();
 		user.color = "#" + fakerator.internet.color();
 
-		if (user.type === "business") user.company = fakerator.entity.company();
+		if (user.type === "business") {
+			user.company = fakerator.entity.company();
+		}
 
 		user.income = [fakerator.random.number(50000), fakerator.random.number(50000, 100000)];
 

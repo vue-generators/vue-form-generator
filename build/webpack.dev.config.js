@@ -44,12 +44,13 @@ module.exports = {
 		contentBase: [path.resolve("dev/projects")]
 	},
 	entry: {
-		full: path.resolve("dev", "projects", "full", "main.js"),
 		basic: path.resolve("dev", "projects", "basic", "main.js"),
-		mselect: path.resolve("dev", "projects", "multiselect", "main.js"),
-		grouping: path.resolve("dev", "projects", "grouping", "main.js"),
-		multi: path.resolve("dev", "projects", "multi", "main.js"),
 		checklist: path.resolve("dev", "projects", "checklist", "main.js"),
+		custom: path.resolve("dev", "projects", "custom", "main.js"),
+		full: path.resolve("dev", "projects", "full", "main.js"),
+		grouping: path.resolve("dev", "projects", "grouping", "main.js"),
+		mselect: path.resolve("dev", "projects", "multiselect", "main.js"),
+		multi: path.resolve("dev", "projects", "multi", "main.js"),
 		picker: path.resolve("dev", "projects", "picker", "main.js")
 	},
 

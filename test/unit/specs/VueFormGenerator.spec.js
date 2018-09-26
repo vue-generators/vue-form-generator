@@ -1070,9 +1070,6 @@ describe("VueFormGenerator.vue", () => {
 			field.validate();
 			Vue.config.errorHandler = done;
 			Vue.nextTick(() => {
-				console.log(form.errors);
-				console.log(formGenerator.emitted().validated);
-
 				expect(form.errors).to.be.length(1);
 				expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
 				expect(formGenerator.emitted().validated.length).to.be.equal(1);
@@ -1087,6 +1084,87 @@ describe("VueFormGenerator.vue", () => {
 				expect(onValidated.calledWith(false, [{ field: schema.fields[0], error: "Invalid name" }])).to.be.true;
 				done();
 			});
+		});
+	});
+
+	describe("check custom slot", () => {
+		let schema = {
+			fields: [
+				{
+					type: "input",
+					fieldOptions: {
+						inputType: "text",
+						min: 3
+					},
+					label: "My label",
+					help: "My help",
+					hint: "My hint",
+					model: "name",
+					validator: ["string"]
+				}
+			]
+		};
+		let model = { name: "B" };
+		let formOptions = { validateAfterLoad: true };
+		let formGenerator;
+		let form;
+
+		beforeEach(() => {
+			createFormGenerator(
+				{ schema, model, formOptions },
+				{},
+				`<vue-form-generator :schema="schema" ref="form" tag="section">
+					<template slot="label" slot-scope="{ field, getValueFromOption }">
+						<span class="custom-class--label">Custom label</span>
+						<div v-html="getValueFromOption(field, 'label', undefined)"></div>
+					</template>
+
+					<template slot="help" slot-scope="{ field, getValueFromOption }">
+						<span class="custom-class--help">Custom help</span>
+						<div v-html="getValueFromOption(field, 'help', undefined)"></div>
+					</template>
+
+					<template slot="hint" slot-scope="{ field, getValueFromOption }">
+						<span class="custom-class--hint">Custom hint</span>
+						<div v-html="getValueFromOption(field, 'hint', undefined)"></div>
+					</template>
+
+					<template slot="errors" slot-scope="{ errors, field, getValueFromOption }">
+						<span class="custom-class--errors">Custom errors</span>
+						<div v-for="(error, index) in errors" :key="index">
+							{{index}}
+						</div>
+					</template>
+				</vue-form-generator>`
+			);
+			formGenerator = wrapper.find({ name: "formGenerator" });
+			form = formGenerator.vm;
+		});
+
+		it("should have a custom label", () => {
+			expect(formGenerator.find(".custom-class--label").exists()).to.be.true;
+		});
+
+		it("should have a custom help", () => {
+			expect(formGenerator.find(".custom-class--help").exists()).to.be.true;
+		});
+
+		it("should have a custom hint", () => {
+			expect(formGenerator.find(".custom-class--hint").exists()).to.be.true;
+		});
+		// TODO: fix error not showing
+		it.skip("should have a custom error", (done) => {
+			Vue.config.errorHandler = done;
+
+			form.validate().then(
+				() => {
+					Vue.nextTick(() => {
+						expect(formGenerator.find(".custom-class--errors").exists()).to.be.true;
+						done();
+					});
+				},
+				() => {}
+			);
 		});
 	});
 });
