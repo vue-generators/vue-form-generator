@@ -89,6 +89,7 @@
 		"jsdom": "11.11.0",
 		"jsdom-global": "3.0.2",
 		"lodash": "4.17.10",
+		"lodash-webpack-plugin": "0.11.5",
 		"lolex": "2.7.0",
 		"mocha": "5.2.0",
 		"mocha-generators": "2.0.0",
