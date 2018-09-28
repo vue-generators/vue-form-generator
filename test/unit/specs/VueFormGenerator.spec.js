@@ -72,23 +72,9 @@ describe("VueFormGenerator.vue", () => {
 	});
 
 	describe("check form-element classes", () => {
-		let group;
-		let schema = {
-			fields: [
-				{
-					type: "input",
-					fieldOptions: {
-						inputType: "text"
-					},
-					label: "Name",
-					model: "name",
-					readonly: false,
-					featured: false,
-					required: false,
-					disabled: false
-				}
-			]
-		};
+		let formGenerator;
+		let formElement;
+		let schema;
 
 		beforeEach(() => {
 			// Reset schema value
@@ -96,9 +82,12 @@ describe("VueFormGenerator.vue", () => {
 				fields: [
 					{
 						type: "input",
-						fieldOptions: {
-							inputType: "text"
-						},
+						fieldOptions: { inputType: "text" },
+						/*
+							styleClasses need to be defined for the unit test to work (add getter/setter)
+							In real use, it is not mandatory
+						 */
+						styleClasses: "",
 						label: "Name",
 						model: "name",
 						readonly: false,
@@ -109,83 +98,95 @@ describe("VueFormGenerator.vue", () => {
 				]
 			};
 			createFormGenerator({ schema });
-			group = wrapper.find(".form-element");
+			formGenerator = wrapper.find({ name: "formGenerator" });
+			formElement = wrapper.find({ name: "form-element" });
 		});
 
 		it("should be minimal classes", () => {
-			expect(group.classes().length).to.be.equal(2);
-			expect(group.classes()).to.include("form-element");
-			expect(group.classes()).to.include("field-input");
+			expect(formElement.classes().length).to.be.equal(3);
+			expect(formElement.classes()).to.include("form-element");
+			expect(formElement.classes()).to.include("field-input");
 		});
 
 		it("should be featured class", () => {
 			wrapper.vm.schema.fields[0].featured = true;
 
-			expect(group.classes()).to.include("featured");
+			expect(formElement.classes()).to.include("featured");
 		});
 
 		it("should be readonly class", () => {
 			wrapper.vm.schema.fields[0].readonly = true;
 
-			expect(group.classes()).to.include("readonly");
+			expect(formElement.classes()).to.include("readonly");
 		});
 
 		it("should be disabled class", () => {
 			wrapper.vm.schema.fields[0].disabled = true;
 
-			expect(group.classes()).to.include("disabled");
+			expect(formElement.classes()).to.include("disabled");
 		});
 
 		it("should be required class", () => {
 			wrapper.vm.schema.fields[0].required = true;
 
-			expect(group.classes()).to.include("required");
+			expect(formElement.classes()).to.include("required");
 		});
 
 		it("should be error class", () => {
-			const formElement = wrapper.find({ name: "form-element" });
 			formElement.vm.onChildValidated(["Validation error!"]);
-			expect(group.classes()).to.include("error");
+			expect(formElement.classes()).to.include("error");
 		});
 
 		describe("custom validation classes", () => {
+			let formGenerator;
+			let formElement;
 			beforeEach(() => {
-				let options = { validationErrorClass: "has-error", validationSuccessClass: "has-success" };
+				let options = {
+					validationCleanClass: "is-clean",
+					validationSuccessClass: "has-success",
+					validationErrorClass: "has-error"
+				};
 				createFormGenerator({
 					schema,
 					options: options
 				});
-				group = wrapper.find(".form-element");
+				formGenerator = wrapper.find({ name: "formGenerator" });
+				formElement = wrapper.find({ name: "form-element" });
+			});
+
+			it("clean class", () => {
+				expect(formElement.classes()).to.include("is-clean");
 			});
 
 			it("error class", () => {
-				const formElement = wrapper.find({ name: "form-element" });
 				formElement.vm.onChildValidated(["Validation error!"]);
 
-				expect(group.classes()).to.include("has-error");
+				expect(formElement.classes()).to.include("has-error");
 			});
 
-			it("success class", () => {
-				const formElement = wrapper.find({
-					name: "form-element"
-				});
-				formElement.vm.onChildValidated([]);
-
-				expect(group.classes()).to.include("has-success");
+			it("success class", (done) => {
+				formGenerator.vm.validate().then(
+					() => {
+						expect(formElement.classes()).to.include("has-success");
+						done();
+					},
+					() => {}
+				);
 			});
 		});
-		// Work in real use, but not here
-		it.skip("should be add a custom classes", () => {
-			wrapper.vm.schema.fields[0].styleClasses = "classA";
 
-			expect(group.classes()).to.include("classA");
+		it("should be add a custom classes", () => {
+			schema.fields[0].styleClasses = "classA";
+			formGenerator.setProps({ schema: { ...schema } });
+
+			expect(formElement.classes()).to.include("classA");
 		});
-		// Work in real use, but not here
-		it.skip("should be add more custom classes", () => {
-			wrapper.vm.schema.fields[0].styleClasses = ["classB", "classC"];
 
-			expect(group.classes()).to.include("classB");
-			expect(group.classes()).to.include("classC");
+		it("should be add more custom classes", () => {
+			schema.fields[0].styleClasses = ["classB", "classC"];
+
+			expect(formElement.classes()).to.include("classB");
+			expect(formElement.classes()).to.include("classC");
 		});
 	});
 	// TODO: should be moved to formGroup
