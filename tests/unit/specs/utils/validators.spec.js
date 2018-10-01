@@ -1,3 +1,4 @@
+/* eslint no-undefined: 0 */
 import v from "@/utils/validators";
 
 function check(validator, value, field, errorCount) {

@@ -1,3 +1,4 @@
+/* eslint no-undefined: 0 */
 import { clone } from "lodash";
 
 import { createDefaultObject, getMultipleFields, mergeMultiObjectFields } from "@/utils/schema";

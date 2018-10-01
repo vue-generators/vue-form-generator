@@ -27,7 +27,7 @@
 				</vue-form-generator>
 			</div>
 			<div class="col-md-6">
-				<pre v-if="model" v-html="prettyModel"></pre>
+				<pre v-highlightjs="prettyModel"><code class="json"></code></pre>
 			</div>
 		</div>
 	</div>

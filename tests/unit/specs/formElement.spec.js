@@ -13,7 +13,7 @@ function createFormElement(data, methods) {
 			eventBus: new Vue(),
 			...data
 		},
-		methods: methods
+		methods
 	});
 
 	wrapper = _wrapper;

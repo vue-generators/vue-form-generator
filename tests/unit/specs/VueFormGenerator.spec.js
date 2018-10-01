@@ -1,3 +1,4 @@
+/* eslint no-undefined: 0 */
 import { mount, createLocalVue } from "@vue/test-utils";
 
 import Vue from "vue";
@@ -22,7 +23,7 @@ function createFormGenerator(data, methods, template) {
 			};
 			return _data;
 		},
-		methods: methods
+		methods
 	};
 
 	const _wrapper = mount(Component, {
@@ -59,7 +60,7 @@ describe("VueFormGenerator.vue", () => {
 		before(() => {
 			createFormGenerator(
 				{ schema },
-				undefined,
+				{},
 				`<vue-form-generator :schema="schema" ref="form" tag="section"></vue-form-generator>`
 			);
 		});
@@ -146,7 +147,7 @@ describe("VueFormGenerator.vue", () => {
 					validationSuccessClass: "has-success",
 					validationErrorClass: "has-error"
 				};
-				createFormGenerator({ schema, options: options });
+				createFormGenerator({ schema, options });
 				formGenerator = wrapper.find({ name: "formGenerator" });
 				formElement = wrapper.find({ name: "form-element" });
 			});
@@ -962,7 +963,7 @@ describe("VueFormGenerator.vue", () => {
 		before(() => {
 			createFormGenerator(
 				{ schema, model },
-				{ onValidated: onValidated },
+				{ onValidated },
 				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
 			);
 			formGenerator = wrapper.find({ name: "formGenerator" });

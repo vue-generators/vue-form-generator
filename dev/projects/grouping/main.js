@@ -1,6 +1,10 @@
 import Vue from "vue";
-import VueFormGenerator from "../../../src";
+
+import VueFormGenerator from "@";
 Vue.use(VueFormGenerator);
+
+import VueHighlightJS from "vue-highlightjs";
+Vue.use(VueHighlightJS);
 
 import App from "./app.vue";
 

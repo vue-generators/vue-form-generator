@@ -37,12 +37,12 @@ module.exports = {
 	runtimeCompiler: false,
 	transpileDependencies: [],
 	productionSourceMap: false,
-	pages: process.env.NODE_ENV !== "development" ? undefined : generateDevProjects(),
+	pages: process.env.NODE_ENV !== "development" ? {} : generateDevProjects(),
 	chainWebpack: (config) => {
 		if (process.env.NODE_ENV === "production") {
 			config.plugin("banner").use(webpack.BannerPlugin, [
 				{
-					banner: banner,
+					banner,
 					raw: true,
 					entryOnly: true
 				}

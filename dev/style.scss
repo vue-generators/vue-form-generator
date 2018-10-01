@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Open+Sans:300,600,700&subset=latin-ext");
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,600,700&subset=latin-ext");
 html {
 	font-family: "Open Sans";
 	font-size: 14px;
@@ -8,26 +8,6 @@ html {
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
-}
-
-pre {
-	overflow: auto;
-
-	.string {
-		color: #885800;
-	}
-	.number {
-		color: blue;
-	}
-	.boolean {
-		color: magenta;
-	}
-	.null {
-		color: red;
-	}
-	.key {
-		color: green;
-	}
 }
 
 .control-buttons {

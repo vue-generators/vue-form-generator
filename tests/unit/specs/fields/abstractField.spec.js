@@ -221,7 +221,7 @@ describe("abstractField.vue", () => {
 			wrapper.setProps({ formOptions: { validateAfterChanged: true } });
 			// console.log("---", field.value);
 			// console.log("---", wrapper);
-			const textInput = wrapper.find(`input[type="text"]`);
+			const textInput = wrapper.find('input[type="text"]');
 			// console.log("---", wrapper);
 			textInput.setValue("Jane Roe");
 			// field.value.set("Jane Roe");
