@@ -1,6 +1,6 @@
 {
 	"name": "vue-form-generator",
-	"version": "3.0.0-beta.1",
+	"version": "3.0.0-beta.2",
 	"description": "A schema-based form generator component for Vue.js",
 	"homepage": "https://github.com/vue-generators/vue-form-generator/",
 	"main": "dist/vfg.js",
@@ -31,10 +31,14 @@
 		"url": "https://github.com/vue-generators/vue-form-generator.git"
 	},
 	"files": [
-		"dist/vfg.js",
+		"dist/vfg.common.js",
 		"dist/vfg.css",
-		"dist/vfg-core.js",
+		"dist/vfg.umd.js",
+		"dist/vfg.umd.min.js",
+		"dist/vfg-core.common.js",
 		"dist/vfg-core.css",
+		"dist/vfg-core.umd.js",
+		"dist/vfg-core.umd.min.js",
 		"src"
 	],
 	"author": "Icebob",
