@@ -36,7 +36,7 @@ export default {
 		},
 
 		getRoleName(row) {
-			let role = find(roles, role => role.id === row.role);
+			let role = find(roles, (role) => role.id === row.role);
 			return role ? role.name : "";
 		}
 	}

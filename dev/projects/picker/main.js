@@ -5,5 +5,5 @@ Vue.use(VueFormGenerator);
 import App from "./app.vue";
 
 new Vue({
-	...App
+	render: (h) => h(App)
 }).$mount("#app");
