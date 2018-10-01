@@ -3,7 +3,7 @@
 	"version": "3.0.0-beta.2",
 	"description": "A schema-based form generator component for Vue.js",
 	"homepage": "https://github.com/vue-generators/vue-form-generator/",
-	"main": "dist/vfg.js",
+	"main": "dist/vfg.umd.min.js",
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"prebuild": "npm run test:unit",
@@ -41,7 +41,18 @@
 		"dist/vfg-core.umd.min.js",
 		"src"
 	],
-	"author": "Icebob",
+  "author": "Icebob",
+  "maintainers":[
+    {
+      "name": "David Higgins",
+      "email": "higginsd@zoulcreations.com",
+      "web": "http://www.fragmentedcode.com"
+    },
+    {
+      "name": "Lionel Bijaoui",
+      "email": "lionel.bijaoui@gmail.com"
+    }
+  ],
 	"license": "MIT",
 	"dependencies": {},
 	"devDependencies": {
