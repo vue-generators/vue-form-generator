@@ -1,6 +1,6 @@
 .DS_Store
 node_modules/
-dist/*-report.html
+dist/*.html
 tests/unit/coverage
 
 # local env files

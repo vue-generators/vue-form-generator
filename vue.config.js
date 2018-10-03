@@ -2,14 +2,13 @@ const path = require("path");
 const webpack = require("webpack");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const version = require("./package.json").version;
-const banner =
-	"/**\n" +
-	" * vue-form-generator v" +
-	version +
-	"\n" +
-	" * https://github.com/vue-generators/vue-form-generator/\n" +
-	" * Released under the MIT License.\n" +
-	" */\n";
+const banner = `
+/**
+ * vue-form-generator ${version}
+ * https://github.com/vue-generators/vue-form-generator/
+ * Released under the MIT License.
+ */
+`;
 
 const generateDevProjects = () => {
 	const devProjects = JSON.parse(process.env.VUE_APP_DEV_PROJECT);

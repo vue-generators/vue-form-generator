@@ -1,5 +1,6 @@
+
 /**
- * vue-form-generator v3.0.0-beta.1
+ * vue-form-generator 3.0.0-beta.4
  * https://github.com/vue-generators/vue-form-generator/
  * Released under the MIT License.
  */
@@ -2166,7 +2167,7 @@ module.exports = now;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"138839da-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/formGenerator.vue?vue&type=template&id=5d42dff0&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules//.cache//vue-loader","cacheIdentifier":"138839da-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/formGenerator.vue?vue&type=template&id=4818e5c5&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.schema != null)?_c('div',{staticClass:"vue-form-generator"},[_c('form-group',{attrs:{"tag":_vm.tag,"fields":_vm.fields,"model":_vm.model,"options":_vm.options,"errors":_vm.errors,"eventBus":_vm.eventBus},scopedSlots:_vm._u([{key:"element",fn:function(slotProps){return [_c('form-element',{attrs:{"field":slotProps.field,"model":slotProps.model,"options":slotProps.options,"errors":slotProps.errors,"eventBus":_vm.eventBus},scopedSlots:_vm._u([{key:"label",fn:function(ref){
 var field = ref.field;
 var getValueFromOption = ref.getValueFromOption;
@@ -2184,7 +2185,7 @@ return [_vm._t("errors",[_c('div',{staticClass:"errors help-block"},_vm._l((chil
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/formGenerator.vue?vue&type=template&id=5d42dff0&
+// CONCATENATED MODULE: ./src/formGenerator.vue?vue&type=template&id=4818e5c5&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.promise.js
 var es6_promise = __webpack_require__("551c");
@@ -4059,7 +4060,9 @@ function attributesDirective(el, binding, vnode) {
         return handleErrors(results);
       }
 
-      return Promise.all(results).then(handleErrors);
+      return Promise.all(results).then(handleErrors).catch(function (error) {
+        console.warn("Problem during field validation", error);
+      });
     },
     debouncedValidate: function debouncedValidate() {
       if (!lodash_isFunction__WEBPACK_IMPORTED_MODULE_11___default()(this.debouncedValidateFunc)) {
