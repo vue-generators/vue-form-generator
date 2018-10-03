@@ -201,7 +201,11 @@ export default {
 				return handleErrors(results);
 			}
 
-			return Promise.all(results).then(handleErrors);
+			return Promise.all(results)
+				.then(handleErrors)
+				.catch((error) => {
+					console.warn("Problem during field validation", error);
+				});
 		},
 
 		debouncedValidate() {

@@ -10,7 +10,7 @@ coreFields.keys().forEach((key) => {
 	fieldComponents[getCompName(key)] = coreFields(key).default;
 });
 
-if (process.env.FULL_BUNDLE) {
+if (process.env.VUE_APP_FULL_BUNDLE === "true") {
 	let optionalFields = require.context("../fields/optional", false, /^\.\/field([\w-_]+)\.vue$/);
 
 	optionalFields.keys().forEach((key) => {
@@ -18,4 +18,4 @@ if (process.env.FULL_BUNDLE) {
 	});
 }
 
-module.exports = fieldComponents;
+export default fieldComponents;

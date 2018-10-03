@@ -13,7 +13,7 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
-				<pre v-if="model" v-html="prettyModel"></pre>
+				<pre v-highlightjs="prettyModel"><code class="json"></code></pre>
 			</div>
 		</div>
 	</div>

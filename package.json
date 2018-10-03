@@ -1,26 +1,21 @@
 {
 	"name": "vue-form-generator",
-	"version": "2.3.0",
+	"version": "3.0.0-beta.4",
 	"description": "A schema-based form generator component for Vue.js",
 	"homepage": "https://github.com/vue-generators/vue-form-generator/",
-	"main": "dist/vfg.js",
+	"main": "dist/vfg.umd.min.js",
 	"scripts": {
-		"prebuild": "npm run test",
-		"build:core": "cross-env FULL_BUNDLE=false webpack --progress --config build/webpack.build.config.js --define process.env.FULL_BUNDLE=false --output-filename=vfg-core.js",
-		"build:full": "cross-env FULL_BUNDLE=true  webpack --progress --config build/webpack.build.config.js --define process.env.FULL_BUNDLE=true",
-		"build": "cross-env NODE_ENV=production npm run build:core && cross-env NODE_ENV=production npm run build:full",
-		"dev": "webpack-dev-server --config build/webpack.dev.config.js --inline --hot",
-		"lint": "eslint --ext=.js,.vue src test/unit/specs",
+		"serve": "vue-cli-service serve",
+		"prebuild": "npm run test:unit",
+		"build": "npm run build:core && npm run build:full",
+		"build:core": "cross-env VUE_APP_FULL_BUNDLE=false vue-cli-service build --no-clean --target lib --name vfg-core src/index.js --report",
+		"build:full": "cross-env VUE_APP_FULL_BUNDLE=true  vue-cli-service build --no-clean --target lib --name vfg src/index.js --report",
+		"lint": "vue-cli-service lint",
+		"test:unit": "vue-cli-service test:unit --include ./tests/unit/setup.js",
 		"coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-		"coverage": "cross-env NODE_ENV=test nyc npm run mocha && nyc report --reporter=text-lcov | coveralls",
 		"changelog": "conventional-changelog -i CHANGELOG.md -s",
 		"changelog:full": "conventional-changelog -i CHANGELOG.md -s -r 0",
 		"docs": "cd docs && gitbook serve",
-		"mocha": "mocha-webpack --webpack-config build/webpack.test.config.js --require test/unit/setup.js test/unit/specs/**/*.spec.js",
-		"unit": "cross-env NODE_ENV=test nyc npm run mocha",
-		"e2e": "node test/e2e/runner.js",
-		"ci": "cross-env NODE_ENV=test mocha-webpack --watch --webpack-config build/webpack.test.config.js --require test/unit/setup.js test/unit/specs/**/*.spec.js",
-		"test": "npm run unit",
 		"version": "bumped release"
 	},
 	"keywords": [
@@ -36,92 +31,124 @@
 		"url": "https://github.com/vue-generators/vue-form-generator.git"
 	},
 	"files": [
-		"dist/vfg.js",
+		"dist/vfg.common.js",
 		"dist/vfg.css",
-		"dist/vfg-core.js",
+		"dist/vfg.umd.js",
+		"dist/vfg.umd.min.js",
+		"dist/vfg-core.common.js",
 		"dist/vfg-core.css",
+		"dist/vfg-core.umd.js",
+		"dist/vfg-core.umd.min.js",
 		"src"
 	],
 	"author": "Icebob",
+	"maintainers": [
+		{
+			"name": "David Higgins",
+			"email": "higginsd@zoulcreations.com",
+			"web": "http://www.fragmentedcode.com"
+		},
+		{
+			"name": "Lionel Bijaoui",
+			"email": "lionel.bijaoui@gmail.com"
+		}
+	],
 	"license": "MIT",
+	"dependencies": {},
 	"devDependencies": {
-		"@vue/test-utils": "1.0.0-beta.24",
-		"ajv": "6.5.3",
-		"autoprefixer": "9.1.5",
-		"babel-core": "6.26.3",
-		"babel-eslint": "8.2.6",
-		"babel-loader": "7.1.5",
-		"babel-plugin-istanbul": "4.1.6",
+		"@vue/cli-plugin-babel": "3.0.4",
+		"@vue/cli-plugin-eslint": "3.0.4",
+		"@vue/cli-plugin-unit-mocha": "3.0.4",
+		"@vue/cli-service": "3.0.4",
+		"@vue/eslint-config-prettier": "3.0.4",
+		"@vue/test-utils": "1.0.0-beta.25",
+		"babel-plugin-istanbul": "5.0.1",
 		"babel-plugin-lodash": "3.3.4",
-		"babel-plugin-transform-runtime": "6.23.0",
-		"babel-preset-env": "1.7.0",
-		"babel-preset-stage-2": "6.24.1",
 		"bumped": "0.10.10",
-		"bumped-terminal": "0.7.5",
-		"chai": "4.1.2",
+		"chai": "4.2.0",
 		"cleave.js": "1.4.4",
 		"conventional-changelog-cli": "2.0.5",
 		"coveralls": "3.0.2",
 		"cross-env": "5.2.0",
-		"css-loader": "0.28.11",
 		"eonasdan-bootstrap-datetimepicker": "4.17.47",
-		"eslint": "5.3.0",
-		"eslint-config-prettier": "3.0.1",
-		"eslint-friendly-formatter": "4.0.1",
-		"eslint-loader": "2.1.0",
-		"eslint-plugin-babel": "^5.1.0",
-		"eslint-plugin-import": "2.14.0",
-		"eslint-plugin-node": "7.0.1",
-		"eslint-plugin-prettier": "2.6.2",
-		"eslint-plugin-vue": "4.7.1",
-		"expect": "23.5.0",
-		"extract-text-webpack-plugin": "3.0.2",
 		"fakerator": "0.3.0",
 		"fecha": "2.3.3",
-		"file-loader": "1.1.11",
-		"inject-loader": "3.0.1",
 		"ion-rangeslider": "2.2.0",
+		"istanbul-instrumenter-loader": "3.0.1",
 		"jquery": "3.3.1",
-		"jsdom": "11.12.0",
-		"jsdom-global": "3.0.2",
-		"lodash": "4.17.11",
-		"lolex": "2.7.5",
-		"mocha": "5.2.0",
-		"mocha-generators": "2.0.0",
-		"mocha-loader": "1.1.3",
-		"mocha-webpack": "1.1.0",
-		"nightwatch": "0.9.21",
+		"lodash-webpack-plugin": "0.11.5",
 		"node-sass": "4.9.3",
 		"nouislider": "11.1.0",
-		"nyc": "12.0.2",
+		"nyc": "13.0.1",
 		"pikaday": "1.7.0",
-		"prettier": "1.13.7",
-		"pug": "2.0.3",
-		"pug-loader": "2.4.0",
 		"sass-loader": "7.1.0",
-		"sinon": "6.1.5",
-		"sinon-chai": "3.2.0",
-		"spectrum-colorpicker": "1.8.0",
-		"stats-webpack-plugin": "0.6.2",
-		"url-loader": "1.1.1",
+		"sinon": "6.3.4",
 		"vue": "2.5.17",
-		"vue-loader": "14.2.2",
-		"vue-markdown": "^2.2.4",
-		"vue-multiselect": "2.1.0",
-		"vue-style-loader": "4.1.2",
-		"vue-template-compiler": "2.5.17",
-		"webpack": "3.12.0",
-		"webpack-dev-middleware": "2.0.6",
-		"webpack-dev-server": "2.11.1",
-		"webpack-merge": "4.1.4",
-		"webpack-node-externals": "1.7.2"
+		"vue-cli-plugin-pug": "1.0.7",
+		"vue-highlightjs": "^1.3.3",
+		"vue-markdown": "2.2.4",
+		"vue-multiselect": "2.1.2",
+		"vue-template-compiler": "2.5.17"
 	},
-	"dependencies": {},
-	"publishConfig": {
-		"access": "public"
+	"eslintConfig": {
+		"root": true,
+		"env": {
+			"browser": true,
+			"node": true
+		},
+		"extends": [
+			"eslint:recommended",
+			"plugin:vue/essential",
+			"@vue/prettier"
+		],
+		"rules": {
+			"indent": [
+				1,
+				"tab",
+				{
+					"SwitchCase": 1
+				}
+			],
+			"quotes": [
+				1,
+				"double",
+				{
+					"allowTemplateLiterals": true,
+					"avoidEscape": true
+				}
+			],
+			"semi": [
+				2,
+				"always"
+			],
+			"no-var": [
+				2
+			],
+			"no-console": [
+				0
+			],
+			"no-unused-vars": [
+				1
+			],
+			"no-throw-literal": 0,
+			"eqeqeq": [
+				2,
+				"smart"
+			]
+		},
+		"parserOptions": {
+			"parser": "babel-eslint"
+		}
+	},
+	"postcss": {
+		"plugins": {
+			"autoprefixer": {}
+		}
 	},
 	"browserslist": [
-		"last 2 versions"
+		"> 1%",
+		"last 2 versions",
+		"not ie <= 8"
 	],
 	"prettier": {
 		"printWidth": 120,
@@ -134,16 +161,27 @@
 		"arrowParens": "always"
 	},
 	"nyc": {
+		"check-coverage": true,
+		"per-file": true,
 		"include": [
-			"src/**/*.(js|vue)"
+			"src/**/*.{js,vue}"
 		],
-		"instrument": false,
-		"sourceMap": false,
+		"exclude": [
+			"src/*.js"
+		],
+		"extension": [
+			".js"
+		],
 		"reporter": [
 			"lcov",
 			"text"
 		],
-		"report-dir": "./test/unit/coverage",
-		"temp-directory": "./test/unit/coverage/.nyc_output"
+		"report-dir": "./tests/unit/coverage",
+		"temp-directory": "./tests/unit/coverage/.nyc_output",
+		"cache": true,
+		"all": true
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
