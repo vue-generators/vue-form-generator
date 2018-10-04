@@ -12,6 +12,7 @@ import { defaults } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 
 export default {
+	name: "field-dateTimePicker",
 	mixins: [abstractField],
 
 	methods: {

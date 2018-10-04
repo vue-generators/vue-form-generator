@@ -1,7 +1,8 @@
 /* eslint no-console: 0 */
 import fecha from "fecha";
 
-import { validators } from "../../../src";
+import VueFormGenerator from "@";
+const validators = VueFormGenerator.validators;
 
 let customAsyncValidator = function(value) {
 	return new Promise((resolve, reject) => {

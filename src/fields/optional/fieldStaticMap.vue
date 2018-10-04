@@ -7,6 +7,7 @@ import abstractField from "../abstractField";
 import { defaults } from "lodash";
 
 export default {
+	name: "field-staticmap",
 	mixins: [abstractField],
 
 	computed: {

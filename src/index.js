@@ -1,17 +1,23 @@
-const component = require("./formGenerator.vue").default;
-const schema = require("./utils/schema.js");
-const validators = require("./utils/validators.js").default;
-const fieldComponents = require("./utils/fieldsLoader.js").default;
-const abstractField = require("./fields/abstractField.js").default;
-const install = (Vue) => {
-	Vue.component("VueFormGenerator", module.exports.component);
+import component from "./formGenerator.vue";
+import * as schema from "./utils/schema.js";
+import validators from "./utils/validators.js";
+import abstractField from "./fields/abstractField.js";
+
+const install = (Vue, options = {}) => {
+	if (options.fields) {
+		options.fields.forEach((field) => {
+			if (typeof field.name !== "undefined") {
+				Vue.component(field.name, field);
+			}
+		});
+	}
+	Vue.component("VueFormGenerator", component);
 };
 
-module.exports = {
+export default {
 	component,
 	schema,
 	validators,
 	abstractField,
-	fieldComponents,
 	install
 };

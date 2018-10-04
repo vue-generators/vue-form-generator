@@ -19,6 +19,7 @@ import abstractField from "../abstractField";
 import { isFunction } from "lodash";
 
 export default {
+	name: "field-upload",
 	mixins: [abstractField],
 	methods: {
 		onChange($event) {

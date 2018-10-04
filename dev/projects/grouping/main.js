@@ -1,7 +1,10 @@
 import Vue from "vue";
 
 import VueFormGenerator from "@";
-Vue.use(VueFormGenerator);
+import { fieldInput } from "@/utils/fieldsLoader.js";
+Vue.use(VueFormGenerator, {
+	fields: [fieldInput]
+});
 
 import VueHighlightJS from "vue-highlightjs";
 Vue.use(VueHighlightJS);

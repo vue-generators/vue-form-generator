@@ -7,6 +7,7 @@ import abstractField from "../abstractField";
 import { isFunction, isEmpty } from "lodash";
 
 export default {
+	name: "field-submit",
 	mixins: [abstractField],
 
 	methods: {

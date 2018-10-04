@@ -24,6 +24,7 @@ import abstractField from "../abstractField";
 import { slugify } from "../../utils/schema";
 
 export default {
+	name: "field-checklist",
 	mixins: [abstractField],
 
 	data() {

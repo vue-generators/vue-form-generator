@@ -16,7 +16,8 @@
 
 <script>
 /* eslint no-console: 0 */
-import { validators } from "../../../src";
+import VueFormGenerator from "../../../src/index.js";
+const validators = VueFormGenerator.validators;
 import mixinUtils from "../../mixins/utils.js";
 
 export default {

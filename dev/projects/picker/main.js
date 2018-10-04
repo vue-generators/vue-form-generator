@@ -1,7 +1,10 @@
 import Vue from "vue";
 
 import VueFormGenerator from "@";
-Vue.use(VueFormGenerator);
+import { fieldDateTimePicker } from "@/utils/fieldsLoader.js";
+Vue.use(VueFormGenerator, {
+	fields: [fieldDateTimePicker]
+});
 
 import VueHighlightJS from "vue-highlightjs";
 Vue.use(VueHighlightJS);

@@ -17,6 +17,7 @@
 import abstractField from "../abstractField";
 
 export default {
+	name: "field-textArea",
 	mixins: [abstractField]
 };
 </script>

@@ -10,6 +10,7 @@ import { isObject } from "lodash";
 import abstractField from "../abstractField";
 
 export default {
+	name: "field-selectex",
 	mixins: [abstractField],
 
 	computed: {

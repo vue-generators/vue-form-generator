@@ -3,9 +3,10 @@
 </template>
 
 <script>
-import VueFormGenerator from "../../../src";
+import VueFormGenerator from "@";
 
 export default {
+	name: "field-awesome",
 	mixins: [VueFormGenerator.abstractField]
 };
 </script>

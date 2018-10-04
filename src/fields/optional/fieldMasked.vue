@@ -7,6 +7,7 @@
 import abstractField from "../abstractField";
 
 export default {
+	name: "field-masked",
 	mixins: [abstractField],
 
 	mounted() {

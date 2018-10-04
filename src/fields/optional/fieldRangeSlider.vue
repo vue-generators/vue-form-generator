@@ -8,6 +8,7 @@ import abstractField from "../abstractField";
 import { defaults, isArray } from "lodash";
 
 export default {
+	name: "field-rangeSlider",
 	mixins: [abstractField],
 
 	data() {

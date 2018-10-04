@@ -46,7 +46,7 @@ import formGroup from "./formGroup.vue";
 import formElement from "./formElement.vue";
 
 export default {
-	name: "formGenerator",
+	name: "form-generator",
 	components: { formGroup, formElement },
 	props: {
 		schema: {
