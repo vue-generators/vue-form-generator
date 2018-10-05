@@ -25,11 +25,9 @@
 import { get as objGet, isArray, isFunction, isNil } from "lodash";
 import { slugifyFormID } from "./utils/schema";
 import formMixin from "./formMixin.js";
-import fieldComponents from "./utils/fieldsLoader.js";
 
 export default {
 	name: "form-element",
-	components: fieldComponents,
 	mixins: [formMixin],
 	props: {
 		model: {

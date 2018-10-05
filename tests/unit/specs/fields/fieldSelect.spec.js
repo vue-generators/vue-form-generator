@@ -144,6 +144,9 @@ describe("fieldSelect.vue", () => {
 			type: "select",
 			label: "Cities",
 			model: "city",
+			fieldOptions: {
+				value: "id"
+			},
 			values: [
 				{ id: 1, name: "London" },
 				{ id: 2, name: "Paris" },

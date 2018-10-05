@@ -14,6 +14,7 @@ import { isObject, isNil, find } from "lodash";
 import abstractField from "../abstractField";
 
 export default {
+	name: "field-select",
 	mixins: [abstractField],
 
 	computed: {

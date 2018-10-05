@@ -52,6 +52,7 @@ const DATETIME_FORMATS = {
 };
 
 export default {
+	name: "field-input",
 	mixins: [abstractField],
 	computed: {
 		inputType() {

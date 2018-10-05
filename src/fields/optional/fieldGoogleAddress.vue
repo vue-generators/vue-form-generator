@@ -13,6 +13,7 @@ import { isFunction } from "lodash";
 
 /* global google */
 export default {
+	name: "field-googleAddress",
 	mixins: [abstractField],
 
 	data() {

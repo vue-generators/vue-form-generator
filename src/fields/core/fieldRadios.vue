@@ -11,6 +11,7 @@ import { isObject } from "lodash";
 import abstractField from "../abstractField";
 
 export default {
+	name: "field-radios",
 	mixins: [abstractField],
 
 	computed: {

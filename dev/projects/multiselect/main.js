@@ -1,7 +1,10 @@
 import Vue from "vue";
 
 import VueFormGenerator from "@";
-Vue.use(VueFormGenerator);
+import { fieldVueMultiSelect } from "@/utils/fieldsLoader.js";
+Vue.use(VueFormGenerator, {
+	fields: [fieldVueMultiSelect]
+});
 
 import VueHighlightJS from "vue-highlightjs";
 Vue.use(VueHighlightJS);

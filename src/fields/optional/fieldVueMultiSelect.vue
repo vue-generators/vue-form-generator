@@ -48,6 +48,7 @@
 import abstractField from "../abstractField";
 
 export default {
+	name: "field-vueMultiSelect",
 	mixins: [abstractField],
 	computed: {
 		options() {

@@ -9,6 +9,7 @@
 import abstractField from "../abstractField";
 
 export default {
+	name: "field-switch",
 	mixins: [abstractField],
 
 	methods: {

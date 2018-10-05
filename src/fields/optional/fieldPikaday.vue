@@ -8,6 +8,7 @@ import { defaults } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 
 export default {
+	name: "field-pikaday",
 	mixins: [abstractField],
 	data() {
 		return { picker: null };

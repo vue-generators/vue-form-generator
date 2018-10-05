@@ -7,6 +7,7 @@ import abstractField from "../abstractField";
 import { isArray, defaults } from "lodash";
 
 export default {
+	name: "field-noUiSlider",
 	mixins: [abstractField],
 
 	data() {

@@ -36,7 +36,7 @@
 <script>
 /* eslint no-console: 0 */
 import Vue from "vue";
-import VueFormGenerator from "../../../src";
+import VueFormGenerator from "@";
 import DataTable from "./dataTable.vue";
 import Fakerator from "fakerator";
 
@@ -47,13 +47,7 @@ import mixinUtils from "../../mixins/utils.js";
 import Multiselect from "vue-multiselect";
 Vue.component("multiselect", Multiselect);
 
-// Test custom field
-import FieldAwesome from "./fieldAwesome.vue";
-Vue.component("fieldAwesome", FieldAwesome);
-
 import { each, cloneDeep, merge } from "lodash";
-
-Vue.use(VueFormGenerator);
 
 let fakerator = new Fakerator();
 
