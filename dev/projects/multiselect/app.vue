@@ -3,7 +3,9 @@
 		<h1>Multiselect</h1>
 		<div class="row">
 			<div class="col-sm-12">
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+				<vue-form-generator :schema="schema"
+					:model="model"
+					:options="formOptions"></vue-form-generator>
 			</div>
 		</div>
 		<div class="row">

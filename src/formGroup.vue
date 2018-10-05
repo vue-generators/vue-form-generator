@@ -1,18 +1,39 @@
 <template>
-	<fieldset v-if="fields" :is="tag" :class="[groupRowClasses, validationClass]" ref="group">
+	<fieldset v-if="fields"
+		:is="tag"
+		:class="[groupRowClasses, validationClass]"
+		ref="group">
 
 		<legend v-if="groupLegend">{{ groupLegend }}</legend>
 		<template v-for="(field, index) in fields">
 			<template v-if="fieldVisible(field)">
 				<template v-if="field.type === 'group'">
-					<form-group :fields="field.fields" :group="field" :tag="getGroupTag(field)" :model="model" :options="options" :errors="errors" :eventBus="eventBus" :key="index">
-						<template slot="element" slot-scope="slotProps">
-							<slot name="element" :field="slotProps.field" :model="slotProps.model" :options="slotProps.options" :errors="slotProps.errors" :eventBus="slotProps.eventBus"></slot>
+					<form-group :fields="field.fields"
+						:group="field"
+						:tag="getGroupTag(field)"
+						:model="model"
+						:options="options"
+						:errors="errors"
+						:event-bus="eventBus"
+						:key="index">
+						<template slot="element"
+							slot-scope="slotProps">
+							<slot name="element"
+								:field="slotProps.field"
+								:model="slotProps.model"
+								:options="slotProps.options"
+								:errors="slotProps.errors"
+								:eventBus="slotProps.eventBus"></slot>
 						</template>
 					</form-group>
 				</template>
 				<template v-else>
-					<slot name="element" :field="field" :model="model" :options="options" :errors="errors" :eventBus="eventBus"></slot>
+					<slot name="element"
+						:field="field"
+						:model="model"
+						:options="options"
+						:errors="errors"
+						:eventBus="eventBus"></slot>
 				</template>
 			</template>
 		</template>
@@ -26,8 +47,18 @@ export default {
 	name: "form-group",
 	mixins: [formMixin],
 	props: {
-		fields: { type: Array },
-		group: { type: Object },
+		fields: {
+			type: Array,
+			default() {
+				return [];
+			}
+		},
+		group: {
+			type: Object,
+			default() {
+				return {};
+			}
+		},
 		tag: {
 			type: String,
 			default: "fieldset",
@@ -37,16 +68,28 @@ export default {
 		},
 
 		model: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		},
 		options: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		},
 		errors: {
-			type: Array
+			type: Array,
+			default() {
+				return [];
+			}
 		},
 		eventBus: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		}
 	},
 	data() {

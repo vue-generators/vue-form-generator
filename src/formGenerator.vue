@@ -1,34 +1,79 @@
 <template>
-	<div class="vue-form-generator" v-if='schema != null'>
-		<form-group :tag="tag" :fields="fields" :model="model" :options="options" :errors="errors" :eventBus="eventBus">
-			<template slot="element" slot-scope="slotProps">
-				<form-element :field="slotProps.field" :model="slotProps.model" :options="slotProps.options" :errors="slotProps.errors" :eventBus="eventBus">
+	<div
+		class="vue-form-generator"
+		v-if='schema != null'>
+		<form-group
+			:tag="tag"
+			:fields="fields"
+			:model="model"
+			:options="options"
+			:errors="errors"
+			:event-bus="eventBus">
+			<template
+				slot="element"
+				slot-scope="slotProps">
+				<form-element
+					:field="slotProps.field"
+					:model="slotProps.model"
+					:options="slotProps.options"
+					:errors="slotProps.errors"
+					:event-bus="eventBus">
 
-					<template slot="label" slot-scope="{ field, getValueFromOption }">
-						<slot name="label" :field="field" :getValueFromOption="getValueFromOption">
+					<template
+						slot="label"
+						slot-scope="{ field, getValueFromOption }">
+						<slot
+							name="label"
+							:field="field"
+							:getValueFromOption="getValueFromOption">
 							<span v-html="field.label"></span>
 						</slot>
 					</template>
 
-					<template slot="help" slot-scope="{ field, getValueFromOption }">
-						<slot name="help" :field="field" :getValueFromOption="getValueFromOption">
-							<span v-if='field.help' class="help">
+					<template
+						slot="help"
+						slot-scope="{ field, getValueFromOption }">
+						<slot
+							name="help"
+							:field="field"
+							:getValueFromOption="getValueFromOption">
+							<span
+								v-if='field.help'
+								class="help">
 								<i class="icon"></i>
-								<div class="helpText" v-html='field.help'></div>
+								<div
+									class="helpText"
+									v-html='field.help'></div>
 							</span>
 						</slot>
 					</template>
 
-					<template slot="hint" slot-scope="{ field, getValueFromOption }">
-						<slot name="hint" :field="field" :getValueFromOption="getValueFromOption">
-							<div class="hint" v-html="getValueFromOption(field, 'hint', undefined)"></div>
+					<template
+						slot="hint"
+						slot-scope="{ field, getValueFromOption }">
+						<slot
+							name="hint"
+							:field="field"
+							:getValueFromOption="getValueFromOption">
+							<div
+								class="hint"
+								v-html="getValueFromOption(field, 'hint', undefined)"></div>
 						</slot>
 					</template>
 
-					<template slot="errors" slot-scope="{ childErrors, field, getValueFromOption }">
-						<slot name="errors" :errors="childErrors" :field="field" :getValueFromOption="getValueFromOption">
+					<template
+						slot="errors"
+						slot-scope="{ childErrors, field, getValueFromOption }">
+						<slot
+							name="errors"
+							:errors="childErrors"
+							:field="field"
+							:getValueFromOption="getValueFromOption">
 							<div class="errors help-block">
-								<span v-for="(error, index) in childErrors" :key="index" v-html="error"></span>
+								<span
+									v-for="(error, index) in childErrors"
+									:key="index"
+									v-html="error"></span>
 							</div>
 						</slot>
 					</template>
@@ -50,11 +95,17 @@ export default {
 	components: { formGroup, formElement },
 	props: {
 		schema: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		},
 
 		model: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		},
 
 		options: {

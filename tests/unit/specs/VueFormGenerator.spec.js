@@ -148,7 +148,7 @@ describe("VueFormGenerator.vue", () => {
 				]
 			};
 			createFormGenerator({ schema });
-			formGenerator = wrapper.find({ name: "formGenerator" });
+			formGenerator = wrapper.find({ name: "form-generator" });
 			formElement = wrapper.find({ name: "form-element" });
 		});
 
@@ -197,7 +197,7 @@ describe("VueFormGenerator.vue", () => {
 					validationErrorClass: "has-error"
 				};
 				createFormGenerator({ schema, options });
-				formGenerator = wrapper.find({ name: "formGenerator" });
+				formGenerator = wrapper.find({ name: "form-generator" });
 				formElement = wrapper.find({ name: "form-element" });
 			});
 
@@ -908,7 +908,7 @@ describe("VueFormGenerator.vue", () => {
 
 		beforeEach(() => {
 			createFormGenerator({ schema, model });
-			formGenerator = wrapper.find({ name: "formGenerator" });
+			formGenerator = wrapper.find({ name: "form-generator" });
 			form = formGenerator.vm;
 		});
 
@@ -1015,7 +1015,7 @@ describe("VueFormGenerator.vue", () => {
 				{ onValidated },
 				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
 			);
-			formGenerator = wrapper.find({ name: "formGenerator" });
+			formGenerator = wrapper.find({ name: "form-generator" });
 			form = formGenerator.vm;
 			field = form.$children[0];
 		});
@@ -1099,7 +1099,7 @@ describe("VueFormGenerator.vue", () => {
 				{ onValidated: onValidated },
 				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" ref="form" @validated="onValidated"></vue-form-generator>`
 			);
-			formGenerator = wrapper.find({ name: "formGenerator" });
+			formGenerator = wrapper.find({ name: "form-generator" });
 			form = formGenerator.vm;
 			field = formGenerator.find({ name: "form-element" }).vm.$children[0];
 		});
@@ -1185,7 +1185,7 @@ describe("VueFormGenerator.vue", () => {
 					</template>
 				</vue-form-generator>`
 			);
-			formGenerator = wrapper.find({ name: "formGenerator" });
+			formGenerator = wrapper.find({ name: "form-generator" });
 			form = formGenerator.vm;
 		});
 

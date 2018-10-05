@@ -3,40 +3,50 @@
 		<h1>Custom label, help, hint and errors (with grouping)</h1>
 		<div class="row">
 			<div class="col-sm-12">
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" tag="section">
+				<vue-form-generator :schema="schema"
+					:model="model"
+					:options="formOptions"
+					tag="section">
 
-					<template slot="label" slot-scope="{ field, getValueFromOption }">
+					<template slot="label"
+						slot-scope="{ field, getValueFromOption }">
 						<h3><i :class="`fa fa-${getIcon(field, getValueFromOption)}`"></i> {{ field.label }}</h3>
 					</template>
 
-					<template slot="help" slot-scope="{ field }">
-						<span v-if='field.help' class="help">
+					<template slot="help"
+						slot-scope="{ field }">
+						<span v-if='field.help'
+							class="help">
 							<span @click.prevent="testClick(field.help, $event)">Need help</span>
 							<i class="fa fa-question"></i>
-							<vue-markdown class="helpText" :source="field.help"></vue-markdown>
+							<vue-markdown class="helpText"
+								:source="field.help"></vue-markdown>
 						</span>
 					</template>
 
-					<template slot="hint" slot-scope="{ field, getValueFromOption }">
+					<template slot="hint"
+						slot-scope="{ field, getValueFromOption }">
 						<div class="hint hint--info">
 							<i class="fa fa-info-circle"></i>
 							<span v-html="getValueFromOption(field, 'hint', undefined)"></span>
 						</div>
 					</template>
 
-					<template slot="errors" slot-scope="{ errors, field, getValueFromOption }">
+					<template slot="errors"
+						slot-scope="{ errors, field, getValueFromOption }">
 						<span>Custom errors</span>
 						<table class="errors help-block">
 							<tbody>
 								<thead>
 									<tr>
-										<th scope="col" id="">Index</th>
-										<th scope="col" id="">Error</th>
+										<th scope="col">Index</th>
+										<th scope="col">Error</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr v-for="(error, index) in errors" :key="index">
-										<td>{{index}}</td>
+									<tr v-for="(error, index) in errors"
+										:key="index">
+										<td>{{ index }}</td>
 										<td v-html="error"></td>
 									</tr>
 								</tbody>

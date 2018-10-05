@@ -2,27 +2,45 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
-				<data-table :rows="rows" :selected="selected" :select="selectRow"></data-table>
+				<data-table :rows="rows"
+					:selected="selected"
+					:select="selectRow"></data-table>
 			</div>
 		</div>
-		<div v-show="model" class="row">
+		<div v-show="model"
+			class="row">
 			<div class="col-md-5 col-md-offset-1">
 				<div class="control-buttons text-center">
-					<button @click="newModel" class="btn btn-default new">
-						<i class="fa fa-plus"></i>New</button>
-					<button @click="saveModel" class="btn btn-primary save">
-						<i class="fa fa-floppy-o"></i>Save
-						<i v-if="showWarning()" class="fa fa-warning"></i>
+					<button @click="newModel"
+						class="btn btn-default new">
+						<i class="fa fa-plus"></i>New
 					</button>
-					<button @click="deleteModel" class="btn btn-danger delete">
-						<i class="fa fa-trash"></i>Delete</button>
+					<button @click="saveModel"
+						class="btn btn-primary save">
+						<i class="fa fa-floppy-o"></i>Save
+						<i v-if="showWarning()"
+							class="fa fa-warning"></i>
+					</button>
+					<button @click="deleteModel"
+						class="btn btn-danger delete">
+						<i class="fa fa-trash"></i>Delete
+					</button>
 				</div>
 				<div class="errors text-center">
-					<div v-for="(item, index) in validationErrors" :key="index" class="alert alert-danger">{{ item.field.label}}:
+					<div v-for="(item, index) in validationErrors"
+						:key="index"
+						class="alert alert-danger">{{ item.field.label }}:
 						<strong>{{ item.error }}</strong>
 					</div>
 				</div>
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" :multiple="selected.length > 1" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated">
+				<vue-form-generator :schema="schema"
+					:model="model"
+					:options="formOptions"
+					:multiple="selected.length > 1"
+					ref="form"
+					:is-new-model="isNewModel"
+					@model-updated="modelUpdated"
+					@validated="onValidated">
 
 				</vue-form-generator>
 			</div>
