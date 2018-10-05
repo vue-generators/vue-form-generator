@@ -2,10 +2,59 @@
 import { mount, createLocalVue } from "@vue/test-utils";
 
 import Vue from "vue";
-import VueFormGenerator from "@/index.js";
+import VueFormGenerator from "@";
+import {
+	fieldCheckbox,
+	fieldChecklist,
+	fieldInput,
+	fieldLabel,
+	fieldRadios,
+	fieldSelect,
+	fieldSubmit,
+	fieldTextArea,
+	fieldUpload,
+	fieldCleave,
+	fieldDateTimePicker,
+	fieldGoogleAddress,
+	fieldImage,
+	fieldMasked,
+	fieldNoUiSlider,
+	fieldPikaday,
+	fieldRangeSlider,
+	fieldSelectEx,
+	fieldSpectrum,
+	fieldStaticMap,
+	fieldSwitch,
+	fieldVueMultiSelect
+} from "@/utils/fieldsLoader.js";
 
 const localVue = createLocalVue();
-localVue.use(VueFormGenerator);
+localVue.use(VueFormGenerator, {
+	fields: [
+		fieldCheckbox,
+		fieldChecklist,
+		fieldInput,
+		fieldLabel,
+		fieldRadios,
+		fieldSelect,
+		fieldSubmit,
+		fieldTextArea,
+		fieldUpload,
+		fieldCleave,
+		fieldDateTimePicker,
+		fieldGoogleAddress,
+		fieldImage,
+		fieldMasked,
+		fieldNoUiSlider,
+		fieldPikaday,
+		fieldRangeSlider,
+		fieldSelectEx,
+		fieldSpectrum,
+		fieldStaticMap,
+		fieldSwitch,
+		fieldVueMultiSelect
+	]
+});
 
 let wrapper;
 const defaultTemplate = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" ref="form"></vue-form-generator>`;
