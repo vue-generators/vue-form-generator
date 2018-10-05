@@ -1,0 +1,3 @@
+[submodule "dev"]
+	path = dev
+	url = https://github.com/vue-generators/vue-form-generator-examples
