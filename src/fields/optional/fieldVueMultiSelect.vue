@@ -1,48 +1,49 @@
-<template lang="pug">
-	multiselect(
-		:id="fieldOptions.id",
-		:options="options",
-		:value="value",
-		:multiple="fieldOptions.multiple",
-		:track-by="fieldOptions.trackBy || null",
-		:label="fieldOptions.label || null",
-		:searchable="fieldOptions.searchable",
-		:clear-on-select="fieldOptions.clearOnSelect",
-		:hide-selected="fieldOptions.hideSelected",
-		:placeholder="placeholder",
-		:allow-empty="fieldOptions.allowEmpty",
-		:reset-after="fieldOptions.resetAfter",
-		:close-on-select="fieldOptions.closeOnSelect",
-		:custom-label="customLabel",
-		:taggable="fieldOptions.taggable",
-		:tag-placeholder="fieldOptions.tagPlaceholder",
-		:max="fieldOptions.max || null",
-		:options-limit="fieldOptions.optionsLimit",
-		:group-values="fieldOptions.groupValues",
-		:group-label="fieldOptions.groupLabel",
-		:block-keys="fieldOptions.blockKeys",
-		:internal-search="fieldOptions.internalSearch",
-		:select-label="fieldOptions.selectLabel",
-		:selected-label="fieldOptions.selectedLabel",
-		:deselect-label="fieldOptions.deselectLabel",
-		:show-labels="fieldOptions.showLabels",
-		:limit="fieldOptions.limit",
-		:limit-text="fieldOptions.limitText",
-		:loading="fieldOptions.loading",
-		:disabled="disabled",
-		:max-height="fieldOptions.maxHeight",
-		:show-pointer="fieldOptions.showPointer",
-		@input="updateSelected",
-		@select="onSelect",
-		@remove="onRemove",
-		@search-change="onSearchChange",
-		@tag="addTag",
-		@open="onOpen",
-		@close="onClose",
-		:option-height="fieldOptions.optionHeight",
-	)
-		span(slot="noResult").
+<template>
+	<multiselect
+		:id="fieldOptions.id"
+		:options="options"
+		:value="value"
+		:multiple="fieldOptions.multiple"
+		:track-by="fieldOptions.trackBy || null"
+		:label="fieldOptions.label || null"
+		:searchable="fieldOptions.searchable"
+		:clear-on-select="fieldOptions.clearOnSelect"
+		:hide-selected="fieldOptions.hideSelected"
+		:placeholder="placeholder"
+		:allow-empty="fieldOptions.allowEmpty"
+		:reset-after="fieldOptions.resetAfter"
+		:close-on-select="fieldOptions.closeOnSelect"
+		:custom-label="customLabel"
+		:taggable="fieldOptions.taggable"
+		:tag-placeholder="fieldOptions.tagPlaceholder"
+		:max="fieldOptions.max || null"
+		:options-limit="fieldOptions.optionsLimit"
+		:group-values="fieldOptions.groupValues"
+		:group-label="fieldOptions.groupLabel"
+		:block-keys="fieldOptions.blockKeys"
+		:internal-search="fieldOptions.internalSearch"
+		:select-label="fieldOptions.selectLabel"
+		:selected-label="fieldOptions.selectedLabel"
+		:deselect-label="fieldOptions.deselectLabel"
+		:show-labels="fieldOptions.showLabels"
+		:limit="fieldOptions.limit"
+		:limit-text="fieldOptions.limitText"
+		:loading="fieldOptions.loading"
+		:disabled="disabled"
+		:max-height="fieldOptions.maxHeight"
+		:show-pointer="fieldOptions.showPointer"
+		@input="updateSelected"
+		@select="onSelect"
+		@remove="onRemove"
+		@search-change="onSearchChange"
+		@tag="addTag"
+		@open="onOpen"
+		@close="onClose"
+		:option-height="fieldOptions.optionHeight">
+		<span slot="noResult">
 			{{ fieldOptions.noResult }}
+		</span>
+	</multiselect>
 </template>
 <script>
 import abstractField from "../abstractField";

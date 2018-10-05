@@ -1,5 +1,12 @@
-<template lang="pug">
-	input(:id="fieldID", type="submit", :value="fieldOptions.buttonText", @click="onClick", :name="inputName", :disabled="disabled", :class="fieldClasses", v-attributes="'input'")
+<template>
+	<input :id="fieldID"
+		type="submit"
+		:value="fieldOptions.buttonText"
+		@click="onClick"
+		:name="inputName"
+		:disabled="disabled"
+		:class="fieldClasses"
+		v-attributes="'input'">
 </template>
 
 <script>

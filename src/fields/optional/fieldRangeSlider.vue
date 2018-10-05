@@ -1,5 +1,14 @@
-<template lang="pug">
-	input(type="text", :autocomplete="fieldOptions.autocomplete", :data-disable="disabled", :data-max="fieldOptions.max", :data-min="fieldOptions.min", :data-step="fieldOptions.step", :placeholder="placeholder", :readonly="readonly", :name="inputName")
+<template>
+	<input type="text"
+		:autocomplete="fieldOptions.autocomplete"
+		:data-disable="disabled"
+		:data-max="fieldOptions.max"
+		:data-min="fieldOptions.min"
+		:data-step="fieldOptions.step"
+		:placeholder="placeholder"
+		:readonly="readonly"
+
+		:name="inputName">
 </template>
 
 <script>

@@ -1,4 +1,2 @@
 dist/*.js
-build/*.js
-config/*.js
 !.eslintrc.js

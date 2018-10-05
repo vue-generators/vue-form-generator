@@ -1,23 +1,57 @@
 <template>
-	<div class="form-element" :class="[fieldRowClasses]">
-		<label v-if="fieldTypeHasLabel" :for="fieldID" :class="field.labelClasses">
-			<slot name="label" :field="field" :getValueFromOption="getValueFromOption"></slot>
-			<slot name="help" :field="field" :getValueFromOption="getValueFromOption"></slot>
+	<div
+		class="form-element"
+		:class="[fieldRowClasses]">
+		<label
+			v-if="fieldTypeHasLabel"
+			:for="fieldID"
+			:class="field.labelClasses">
+			<slot
+				name="label"
+				:field="field"
+				:getValueFromOption="getValueFromOption"></slot>
+			<slot
+				name="help"
+				:field="field"
+				:getValueFromOption="getValueFromOption"></slot>
 		</label>
 
 		<div class="field-wrap">
-			<component ref="child" :is="fieldType" :model="model" :schema="field" :formOptions="options" :eventBus="eventBus" :fieldID="fieldID" @field-touched="onFieldTouched" @errors-updated="onChildValidated"></component>
-			<div v-if="buttonsAreVisible" class="buttons">
-				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
+			<component
+				ref="child"
+				:is="fieldType"
+				:model="model"
+				:schema="field"
+				:form-options="options"
+				:event-bus="eventBus"
+				:field-id="fieldID"
+				@field-touched="onFieldTouched"
+				@errors-updated="onChildValidated"></component>
+			<div
+				v-if="buttonsAreVisible"
+				class="buttons">
+				<button
+					v-for="(btn, index) in field.buttons"
+					@click="buttonClickHandler(btn, field, $event)"
+					:class="btn.classes"
+					:key="index"
+					v-text="btn.label"></button>
 			</div>
 		</div>
 
 		<template v-if="fieldHasHint">
-			<slot name="hint" :field="field" :getValueFromOption="getValueFromOption"></slot>
+			<slot
+				name="hint"
+				:field="field"
+				:getValueFromOption="getValueFromOption"></slot>
 		</template>
 
 		<template v-if="fieldHasErrors">
-			<slot name="errors" :childErrors="childErrors" :field="field" :getValueFromOption="getValueFromOption" ></slot>
+			<slot
+				name="errors"
+				:childErrors="childErrors"
+				:field="field"
+				:getValueFromOption="getValueFromOption" ></slot>
 		</template>
 	</div>
 </template>
@@ -31,20 +65,32 @@ export default {
 	mixins: [formMixin],
 	props: {
 		model: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		},
 		options: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		},
 		field: {
 			type: Object,
 			required: true
 		},
 		errors: {
-			type: Array
+			type: Array,
+			default() {
+				return [];
+			}
 		},
 		eventBus: {
-			type: Object
+			type: Object,
+			default() {
+				return {};
+			}
 		}
 	},
 	data() {

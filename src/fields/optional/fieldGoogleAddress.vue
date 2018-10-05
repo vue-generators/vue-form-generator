@@ -1,5 +1,15 @@
-<template lang="pug">
-	input.form-control(type="text", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName",  debounce="500", @focus="geolocate()", :id="fieldID")
+<template>
+	<input class="form-control"
+		type="text"
+		v-model="value"
+		:autocomplete="fieldOptions.autocomplete"
+		:disabled="disabled"
+		:placeholder="placeholder"
+		:readonly="readonly"
+		:name="inputName"
+		debounce="500"
+		@focus="geolocate()"
+		:id="fieldID">
 </template>
 
 <script>

@@ -1,17 +1,19 @@
-<template lang="pug">
-.wrapper(v-attributes="'wrapper'")
-	input.form-control(
-		:id="fieldID",
-		type="file",
-		:name="inputName",
-		@change="onChange",
-		:accept="fieldOptions.accept",
-		:multiple="fieldOptions.multiple",
-		:placeholder="placeholder",
-		:readonly="readonly",
-		:required="schema.required",
-		:disabled="disabled",
-		v-attributes="'input'")
+<template >
+	<div class="wrapper"
+		v-attributes="'wrapper'">
+		<input class="form-control"
+			:id="fieldID"
+			type="file"
+			:name="inputName"
+			@change="onChange"
+			:accept="fieldOptions.accept"
+			:multiple="fieldOptions.multiple"
+			:placeholder="placeholder"
+			:readonly="readonly"
+			:required="schema.required"
+			:disabled="disabled"
+			v-attributes="'input'">
+	</div>
 </template>
 
 <script>

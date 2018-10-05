@@ -1,5 +1,12 @@
-<template lang="pug">
-	input(:id="fieldID", type="checkbox", v-model="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :name="inputName", :class="fieldClasses", v-attributes="'input'")
+<template>
+	<input :id="fieldID"
+		type="checkbox"
+		v-model="value"
+		:autocomplete="fieldOptions.autocomplete"
+		:disabled="disabled"
+		:name="inputName"
+		:class="fieldClasses"
+		v-attributes="'input'" >
 </template>
 
 <script>

@@ -3,7 +3,13 @@
 		<h1>Basic</h1>
 		<div class="row">
 			<div class="col-sm-12">
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" ref="form" :is-new-model="isNewModel" @model-updated="modelUpdated" @validated="onValidated"></vue-form-generator>
+				<vue-form-generator :schema="schema"
+					:model="model"
+					:options="formOptions"
+					ref="form"
+					:is-new-model="isNewModel"
+					@model-updated="modelUpdated"
+					@validated="onValidated"></vue-form-generator>
 			</div>
 		</div>
 		<div class="row">

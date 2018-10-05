@@ -2,8 +2,10 @@
 	<div class="container">
 		<h1>Dev Project</h1>
 		<ul>
-			<li v-for="link in devProject" :key="link" >
-				<a :href="'/' + link" v-text="link"></a>
+			<li v-for="link in devProject"
+				:key="link" >
+				<a :href="'/' + link"
+					v-text="link"></a>
 			</li>
 		</ul>
 	</div>

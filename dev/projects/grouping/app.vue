@@ -3,7 +3,10 @@
 		<h1>Grouping</h1>
 		<div class="row">
 			<div class="col-sm-12">
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" tag="section"></vue-form-generator>
+				<vue-form-generator :schema="schema"
+					:model="model"
+					:options="formOptions"
+					tag="section"></vue-form-generator>
 			</div>
 		</div>
 		<div class="row">

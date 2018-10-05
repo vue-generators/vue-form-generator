@@ -3,12 +3,24 @@
 		<h1>Multi</h1>
 		<div class="row">
 			<div class="col-sm-12">
-				<vue-form-generator :schema="schema" :model="model" :options="formOptions" ref="form1" :is-new-model="isNewModel" @model-updated="modelUpdated1" @validated="onValidated1"></vue-form-generator>
+				<vue-form-generator :schema="schema"
+					:model="model"
+					:options="formOptions"
+					ref="form1"
+					:is-new-model="isNewModel"
+					@model-updated="modelUpdated1"
+					@validated="onValidated1"></vue-form-generator>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-12">
-				<vue-form-generator :schema="schema2" :model="model" :options="formOptions" ref="form2" :is-new-model="isNewModel" @model-updated="modelUpdated2" @validated="onValidated2"></vue-form-generator>
+				<vue-form-generator :schema="schema2"
+					:model="model"
+					:options="formOptions"
+					ref="form2"
+					:is-new-model="isNewModel"
+					@model-updated="modelUpdated2"
+					@validated="onValidated2"></vue-form-generator>
 			</div>
 		</div>
 		<div class="row">
