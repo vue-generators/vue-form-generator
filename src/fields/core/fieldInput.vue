@@ -1,43 +1,47 @@
-<template lang="pug">
-.wrapper(v-attributes="'wrapper'")
-	input.form-control(
-		:id="fieldID",
-		:type="inputType",
-		:value="value",
-		@input="onInput",
-		@blur="onBlur",
-		:class="fieldClasses",
-		@change="schema.onChange || null",
-		:disabled="disabled",
-		:accept="fieldOptions.accept",
-		:alt="fieldOptions.alt",
-		:autocomplete="fieldOptions.autocomplete",
-		:checked="fieldOptions.checked",
-		:dirname="fieldOptions.dirname",
-		:formaction="fieldOptions.formaction",
-		:formenctype="fieldOptions.formenctype",
-		:formmethod="fieldOptions.formmethod",
-		:formnovalidate="fieldOptions.formnovalidate",
-		:formtarget="fieldOptions.formtarget",
-		:height="fieldOptions.height",
-		:list="fieldOptions.list",
-		:max="fieldOptions.max",
-		:maxlength="fieldOptions.maxlength",
-		:min="fieldOptions.min",
-		:minlength="fieldOptions.minlength",
-		:multiple="fieldOptions.multiple",
-		:name="inputName",
-		:pattern="fieldOptions.pattern",
-		:placeholder="placeholder",
-		:readonly="readonly",
-		:required="schema.required",
-		:size="fieldOptions.size",
-		:src="fieldOptions.src",
-		:step="fieldOptions.step",
-		:width="fieldOptions.width",
-		:files="fieldOptions.files"
-		v-attributes="'input'")
-	span.helper(v-if="inputType === 'color' || inputType === 'range'") {{ value }}
+<template>
+	<div class="wrapper"
+		v-attributes="'wrapper'">
+		<input class="form-control"
+			:id="fieldID"
+			:type="inputType"
+			:value="value"
+			@input="onInput"
+			@blur="onBlur"
+			:class="fieldClasses"
+			@change="schema.onChange || null"
+			:disabled="disabled"
+			:accept="fieldOptions.accept"
+			:alt="fieldOptions.alt"
+			:autocomplete="fieldOptions.autocomplete"
+			:checked="fieldOptions.checked"
+			:dirname="fieldOptions.dirname"
+			:formaction="fieldOptions.formaction"
+			:formenctype="fieldOptions.formenctype"
+			:formmethod="fieldOptions.formmethod"
+			:formnovalidate="fieldOptions.formnovalidate"
+			:formtarget="fieldOptions.formtarget"
+			:height="fieldOptions.height"
+			:list="fieldOptions.list"
+			:max="fieldOptions.max"
+			:maxlength="fieldOptions.maxlength"
+			:min="fieldOptions.min"
+			:minlength="fieldOptions.minlength"
+			:multiple="fieldOptions.multiple"
+			:name="inputName"
+			:pattern="fieldOptions.pattern"
+			:placeholder="placeholder"
+			:readonly="readonly"
+			:required="schema.required"
+			:size="fieldOptions.size"
+			:src="fieldOptions.src"
+			:step="fieldOptions.step"
+			:width="fieldOptions.width"
+			:files="fieldOptions.files"
+			v-attributes="'input'">
+		<span class="helper"
+			v-if="inputType === 'color' || inputType === 'range'"
+			v-text="value"></span>
+	</div>
 </template>
 
 <script>

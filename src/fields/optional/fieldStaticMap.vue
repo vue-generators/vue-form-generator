@@ -1,5 +1,5 @@
-<template lang="pug">
-	img(:src="mapLink")
+<template>
+	<img :src="mapLink">
 </template>
 
 <script>

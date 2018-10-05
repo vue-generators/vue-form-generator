@@ -1,5 +1,13 @@
-<template lang="pug">
-	input.form-control(type="text", :value="value", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName", :id="fieldID")
+<template>
+	<input class="form-control"
+		type="text"
+		:value="value"
+		:autocomplete="fieldOptions.autocomplete"
+		:disabled="disabled"
+		:placeholder="placeholder"
+		:readonly="readonly"
+		:name="inputName"
+		:id="fieldID">
 </template>
 
 <script>

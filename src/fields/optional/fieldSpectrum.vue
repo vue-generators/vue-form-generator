@@ -1,5 +1,11 @@
-<template lang="pug">
-	input(type="text", :autocomplete="fieldOptions.autocomplete", :disabled="disabled", :placeholder="placeholder", :readonly="readonly", :name="inputName", :id="fieldID")
+<template>
+	<input type="text"
+		:autocomplete="fieldOptions.autocomplete"
+		:disabled="disabled"
+		:placeholder="placeholder"
+		:readonly="readonly"
+		:name="inputName"
+		:id="fieldID" >
 </template>
 
 <script>

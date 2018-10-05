@@ -1,7 +1,19 @@
-<template lang="pug">
-	select.selectpicker(v-model="value", :disabled="disabled", :multiple="fieldOptions.multiSelect", :title="placeholder", data-width="100%", :name="inputName")
-		option(:disabled="schema.required", v-if="fieldOptions.multiSelect !== true", :value="null", :selected="value == undefined")
-		option(v-for="item in items", :value="getItemValue(item)") {{ getItemName(item) }}
+<template>
+	<select class="selectpicker"
+		v-model="value"
+		:disabled="disabled"
+		:multiple="fieldOptions.multiSelect"
+		:title="placeholder"
+		data-width="100%"
+		:name="inputName">
+		<option :disabled="schema.required"
+			v-if="fieldOptions.multiSelect !== true"
+			:value="null"
+			:selected="value == undefined" ></option>
+		<option v-for="item in items"
+			:key="getItemValue(item)"
+			:value="getItemValue(item)"> {{ getItemName(item) }}</option>
+	</select>
 </template>
 
 <script>

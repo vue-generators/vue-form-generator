@@ -84,7 +84,6 @@
 		"sass-loader": "7.1.0",
 		"sinon": "6.3.4",
 		"vue": "2.5.17",
-		"vue-cli-plugin-pug": "1.0.7",
 		"vue-highlightjs": "^1.3.3",
 		"vue-markdown": "2.2.4",
 		"vue-multiselect": "2.1.2",
