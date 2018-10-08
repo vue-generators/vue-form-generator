@@ -19,19 +19,23 @@ function createField2(data, methods) {
 
 describe("fieldSubmit.vue", () => {
 	describe("check template", () => {
+		let vfg = {};
 		let schema = {
 			type: "submit",
 			buttonText: "Submit form",
 			inputName: "",
 			validateBeforeSubmit: false,
-			onSubmit() {},
+			onSubmit: sinon.spy(),
 			fieldClasses: ["applied-class", "another-class"]
+		};
+		let formOptions = {
+			validateAsync: false
 		};
 		let model = { name: "John Doe" };
 		let input;
 
 		before(() => {
-			createField2({ schema, model, disabled: false });
+			createField2({ vfg, schema, formOptions, model, disabled: false });
 			input = wrapper.find("input");
 		});
 
@@ -43,43 +47,89 @@ describe("fieldSubmit.vue", () => {
 		});
 
 		describe("valid form", () => {
-			it.skip("should not call validate if validateBeforeSubmit is false", () => {
-				schema.onSubmit = sinon.spy();
-				let cb = sinon.spy();
-				wrapper.vm.$parent.validate = cb;
+			before(() => {
+				vfg.validate = () => true;
+				sinon.spy(vfg, "validate");
+			});
 
-				input.click();
-				expect(cb.called).to.be.false;
+			afterEach(() => {
+				schema.onSubmit.resetHistory();
+				vfg.validate.resetHistory();
+			});
+
+			it("should not call validate but should call onSubmit if validateBeforeSubmit is false", () => {
+				input.trigger("click");
+
+				expect(vfg.validate.notCalled).to.be.true;
 				expect(schema.onSubmit.calledOnce).to.be.true;
 				expect(schema.onSubmit.calledWith(model, schema)).to.be.true;
 			});
 
-			it.skip("should call validate if validateBeforeSubmit is true", () => {
+			it("should call validate and onSubmit if validateBeforeSubmit is true", () => {
 				schema.validateBeforeSubmit = true;
-				schema.onSubmit = sinon.spy();
-				let cb = sinon.spy();
-				wrapper.vm.$parent.validate = cb;
 
 				input.trigger("click");
 
-				expect(cb.called).to.be.true;
+				expect(vfg.validate.called).to.be.true;
 				expect(schema.onSubmit.called).to.be.true;
 			});
 		});
 
 		describe("invalid form", () => {
-			it.skip("should not call onSubmit if validateBeforeSubmit is true", () => {
+			before(() => {
+				vfg.validate = () => false;
+				sinon.spy(vfg, "validate");
+			});
+
+			afterEach(() => {
+				schema.onSubmit.resetHistory();
+				vfg.validate.resetHistory();
+			});
+
+			it("should call validate but should not call onSubmit if validateBeforeSubmit is true", () => {
 				schema.validateBeforeSubmit = true;
-				schema.onSubmit = sinon.spy();
-				let cb = sinon.spy(() => {
-					return ["an error occurred"];
-				});
-				wrapper.vm.$parent.validate = cb;
 
 				input.trigger("click");
 
-				expect(cb.called).to.be.true;
-				expect(schema.onSubmit.called).to.be.true;
+				expect(vfg.validate.called).to.be.true;
+				expect(schema.onSubmit.notCalled).to.be.true;
+			});
+		});
+
+		describe("async validate", () => {
+			before(() => {
+				formOptions.validateAsync = true;
+				vfg.validate = sinon.stub();
+				schema.onSubmit = sinon.spy();
+			});
+
+			afterEach(() => {
+				vfg.validate.reset();
+				schema.onSubmit.resetHistory();
+			});
+
+			describe("valid form", () => {
+				it("should call validate and onSubmit if validateBeforeSubmit is true", async function () {
+					schema.validateBeforeSubmit = true;
+					vfg.validate.resolves([]);
+
+					await input.trigger("click");
+
+					expect(vfg.validate.called).to.be.true;
+					expect(schema.onSubmit.called).to.be.true;
+				});
+			});
+
+			describe("invalid form", () => {
+				it("should call validate but should not call onSubmit if validateBeforeSubmit is true", async function () {
+					schema.validateBeforeSubmit = true;
+					vfg.validate.resolves(["Error"]);
+
+					await input.trigger("click");
+
+					expect(vfg.validate.called).to.be.true;
+					expect(schema.onSubmit.notCalled).to.be.true;
+				});
 			});
 		});
 

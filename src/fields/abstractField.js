@@ -25,7 +25,7 @@ function attributesDirective(el, binding, vnode) {
 }
 
 export default {
-	props: ["model", "schema", "formOptions", "disabled"],
+	props: ["vfg", "model", "schema", "formOptions", "disabled"],
 
 	data() {
 		return {
