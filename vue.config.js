@@ -47,6 +47,8 @@ module.exports = {
 				}
 			]);
 			config.plugin("lodash").use(LodashModuleReplacementPlugin);
+		} else {
+			config.resolve.alias.set("vue-form-generator", path.resolve("src"));
 		}
 	},
 	css: {
