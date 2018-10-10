@@ -9,7 +9,7 @@
 		</label>
 
 		<div class="field-wrap">
-			<component ref="child" :is="getFieldType(field)" :disabled="fieldDisabled(field)" :model="model" :schema="field" :formOptions="options" @model-updated="onModelUpdated" @validated="onFieldValidated"></component>
+			<component ref="child" :is="getFieldType(field)" :vfg="vfg" :disabled="fieldDisabled(field)" :model="model" :schema="field" :formOptions="options" @model-updated="onModelUpdated" @validated="onFieldValidated"></component>
 			<div v-if="buttonVisibility(field)" class="buttons">
 				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
 			</div>
@@ -33,6 +33,10 @@ export default {
 	components: fieldComponents,
 	mixins: [formMixin],
 	props: {
+		vfg: {
+			type: Object,
+			required: true
+		},
 		model: Object,
 		options: {
 			type: Object
