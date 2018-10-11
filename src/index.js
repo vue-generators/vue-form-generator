@@ -1,6 +1,7 @@
 import component from "./formGenerator.vue";
 import * as schema from "./utils/schema.js";
 import validators from "./utils/validators.js";
+import * as fieldsLoader from "./utils/fieldsLoader.js";
 import abstractField from "./fields/abstractField.js";
 
 const install = (Vue, options = {}) => {
@@ -19,5 +20,6 @@ export default {
 	schema,
 	validators,
 	abstractField,
+	fieldsLoader,
 	install
 };
