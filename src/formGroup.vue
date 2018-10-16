@@ -139,7 +139,10 @@ export default {
 	created() {
 		this.eventBus.$on("field-validated", () => {
 			this.$nextTick(() => {
-				let containFieldWithError = this.$refs.group.querySelector(".form-element.error") !== null;
+				let containFieldWithError =
+					this.$refs.group.querySelector(
+						".form-element." + objGet(this.options, "validationErrorClass", "error")
+					) !== null;
 				this.validationClass = {
 					[objGet(this.options, "validationErrorClass", "error")]: containFieldWithError,
 					[objGet(this.options, "validationSuccessClass", "valid")]: !containFieldWithError
