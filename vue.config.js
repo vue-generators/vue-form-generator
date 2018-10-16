@@ -47,6 +47,17 @@ module.exports = {
 				}
 			]);
 			config.plugin("lodash").use(LodashModuleReplacementPlugin);
+		} else if (process.env.NODE_ENV === "test") {
+			config.devtool("eval");
+			config.module
+				.rule("istanbul")
+				.test(/\.(js|vue)$/)
+				.enforce("post")
+				.include.add(path.resolve(__dirname, "/src"))
+				.end()
+				.use("istanbul-instrumenter-loader")
+				.loader("istanbul-instrumenter-loader")
+				.options({ esModules: true });
 		} else {
 			config.resolve.alias.set("vue-form-generator", path.resolve("src"));
 		}
