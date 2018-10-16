@@ -12,7 +12,7 @@
 		"build:full": "cross-env VUE_APP_FULL_BUNDLE=true  vue-cli-service build --no-clean --target lib --name vfg src/index.js --report",
 		"lint": "vue-cli-service lint",
 		"test:unit": "nyc vue-cli-service test:unit --include ./tests/unit/setup.js",
-		"coverall": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+		"coverall": "cat ./tests/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
 		"changelog": "conventional-changelog -i CHANGELOG.md -s",
 		"changelog:full": "conventional-changelog -i CHANGELOG.md -s -r 0",
 		"docs": "cd docs && gitbook serve",
