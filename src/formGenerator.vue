@@ -10,6 +10,23 @@
 			:errors="errors"
 			:event-bus="eventBus">
 			<template
+				slot="group-help"
+				slot-scope="{ group }">
+				<slot
+					name="group-help"
+					:group="group">
+					<span
+						v-if='group.help'
+						class="help">
+						<i class="icon"></i>
+						<div
+							class="helpText"
+							v-html='group.help'></div>
+					</span>
+				</slot>
+			</template>
+
+			<template
 				slot="element"
 				slot-scope="slotProps">
 				<form-element

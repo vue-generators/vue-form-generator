@@ -5,6 +5,9 @@
 		ref="group">
 
 		<legend v-if="groupLegend">{{ groupLegend }}</legend>
+		<slot
+			name="group-help"
+			:group="group"></slot>
 		<template v-for="(field, index) in fields">
 			<template v-if="fieldVisible(field)">
 				<template v-if="field.type === 'group'">
@@ -16,6 +19,14 @@
 						:errors="errors"
 						:event-bus="eventBus"
 						:key="index">
+						<template
+							slot="group-help"
+							slot-scope="slotProps">
+							<slot
+								name="group-help"
+								:group="slotProps.group"></slot>
+						</template>
+
 						<template slot="element"
 							slot-scope="slotProps">
 							<slot name="element"
