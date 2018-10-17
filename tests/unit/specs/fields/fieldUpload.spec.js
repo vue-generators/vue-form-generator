@@ -84,4 +84,36 @@ describe("fieldUpload.vue", () => {
 			});
 		});
 	});
+	describe("check onChange methods", () => {
+		let schema = {
+			type: "upload",
+			label: "Upload",
+			inputName: "testupload",
+			placeholder: "",
+			readonly: false,
+			required: false,
+			disabled: false,
+			fieldOptions: {
+				multiple: true,
+				accept: "image/*"
+			}
+		};
+		let model = {};
+		let input;
+
+		before(() => {
+			createField({ schema, model });
+			input = wrapper.find("input");
+			schema.fieldOptions = { inputType: "file" };
+		});
+
+		it("should contain an input text element", () => {
+			schema.fieldOptions.onChanged = sinon.spy();
+			wrapper.setProps({ schema: { ...schema } });
+
+			input.trigger("change", { $event: "MyEvent" });
+
+			expect(schema.fieldOptions.onChanged.calledOnce).to.be.true;
+		});
+	});
 });

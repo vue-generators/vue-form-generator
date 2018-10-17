@@ -25,9 +25,9 @@ export default {
 	mixins: [abstractField],
 	methods: {
 		onChange($event) {
-			if (isFunction(this.schema.onChanged)) {
+			if (isFunction(this.fieldOptions.onChanged)) {
 				// Schema has defined onChange method.
-				this.schema.onChanged.call(this, this.model, this.schema, $event, this);
+				this.fieldOptions.onChanged.call(this, this.model, this.schema, $event, this);
 			}
 		}
 	}
