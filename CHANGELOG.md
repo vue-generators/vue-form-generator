@@ -1,5 +1,5 @@
 <a name="2.3.1"></a>
-## 2.3.0 (2018-10-03)
+## 2.3.1 (2018-10-03)
 
 * Use lodash-webpack-plugin for even better size
 * Added required attribute to textarea
