@@ -14,6 +14,7 @@
 				:value="getItemValue(item)"
 				:checked="isItemChecked(item)"
 				:class="fieldClasses"
+				:required="required"
 				v-attributes="'input'">{{ getItemName(item) }}
 		</label>
 	</div>
