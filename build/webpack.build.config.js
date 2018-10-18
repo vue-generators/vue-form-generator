@@ -73,7 +73,24 @@ module.exports = [
 					NODE_ENV: JSON.stringify("production")
 				}
 			}),
-			new LodashModuleReplacementPlugin(),
+			new LodashModuleReplacementPlugin({
+				shorthands: true,
+				cloning: true,
+				currying: true,
+				caching: true,
+				collections: true,
+				exotics: true,
+				guards: true,
+				metadata: true,
+				deburring: true,
+				unicode: true,
+				chaining: true,
+				memoizing: true,
+				coercions: true,
+				flattening: true,
+				paths: false,
+				placeholders: true
+			}),
 			new webpack.optimize.UglifyJsPlugin({
 				compress: {
 					warnings: false
