@@ -10,6 +10,16 @@
 			:errors="errors"
 			:event-bus="eventBus">
 			<template
+				slot="group-legend"
+				slot-scope="{ group, groupLegend }">
+				<slot
+					name="group-legend"
+					:group="group"
+					:group-legend="groupLegend">
+					<legend v-if="groupLegend"><span v-html="groupLegend"></span></legend>
+				</slot>
+			</template>
+			<template
 				slot="group-help"
 				slot-scope="{ group }">
 				<slot
