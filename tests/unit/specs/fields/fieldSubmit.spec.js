@@ -66,7 +66,7 @@ describe("fieldSubmit.vue", () => {
 				expect(schema.fieldOptions.onSubmit.calledWith(model, schema)).to.be.true;
 			});
 
-			it("should call validate if validateBeforeSubmit is true", () => {
+			it("should call validate and onSubmit if validateBeforeSubmit is true", () => {
 				const spyEmit = sinon.spy(wrapper.props().eventBus, "$emit");
 				schema.fieldOptions.validateBeforeSubmit = true;
 				schema.fieldOptions.onSubmit = sinon.spy();
