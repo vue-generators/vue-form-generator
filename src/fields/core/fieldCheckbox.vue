@@ -6,6 +6,7 @@
 		:disabled="disabled"
 		:name="inputName"
 		:class="fieldClasses"
+		:required="required"
 		v-attributes="'input'" >
 </template>
 
