@@ -7,6 +7,7 @@
 		:maxlength="fieldOptions.max"
 		:minlength="fieldOptions.min"
 		:placeholder="placeholder"
+		:required="required"
 		:readonly="readonly"
 		:rows="fieldOptions.rows || 2"
 		:name="inputName"
