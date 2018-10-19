@@ -78,7 +78,7 @@ module.exports = {
 				.loader("istanbul-instrumenter-loader")
 				.options({ esModules: true });
 		} else {
-			config.resolve.alias.set("vue-form-generator", path.resolve("src"));
+			config.resolve.alias.set("vue-form-generator", path.resolve(__dirname, "src"));
 		}
 	},
 	css: {
