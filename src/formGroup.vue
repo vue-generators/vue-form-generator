@@ -3,8 +3,10 @@
 		:is="tag"
 		:class="[groupRowClasses, validationClass]"
 		ref="group">
-
-		<legend v-if="groupLegend">{{ groupLegend }}</legend>
+		<slot
+			name="group-legend"
+			:group="group"
+			:group-legend="groupLegend"></slot>
 		<slot
 			name="group-help"
 			:group="group"></slot>
@@ -19,6 +21,14 @@
 						:errors="errors"
 						:event-bus="eventBus"
 						:key="index">
+						<template
+							slot="group-legend"
+							slot-scope="slotProps">
+							<slot
+								name="group-legend"
+								:group="slotProps.group"
+								:group-legend="slotProps.groupLegend"></slot>
+						</template>
 						<template
 							slot="group-help"
 							slot-scope="slotProps">
