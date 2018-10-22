@@ -43,6 +43,8 @@
 	)
 		span(slot="noResult").
 			{{ selectOptions.noResult }}
+		span(slot="maxElements").
+			{{ selectOptions.maxElements }}
 </template>
 <script>
 import abstractField from "../abstractField";
