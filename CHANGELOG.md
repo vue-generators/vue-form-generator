@@ -1,3 +1,15 @@
+## <small>2.3.2 (2018-10-22)</small>
+
+* Export dist ([9912b5e](https://github.com/vue-generators/vue-form-generator/commit/9912b5e))
+* Fix deep property path not working ([fb02f26](https://github.com/vue-generators/vue-form-generator/commit/fb02f26))
+* Fix fieldSubmit not calling validate method ([c82c44b](https://github.com/vue-generators/vue-form-generator/commit/c82c44b))
+* Fix Rawgit shut down ([34e08a6](https://github.com/vue-generators/vue-form-generator/commit/34e08a6))
+* docs: replace duplicated 2.3.0 with 2.3.1 ([69bbfce](https://github.com/vue-generators/vue-form-generator/commit/69bbfce))
+* feat(fields): add required attribute to checkbox component ([2b3c7e5](https://github.com/vue-generators/vue-form-generator/commit/2b3c7e5))
+* feat(fields): add required attribute to radios component ([8d04252](https://github.com/vue-generators/vue-form-generator/commit/8d04252))
+
+
+
 <a name="2.3.1"></a>
 ## 2.3.1 (2018-10-03)
 
