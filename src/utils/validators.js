@@ -1,4 +1,4 @@
-import { defaults, isNil, isNumber, isInteger, isString, isArray, isFunction } from "lodash";
+import { defaults, isNil, isNumber, isInteger, isString, isArray, isFunction, isFinite } from "lodash";
 import fecha from "fecha";
 
 let resources = {
@@ -66,7 +66,7 @@ const validators = {
 		if (res != null) return res;
 
 		let err = [];
-		if (isNumber(value)) {
+		if (isFinite(value)) {
 			if (!isNil(field.min) && value < field.min) {
 				err.push(msg(messages.numberTooSmall, field.min));
 			}
