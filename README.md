@@ -189,6 +189,27 @@ export default {
 };
 ```
 
+## Manual validation 
+
+```
+<vue-form-generator ... ref="form"><vue-form-generator>
+
+...
+
+myManualValidation() {
+    let errors = this.$refs.form.validate();
+    if(errors.length > 0) {
+        // Validation error
+        console.warn("Error during validation", error);
+    } else {
+        // No validation errors
+        // ...
+
+    }
+}
+
+```
+
 ## Development
 
 This command will start a `webpack-dev-server` with content of `dev` folder.
