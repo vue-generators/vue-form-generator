@@ -29,7 +29,7 @@ export default {
 		this.$nextTick(function() {
 			if (window.$ && window.$.fn.datetimepicker) {
 				let input = this.$el.querySelector(".form-control");
-				$(this.$el)
+				$(input)
 					.datetimepicker(
 						defaults(this.schema.dateTimePickerOptions || {}, {
 							format: inputFormat
