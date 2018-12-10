@@ -2,7 +2,7 @@
 .wrapper(v-attributes="'wrapper'")
 	input.form-control(
 		:id="getFieldID(schema)",
-		:type="schema.inputType.toLowerCase()",
+		:type="inputType",
 		:value="value",
 		@input="onInput",
 		@blur="onBlur",
@@ -53,6 +53,16 @@ const DATETIME_FORMATS = {
 
 export default {
 	mixins: [abstractField],
+	computed: {
+		inputType() {
+			if(this.schema && this.schema.inputType === "datetime") {
+				// convert "datetime" to "datetime-local" (datetime deprecated in favor of "datetime-local")
+				// ref: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime
+				return "datetime-local";
+			}
+			return this.schema.inputType;
+		}
+	},
 	methods: {
 		formatValueToModel(value) {
 			if (value != null) {
@@ -71,6 +81,15 @@ export default {
 
 			return value;
 		},
+		formatValueToField(value) {
+			switch(this.schema.inputType.toLowerCase()) {
+				case "date":
+				case "datetime":
+				case "datetime-local":
+					return this.formatDatetimeValueToField(value);
+			}
+			return value;
+		},
 		formatDatetimeToModel(newValue, oldValue) {
 			let defaultFormat = DATETIME_FORMATS[this.schema.inputType.toLowerCase()];
 			let m = fecha.parse(newValue, defaultFormat);
@@ -82,6 +101,17 @@ export default {
 				}
 			}
 			this.updateModelValue(newValue, oldValue);
+		},
+		formatDatetimeValueToField(value) {
+			let defaultFormat = DATETIME_FORMATS[this.schema.inputType.toLowerCase()];
+			let m = value;
+			if(!isNumber(value)) {
+				m = fecha.parse(value, defaultFormat);
+			}
+			if(m !== false) {
+				return fecha.format(m, defaultFormat);
+			}
+			return value;
 		},
 		formatNumberToModel(newValue, oldValue) {
 			if (!isNumber(newValue)) {
