@@ -83,7 +83,7 @@ export default {
 		},
 		// Get type of button, default to 'button'
 		getButtonType(btn) {
-			return objGet(btn, 'type', 'button');
+			return objGet(btn, "type", "button");
 		},
 		// Child field executed validation
 		onFieldValidated(res, errors, field) {
