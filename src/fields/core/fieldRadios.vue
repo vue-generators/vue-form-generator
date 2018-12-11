@@ -66,9 +66,13 @@ export default {
 			return currentValue === this.value;
 		},
 		isItemDisabled(item) {
-			if(this.disabled) return true;
+			if (this.disabled) {
+				return true;
+			}
 			let disabled = objGet(item, "disabled", false);
-			if(isFunction(disabled)) return disabled(this.model);
+			if (isFunction(disabled)) {
+				return disabled(this.model);
+			}
 			return disabled;
 		}
 	}
