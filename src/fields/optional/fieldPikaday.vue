@@ -4,46 +4,56 @@
 
 <script>
 import abstractField from "../abstractField";
-import { defaults } from "lodash";
+import { defaults, get as objGet } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 
 let inputFormat = "YYYY-MM-DD";
 
 export default {
-	mixins: [abstractField],
+	mixins: [ abstractField ],
 	data() {
-		return { picker: null };
+		return { 
+			picker: null,
+			options: null
+		};
 	},
 
 	methods: {
 		getDateFormat() {
-			if (this.schema.pikadayOptions && this.schema.pikadayOptions.format) return this.schema.pikadayOptions.format;
-			else return inputFormat;
+			return objGet(this.schema, "pikadayOptions.format", inputFormat);
 		},
+		...dateFieldHelper,
+		initialize(options) {
+			if(this.picker && this.picker.destroy) {
+				// if an existing picker is already set, destroy it first
+				this.picker.destroy();
+			}
 
-		...dateFieldHelper
-	},
-
-	mounted() {
-		this.$nextTick(() => {
-			if (window.Pikaday) {
-				this.picker = new window.Pikaday(
-					defaults(this.schema.pikadayOptions || {}, {
+			this.$nextTick(() => {
+				if (window.Pikaday) {
+					this.options = defaults({}, options, {
 						field: this.$el, // bind the datepicker to a form field
 						onSelect: () => {
 							this.value = this.picker.toString();
 						}
 						// trigger: , // use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
-					})
-				);
-			} else {
-				console.warn("Pikaday is missing. Please download from https://github.com/dbushell/Pikaday/ and load the script and CSS in the HTML head section!");
-			}
-		});
+					});
+					this.picker = new window.Pikaday(this.options);
+				} else {
+					console.warn("Pikaday is missing. Please download from https://github.com/dbushell/Pikaday/ and load the script and CSS in the HTML head section!");
+				}
+			});
+		}
+	},
+
+	mounted() {
+		this.initialize(objGet(this.schema, "pikadayOptions", {}));
 	},
 
 	beforeDestroy() {
-		if (this.picker) this.picker.destroy();
+		if (this.picker) {
+			this.picker.destroy();
+		}
 	}
 };
 </script>
