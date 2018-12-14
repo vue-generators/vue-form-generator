@@ -1,3 +1,24 @@
+## <small>2.3.3 (2018-12-14)</small>
+
+* #535, #526 - reversed "deep property path" fix ([da32bde](https://github.com/vue-generators/vue-form-generator/commit/da32bde)), closes [#535](https://github.com/vue-generators/vue-form-generator/issues/535) [#526](https://github.com/vue-generators/vue-form-generator/issues/526)
+* added "item.disabled" logic, supporting both boolean values and a function that is passed a referenc ([b227eb4](https://github.com/vue-generators/vue-form-generator/commit/b227eb4))
+* added "options" to VFG install function, appending custom "validators" to the validators object that ([892469e](https://github.com/vue-generators/vue-form-generator/commit/892469e))
+* added "type" attribute to inside buttons schema, defaults to "button" when one is not provided ([3306893](https://github.com/vue-generators/vue-form-generator/commit/3306893))
+* added an optional "unique" flag to "getFieldID" that appends lodash "uniqueId" to the ID when true.  ([ab1daeb](https://github.com/vue-generators/vue-form-generator/commit/ab1daeb)), closes [#468](https://github.com/vue-generators/vue-form-generator/issues/468)
+* added newline ([5813f0a](https://github.com/vue-generators/vue-form-generator/commit/5813f0a))
+* Codacy (guard-for-in) fix ([4e81d2d](https://github.com/vue-generators/vue-form-generator/commit/4e81d2d))
+* code fix ([b3a1010](https://github.com/vue-generators/vue-form-generator/commit/b3a1010))
+* Fix required number input does not require a value ([f95b38c](https://github.com/vue-generators/vue-form-generator/commit/f95b38c))
+* fixed code structure ([3b750b3](https://github.com/vue-generators/vue-form-generator/commit/3b750b3))
+* fixed single-quotes ([dfee175](https://github.com/vue-generators/vue-form-generator/commit/dfee175))
+* fixes #480 - dates are always passed to "date" and "datetime-local" elements using the standard form ([db3413f](https://github.com/vue-generators/vue-form-generator/commit/db3413f)), closes [#480](https://github.com/vue-generators/vue-form-generator/issues/480)
+* fixes an issue with fieldPikaday modifying the field schema and attaching `this.$el` to it, the pika ([2024204](https://github.com/vue-generators/vue-form-generator/commit/2024204))
+* listen for model-updated from `fields`, and fix `debounceFormatFunction` property to match fieldInpu ([7ad1fca](https://github.com/vue-generators/vue-form-generator/commit/7ad1fca))
+* migrated VFG docs to newer GitBooks, created GitHub Repo for Docs to allow for easier maintenance, u ([d372f5b](https://github.com/vue-generators/vue-form-generator/commit/d372f5b))
+* feat: add maxElements slot to fieldVueMultiSelect ([2e91a2f](https://github.com/vue-generators/vue-form-generator/commit/2e91a2f))
+
+
+
 ## <small>2.3.2 (2018-10-22)</small>
 
 * Export dist ([9912b5e](https://github.com/vue-generators/vue-form-generator/commit/9912b5e))
