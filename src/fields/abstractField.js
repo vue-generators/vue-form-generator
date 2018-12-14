@@ -31,7 +31,7 @@ export default {
 		return {
 			errors: [],
 			debouncedValidateFunc: null,
-			debouncedFormatFunction: null
+			debouncedFormatFunc: null
 		};
 	},
 
