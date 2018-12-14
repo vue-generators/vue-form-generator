@@ -20,7 +20,7 @@ export default {
 
 	methods: {
 		getDateFormat() {
-			return objGet(this.schema, 'pikadayOptions.format', inputFormat);
+			return objGet(this.schema, "pikadayOptions.format", inputFormat);
 		},
 		...dateFieldHelper,
 		initialize(options) {
