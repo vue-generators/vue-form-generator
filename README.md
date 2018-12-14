@@ -16,6 +16,7 @@ A schema-based form generator component for Vue.js.
 ## Demo
 
 [JSFiddle simple example](https://jsfiddle.net/zoul0813/d8excp36/)
+
 [CodePen simple example](https://codepen.io/zoul0813/pen/OrNVNw)
 
 [![Screenshot](https://github.com/vue-generators/vue-form-generator-docs/raw/master/assets/vfg-example1.png)](https://jsfiddle.net/zoul0813/d8excp36/)
