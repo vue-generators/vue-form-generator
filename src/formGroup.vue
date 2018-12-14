@@ -11,7 +11,7 @@
 		<div class="field-wrap">
 			<component ref="child" :is="getFieldType(field)" :vfg="vfg" :disabled="fieldDisabled(field)" :model="model" :schema="field" :formOptions="options" @model-updated="onModelUpdated" @validated="onFieldValidated"></component>
 			<div v-if="buttonVisibility(field)" class="buttons">
-				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label"></button>
+				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label" :type="getButtonType(btn)"></button>
 			</div>
 		</div>
 
@@ -80,6 +80,10 @@ export default {
 		// Get type of field 'field-xxx'. It'll be the name of HTML element
 		getFieldType(fieldSchema) {
 			return "field-" + fieldSchema.type;
+		},
+		// Get type of button, default to 'button'
+		getButtonType(btn) {
+			return objGet(btn, "type", "button");
 		},
 		// Child field executed validation
 		onFieldValidated(res, errors, field) {
