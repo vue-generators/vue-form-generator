@@ -15,9 +15,10 @@ A schema-based form generator component for Vue.js.
 
 ## Demo
 
-[JSFiddle simple example](https://jsfiddle.net/icebob/0mg1v81e/)
+[JSFiddle simple example](https://jsfiddle.net/zoul0813/d8excp36/)
+[CodePen simple example](https://codepen.io/zoul0813/pen/OrNVNw)
 
-[![Screenshot](https://icebob.gitbooks.io/vueformgenerator/content/assets/vfg-example1.png)](https://jsfiddle.net/icebob/0mg1v81e/)
+[![Screenshot](https://github.com/vue-generators/vue-form-generator-docs/raw/master/assets/vfg-example1.png)](https://jsfiddle.net/zoul0813/d8excp36/)
 
 ## Features
 
@@ -33,7 +34,7 @@ A schema-based form generator component for Vue.js.
 
 ## Documentation
 
-[Online documentation on Gitbook](https://icebob.gitbooks.io/vueformgenerator/content/)
+[Online documentation on Gitbook](https://vue-generators.gitbook.io/vue-generators/)
 
 ## Dependencies
 
@@ -43,7 +44,7 @@ While built-in fields don't need external dependencies, optional fields may need
 These dependencies fall into two camps: jQuery or Vanilla. You can find almost the same functionality in both flavors.
 In the end, it's your choice to depend on jQuery or not.
 
-You can find details about dependencies in the official [documentation](https://icebob.gitbooks.io/vueformgenerator/content/) under each specific component.
+You can find details about dependencies in the official [documentation](https://vue-generators.gitbook.io/vue-generators/) under each specific component.
 
 ## Installation
 
