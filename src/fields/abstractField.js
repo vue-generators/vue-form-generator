@@ -1,4 +1,4 @@
-import { get as objGet, forEach, isFunction, isString, isArray, debounce } from "lodash";
+import { get as objGet, forEach, isFunction, isString, isArray, debounce, uniqueId } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
@@ -208,9 +208,9 @@ export default {
 			}
 		},
 
-		getFieldID(schema) {
+		getFieldID(schema, unique = false) {
 			const idPrefix = objGet(this.formOptions, "fieldIdPrefix", "");
-			return slugifyFormID(schema, idPrefix);
+			return slugifyFormID(schema, idPrefix) + (unique ? "-" + uniqueId() : "");
 		},
 
 		getFieldClasses() {
