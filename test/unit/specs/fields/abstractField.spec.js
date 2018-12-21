@@ -213,6 +213,8 @@ describe("abstractField.vue", () => {
 
 		it("should call validate function after value changed", () => {
 			options.validateAfterChanged = true;
+			// seems to be an issue with how the field is defined, the update to 'options' isn't carried over to field.formOptions
+			field.formOptions = options;
 			field.value = "Jane Roe";
 
 			expect(field.validate.callCount).to.be.equal(1);
