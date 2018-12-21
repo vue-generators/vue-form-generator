@@ -139,7 +139,7 @@ export default {
 			if (!isFunction(this.debouncedValidateFunc)) {
 				this.debouncedValidateFunc = debounce(
 					this.validate.bind(this),
-					objGet(this.schema, 'validateDebounceTime', objGet(this.formOptions, 'validateDebounceTime', 500))
+					objGet(this.schema, "validateDebounceTime", objGet(this.formOptions, "validateDebounceTime", 500))
 				);
 			}
 			this.debouncedValidateFunc();
@@ -163,7 +163,7 @@ export default {
 				}
 
 				if (objGet(this.formOptions, "validateAfterChanged", false) === true) {
-					if (objGet(this.schema, 'validateDebounceTime', objGet(this.formOptions, 'validateDebounceTime', 0)) > 0) {
+					if (objGet(this.schema, "validateDebounceTime", objGet(this.formOptions, "validateDebounceTime", 0)) > 0) {
 						this.debouncedValidate();
 					} else {
 						this.validate();
