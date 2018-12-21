@@ -30,8 +30,9 @@ export default {
 			default() {
 				return {
 					validateAfterLoad: false,
-					validateAsync: false,
 					validateAfterChanged: false,
+					fieldIdPrefix: '',
+					validateAsync: false,
 					validationErrorClass: "error",
 					validationSuccessClass: ""
 				};

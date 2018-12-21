@@ -139,7 +139,7 @@ export default {
 			if (!isFunction(this.debouncedValidateFunc)) {
 				this.debouncedValidateFunc = debounce(
 					this.validate.bind(this),
-					objGet(this, "$parent.options.validateDebounceTime", 500)
+					objGet(this.schema, 'validateDebounceTime', objGet(this.formOptions, 'validateDebounceTime', 500))
 				);
 			}
 			this.debouncedValidateFunc();
@@ -162,8 +162,8 @@ export default {
 					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 				}
 
-				if (objGet(this.$parent, "options.validateAfterChanged", false) === true) {
-					if (objGet(this.$parent, "options.validateDebounceTime", 0) > 0) {
+				if (objGet(this.formOptions, "validateAfterChanged", false) === true) {
+					if (objGet(this.schema, 'validateDebounceTime', objGet(this.formOptions, 'validateDebounceTime', 0)) > 0) {
 						this.debouncedValidate();
 					} else {
 						this.validate();
