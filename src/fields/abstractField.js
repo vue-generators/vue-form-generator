@@ -1,4 +1,4 @@
-import { get as objGet, forEach, isFunction, isString, isArray, debounce, uniqueId } from "lodash";
+import { get as objGet, forEach, isFunction, isString, isArray, debounce, uniqueId, uniq as arrayUniq } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
 
@@ -107,9 +107,9 @@ export default {
 				});
 			}
 
-			let handleErrors = errors => {
+			let handleErrors = (errors) => {
 				let fieldErrors = [];
-				forEach(errors, err => {
+				forEach(arrayUniq(errors), err => {
 					if (isArray(err) && err.length > 0) {
 						fieldErrors = fieldErrors.concat(err);
 					} else if (isString(err)) {
@@ -139,7 +139,7 @@ export default {
 			if (!isFunction(this.debouncedValidateFunc)) {
 				this.debouncedValidateFunc = debounce(
 					this.validate.bind(this),
-					objGet(this, "$parent.options.validateDebounceTime", 500)
+					objGet(this.schema, "validateDebounceTime", objGet(this.formOptions, "validateDebounceTime", 500))
 				);
 			}
 			this.debouncedValidateFunc();
@@ -162,8 +162,8 @@ export default {
 					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 				}
 
-				if (objGet(this.$parent, "options.validateAfterChanged", false) === true) {
-					if (objGet(this.$parent, "options.validateDebounceTime", 0) > 0) {
+				if (objGet(this.formOptions, "validateAfterChanged", false) === true) {
+					if (objGet(this.schema, "validateDebounceTime", objGet(this.formOptions, "validateDebounceTime", 0)) > 0) {
 						this.debouncedValidate();
 					} else {
 						this.validate();
