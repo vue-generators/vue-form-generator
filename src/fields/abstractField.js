@@ -349,8 +349,8 @@ export default {
 		}
 	},
 	beforeDestroy() {
-		this.eventBus.$off("clear-validation-errors");
-		this.eventBus.$off("validate-fields");
+		this.eventBus.$off("clear-validation-errors", this.clearValidationErrors);
+		this.eventBus.$off("validate-fields", this.validate);
 		this.eventBus.$emit("field-deregistering", this);
 	}
 };
