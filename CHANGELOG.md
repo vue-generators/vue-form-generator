@@ -1,3 +1,17 @@
+## <small>2.3.4 (2019-02-07)</small>
+
+* #469 - fixes example in README, tested with a fresh vue-cli project ([b0037c9](https://github.com/vue-generators/vue-form-generator/commit/b0037c9))
+* #551 - added "is-disabled" class to the radios label ([1e9db8e](https://github.com/vue-generators/vue-form-generator/commit/1e9db8e)), closes [#551](https://github.com/vue-generators/vue-form-generator/issues/551)
+* Add vfg-field-matrix into the readme ([a898201](https://github.com/vue-generators/vue-form-generator/commit/a898201))
+* added optional field property `debounceValidateTime` which works at the field level, allowing indivi ([d98fa50](https://github.com/vue-generators/vue-form-generator/commit/d98fa50))
+* Ref #563 - return unique validation errors (prevents multiple validators from returning "this field  ([f9c699b](https://github.com/vue-generators/vue-form-generator/commit/f9c699b)), closes [#563](https://github.com/vue-generators/vue-form-generator/issues/563)
+* single-quotes fix ([5756317](https://github.com/vue-generators/vue-form-generator/commit/5756317))
+* Update validators.js ([a282933](https://github.com/vue-generators/vue-form-generator/commit/a282933))
+* updated abstractField test, seems the `field.formOptions` wasn't being updated, the `this.$parent.op ([8c1f462](https://github.com/vue-generators/vue-form-generator/commit/8c1f462))
+* updated package-lock with latest deps ([f7d7c71](https://github.com/vue-generators/vue-form-generator/commit/f7d7c71))
+
+
+
 ## <small>2.3.3 (2018-12-14)</small>
 
 * #535, #526 - reversed "deep property path" fix ([da32bde](https://github.com/vue-generators/vue-form-generator/commit/da32bde)), closes [#535](https://github.com/vue-generators/vue-form-generator/issues/535) [#526](https://github.com/vue-generators/vue-form-generator/issues/526)
