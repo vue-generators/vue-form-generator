@@ -6,7 +6,7 @@ const localVue = createLocalVue();
 localVue.use(VueFormGenerator);
 
 let wrapper;
-const defaultTemplate = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" ref="form"></vue-form-generator>`;
+const defaultTemplate = `<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="multiple" :is-new-model="isNewModel" ref="form"></vue-form-generator>`;
 
 function createFormGenerator(data, methods, template) {
 	const Component = {
@@ -719,6 +719,53 @@ describe("VueFormGenerator.vue", () => {
 		it("should be validation error at ready()", () => {
 			expect(form).to.not.be.undefined;
 			expect(form.options).to.not.be.undefined;
+		});
+	});
+
+	describe("check isNewModel property", () => {
+		let schema = {
+			fields: [
+				{
+					type: "input",
+					inputType: "text",
+					label: "Name",
+					model: "name",
+					min: 3,
+					validator: VueFormGenerator.validators.string
+				}
+			]
+		};
+
+		let model = { name: "Me" };
+		let form;
+		let onValidated = sinon.spy();
+
+		before(() => {
+			onValidated.resetHistory();
+			createFormGenerator(
+				{ schema, model, isNewModel: true, options: { validateAfterLoad: true } },
+				{ onValidated: onValidated },
+				`<vue-form-generator :schema="schema" :model="model" :options="options" :multiple="false" :is-new-model="isNewModel" ref="form" @validated="onValidated"></vue-form-generator>`
+			);
+			wrapper.update();
+		});
+
+		it("there should be no errors on mounted, but the real errors should still be there()", () => {
+			form = wrapper.vm.$refs.form;
+			expect(form.displayedErrors).to.be.length(0);
+			expect(form.errors).to.be.length(1);
+		});
+
+		it("a validated event has been called, telling the form is not valid", () => {
+			expect(onValidated.callCount).to.be.equal(1);
+			expect(
+				onValidated.calledWith(false, [
+					{
+						field: schema.fields[0],
+						error: "The length of text is too small! Current: 2, Minimum: 3"
+					}
+				])
+			).to.be.true;
 		});
 	});
 

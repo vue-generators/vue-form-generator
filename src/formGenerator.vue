@@ -2,17 +2,17 @@
 div.vue-form-generator(v-if='schema != null')
 	fieldset(v-if="schema.fields", :is='tag')
 		template(v-for='field in fields')
-			form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+			form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="displayedErrors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 
 	template(v-for='group in groups')
 		fieldset(:is='tag', :class='getFieldRowClasses(group)')
 			legend(v-if='group.legend') {{ group.legend }}
 			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+				form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="displayedErrors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 </template>
 
 <script>
-import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
+import { get as objGet, forEach, isFunction, isNil, isArray, clone } from "lodash";
 import formMixin from "./formMixin.js";
 import formGroup from "./formGroup.vue";
 
@@ -61,7 +61,8 @@ export default {
 	data() {
 		return {
 			vfg: this,
-			errors: [] // Validation errors
+			displayedErrors: [], // These are the errors currently being displayed
+			errors: []  // These are the errors of the form
 		};
 	},
 
@@ -98,9 +99,8 @@ export default {
 			if (newModel != null) {
 				this.$nextTick(() => {
 					// Model changed!
-					if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
-						this.validate();
-					} else {
+					this.validate();
+					if (!this.options.validateAfterLoad || this.isNewModel) {
 						this.clearValidationErrors();
 					}
 				});
@@ -111,10 +111,9 @@ export default {
 	mounted() {
 		this.$nextTick(() => {
 			if (this.model) {
-				// First load, running validation if neccessary
-				if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
-					this.validate();
-				} else {
+				this.validate();
+				if (!this.options.validateAfterLoad || this.isNewModel) {
+
 					this.clearValidationErrors();
 				}
 			}
@@ -134,11 +133,16 @@ export default {
 		// Child field executed validation
 		onFieldValidated(res, errors, field) {
 			// Remove old errors for this field
+			this.displayedErrors = this.displayedErrors.filter(e => e.field !== field.schema);
 			this.errors = this.errors.filter(e => e.field !== field.schema);
 
 			if (!res && errors && errors.length > 0) {
 				// Add errors with this field
 				forEach(errors, err => {
+					this.displayedErrors.push({
+						field: field.schema,
+						error: err
+					});
 					this.errors.push({
 						field: field.schema,
 						error: err
@@ -183,9 +187,10 @@ export default {
 						});
 					}
 				});
-				this.errors = formErrors;
-				let isValid = formErrors.length === 0;
-				this.$emit("validated", isValid, formErrors, this);
+				this.displayedErrors = formErrors;
+				this.errors = clone(formErrors);
+				let isValid = this.errors.length === 0;
+				this.$emit("validated", isValid, this.errors, this);
 				return isAsync ? formErrors : isValid;
 			};
 
@@ -198,7 +203,11 @@ export default {
 
 		// Clear validation errors
 		clearValidationErrors() {
-			this.errors.splice(0);
+			// TODO: Rename this function to cleanDisplayedValidationErrors, since
+			// it only removes the errors displayed on screen.
+			// Removing the errors must not make the form valid when raising a
+			// validated event
+			this.displayedErrors.splice(0);
 
 			forEach(this.$children, child => {
 				child.clearValidationErrors();
