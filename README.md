@@ -27,7 +27,7 @@ A schema-based form generator component for Vue.js.
 *   multiple object editing
 *   21 field types
 *   built-in validators
-*   core & full bundles (11kb and 19kb gzipped)
+*   core & full bundles (41kb and 50kb gzipped)
 *   Bootstrap friendly templates
 *   customizable styles
 *   can be extended easily with custom fields
@@ -79,8 +79,8 @@ VueFormGenerator come in two version : `core` and `full`.
 Core is a more minimal version with only half the fields.
 Full is core + other fields.
 
-*   Full bundle: 75 kB (gzipped: 19 kB)
-*   Core bundle: 39 kB (gzipped: 11 kB)
+*   Full bundle: 172 kB (gzipped: 50 kB)
+*   Core bundle: 146 kB (gzipped: 41 kB)
 
 If you don't know what to choose, don't worry, the full is the default version.
 If you want the slim down version, here is the changes:
