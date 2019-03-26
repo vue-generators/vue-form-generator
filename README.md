@@ -27,7 +27,7 @@ A schema-based form generator component for Vue.js.
 *   multiple object editing
 *   21 field types
 *   built-in validators
-*   core & full bundles (11kb and 19kb gzipped)
+*   core & full bundles (41kb and 50kb gzipped)
 *   Bootstrap friendly templates
 *   customizable styles
 *   can be extended easily with custom fields
