@@ -120,66 +120,68 @@ export default {
 </script>
 <style lang="scss">
 $errorColor: #f00;
-.form-group:not([class*=" col-"]) {
-	width: 100%;
-}
-.form-group {
-	display: inline-block;
-	vertical-align: top;
-	// width: 100%;
-	// margin: 0.5rem 0.26rem;
-	margin-bottom: 1rem;
-
-	label {
-		font-weight: 400;
-		& > :first-child {
-			display: inline-block;
-		}
+.vue-form-generator {
+	.form-group:not([class*=" col-"]) {
+		width: 100%;
 	}
+	.form-group {
+		display: inline-block;
+		vertical-align: top;
+		// width: 100%;
+		// margin: 0.5rem 0.26rem;
+		margin-bottom: 1rem;
 
-	&.featured {
-		> label {
-			font-weight: bold;
-		}
-	}
-
-	&.required {
-		> label:after {
-			content: "*";
-			font-weight: normal;
-			color: Red;
-			// position: absolute;
-			padding-left: 0.2em;
-			font-size: 1em;
-		}
-	}
-
-	&.disabled {
-		> label {
-			color: #666;
-			font-style: italic;
-		}
-	}
-
-	&.error {
-		input:not([type="checkbox"]),
-		textarea,
-		select {
-			border: 1px solid $errorColor;
-			background-color: rgba($errorColor, 0.15);
+		label {
+			font-weight: 400;
+			& > :first-child {
+				display: inline-block;
+			}
 		}
 
-		.errors {
-			color: $errorColor;
-			font-size: 0.8em;
-			span {
-				display: block;
-				background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAiklEQVR4Xt2TMQoCQQxF3xdhu72MpZU3GU/meBFLOztPYrVWsQmEWSaMsIXgK8P8RyYkMjO2sAN+K9gTIAmDAlzoUzE7p4IFytvDCQWJKSStYB2efcAvqZFM0BcstMx5naSDYFzfLhh/4SmRM+6Agw/xIX0tKEDFufeDNRUc4XqLRz3qabVIf3BMHwl6Ktexn3nmAAAAAElFTkSuQmCC");
-				background-repeat: no-repeat;
-				padding-left: 17px;
-				padding-top: 0px;
-				margin-top: 0.2em;
-				font-weight: 600;
+		&.featured {
+			> label {
+				font-weight: bold;
+			}
+		}
+
+		&.required {
+			> label:after {
+				content: "*";
+				font-weight: normal;
+				color: Red;
+				// position: absolute;
+				padding-left: 0.2em;
+				font-size: 1em;
+			}
+		}
+
+		&.disabled {
+			> label {
+				color: #666;
+				font-style: italic;
+			}
+		}
+
+		&.error {
+			input:not([type="checkbox"]),
+			textarea,
+			select {
+				border: 1px solid $errorColor;
+				background-color: rgba($errorColor, 0.15);
+			}
+
+			.errors {
+				color: $errorColor;
+				font-size: 0.8em;
+				span {
+					display: block;
+					background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAiklEQVR4Xt2TMQoCQQxF3xdhu72MpZU3GU/meBFLOztPYrVWsQmEWSaMsIXgK8P8RyYkMjO2sAN+K9gTIAmDAlzoUzE7p4IFytvDCQWJKSStYB2efcAvqZFM0BcstMx5naSDYFzfLhh/4SmRM+6Agw/xIX0tKEDFufeDNRUc4XqLRz3qabVIf3BMHwl6Ktexn3nmAAAAAElFTkSuQmCC");
+					background-repeat: no-repeat;
+					padding-left: 17px;
+					padding-top: 0px;
+					margin-top: 0.2em;
+					font-weight: 600;
+				}
 			}
 		}
 	}
