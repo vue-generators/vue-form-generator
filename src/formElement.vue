@@ -16,43 +16,45 @@
 				:getValueFromOption="getValueFromOption"></slot>
 		</label>
 
-		<div class="field-wrap">
-			<component
-				ref="child"
-				:is="fieldType"
-				:model="model"
-				:schema="field"
-				:form-options="options"
-				:event-bus="eventBus"
-				:field-id="fieldID"
-				@field-touched="onFieldTouched"
-				@errors-updated="onChildValidated"></component>
-			<div
-				v-if="buttonsAreVisible"
-				class="buttons">
-				<button
-					v-for="(btn, index) in field.buttons"
-					@click="buttonClickHandler(btn, field, $event)"
-					:class="btn.classes"
-					:key="index"
-					v-text="btn.label"></button>
+		<div class="field-content">
+			<div class="field-wrap">
+				<component
+					ref="child"
+					:is="fieldType"
+					:model="model"
+					:schema="field"
+					:form-options="options"
+					:event-bus="eventBus"
+					:field-id="fieldID"
+					@field-touched="onFieldTouched"
+					@errors-updated="onChildValidated"></component>
+				<div
+					v-if="buttonsAreVisible"
+					class="buttons">
+					<button
+						v-for="(btn, index) in field.buttons"
+						@click="buttonClickHandler(btn, field, $event)"
+						:class="btn.classes"
+						:key="index"
+						v-text="btn.label"></button>
+				</div>
 			</div>
+
+			<template v-if="fieldHasHint">
+				<slot
+					name="hint"
+					:field="field"
+					:getValueFromOption="getValueFromOption"></slot>
+			</template>
+
+			<template v-if="fieldHasErrors">
+				<slot
+					name="errors"
+					:childErrors="childErrors"
+					:field="field"
+					:getValueFromOption="getValueFromOption" ></slot>
+			</template>
 		</div>
-
-		<template v-if="fieldHasHint">
-			<slot
-				name="hint"
-				:field="field"
-				:getValueFromOption="getValueFromOption"></slot>
-		</template>
-
-		<template v-if="fieldHasErrors">
-			<slot
-				name="errors"
-				:childErrors="childErrors"
-				:field="field"
-				:getValueFromOption="getValueFromOption" ></slot>
-		</template>
 	</div>
 </template>
 <script>
