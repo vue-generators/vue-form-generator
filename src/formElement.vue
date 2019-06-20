@@ -24,7 +24,7 @@
 				:schema="field"
 				:form-options="options"
 				:event-bus="eventBus"
-				:field-id="fieldID"
+				:field-i-d="fieldID"
 				@field-touched="onFieldTouched"
 				@errors-updated="onChildValidated"></component>
 			<div
