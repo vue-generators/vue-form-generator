@@ -110,11 +110,11 @@ const validators = {
 
 		let err = [];
 		if (isString(value)) {
-			if (!isNil(field.fieldOptions.min) && value.length < field.fieldOptions.min) {
+			if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.min) && value.length < field.fieldOptions.min) {
 				err.push(msg(messages.textTooSmall, value.length, field.fieldOptions.min));
 			}
 
-			if (!isNil(field.fieldOptions.max) && value.length > field.fieldOptions.max) {
+			if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.max) && value.length > field.fieldOptions.max) {
 				err.push(msg(messages.textTooBig, value.length, field.fieldOptions.max));
 			}
 		} else {
@@ -136,11 +136,11 @@ const validators = {
 		}
 
 		if (!isNil(value)) {
-			if (!isNil(field.fieldOptions.min) && value.length < field.fieldOptions.min) {
+			if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.min) && value.length < field.fieldOptions.min) {
 				return [msg(messages.selectMinItems, field.fieldOptions.min)];
 			}
 
-			if (!isNil(field.fieldOptions.max) && value.length > field.fieldOptions.max) {
+			if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.max) && value.length > field.fieldOptions.max) {
 				return [msg(messages.selectMaxItems, field.fieldOptions.max)];
 			}
 		}
@@ -157,14 +157,14 @@ const validators = {
 
 		let err = [];
 
-		if (!isNil(field.fieldOptions.min)) {
+		if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.min)) {
 			let min = new Date(field.fieldOptions.min);
 			if (m.valueOf() < min.valueOf()) {
 				err.push(msg(messages.dateIsEarly, fecha.format(m), fecha.format(min)));
 			}
 		}
 
-		if (!isNil(field.fieldOptions.max)) {
+		if (!isNil(field.fieldOptions) && !isNil(field.fieldOptions.max)) {
 			let max = new Date(field.fieldOptions.max);
 			if (m.valueOf() > max.valueOf()) {
 				err.push(msg(messages.dateIsLate, fecha.format(m), fecha.format(max)));
