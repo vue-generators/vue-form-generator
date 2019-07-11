@@ -1,5 +1,5 @@
 <template>
-	<fieldset v-if="fields"
+	<fieldset v-if="fields && groupVisible(group)"
 		:is="tag"
 		:class="[groupRowClasses, validationClass]"
 		ref="group">
@@ -147,6 +147,19 @@ export default {
 			}
 
 			return field.visible;
+		},
+
+		// Get visible prop of the group
+		groupVisible(group) {
+			if (isFunction(group.visible)) {
+				return group.visible.call(this, this.model, group, this);
+			}
+
+			if (isNil(group.visible)) {
+				return true;
+			}
+
+			return group.visible;
 		},
 
 		getGroupTag(field) {
