@@ -62,7 +62,7 @@ module.exports = {
 					memoizing: true,
 					coercions: true,
 					flattening: true,
-					paths: false,
+					paths: true,
 					placeholders: true
 				}
 			]);
