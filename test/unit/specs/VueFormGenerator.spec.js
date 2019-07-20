@@ -559,6 +559,14 @@ describe("VueFormGenerator.vue", () => {
 						return model.status;
 					}
 				}
+			],
+			groups: [
+				{
+					legend: "Legend",
+					visible(model) {
+						return model.status;
+					}
+				}
 			]
 		};
 
@@ -576,11 +584,18 @@ describe("VueFormGenerator.vue", () => {
 			expect(input.exists()).to.be.true;
 		});
 
-		it("should be hidden the name field", () => {
+		it("should be visible the group", () => {
+			let legend = wrapper.find("legend");
+			expect(legend.exists()).to.be.true;
+		});
+
+		it("should be hidden the name field and the group", () => {
 			wrapper.vm.model.status = false;
 			wrapper.update();
 			let input = wrapper.find("input[type=text]");
 			expect(input.exists()).to.be.false;
+			let legend = wrapper.find("legend");
+			expect(legend.exists()).to.be.false;
 		});
 	});
 
@@ -592,6 +607,12 @@ describe("VueFormGenerator.vue", () => {
 					inputType: "text",
 					label: "Name",
 					model: "name",
+					visible: true
+				}
+			],
+			groups: [
+				{
+					legend: "Legend",
 					visible: true
 				}
 			]
@@ -608,11 +629,23 @@ describe("VueFormGenerator.vue", () => {
 			expect(input.exists()).to.be.true;
 		});
 
+		it("should be enabled the group", () => {
+			let legend = wrapper.find("legend");
+			expect(legend.exists()).to.be.true;
+		});
+
 		it("should be disabled the name field", () => {
 			wrapper.vm.schema.fields[0].visible = false;
 			wrapper.update();
 			let input = wrapper.find("input[type=text]");
 			expect(input.exists()).to.be.false;
+		});
+
+		it("should be disabled the group", () => {
+			wrapper.vm.schema.groups[0].visible = false;
+			wrapper.update();
+			let legend = wrapper.find("legend");
+			expect(legend.exists()).to.be.false;
 		});
 	});
 
