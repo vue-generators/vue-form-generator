@@ -2,13 +2,13 @@
 div.vue-form-generator(v-if='schema != null')
 	fieldset(v-if="schema.fields", :is='tag')
 		template(v-for='field in fields')
-			form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+			form-group(v-if='isVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 
 	template(v-for='group in groups')
-		fieldset(:is='tag', :class='getFieldRowClasses(group)')
-			legend(v-if='group.legend') {{ group.legend }}
+		fieldset(v-if='isVisible(group)', :is='tag', :class='getFieldRowClasses(group)')
+			legend(v-if='group.legend') {{ group.legend }}{{ group.styleClasses }}
 			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+				form-group(v-if='isVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 </template>
 
 <script>
@@ -122,13 +122,13 @@ export default {
 	},
 
 	methods: {
-		// Get visible prop of field
-		fieldVisible(field) {
-			if (isFunction(field.visible)) return field.visible.call(this, this.model, field, this);
+		// Get visible prop of field/group
+		isVisible(option) {
+			if (isFunction(option.visible)) return option.visible.call(this, this.model, option, this);
 
-			if (isNil(field.visible)) return true;
+			if (isNil(option.visible)) return true;
 
-			return field.visible;
+			return option.visible;
 		},
 
 		// Child field executed validation
