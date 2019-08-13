@@ -289,7 +289,10 @@ export default {
 			this.eventBus.$on("field-validated", this.onFieldValidated);
 		}
 		this.eventBus.$on("model-updated", this.onModelUpdated);
-		this.eventBus.$on("fields-validation-trigger", this.validate);
+		//this.eventBus.$on("fields-validation-trigger", this.validate);
+		this.eventBus.$on("fields-validation-trigger", () => {
+			return this.validate().then(() => {}, () => {});
+		});
 		this.eventBus.$on("field-registering", () => {
 			this.totalNumberOfFields = this.totalNumberOfFields + 1;
 		});

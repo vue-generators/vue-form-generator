@@ -918,31 +918,38 @@ describe("VueFormGenerator.vue", () => {
 
 		it("should be validation error if model value is not valid", () => {
 			formGenerator.setProps({ model: { name: "A" } });
-			form.validate();
-
-			expect(form.errors).to.be.length(1);
-			expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
-			expect(formGenerator.emitted().validated.length).to.be.equal(1);
-			expect(formGenerator.emitted().validated[0][0]).to.be.false;
-			expect(formGenerator.emitted().validated[0][1]).to.be.an.instanceof(Array);
-			expect(formGenerator.emitted().validated[0][1].length).to.be.equal(1);
-			expect(formGenerator.emitted().validated[0][1][0].uid).to.be.a("string");
-			expect(formGenerator.emitted().validated[0][1][0].error).to.be.a("string");
-			expect(formGenerator.emitted().validated[0][1][0].error).to.be.equal(
-				"The length of text is too small! Current: 1, Minimum: 3"
+			form.validate().then(
+				() => {
+					console.log(JSON.stringify(form.errors));
+					expect(form.errors).to.be.length(1);
+					expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
+					expect(formGenerator.emitted().validated.length).to.be.equal(1);
+					expect(formGenerator.emitted().validated[0][0]).to.be.false;
+					expect(formGenerator.emitted().validated[0][1]).to.be.an.instanceof(Array);
+					expect(formGenerator.emitted().validated[0][1].length).to.be.equal(1);
+					expect(formGenerator.emitted().validated[0][1][0].uid).to.be.a("string");
+					expect(formGenerator.emitted().validated[0][1][0].error).to.be.a("string");
+					expect(formGenerator.emitted().validated[0][1][0].error).to.be.equal(
+						"The length of text is too small! Current: 1, Minimum: 3"
+					);
+				},
+				() => {}
 			);
 		});
 
 		it("should no validation error if model valie is valid", () => {
 			formGenerator.setProps({ model: { name: "Alan" } });
-			form.validate();
-
-			expect(form.errors).to.be.length(0);
-			expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
-			expect(formGenerator.emitted().validated.length).to.be.equal(1);
-			expect(formGenerator.emitted().validated[0][0]).to.be.true;
-			expect(formGenerator.emitted().validated[0][1]).to.be.an.instanceof(Array);
-			expect(formGenerator.emitted().validated[0][1].length).to.be.equal(0);
+			form.validate().then(
+				() => {
+					expect(form.errors).to.be.length(0);
+					expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
+					expect(formGenerator.emitted().validated.length).to.be.equal(1);
+					expect(formGenerator.emitted().validated[0][0]).to.be.true;
+					expect(formGenerator.emitted().validated[0][1]).to.be.an.instanceof(Array);
+					expect(formGenerator.emitted().validated[0][1].length).to.be.equal(0);
+				},
+				() => {}
+			);
 		});
 	});
 
@@ -1030,7 +1037,7 @@ describe("VueFormGenerator.vue", () => {
 		it.skip("should be validation error if model value is not valid", () => {
 			onValidated.resetHistory();
 			wrapper.vm.model.name = "A";
-			field.validate();
+			field.validate().then(() => {}, () => {});
 
 			expect(form.errors).to.be.length(1);
 			expect(onValidated.callCount).to.be.equal(1);
@@ -1045,7 +1052,7 @@ describe("VueFormGenerator.vue", () => {
 		});
 
 		it.skip("should be 2 validation error", () => {
-			form.$children[1].validate();
+			form.$children[1].validate().then(() => {}, () => {});
 			expect(form.errors).to.be.length(2);
 			expect(form.errors[0].error).to.be.equal("The length of text is too small! Current: 1, Minimum: 3");
 			expect(form.errors[1].error).to.be.equal("Validation error!");
@@ -1054,7 +1061,7 @@ describe("VueFormGenerator.vue", () => {
 		it.skip("should only other field validation error", () => {
 			wrapper.vm.model.name = "Alan";
 			onValidated.resetHistory();
-			field.validate();
+			field.validate().then(() => {}, () => {});
 
 			expect(form.errors).to.be.length(1);
 			expect(onValidated.callCount).to.be.equal(1);
@@ -1115,7 +1122,7 @@ describe("VueFormGenerator.vue", () => {
 			onValidated.resetHistory();
 			wrapper.vm.model.name = "A";
 			// console.log(formGenerator.find({ name: "form-element" }).vm.$children[0].validate);
-			field.validate();
+			field.validate().then(() => {}, () => {});
 			Vue.config.errorHandler = done;
 			Vue.nextTick(() => {
 				expect(form.errors).to.be.length(1);
