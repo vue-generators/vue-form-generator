@@ -13,6 +13,11 @@ export default {
 	formatValueToModel(value) {
 		if (value != null) {
 			let m = fecha.parse(value, this.getDateFormat());
+			
+		    if (m == null) {
+			  return null
+		    }
+			
 			if (this.schema.format) {
 				value = fecha.format(m, this.schema.format);
 			} else {
