@@ -242,7 +242,6 @@ export default {
 				let formErrors = [];
 
 				this.eventBus.$on("field-deregistering", () => {
-					// console.warn("Fields were deleted during validation process");
 					this.eventBus.$emit("fields-validation-terminated", formErrors);
 					reject(formErrors);
 				});
@@ -289,7 +288,6 @@ export default {
 			this.eventBus.$on("field-validated", this.onFieldValidated);
 		}
 		this.eventBus.$on("model-updated", this.onModelUpdated);
-		//this.eventBus.$on("fields-validation-trigger", this.validate);
 		this.eventBus.$on("fields-validation-trigger", () => {
 			return this.validate().then(() => {}, () => {});
 		});

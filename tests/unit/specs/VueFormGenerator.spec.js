@@ -920,7 +920,6 @@ describe("VueFormGenerator.vue", () => {
 			formGenerator.setProps({ model: { name: "A" } });
 			form.validate().then(
 				() => {
-					console.log(JSON.stringify(form.errors));
 					expect(form.errors).to.be.length(1);
 					expect(formGenerator.emitted().validated).to.be.an.instanceof(Array);
 					expect(formGenerator.emitted().validated.length).to.be.equal(1);
