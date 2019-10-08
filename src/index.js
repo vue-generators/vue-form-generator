@@ -12,6 +12,15 @@ const install = (Vue, options = {}) => {
 			}
 		});
 	}
+
+	if (options.validators) {
+		for (let key in options.validators) {
+			if ({}.hasOwnProperty.call(options.validators, key)) {
+				validators[key] = options.validators[key];
+			}
+		}
+	}
+
 	Vue.component("VueFormGenerator", component);
 };
 
