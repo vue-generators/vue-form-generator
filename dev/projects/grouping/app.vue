@@ -35,6 +35,7 @@ export default {
 			schema: {
 				groups: [
 					{
+						visible: true,
 						legend: "Contact Details",
 						fields: [
 							{
@@ -52,6 +53,7 @@ export default {
 						]
 					},
 					{
+						visible: false,
 						legend: "Other Details",
 						fields: [
 							{
