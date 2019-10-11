@@ -37,6 +37,7 @@ export default {
 					{
 						legend: "Contact Details",
 						id: "SomeID",
+						styleClasses: ";lkdsfjhg",
 						fields: [
 							{
 								type: "input",

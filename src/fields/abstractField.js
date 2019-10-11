@@ -82,18 +82,18 @@ export default {
 				if (!isArray(this.schema.validator)) {
 					validators.push(convertValidator(this.schema.validator).bind(this));
 				} else {
-					forEach(this.schema.validator, validator => {
+					forEach(this.schema.validator, (validator) => {
 						validators.push(convertValidator(validator).bind(this));
 					});
 				}
 
-				forEach(validators, validator => {
+				forEach(validators, (validator) => {
 					if (validateAsync) {
 						results.push(validator(this.value, this.schema, this.model));
 					} else {
 						let result = validator(this.value, this.schema, this.model);
 						if (result && isFunction(result.then)) {
-							result.then(err => {
+							result.then((err) => {
 								if (err) {
 									this.errors = this.errors.concat(err);
 								}
@@ -109,7 +109,7 @@ export default {
 
 			let handleErrors = (errors) => {
 				let fieldErrors = [];
-				forEach(arrayUniq(errors), err => {
+				forEach(arrayUniq(errors), (err) => {
 					if (isArray(err) && err.length > 0) {
 						fieldErrors = fieldErrors.concat(err);
 					} else if (isString(err)) {
@@ -155,15 +155,20 @@ export default {
 				changed = true;
 			}
 
+			this.$emit("model-updated", newValue, this.schema.model);
 			if (changed) {
-				this.$emit("model-updated", newValue, this.schema.model);
-
 				if (isFunction(this.schema.onChanged)) {
 					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 				}
 
 				if (objGet(this.formOptions, "validateAfterChanged", false) === true) {
-					if (objGet(this.schema, "validateDebounceTime", objGet(this.formOptions, "validateDebounceTime", 0)) > 0) {
+					if (
+						objGet(
+							this.schema,
+							"validateDebounceTime",
+							objGet(this.formOptions, "validateDebounceTime", 0)
+						) > 0
+					) {
 						this.debouncedValidate();
 					} else {
 						this.validate();
