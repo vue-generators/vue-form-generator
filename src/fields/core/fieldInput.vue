@@ -55,7 +55,7 @@ export default {
 	mixins: [abstractField],
 	computed: {
 		inputType() {
-			if(this.schema && this.schema.inputType === "datetime") {
+			if (this.schema && this.schema.inputType === "datetime") {
 				// convert "datetime" to "datetime-local" (datetime deprecated in favor of "datetime-local")
 				// ref: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/datetime
 				return "datetime-local";
@@ -82,7 +82,7 @@ export default {
 			return value;
 		},
 		formatValueToField(value) {
-			switch(this.schema.inputType.toLowerCase()) {
+			switch (this.schema.inputType.toLowerCase()) {
 				case "date":
 				case "datetime":
 				case "datetime-local":
@@ -103,16 +103,16 @@ export default {
 			this.updateModelValue(newValue, oldValue);
 		},
 		formatDatetimeValueToField(value) {
-			if(value === null || undefined === value) {
+			if (value === null || undefined === value) {
 				return null;
 			}
 
 			let defaultFormat = DATETIME_FORMATS[this.schema.inputType.toLowerCase()];
 			let m = value;
-			if(!isNumber(value)) {
+			if (!isNumber(value)) {
 				m = fecha.parse(value, defaultFormat);
 			}
-			if(m !== false) {
+			if (m !== false) {
 				return fecha.format(m, defaultFormat);
 			}
 			return value;
@@ -150,7 +150,7 @@ export default {
 					(newValue, oldValue) => {
 						this.formatNumberToModel(newValue, oldValue);
 					},
-					parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)),
+					parseInt(objGet(this.schema, "debounceFormatTimeout", 150)),
 					{
 						trailing: true,
 						leading: false
@@ -165,7 +165,7 @@ export default {
 					(newValue, oldValue) => {
 						this.formatDatetimeToModel(newValue, oldValue);
 					},
-					parseInt(objGet(this.schema, "debounceFormatTimeout", 1000)),
+					parseInt(objGet(this.schema, "debounceFormatTimeout", 150)),
 					{
 						trailing: true,
 						leading: false

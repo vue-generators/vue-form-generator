@@ -36,6 +36,7 @@ export default {
 				groups: [
 					{
 						legend: "Contact Details",
+						id: "SomeID",
 						fields: [
 							{
 								type: "input",
