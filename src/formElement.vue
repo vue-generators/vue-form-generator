@@ -16,28 +16,26 @@
 				:getValueFromOption="getValueFromOption"></slot>
 		</label>
 
-		<div class="field-content">
-			<div class="field-wrap">
-				<component
-					ref="child"
-					:is="fieldType"
-					:model="model"
-					:schema="field"
-					:form-options="options"
-					:event-bus="eventBus"
-					:field-i-d="fieldID"
-					@field-touched="onFieldTouched"
-					@errors-updated="onChildValidated"></component>
-				<div
-					v-if="buttonsAreVisible"
-					class="buttons">
-					<button
-						v-for="(btn, index) in field.buttons"
-						@click="buttonClickHandler(btn, field, $event)"
-						:class="btn.classes"
-						:key="index"
-						v-text="btn.label"></button>
-				</div>
+		<div class="field-wrap">
+			<component
+				ref="child"
+				:is="fieldType"
+				:model="model"
+				:schema="field"
+				:form-options="options"
+				:event-bus="eventBus"
+				:field-id="fieldID"
+				@field-touched="onFieldTouched"
+				@errors-updated="onChildValidated"></component>
+			<div
+				v-if="buttonsAreVisible"
+				class="buttons">
+				<button
+					v-for="(btn, index) in field.buttons"
+					@click="buttonClickHandler(btn, field, $event)"
+					:class="btn.classes"
+					:key="index"
+					v-text="btn.label"></button>
 			</div>
 		</div>
 
