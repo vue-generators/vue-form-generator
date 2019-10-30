@@ -1,3 +1,16 @@
+## <small>2.3.5 (2019-10-30)</small>
+
+* add group id ([59d8ea5](https://github.com/vue-generators/vue-form-generator/commit/59d8ea5))
+* add visibility for group ([65650e9](https://github.com/vue-generators/vue-form-generator/commit/65650e9))
+* Changed in intro ([cdf6f93](https://github.com/vue-generators/vue-form-generator/commit/cdf6f93))
+* commit dist ([392f5cf](https://github.com/vue-generators/vue-form-generator/commit/392f5cf))
+* emit model update on delete/ ([dcb6b43](https://github.com/vue-generators/vue-form-generator/commit/dcb6b43))
+* faster debounce ([5712923](https://github.com/vue-generators/vue-form-generator/commit/5712923))
+* make build dist ([7b7edab](https://github.com/vue-generators/vue-form-generator/commit/7b7edab))
+* Updated bundle sizes ([6c5af99](https://github.com/vue-generators/vue-form-generator/commit/6c5af99))
+
+
+
 ## <small>2.3.4 (2019-02-07)</small>
 
 * #469 - fixes example in README, tested with a fresh vue-cli project ([b0037c9](https://github.com/vue-generators/vue-form-generator/commit/b0037c9))

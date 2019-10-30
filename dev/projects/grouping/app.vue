@@ -29,13 +29,13 @@ export default {
 					more: "More",
 					things: "Things"
 				},
+				emptyother: {},
 				single: "blah"
 			},
-
 			schema: {
 				groups: [
 					{
-						legend: "Contact Details",
+						legend: "Contact Details (not advance)",
 						id: "SomeID",
 						styleClasses: ";lkdsfjhg",
 						fields: [
@@ -55,6 +55,7 @@ export default {
 					},
 					{
 						legend: "Other Details",
+						advance: true,
 						fields: [
 							{
 								type: "input",
@@ -67,6 +68,24 @@ export default {
 								inputType: "text",
 								label: "Things",
 								model: "others.things"
+							}
+						]
+					},
+					{
+						legend: "Empty Other Details",
+						advance: true,
+						fields: [
+							{
+								type: "input",
+								inputType: "text",
+								label: "More",
+								model: "emptyother.more"
+							},
+							{
+								type: "input",
+								inputType: "text",
+								label: "Things",
+								model: "emptyother.things"
 							}
 						]
 					}

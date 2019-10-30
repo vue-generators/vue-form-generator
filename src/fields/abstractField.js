@@ -155,12 +155,11 @@ export default {
 				changed = true;
 			}
 
-			this.$emit("model-updated", newValue, this.schema.model);
 			if (changed) {
 				if (isFunction(this.schema.onChanged)) {
 					this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema);
 				}
-
+				this.$emit("model-updated", newValue, this.schema.model);
 				if (objGet(this.formOptions, "validateAfterChanged", false) === true) {
 					if (
 						objGet(

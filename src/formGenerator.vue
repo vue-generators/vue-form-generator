@@ -5,20 +5,28 @@ div.vue-form-generator(v-if='schema != null')
 			form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 
 	template(v-for='group in groups'  v-if="groupVisible(group)")
-		fieldset(:is='tag', :class='getFieldRowClasses(group)', :id="group.id")
-			legend(v-if='group.legend') {{ group.legend }}
-			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+		drawer(v-if="groupAdvanced(group)", :group="group", :model="model")
+			fieldset(slot="title")
+				legend {{ group.legend }}
+			template(slot="content")
+				fieldset(:is='tag', :class='getFieldRowClasses(group)', :id="group.id")
+					template(v-for='field in group.fields')
+						form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+		div(v-else)
+			fieldset(:is='tag', :class='getFieldRowClasses(group)', :id="group.id")
+				legend(v-if='group.legend') {{ group.legend }}
+				template(v-for='field in group.fields')
+					form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 </template>
 
 <script>
 import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
 import formMixin from "./formMixin.js";
 import formGroup from "./formGroup.vue";
-
+import drawer from "./drawer";
 export default {
 	name: "formGenerator",
-	components: { formGroup },
+	components: { formGroup, drawer },
 	mixins: [formMixin],
 	props: {
 		schema: Object,
@@ -134,6 +142,14 @@ export default {
 			return this.fieldVisible(group);
 		},
 
+		groupAdvanced(group) {
+			if (isFunction(group.advance)) return group.advance.call(this, this.model, group, this);
+
+			if (isNil(group.advance)) return false;
+
+			return group.advance;
+		},
+
 		// Child field executed validation
 		onFieldValidated(res, errors, field) {
 			// Remove old errors for this field
@@ -204,7 +220,9 @@ export default {
 			this.errors.splice(0);
 
 			forEach(this.$children, (child) => {
-				child.clearValidationErrors();
+				if (isFunction(child.clearValidationErrors)) {
+					child.clearValidationErrors();
+				}
 			});
 		}
 	}

@@ -1,6 +1,6 @@
 {
   "name": "vue-form-generator",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "A schema-based form generator component for Vue.js",
   "homepage": "https://github.com/vue-generators/vue-form-generator/",
   "main": "dist/vfg.js",
