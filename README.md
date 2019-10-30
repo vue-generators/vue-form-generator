@@ -185,7 +185,6 @@ export default {
   }
 }
 </script>
-
 ```
 
 Usage in local components
@@ -200,6 +199,10 @@ export default {
 	}
 };
 ```
+
+### 2.3.5
+
+Now it is possible to define groups in groups. It will render group using recursion.
 
 ## Development
 
@@ -241,11 +244,11 @@ This way, it will be easier for everyone to find it. Thank you !
 
 ### Public Custom Fields
 
-* [vue-tel-input](https://github.com/EducationLink/vue-tel-input) - International Telephone Input Boilerplate with Vue (integrated with VueFormGenerator).
-* [vfg-field-sourcecode](https://github.com/gwenaelp/vfg-field-sourcecode) - A source code field for vue-form-generator
-* [vfg-field-array](https://github.com/gwenaelp/vfg-field-array) - A vue-form-generator field to handle arrays of items of any type.
-* [vfg-field-object](https://github.com/gwenaelp/vfg-field-object) - A vue-form-generator field to handle objects, with or without schemas.
-* [vfg-field-matrix](https://github.com/shwld/vfg-field-matrix) - A matrix field for vue-form-generator.
+*   [vue-tel-input](https://github.com/EducationLink/vue-tel-input) - International Telephone Input Boilerplate with Vue (integrated with VueFormGenerator).
+*   [vfg-field-sourcecode](https://github.com/gwenaelp/vfg-field-sourcecode) - A source code field for vue-form-generator
+*   [vfg-field-array](https://github.com/gwenaelp/vfg-field-array) - A vue-form-generator field to handle arrays of items of any type.
+*   [vfg-field-object](https://github.com/gwenaelp/vfg-field-object) - A vue-form-generator field to handle objects, with or without schemas.
+*   [vfg-field-matrix](https://github.com/shwld/vfg-field-matrix) - A matrix field for vue-form-generator.
 
 ## Contribution
 

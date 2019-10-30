@@ -1,6 +1,6 @@
 <template lang="pug">
 div.vue-form-generator(v-if='schema != null')
-	fieldset(v-if="schema.fields", :is='tag')
+	fieldset(v-if="schema.fields || schema.groups", :is='tag')
 		template(v-for='field in fields')
 			form-field(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 		form-group(:options="options", :tag="tag", :groups="schema.groups", :model="model", :vfg="vfg", @validated="onFieldValidated", @model-updated="onModelUpdated")
