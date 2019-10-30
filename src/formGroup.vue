@@ -1,5 +1,5 @@
 <template lang="pug">
-	div
+	section.form-group
 		template(v-for='group in groups'  v-if="groupVisible(group)")
 			drawer(v-if="groupFoldable(group)", :group="group", :model="model")
 				fieldset(slot="title")
@@ -9,18 +9,18 @@
 					template(v-if="group.fields")
 						template(v-for='field in group.fields')
 							form-field(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
-					form-group(v-if="group.groups", :options="options", :tag="tag", :groups="group.groups", :model="model", :vfg="vfg", @validated="onFieldValidated", @model-updated="onModelUpdated")
-			div(v-else)
+					form-group(:class="getFieldRowClasses(group)", v-if="group.groups", :options="options", :tag="tag", :groups="group.groups", :model="model", :vfg="vfg", @validated="onFieldValidated", @model-updated="onModelUpdated")
+			template(v-else)
 				fieldset(:is='tag', :class='getFieldRowClasses(group)', :id="group.id")
 					legend(v-if='group.legend') {{ group.legend }}
 					template(v-if="group.fields")
 						template(v-for='field in group.fields')
 							form-field(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
-					form-group(v-if="group.groups",:options="options", :tag="tag", :groups="group.groups", :model="model", :vfg="vfg", @validated="onFieldValidated", @model-updated="onModelUpdated")
+					form-group(:class="getFieldRowClasses(group)", v-if="group.groups",:options="options", :tag="tag", :groups="group.groups", :model="model", :vfg="vfg", @validated="onFieldValidated", @model-updated="onModelUpdated")
 </template>
 
 <script>
-import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
+import { get as isFunction, isNil } from "lodash";
 import drawer from "./drawer";
 import formMixin from "./formMixin.js";
 import formField from "./formField.vue";

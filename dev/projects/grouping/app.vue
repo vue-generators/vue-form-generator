@@ -85,6 +85,8 @@ export default {
 						advance: true,
 						legend: "Advanced",
 						foldable: true,
+						styleClasses: "advance",
+
 						groups: [
 							{
 								legend: "Fixed Leg",
