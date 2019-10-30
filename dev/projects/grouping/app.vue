@@ -23,7 +23,7 @@ export default {
 	data() {
 		return {
 			model: {
-				name: "Brian Blessed",
+				name: "",
 				email: "brian@hawkman.mongo",
 				others: {
 					more: "More",
@@ -55,7 +55,7 @@ export default {
 					},
 					{
 						legend: "Other Details",
-						advance: true,
+						foldable: true,
 						fields: [
 							{
 								type: "input",
@@ -73,7 +73,7 @@ export default {
 					},
 					{
 						legend: "Empty Other Details",
-						advance: true,
+						foldable: true,
 						fields: [
 							{
 								type: "input",
@@ -86,6 +86,46 @@ export default {
 								inputType: "text",
 								label: "Things",
 								model: "emptyother.things"
+							}
+						],
+						groups: [
+							{
+								legend: "wwww wwwww Details",
+								foldable: true,
+								fields: [
+									{
+										type: "input",
+										inputType: "text",
+										label: "More",
+										model: "wwww.more"
+									},
+									{
+										type: "input",
+										inputType: "text",
+										label: "Things",
+										model: "www.things"
+									}
+								],
+								groups: [
+									{
+										legend: "wwww wwwww Details",
+										foldable: true,
+										fields: [
+											{
+												type: "input",
+												inputType: "text",
+												label: "More",
+												model: "wwww.more"
+											},
+											{
+												type: "input",
+												inputType: "text",
+												label: "Things",
+												model: "www.things"
+											}
+										]
+									}
+								]
 							}
 						]
 					}

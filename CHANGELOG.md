@@ -1,3 +1,8 @@
+## <small>2.3.6 (2019-10-30)</small>
+
+
+
+
 ## <small>2.3.5 (2019-10-30)</small>
 
 * add group id ([59d8ea5](https://github.com/vue-generators/vue-form-generator/commit/59d8ea5))
