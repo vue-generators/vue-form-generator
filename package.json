@@ -45,7 +45,8 @@
     "dist/vfg.css",
     "dist/vfg-core.js",
     "dist/vfg-core.css",
-    "src"
+    "src",
+    "index.d.ts"
   ],
   "author": "Icebob",
   "license": "MIT",
