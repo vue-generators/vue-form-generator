@@ -171,6 +171,88 @@ describe("VueFormGenerator.vue", () => {
 		});
 	});
 
+	describe("check subgroups", () => {
+		let schema = {
+			groups: [
+				{
+					legend: "Test Legend",
+					groups: [
+						{
+							legend: "Nested Legend",
+							legendAttr: "title",
+							fields: [
+								{
+									type: "input",
+									inputType: "text",
+									label: "Name",
+									model: "name",
+								}
+							]
+						}
+					]
+				},
+			]
+		};
+		let label;
+		let fieldset;
+
+		before(() => {
+			createFormGenerator({ schema });
+			label = wrapper.find("fieldset fieldset legend");
+			fieldset = wrapper.find("fieldset fieldset");
+		});
+
+		it("should render nested legend", () => {
+			expect(label.exists()).to.be.true;
+			expect(label.text()).to.be.equal("Nested Legend");
+		});
+
+		it("should render nested legend in specified attribute", () => {
+			expect(fieldset.attributes().title).to.be.equal("Nested Legend");
+		});
+	});
+
+	describe("check group tag definition", () => {
+		let schema = {
+			groups: [
+				{
+					tag: "section",
+					legend: "Test Legend",
+					groups: [
+						{
+							tag: "aside",
+							legend: "Nested Legend",
+							fields: [
+								{
+									type: "input",
+									inputType: "text",
+									label: "Name",
+									model: "name",
+								}
+							]
+						}
+					]
+				},
+			]
+		};
+
+		before(() => {
+			createFormGenerator({ schema });
+		});
+
+		it("should create custom tag", () => {
+			const section = wrapper.find("section");
+			expect(section.exists()).to.be.true;
+			expect(section.is("section")).to.be.true;
+		});
+
+		it("should create custom tag (nested)", () => {
+			const aside = wrapper.find("section aside");
+			expect(aside.exists()).to.be.true;
+			expect(aside.is("aside")).to.be.true;
+		});
+	});
+
 	describe("check label classes", () => {
 		let schema = {
 			fields: [

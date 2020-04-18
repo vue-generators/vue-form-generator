@@ -25,6 +25,9 @@ export default {
 			model: {
 				name: "Brian Blessed",
 				email: "brian@hawkman.mongo",
+				city: "Springfield",
+				state: "IL",
+				age: 25,
 				others: {
 					more: "More",
 					things: "Things"
@@ -48,6 +51,41 @@ export default {
 								inputType: "email",
 								label: "Email",
 								model: "email"
+							}
+						]
+					},
+					{
+						groups: [
+							{
+								legend: "Location",
+								fields: [
+									{
+										type: "input",
+										inputType: "text",
+										label: "City",
+										model: "city",
+										styleClasses: "half-width"
+									},
+									{
+										type: "input",
+										inputType: "text",
+										label: "State",
+										model: "state",
+										styleClasses: "half-width"
+									}
+								]
+							},
+							{
+								legend: "Demographics",
+								fields: [
+									{
+										type: "input",
+										inputType: "number",
+										label: "Age",
+										model: "age",
+										styleClasses: "half-width"
+									}
+								]
 							}
 						]
 					},
@@ -90,6 +128,16 @@ export default {
 	}
 };
 </script>
+
+<style>
+/* To demonstrate subgroups */
+section section legend {
+	color: #777;
+	border: 0;
+	margin-bottom: 10px;
+	font-size: 18px;
+}
+</style>
 
 <style lang="scss">
 @import "../../style.scss";
