@@ -5,10 +5,15 @@ div.vue-form-generator(v-if='schema != null')
 			form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 
 	template(v-for='group in groups')
-		fieldset(:is='tag', :class='getFieldRowClasses(group)')
+		fieldset(:is='group.tag || tag', :class='getFieldRowClasses(group)', v-bind="{ [group.legendAttr]: group.legend }")
 			legend(v-if='group.legend') {{ group.legend }}
 			template(v-for='field in group.fields')
 				form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+			template(v-for='subGroup in group.groups')
+				fieldset(:is='subGroup.tag || tag', :class='getFieldRowClasses(subGroup)', v-bind="{ [subGroup.legendAttr]: subGroup.legend }")
+					legend(v-if='subGroup.legend') {{ subGroup.legend }}
+					template(v-for='nestedField in subGroup.fields')
+						form-group(v-if='fieldVisible(nestedField)', :vfg="vfg", :field="nestedField", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
 </template>
 
 <script>
@@ -201,7 +206,9 @@ export default {
 			this.errors.splice(0);
 
 			forEach(this.$children, child => {
-				child.clearValidationErrors();
+				if (child.clearValidationErrors) {
+					child.clearValidationErrors();
+				}
 			});
 		},
 	}
