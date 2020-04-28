@@ -198,7 +198,7 @@ const validators = {
 		let res = checkEmpty(value, field.required, messages);
 		if (res != null) return res;
 
-		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g; // eslint-disable-line no-useless-escape
+		let re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g; // eslint-disable-line no-useless-escape
 		if (!re.test(value)) {
 			return [msg(messages.invalidURL)];
 		}
