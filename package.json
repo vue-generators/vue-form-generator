@@ -85,7 +85,7 @@
     "file-loader": "1.1.11",
     "inject-loader": "3.0.1",
     "ion-rangeslider": "2.2.0",
-    "jquery": "3.3.1",
+    "jquery": "3.5.0",
     "jsdom": "11.11.0",
     "jsdom-global": "3.0.2",
     "lodash": "4.17.10",
