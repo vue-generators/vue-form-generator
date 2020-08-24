@@ -177,7 +177,7 @@ export default {
 
 	created() {
 		if (this.schema.inputType.toLowerCase() === "file") {
-			console.warn("The 'file' type in input field is deprecated. Use 'file' field instead.");
+			console.warn("The 'file' type in input field is deprecated. Use 'upload' field instead.");
 		}
 	}
 };
