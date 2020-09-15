@@ -43,6 +43,8 @@
 	)
 		span(slot="noResult").
 			{{ selectOptions.noResult }}
+		span(slot="noOptions").
+			{{ selectOptions.noOptions }}
 		span(slot="maxElements").
 			{{ selectOptions.maxElements }}
 </template>
