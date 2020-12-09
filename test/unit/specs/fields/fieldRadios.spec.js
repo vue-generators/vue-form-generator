@@ -130,17 +130,13 @@ describe("FieldRadios.vue", () => {
 				expect(radios.is(`input[name="${nameAttribute}"]`));
 			});
 			it("should render different 'name' attribute for all input[type=radio] across different instances", () => {
-				const wrapper2 = mount(FieldRadios, {
-					localVue,
-					propsData: { schema, model, disabled: false }
-				});
-				const radios2 = wrapper2.findAll("input[type=radio]");
-
 				const nameAttribute = radios.at(0).attributes().name;
 				expect(radios.is(`input[name="${nameAttribute}"]`));
 
-				const nameAttribute2 = radios2.at(0).attributes().name;
-				expect(radios2.is(`input[name="${nameAttribute2}"]`));
+				createField2({ schema, model, disabled: false });
+
+				const nameAttribute2 = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute2}"]`));
 
 				expect(nameAttribute).not.to.equal(nameAttribute2);
 			});
@@ -250,17 +246,13 @@ describe("FieldRadios.vue", () => {
 				expect(radios.is(`input[name="${nameAttribute}"]`));
 			});
 			it("should render different 'name' attribute for all input[type=radio] across different instances", () => {
-				const wrapper2 = mount(FieldRadios, {
-					localVue,
-					propsData: { schema, model, disabled: false }
-				});
-				const radios2 = wrapper2.findAll("input[type=radio]");
-
 				const nameAttribute = radios.at(0).attributes().name;
 				expect(radios.is(`input[name="${nameAttribute}"]`));
 
-				const nameAttribute2 = radios2.at(0).attributes().name;
-				expect(radios2.is(`input[name="${nameAttribute2}"]`));
+				createField2({ schema, model, disabled: false });
+
+				const nameAttribute2 = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute2}"]`));
 
 				expect(nameAttribute).not.to.equal(nameAttribute2);
 			});
@@ -374,17 +366,13 @@ describe("FieldRadios.vue", () => {
 				expect(radios.is(`input[name="${nameAttribute}"]`));
 			});
 			it("should render different 'name' attribute for all input[type=radio] across different instances", () => {
-				const wrapper2 = mount(FieldRadios, {
-					localVue,
-					propsData: { schema, model, disabled: false }
-				});
-				const radios2 = wrapper2.findAll("input[type=radio]");
-
 				const nameAttribute = radios.at(0).attributes().name;
 				expect(radios.is(`input[name="${nameAttribute}"]`));
 
-				const nameAttribute2 = radios2.at(0).attributes().name;
-				expect(radios2.is(`input[name="${nameAttribute2}"]`));
+				createField2({ schema, model, disabled: false });
+
+				const nameAttribute2 = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute2}"]`));
 
 				expect(nameAttribute).not.to.equal(nameAttribute2);
 			});
