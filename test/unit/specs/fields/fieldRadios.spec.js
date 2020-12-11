@@ -123,6 +123,24 @@ describe("FieldRadios.vue", () => {
 				expect(labelList.at(6).classes()).to.not.include("is-checked");
 			});
 		});
+
+		describe("test 'name' attribute for the radio group", () => {
+			it("should render the same 'name' attribute for all input[type=radio] within an instance", () => {
+				const nameAttribute = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute}"]`));
+			});
+			it("should render different 'name' attribute for all input[type=radio] across different instances", () => {
+				const nameAttribute = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute}"]`));
+
+				createField2({ schema, model, disabled: false });
+
+				const nameAttribute2 = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute2}"]`));
+
+				expect(nameAttribute).not.to.equal(nameAttribute2);
+			});
+		});
 	});
 
 	describe("check static values with { value, name } objects (default key name)", () => {
@@ -219,6 +237,24 @@ describe("FieldRadios.vue", () => {
 				expect(labelList.at(4).classes()).to.not.include("is-checked");
 				expect(labelList.at(5).classes()).to.not.include("is-checked");
 				expect(labelList.at(6).classes()).to.not.include("is-checked");
+			});
+		});
+
+		describe("test 'name' attribute for the radio group", () => {
+			it("should render the same 'name' attribute for all input[type=radio] within an instance", () => {
+				const nameAttribute = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute}"]`));
+			});
+			it("should render different 'name' attribute for all input[type=radio] across different instances", () => {
+				const nameAttribute = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute}"]`));
+
+				createField2({ schema, model, disabled: false });
+
+				const nameAttribute2 = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute2}"]`));
+
+				expect(nameAttribute).not.to.equal(nameAttribute2);
 			});
 		});
 	});
@@ -321,6 +357,24 @@ describe("FieldRadios.vue", () => {
 				expect(labelList.at(4).classes()).to.not.include("is-checked");
 				expect(labelList.at(5).classes()).to.not.include("is-checked");
 				expect(labelList.at(6).classes()).to.not.include("is-checked");
+			});
+		});
+
+		describe("test 'name' attribute for the radio group", () => {
+			it("should render the same 'name' attribute for all input[type=radio] within an instance", () => {
+				const nameAttribute = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute}"]`));
+			});
+			it("should render different 'name' attribute for all input[type=radio] across different instances", () => {
+				const nameAttribute = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute}"]`));
+
+				createField2({ schema, model, disabled: false });
+
+				const nameAttribute2 = radios.at(0).attributes().name;
+				expect(radios.is(`input[name="${nameAttribute2}"]`));
+
+				expect(nameAttribute).not.to.equal(nameAttribute2);
 			});
 		});
 	});

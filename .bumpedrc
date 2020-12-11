@@ -17,8 +17,8 @@ plugins:
 
     'Commiting new version':
       plugin: 'bumped-terminal'
-      command: 'git commit -am "$newVersion releases" && git push origin master'
+      command: 'git commit -am "$newVersion releases" && git push My_Fork master'
 
     'Publishing tag at GitHub':
       plugin: 'bumped-terminal'
-      command: 'git tag v$newVersion && git push origin v$newVersion'
+      command: 'git tag v$newVersion && git push My_Fork v$newVersion'

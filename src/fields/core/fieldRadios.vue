@@ -23,7 +23,7 @@ export default {
 			}
 		},
 		id() {
-			return this.schema.model;
+			return this.getFieldID(this.schema, true);
 		}
 	},
 
