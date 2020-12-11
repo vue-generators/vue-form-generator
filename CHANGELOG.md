@@ -1,3 +1,13 @@
+## 2.4.0 (2020-12-11)
+
+* Changed in intro ([cdf6f93](https://github.com/vue-generators/vue-form-generator/commit/cdf6f93))
+* Clean up unnecessarily verbose code ([51147fa](https://github.com/vue-generators/vue-form-generator/commit/51147fa))
+* Set `name` attribute of radio-groups which are scoped to the instance ([8daba64](https://github.com/vue-generators/vue-form-generator/commit/8daba64))
+* update gitignore ([45b2087](https://github.com/vue-generators/vue-form-generator/commit/45b2087))
+* Updated bundle sizes ([6c5af99](https://github.com/vue-generators/vue-form-generator/commit/6c5af99))
+
+
+
 ## <small>2.3.4 (2019-02-07)</small>
 
 * #469 - fixes example in README, tested with a fresh vue-cli project ([b0037c9](https://github.com/vue-generators/vue-form-generator/commit/b0037c9))
