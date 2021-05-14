@@ -156,7 +156,7 @@ export default {
             validator: VueFormGenerator.validators.string
           },
           {
-            type: 'select',
+            type: 'checklist',
             label: 'Skills',
             model: 'skills',
             values: ['Javascript', 'VueJS', 'CSS3', 'HTML5']
